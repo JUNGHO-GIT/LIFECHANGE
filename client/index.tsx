@@ -1,6 +1,6 @@
 /**
  * @file index.tsx
- * @description foo
+ * @description foo-hmr-probe
  * @author Jungho
  * @since 2025-12-26
  */
@@ -11,6 +11,7 @@ import "@assets/styles/Calendar.css";
 import "@assets/styles/Chart.css";
 import "@assets/styles/Mui.css";
 import "@assets/styles/Components.css";
+import "@assets/styles/Extra.css";
 
 import lifechangeLogo from "@assets/images/splash-v2.webp";
 import { useCommonValue } from "@hooks/common/useCommonValue";
@@ -30,7 +31,7 @@ import { CssBaseline, createTheme, ThemeProvider } from "@exportMuis";
 import { BrowserRouter, createRoot, lazy, memo, Route, Routes, Suspense, useEffect, useState } from "@exportReacts";
 import { registerInterceptor } from "@assets/scripts/interceptor";
 
-// admin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// admin ------------------------------------------------------------------------------------------
 const AdminDashboard = lazy(() => import("@pages/admin/AdminDashboard").then((m) => ({
   default: m.AdminDashboard,
 })));
@@ -38,7 +39,7 @@ const AdminAppInfo = lazy(() => import("@pages/admin/AdminAppInfo").then((m) => 
   default: m.AdminAppInfo,
 })));
 
-// auth ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// auth --------------------------------------------------------------------------------------------
 const AuthError = lazy(() => import("@pages/auth/AuthError").then((m) => ({
   default: m.AuthError
 })));
@@ -49,7 +50,7 @@ const AuthPrivacy = lazy(() => import("@pages/auth/AuthPrivacy").then((m) => ({
   default: m.AuthPrivacy
 })));
 
-// calendar ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// calendar ----------------------------------------------------------------------------------------
 const CalendarList = lazy(() => import("@pages/calendar/CalendarList").then((m) => ({
   default: m.CalendarList
 })));
@@ -57,7 +58,7 @@ const CalendarDetail = lazy(() => import("@pages/calendar/CalendarDetail").then(
   default: m.CalendarDetail
 })));
 
-// exercise ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// exercise ----------------------------------------------------------------------------------------
 const ExerciseChart = lazy(() => import("@pages/exercise/chart/ExerciseChart").then((m) => ({
   default: m.ExerciseChart
 })));
@@ -74,7 +75,7 @@ const ExerciseRecordDetail = lazy(() => import("@pages/exercise/record/ExerciseR
   default: m.ExerciseRecordDetail
 })));
 
-// food ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// food --------------------------------------------------------------------------------------------
 const FoodChart = lazy(() => import("@pages/food/chart/FoodChart").then((m) => ({
   default: m.FoodChart
 })));
@@ -97,7 +98,7 @@ const FoodRecordDetail = lazy(() => import("@pages/food/record/FoodRecordDetail"
   default: m.FoodRecordDetail
 })));
 
-// money ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// money ------------------------------------------------------------------------------------------
 const MoneyChart = lazy(() => import("@pages/money/chart/MoneyChart").then((m) => ({
   default: m.MoneyChart
 })));
@@ -114,7 +115,7 @@ const MoneyRecordDetail = lazy(() => import("@pages/money/record/MoneyRecordDeta
   default: m.MoneyRecordDetail
 })));
 
-// sleep ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// sleep ------------------------------------------------------------------------------------------
 const SleepChart = lazy(() => import("@pages/sleep/chart/SleepChart").then((m) => ({
   default: m.SleepChart
 })));
@@ -131,7 +132,7 @@ const SleepRecordDetail = lazy(() => import("@pages/sleep/record/SleepRecordDeta
   default: m.SleepRecordDetail
 })));
 
-// user ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// user --------------------------------------------------------------------------------------------
 const UserAppSetting = lazy(() => import("@pages/user/UserAppSetting").then((m) => ({
   default: m.UserAppSetting
 })));
@@ -154,7 +155,7 @@ const UserCategory = lazy(() => import("@pages/user/UserCategory").then((m) => (
   default: m.UserCategory
 })));
 
-// 앱 실행 스플래시 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 앱 실행 스플래시 ------------------------------------------------------------------------------
 const SplashScreen = memo(() => {
   const [visible, setVisible] = useState<boolean>(true);
   const [closing, setClosing] = useState<boolean>(false);
@@ -189,7 +190,7 @@ const SplashScreen = memo(() => {
   ) : null;
 });
 
-// 앱 라우트 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 앱 라우트 ----------------------------------------------------------------------------------
 const App = memo(() => {
   const { PATH } = useCommonValue();
 
@@ -221,7 +222,7 @@ const App = memo(() => {
       <Loader />
       <Alert />
       <Confirm />
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader active={true} />}>
         <Routes>
           {/** home * */}
           <Route path={`/`} element={<div />} />
@@ -276,10 +277,10 @@ const App = memo(() => {
   );
 });
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 const fontFamily: string = `'Pretendard Variable', Pretendard, FontAwesome, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif`;
 
-// 테마 팔레트 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 테마 팔레트 -----------------------------------------------------------------------------------
 const appTheme = createTheme({
   typography: {
     fontFamily: fontFamily
@@ -296,7 +297,7 @@ const appTheme = createTheme({
   },
 });
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 registerInterceptor();
 createRoot(document.querySelector(`#root`) as HTMLElement).render(
   <BrowserRouter basename={`/lifechange`}>

@@ -10,27 +10,27 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { MoneyLine, MoneyLineType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDate } from "@exportScripts";
+import { formatY, formatDateMmDd } from "@exportScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface MoneyChartLineProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const { URL_OBJECT, PATH, sessionId, chartColors, moneyChartArray } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { URL_OBJECT, PATH, sessionId, chartThemeColors, moneyChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `line`, PATH, {
       section: `week`,
@@ -38,7 +38,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -54,11 +54,11 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[MoneyLineType]>([MoneyLine]);
   const [ OBJECT_MONTH, setOBJECT_MONTH ] = useState<[MoneyLineType]>([MoneyLine]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -97,7 +97,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -107,7 +107,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -120,7 +120,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
     let object: any = null;
@@ -200,7 +200,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 		        <Line
 		          dataKey={`income`}
 		          type={`monotone`}
-		          stroke={chartColors[0]}
+		          stroke={chartThemeColors.income}
 		          strokeWidth={2}
 		          activeDot={{ r: 4 }}
 		          dot={false}
@@ -214,7 +214,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 		        <Line
 		          dataKey={`expense`}
 		          type={`monotone`}
-		          stroke={chartColors[3]}
+		          stroke={chartThemeColors.expense}
 		          strokeWidth={2}
 		          activeDot={{ r: 4 }}
 		          dot={false}
@@ -228,7 +228,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 		        labelFormatter={(_label: any, payload: any) => {
 		          const name: string = payload?.length > 0 ? payload[0]?.payload.name : ``;
 		          const date: string = payload?.length > 0 ? payload[0]?.payload.date : ``;
-		          return `${translate(name)} (${formatDate(date)})`;
+		          return `${translate(name)} (${formatDateMmDd(date)})`;
 		        }}
 		        formatter={(value: any, name: any) => {
 		          const customName: string = translate(name as string);
@@ -266,7 +266,7 @@ export const MoneyChartLine = memo((props: MoneyChartLineProps) => {
 		);
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

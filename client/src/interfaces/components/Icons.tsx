@@ -8,13 +8,12 @@
 import { React, memo, type JSX } from "@exportReacts";
 import { IconButton } from "@exportMuis";
 
-// ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+// -------------------------------------------------------------------------------------------------
 export const Icons = memo((props: any) => {
 
   if (!props.name) {
     return null;
   }
-
   const commonValues: Record<string, string> = {
     xmlns: `http://www.w3.org/2000/svg`,
     viewBox: `0 0 24 24`,
@@ -26,8 +25,39 @@ export const Icons = memo((props: any) => {
     fill: props?.fill ?? `#ffffff`,
     className: props?.className ?? ``,
   };
-
+  const assetIconSrcs: Record<string, string> = {
+    calendar1: new URL(`../../assets/svg/calendar1.svg`, import.meta.url).href,
+    calendar3: new URL(`../../assets/svg/calendar3.svg`, import.meta.url).href,
+    common1: new URL(`../../assets/svg/common1.svg`, import.meta.url).href,
+    common2: new URL(`../../assets/svg/common2.svg`, import.meta.url).href,
+    empty: new URL(`../../assets/svg/empty.svg`, import.meta.url).href,
+    exercise1: new URL(`../../assets/svg/exercise1.svg`, import.meta.url).href,
+    exercise2: new URL(`../../assets/svg/exercise2.svg`, import.meta.url).href,
+    exercise3_1: new URL(`../../assets/svg/exercise3_1.svg`, import.meta.url).href,
+    exercise3_2: new URL(`../../assets/svg/exercise3_2.svg`, import.meta.url).href,
+    exercise3_3: new URL(`../../assets/svg/exercise3_3.svg`, import.meta.url).href,
+    exercise4: new URL(`../../assets/svg/exercise4.svg`, import.meta.url).href,
+    flag1: new URL(`../../assets/svg/flag1.svg`, import.meta.url).href,
+    flag2: new URL(`../../assets/svg/flag2.svg`, import.meta.url).href,
+    money1: new URL(`../../assets/svg/money1.svg`, import.meta.url).href,
+    sleep1: new URL(`../../assets/svg/sleep1.svg`, import.meta.url).href,
+    sleep2: new URL(`../../assets/svg/sleep2.svg`, import.meta.url).href,
+    sleep3: new URL(`../../assets/svg/sleep3.svg`, import.meta.url).href,
+    sleep4: new URL(`../../assets/svg/sleep4.svg`, import.meta.url).href,
+    user1: new URL(`../../assets/svg/user1.svg`, import.meta.url).href,
+  };
   const icons: Record<string, JSX.Element> = {
+    ...Object.fromEntries(
+      Object.entries(assetIconSrcs).map(([ name, src ]) => [
+        name,
+        <img
+          src={src}
+          alt={String(name)}
+          className={props?.className ?? ``}
+          draggable={false}
+        />,
+      ]),
+    ),
     X: (
       <svg {...commonValues}>
         <path stroke={`none`} d={`M0 0h24v24H0z`} fill={`none`} />
@@ -302,10 +332,181 @@ export const Icons = memo((props: any) => {
         <path d={`M8 12l8 0`} />
       </svg>
     ),
+    exercise5: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <rect x={`24`} y={`28`} width={`208`} height={`198`} rx={`30`} fill={`#F8FAFC`} stroke={`#111118`} strokeWidth={`10`} />
+        <rect x={`88`} y={`56`} width={`80`} height={`45`} rx={`10`} fill={`#DCEBFF`} stroke={`#111118`} strokeWidth={`9`} />
+        <path d={`M112 101h32`} stroke={`#111118`} strokeWidth={`9`} strokeLinecap={`round`} />
+        <g fill={`#E8E4FF`} stroke={`#111118`} strokeWidth={`9`}>
+          <circle cx={`65`} cy={`68`} r={`20`} />
+          <circle cx={`191`} cy={`68`} r={`20`} />
+          <circle cx={`65`} cy={`186`} r={`20`} />
+          <circle cx={`191`} cy={`186`} r={`20`} />
+        </g>
+      </svg>
+    ),
+    exercise6: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <rect x={`30`} y={`30`} width={`196`} height={`196`} rx={`34`} fill={`#E8E4FF`} stroke={`#111118`} strokeWidth={`10`} />
+        <path d={`M65 98Q128 58 191 98L170 150H86z`} fill={`#FFED9B`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M91 101l8 19M128 82v24M165 101l-8 19`} stroke={`#111118`} strokeWidth={`9`} strokeLinecap={`round`} />
+        <path d={`M105 150a24 24 0 0 1 46 0`} fill={`#FF5263`} stroke={`#111118`} strokeWidth={`9`} />
+        <path d={`M86 176h84`} stroke={`#111118`} strokeWidth={`10`} strokeLinecap={`round`} />
+      </svg>
+    ),
+    food1: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <circle cx={`128`} cy={`128`} r={`106`} fill={`#ffffff`} stroke={`#111118`} strokeWidth={`10`} />
+        <path d={`M128 22a106 106 0 0 1 91 52l-39 23a61 61 0 0 0 -52 -30z`} fill={`#FFED9B`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M219 74a106 106 0 0 1 15 54h-45a61 61 0 0 0 -9 -31z`} fill={`#FF5263`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M22 128a106 106 0 0 1 45 -87l27 36a61 61 0 0 0 -27 51z`} fill={`#1ECF9F`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <circle cx={`128`} cy={`128`} r={`56`} fill={`#F8FAFC`} stroke={`#111118`} strokeWidth={`10`} />
+        <path d={`M86 143l58 -18`} stroke={`#111118`} strokeWidth={`13`} strokeLinecap={`round`} />
+        <circle cx={`128`} cy={`128`} r={`9`} fill={`#111118`} />
+      </svg>
+    ),
+    food2: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <circle cx={`128`} cy={`128`} r={`106`} fill={`#ffffff`} stroke={`#111118`} strokeWidth={`10`} />
+        <path d={`M128 22a106 106 0 0 1 91 52l-39 23a61 61 0 0 0 -52 -30z`} fill={`#FFED9B`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M219 74a106 106 0 0 1 15 54h-45a61 61 0 0 0 -9 -31z`} fill={`#FF5263`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M22 128a106 106 0 0 1 45 -87l27 36a61 61 0 0 0 -27 51z`} fill={`#1ECF9F`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <circle cx={`128`} cy={`128`} r={`56`} fill={`#F8FAFC`} stroke={`#111118`} strokeWidth={`10`} />
+        <path d={`M86 143l58 -18`} stroke={`#111118`} strokeWidth={`13`} strokeLinecap={`round`} />
+        <circle cx={`128`} cy={`128`} r={`9`} fill={`#111118`} />
+      </svg>
+    ),
+    food3: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <path d={`M42 128c7 -48 43 -80 86 -80s79 32 86 80z`} fill={`#ffffff`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M32 130h192l-12 57c-6 29 -30 48 -59 48h-50c-29 0 -53 -19 -59 -48z`} fill={`#61C9EC`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M35 130h186`} stroke={`#111118`} strokeWidth={`11`} strokeLinecap={`round`} />
+        <g fill={`#111118`}>
+          <circle cx={`82`} cy={`96`} r={`6`} />
+          <circle cx={`104`} cy={`82`} r={`6`} />
+          <circle cx={`173`} cy={`95`} r={`6`} />
+        </g>
+      </svg>
+    ),
+    food4: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <path d={`M53 67c34 -34 86 -23 123 14c22 22 31 49 22 73c-9 25 -35 46 -70 53c-36 7 -72 -3 -94 -25c-26 -26 -20 -84 19 -115z`} fill={`#FF5263`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M172 84c27 8 47 27 56 54c-7 28 -27 49 -56 61l-36 -43l35 -35z`} fill={`#FF5263`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M191 109c16 10 26 24 31 40c-6 17 -16 29 -30 38`} stroke={`#D12A78`} strokeWidth={`12`} strokeLinecap={`round`} />
+        <circle cx={`144`} cy={`153`} r={`19`} fill={`#ffffff`} stroke={`#111118`} strokeWidth={`9`} />
+        <path d={`M58 74c27 -24 67 -20 102 8`} stroke={`#FFD8DF`} strokeWidth={`13`} strokeLinecap={`round`} />
+      </svg>
+    ),
+    food5: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <path d={`M128 34c39 50 61 89 61 127c0 40 -26 67 -61 67s-61 -27 -61 -67c0 -38 22 -77 61 -127z`} fill={`#FFCC45`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M70 68c21 29 33 52 33 74c0 24 -17 41 -38 41s-38 -17 -38 -41c0 -22 12 -45 33 -74z`} fill={`#FFED9B`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M186 68c21 29 33 52 33 74c0 24 -17 41 -38 41s-38 -17 -38 -41c0 -22 12 -45 33 -74z`} fill={`#FFED9B`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M103 194q25 20 50 0`} stroke={`#FFE37A`} strokeWidth={`12`} strokeLinecap={`round`} />
+      </svg>
+    ),
+    food6: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <rect x={`36`} y={`34`} width={`132`} height={`184`} rx={`16`} fill={`#F8FAFC`} stroke={`#111118`} strokeWidth={`10`} />
+        <rect x={`70`} y={`24`} width={`64`} height={`32`} rx={`10`} fill={`#E8E4FF`} stroke={`#111118`} strokeWidth={`9`} />
+        <path d={`M69 91h20M69 128h20M69 165h20`} stroke={`#1ECF9F`} strokeWidth={`14`} strokeLinecap={`round`} />
+        <path d={`M110 91h35M110 128h35M110 165h25`} stroke={`#111118`} strokeWidth={`8`} strokeLinecap={`round`} />
+        <path d={`M129 172c5 -22 28 -30 43 -13c17 -10 37 1 41 22c5 30 -15 53 -42 53s-47 -23 -42 -62z`} fill={`#FF5263`} stroke={`#111118`} strokeWidth={`9`} strokeLinejoin={`round`} />
+        <path d={`M169 160c10 -13 24 -18 39 -9c-9 13 -23 19 -39 9z`} fill={`#1ECF9F`} stroke={`#111118`} strokeWidth={`7`} strokeLinejoin={`round`} />
+      </svg>
+    ),
+    money2: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <rect x={`56`} y={`50`} width={`144`} height={`116`} rx={`18`} fill={`#E8E4FF`} stroke={`#111118`} strokeWidth={`10`} />
+        <rect x={`43`} y={`76`} width={`170`} height={`116`} rx={`18`} fill={`#61C9EC`} stroke={`#111118`} strokeWidth={`10`} />
+        <rect x={`30`} y={`103`} width={`196`} height={`116`} rx={`18`} fill={`#F8FAFC`} stroke={`#111118`} strokeWidth={`10`} />
+        <path d={`M59 143h72M59 174h52`} stroke={`#111118`} strokeWidth={`10`} strokeLinecap={`round`} />
+        <circle cx={`177`} cy={`165`} r={`31`} fill={`#FFED9B`} stroke={`#111118`} strokeWidth={`8`} />
+        <text x={`177`} y={`176`} textAnchor={`middle`} fontSize={`38`} fontFamily={`Arial, sans-serif`} fontWeight={`900`} fill={`#111118`}>₩</text>
+      </svg>
+    ),
+    money4: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <path d={`M82 40l72 82l-85 32l-28 -54z`} fill={`#61C9EC`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <path d={`M139 60l55 76l-78 37l-36 -58z`} fill={`#FF5263`} stroke={`#111118`} strokeWidth={`10`} strokeLinejoin={`round`} />
+        <rect x={`18`} y={`102`} width={`212`} height={`124`} rx={`28`} fill={`#D49A70`} stroke={`#111118`} strokeWidth={`10`} />
+        <path d={`M178 145h48a18 18 0 0 1 18 18v30a18 18 0 0 1 -18 18h-48a33 33 0 0 1 0 -66z`} fill={`#E9B08A`} stroke={`#111118`} strokeWidth={`10`} />
+        <circle cx={`184`} cy={`178`} r={`8`} fill={`#111118`} />
+      </svg>
+    ),
+    smile1: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <circle cx={`128`} cy={`128`} r={`112`} fill={`#FF9AA6`} stroke={`#111118`} strokeWidth={`8`} />
+        <g fill={`none`} stroke={`#3B3D46`} strokeWidth={`8`} strokeLinecap={`round`} strokeLinejoin={`round`}>
+          <path d={`M62 89L103 76`} />
+          <path d={`M146 74L181 89`} />
+          <path d={`M92 151Q125 134 157 151`} />
+        </g>
+        <g fill={`#3B3D46`} stroke={`none`}>
+          <circle cx={`82`} cy={`108`} r={`7.2`} />
+          <circle cx={`162`} cy={`107`} r={`7.2`} />
+        </g>
+      </svg>
+    ),
+    smile2: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <circle cx={`128`} cy={`128`} r={`112`} fill={`#FFE08A`} stroke={`#111118`} strokeWidth={`8`} />
+        <g fill={`none`} stroke={`#3B3D46`} strokeWidth={`8`} strokeLinecap={`round`} strokeLinejoin={`round`}>
+          <path d={`M61 90L98 85`} />
+          <path d={`M147 85L184 91`} />
+          <path d={`M91 155Q125 136 158 154`} />
+        </g>
+        <g fill={`#3B3D46`} stroke={`none`}>
+          <circle cx={`83`} cy={`108`} r={`7.2`} />
+          <circle cx={`163`} cy={`107`} r={`7.2`} />
+        </g>
+      </svg>
+    ),
+    smile3: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <circle cx={`128`} cy={`128`} r={`112`} fill={`#FFF3B8`} stroke={`#111118`} strokeWidth={`8`} />
+        <g fill={`none`} stroke={`#3B3D46`} strokeWidth={`8`} strokeLinecap={`round`}>
+          <path d={`M59 87L105 87`} />
+          <path d={`M144 86L190 86`} />
+          <path d={`M93 155L160 155`} />
+        </g>
+        <g fill={`#3B3D46`} stroke={`none`}>
+          <circle cx={`83`} cy={`108`} r={`7.2`} />
+          <circle cx={`163`} cy={`107`} r={`7.2`} />
+        </g>
+      </svg>
+    ),
+    smile4: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <circle cx={`128`} cy={`128`} r={`112`} fill={`#8FE8D3`} stroke={`#111118`} strokeWidth={`8`} />
+        <g fill={`none`} stroke={`#3B3D46`} strokeWidth={`8`} strokeLinecap={`round`} strokeLinejoin={`round`}>
+          <path d={`M63 91Q82 82 101 90`} />
+          <path d={`M146 90Q165 82 183 91`} />
+          <path d={`M91 151Q128 170 165 151`} />
+        </g>
+        <g fill={`#3B3D46`} stroke={`none`}>
+          <circle cx={`84`} cy={`109`} r={`7.2`} />
+          <circle cx={`165`} cy={`108`} r={`7.2`} />
+        </g>
+      </svg>
+    ),
+    smile5: (
+      <svg {...commonValues} viewBox={`0 0 256 256`} fill={`none`} stroke={`none`}>
+        <circle cx={`128`} cy={`128`} r={`112`} fill={`#A7DCF3`} stroke={`#111118`} strokeWidth={`8`} />
+        <g fill={`none`} stroke={`#3B3D46`} strokeWidth={`8`} strokeLinecap={`round`} strokeLinejoin={`round`}>
+          <path d={`M62 94Q79 78 98 88`} />
+          <path d={`M145 88Q164 78 181 88`} />
+          <path d={`M90 149Q124 169 160 149`} />
+        </g>
+        <g fill={`#3B3D46`} stroke={`none`}>
+          <circle cx={`84`} cy={`110`} r={`7.2`} />
+          <circle cx={`164`} cy={`109`} r={`7.2`} />
+        </g>
+      </svg>
+    ),
   };
 
   const IconComponent: JSX.Element | null = icons[props.name] || null;
-
   const ariaLabels: Record<string, string> = {
     X: `close`,
     Minus: `decrease`,
@@ -313,6 +514,25 @@ export const Icons = memo((props: any) => {
     ChevronDown: `expand`,
     ChevronUp: `collapse`,
     ChevronRight: `next`,
+    calendar1: `calendar`,
+    calendar3: `memo`,
+    common1: `date picker`,
+    common2: `add item`,
+    empty: `empty image`,
+    exercise1: `exercise`,
+    exercise2: `exercise goal`,
+    exercise3_1: `exercise weight`,
+    exercise3_2: `exercise set`,
+    exercise3_3: `kettlebell weight`,
+    exercise4: `cardio time`,
+    flag1: `Korean`,
+    flag2: `English`,
+    money1: `property`,
+    sleep1: `sleep`,
+    sleep2: `bedtime`,
+    sleep3: `wake up time`,
+    sleep4: `sleep time`,
+    user1: `Google account`,
     ChevronLeft: `previous`,
     CaretLeft: `previous`,
     CaretRight: `next`,
@@ -337,7 +557,6 @@ export const Icons = memo((props: any) => {
     Info: `information`,
     List: `list`,
     Calendar: `calendar`,
-    View: `view`,
     Person: `person`,
     Won: `won`,
     Dot: `dot`,
@@ -346,14 +565,35 @@ export const Icons = memo((props: any) => {
     Undo: `undo`,
     Star: `star`,
     CirclePlus: `add`,
+    exercise5: `scale`,
+    exercise6: `scale summary`,
+    food1: `kcal`,
+    food2: `kcal`,
+    food3: `carbohydrate`,
+    food4: `protein`,
+    food5: `fat`,
+    food6: `nutrition summary`,
+    money2: `money`,
+    money4: `property summary`,
+    smile1: `worried face`,
+    smile2: `worried face`,
+    smile3: `neutral face`,
+    smile4: `smiling face`,
+    smile5: `calm smiling face`,
   };
   const iconAriaLabel: string = ariaLabels[props.name] ?? String(props.name);
+  const isIconButton: boolean = props?.isIconButton !== false;
+  const iconButtonProps: Record<string, any> = { ...props };
+  delete iconButtonProps.isIconButton;
+  if (!isIconButton) {
+    return IconComponent;
+  }
 
-  // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――>
+  // ----------------------------------------------------------------------------------------------
   return (
     <IconButton
       aria-label={iconAriaLabel}
-      {...props}
+      {...iconButtonProps}
       component={`div`}
       className={``}
       onClick={(e: React.MouseEvent) => {

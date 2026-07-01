@@ -5,10 +5,10 @@
  * @since 2025-12-26
  */
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -27,7 +27,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
     let finalResult: string = ``;
@@ -45,7 +45,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 1. calcDiffTimeColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. calcDiffTimeColor ------------------------------------------------------------------------
   const calcDiffTimeColor = (goalParam: string, recordParam: string, extra: string) => {
 
     const goalHours: number = Number.parseFloat(goalParam?.split(`:`)[0] ?? `0`);
@@ -84,7 +84,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 2. calcScoreSmileImage ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2. calcScoreSmileImage ----------------------------------------------------------------------
   const calcScoreSmileImage = (colors: string[]) => {
 
     const scoreMap: Record<string, number> = {
@@ -132,7 +132,7 @@ export const list = async (object: any) => {
     }
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
     const sleepRecordBedTime: string = item?.sleep_record_bedTime;
     const sleepRecordWakeTime: string = item?.sleep_record_wakeTime;

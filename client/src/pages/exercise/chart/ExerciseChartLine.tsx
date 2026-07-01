@@ -10,21 +10,21 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { ExerciseLineVolume, ExerciseLineCardio, ExerciseLineScale, ExerciseLineType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDate } from "@exportScripts";
+import { formatY, formatDateMmDd } from "@exportScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface ExerciseChartLineProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
-    URL_OBJECT, PATH, sessionId, chartColors,
+    URL_OBJECT, PATH, sessionId, chartThemeColors,
     localUnit, exerciseChartArray,
   } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
@@ -33,7 +33,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `line`, PATH, {
       section: `week`,
@@ -41,7 +41,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -57,7 +57,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_SCALE_WEEK, setOBJECT_SCALE_WEEK ] = useState<[ExerciseLineType]>([ExerciseLineScale]);
   const [ OBJECT_VOLUME_WEEK, setOBJECT_VOLUME_WEEK ] = useState<[ExerciseLineType]>([ExerciseLineVolume]);
   const [ OBJECT_CARDIO_WEEK, setOBJECT_CARDIO_WEEK ] = useState<[ExerciseLineType]>([ExerciseLineCardio]);
@@ -65,7 +65,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
   const [ OBJECT_VOLUME_MONTH, setOBJECT_VOLUME_MONTH ] = useState<[ExerciseLineType]>([ExerciseLineVolume]);
   const [ OBJECT_CARDIO_MONTH, setOBJECT_CARDIO_MONTH ] = useState<[ExerciseLineType]>([ExerciseLineCardio]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -116,7 +116,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -126,7 +126,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -139,7 +139,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
     let object: any = null;
@@ -239,7 +239,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 		        <Line
 		          dataKey={`scale`}
 		          type={`monotone`}
-		          stroke={chartColors[5]}
+		          stroke={chartThemeColors.scale}
 		          strokeWidth={2}
 		          activeDot={{ r: 4 }}
 		          dot={false}
@@ -253,7 +253,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 		        <Line
 		          dataKey={`volume`}
 		          type={`monotone`}
-		          stroke={chartColors[1]}
+		          stroke={chartThemeColors.volume}
 		          strokeWidth={2}
 		          activeDot={{ r: 4 }}
 		          dot={false}
@@ -267,7 +267,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 		        <Line
 		          dataKey={`cardio`}
 		          type={`monotone`}
-		          stroke={chartColors[3]}
+		          stroke={chartThemeColors.cardio}
 		          strokeWidth={2}
 		          activeDot={{ r: 4 }}
 		          dot={false}
@@ -281,7 +281,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 		        labelFormatter={(_label: any, payload: any) => {
 		          const name: string = payload?.length > 0 ? payload[0]?.payload.name : ``;
 		          const date: string = payload?.length > 0 ? payload[0]?.payload.date : ``;
-		          return `${translate(name)} (${formatDate(date)})`;
+		          return `${translate(name)} (${formatDateMmDd(date)})`;
 		        }}
 		        formatter={(value: any, name: any) => {
 		          const customName: string = translate(name as string);
@@ -319,7 +319,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 		);
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

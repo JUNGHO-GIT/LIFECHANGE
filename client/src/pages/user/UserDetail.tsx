@@ -13,20 +13,20 @@ import { sync, insertComma, handleNumberInput } from "@exportScripts";
 import { User, UserType } from "@exportSchemas";
 import { Footer } from "@exportLayouts";
 import { Input } from "@exportContainers";
-import { Hr, Img, Div, Paper, Grid } from "@exportComponents";
+import { Icons, Hr, Img, Div, Paper, Grid } from "@exportComponents";
 import { Checkbox, Avatar } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const UserDetail = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const { URL_OBJECT, navigate, sessionId, localCurrency, localUnit } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { URL_OBJECT, navigate, sessionId, localCurrency, localUnit, chartThemeColors } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateUser();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT, setOBJECT ] = useState<UserType>(User);
   const [ includingExclusions, setIncludingExclusions ] = useState<boolean>(false);
   const [ SEND, setSEND ] = useState({
@@ -36,15 +36,15 @@ export const UserDetail = memo(() => {
     dateEnd: `0000-00-00`,
   });
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<UserType> = useRef(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/detail`, {
@@ -69,7 +69,7 @@ export const UserDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId ]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   async function flowSave() {
     setLOADING(true);
     if (!await validate(objectRef.current, `detail`, ``)) {
@@ -118,7 +118,7 @@ export const UserDetail = memo(() => {
     });
   }
 
-  // 6. userDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 6. userDetail ---------------------------------------------------------------------------------
   const userDetailNode = () => {
     // 7-1. image
     const imageSection = () => (
@@ -136,7 +136,7 @@ export const UserDetail = memo(() => {
     const detailSection = () => (
       <Grid container={true} spacing={0}>
         {[OBJECT]?.map((item, i) => (
-          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
+          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${item._id || item.user_id}`}>
             {/** 이메일 * */}
             <Grid container={true} spacing={0}>
               <Grid size={12}>
@@ -170,13 +170,9 @@ export const UserDetail = memo(() => {
                   inputRef={REFS?.[i]?.user_initScale}
                   error={ERRORS?.[i]?.user_initScale}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise5.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     localUnit
@@ -203,13 +199,9 @@ export const UserDetail = memo(() => {
                   label={translate(`curScale`)}
                   value={insertComma(item.user_curScale ?? `0`)}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise5.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     localUnit
@@ -229,13 +221,9 @@ export const UserDetail = memo(() => {
                   inputRef={REFS?.[i]?.user_initAvgKcalIntake}
                   error={ERRORS?.[i]?.user_initAvgKcalIntake}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food2.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`kc`)
@@ -262,13 +250,9 @@ export const UserDetail = memo(() => {
                   label={translate(`curAvgKcalIntake`)}
                   value={insertComma(item.user_curAvgKcalIntake ?? `0`)}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food2.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`kc`)
@@ -288,13 +272,9 @@ export const UserDetail = memo(() => {
                   inputRef={REFS?.[i]?.user_initProperty}
                   error={ERRORS?.[i]?.user_initProperty}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`money2.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     localCurrency
@@ -327,13 +307,9 @@ export const UserDetail = memo(() => {
 										)
                   }
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`money2.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     localCurrency
@@ -364,7 +340,7 @@ export const UserDetail = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {imageSection()}
         <Hr m={40} />
         {detailSection()}
@@ -372,7 +348,7 @@ export const UserDetail = memo(() => {
     );
   };
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -387,7 +363,7 @@ export const UserDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {userDetailNode()}

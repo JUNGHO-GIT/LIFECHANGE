@@ -13,28 +13,28 @@ import { User, UserType } from "@exportSchemas";
 import { Input } from "@exportContainers";
 import { Div, Hr, Btn, Paper, Grid } from "@exportComponents";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const UserDelete = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, navigate } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateUser();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT, setOBJECT ] = useState<UserType>(User);
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<UserType> = useRef(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, `delete`, `send`)) {
@@ -109,7 +109,7 @@ export const UserDelete = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowVerifyEmail = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, `delete`, `verify`)) {
@@ -160,7 +160,7 @@ export const UserDelete = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   async function flowSave() {
     setLOADING(true);
     if (!await validate(objectRef.current, `delete`, `save`)) {
@@ -206,7 +206,7 @@ export const UserDelete = memo(() => {
     });
   }
 
-  // 7. userResetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. userResetPw --------------------------------------------------------------------------------
   const userResetPwNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -222,7 +222,7 @@ export const UserDelete = memo(() => {
     const deleteSection = () => (
       <Grid container={true} spacing={0}>
         {[OBJECT]?.map((item, i) => (
-          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
+          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${item._id || item.user_id}`}>
             {/** 이메일 * */}
             <Grid container={true} spacing={1}>
               <Grid size={10}>
@@ -363,7 +363,7 @@ export const UserDelete = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}>
+      <Paper className={`content-wrapper d-center radius-3 border-light-1 shadow-1 h-min-100vh`}>
         {titleSection()}
         <Hr m={40} />
         {deleteSection()}
@@ -373,7 +373,7 @@ export const UserDelete = memo(() => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {userResetPwNode()}

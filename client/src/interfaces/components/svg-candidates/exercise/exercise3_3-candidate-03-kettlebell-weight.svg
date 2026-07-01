@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Kettlebell weight tag</title>
+  <desc id="desc">중량표시가 강조된 케틀벨</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="77" y="35" width="102" height="67" rx="30" fill="#A7DCF3"/><path d="M64 95h128l24 109c2 10-6 20-17 20H57c-11 0-19-10-17-20z" fill="#E8E4FF"/><rect x="82" y="128" width="92" height="59" rx="18" fill="#FFFFFF"/><text x="128" y="166" text-anchor="middle" font-family="Arial, sans-serif" font-size="29" font-weight="900" fill="#343942" stroke="none">12 KG</text>
+  </g>
+</svg>

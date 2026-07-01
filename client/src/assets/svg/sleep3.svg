@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Sunrise horizon</title>
+  <desc id="desc">수평선 위로 떠오르는 아침 해</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M47 167a81 81 0 0 1 162 0z" fill="#FFE08A"/><path d="M83 167a45 45 0 0 1 90 0z" fill="#FFB95E"/><path d="M31 188h194"/><path d="M128 31v30M51 66l22 22m132-22-22 22M26 128h31m142 0h31"/><path d="m46 188-20 25m76-25-20 25m76-25-20 25m76-25-20 25"/>
+  </g>
+</svg>

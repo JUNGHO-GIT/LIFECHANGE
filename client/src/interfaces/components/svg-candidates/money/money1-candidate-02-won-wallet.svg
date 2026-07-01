@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Won wallet</title>
+  <desc id="desc">원화 카드가 보이는 지갑</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="29" y="63" width="186" height="139" rx="27" fill="#61C9EC"/><path d="M42 83h134c18 0 33 15 33 33v76H42z" fill="#E8E4FF"/><path d="M158 112h72v62h-72c-17 0-31-14-31-31s14-31 31-31z" fill="#FFED9B"/><circle cx="158" cy="143" r="8" fill="#343942"/><rect x="67" y="38" width="92" height="74" rx="14" fill="#FFFFFF"/><text x="113" y="86" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="900" fill="#343942" stroke="none">₩</text>
+  </g>
+</svg>

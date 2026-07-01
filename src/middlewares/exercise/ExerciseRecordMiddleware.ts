@@ -5,10 +5,10 @@
  * @since 2025-12-26
  */
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -27,7 +27,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
     let finalResult: string = ``;
@@ -45,7 +45,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 1. calcGoalColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. calcGoalColor ----------------------------------------------------------------------------
   const calcGoalColor = (goalParam: string, recordParam: string, extra: string) => {
 
     const goal: number = Number.parseFloat(goalParam ?? `0`);
@@ -95,7 +95,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 2. calcGoalTimeColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2. calcGoalTimeColor ------------------------------------------------------------------------
   const calcGoalTimeColor = (goalParam: string, recordParam: string) => {
 
     const goalHours: number = Number.parseFloat(goalParam?.split(`:`)[0] ?? `0`);
@@ -133,7 +133,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 3. calcScoreSmileImage ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. calcScoreSmileImage ----------------------------------------------------------------------
   const calcScoreSmileImage = (colors: string[]) => {
 
     const scoreMap: Record<string, number> = {
@@ -181,7 +181,7 @@ export const list = async (object: any) => {
     }
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
     const exerciseRecordTotalCount: string = item?.exercise_record_total_count;
     const exerciseRecordTotalVolume: string = item?.exercise_record_total_volume;

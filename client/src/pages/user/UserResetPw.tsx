@@ -11,30 +11,30 @@ import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores"
 import { axios } from "@exportLibs";
 import { User, UserType } from "@exportSchemas";
 import { Input } from "@exportContainers";
-import { Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
+import { Icons, Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const UserResetPw = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, navigate } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateUser();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT, setOBJECT ] = useState<UserType>(User);
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<UserType> = useRef(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowSendEmail = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, `resetPw`, `send`)) {
@@ -109,7 +109,7 @@ export const UserResetPw = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowVerifyEmail = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, `resetPw`, `verify`)) {
@@ -159,7 +159,7 @@ export const UserResetPw = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   async function flowSave() {
     setLOADING(true);
     if (!await validate(objectRef.current, `resetPw`, `save`)) {
@@ -203,7 +203,7 @@ export const UserResetPw = memo(() => {
     });
   }
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowGoogle = () => {
     axios.get(`${URL_GOOGLE}/login`)
     .then((res: any) => {
@@ -233,7 +233,7 @@ export const UserResetPw = memo(() => {
     });
   };
 
-  // 7. userResetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. userResetPw --------------------------------------------------------------------------------
   const userResetPwNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -249,7 +249,7 @@ export const UserResetPw = memo(() => {
     const resetSection = () => (
       <Grid container={true} spacing={0}>
         {[OBJECT]?.map((item, i) => (
-          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
+          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${item._id || item.user_id}`}>
             {/** 이메일 * */}
             <Grid container={true} spacing={1}>
               <Grid size={10}>
@@ -401,12 +401,11 @@ export const UserResetPw = memo(() => {
               }}
             >
               <Div className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`user1.webp`}
+                <Icons
+                  key={`user1`}
+                  name={`user1`}
+                  isIconButton={false}
+                  className={`w-10px h-10px hover`}
                 />
                 <Div className={`fs-0-8rem black ml-10px`}>
                   {translate(`googleLogin`)}
@@ -457,7 +456,7 @@ export const UserResetPw = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}>
+      <Paper className={`content-wrapper d-center radius-3 border-light-1 shadow-1 h-min-100vh`}>
         {titleSection()}
         <Hr m={30} className={`bg-light`} />
         {resetSection()}
@@ -469,7 +468,7 @@ export const UserResetPw = memo(() => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {userResetPwNode()}

@@ -8,7 +8,7 @@
 import { incrementSeq } from "@schemas/Counter";
 import mongoose from "mongoose";
 
-// 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. types ---------------------------------------------------------------------------------------
 declare interface MoneyRecordSection {
   money_record_part: string;
   money_record_title: string;
@@ -32,7 +32,7 @@ declare interface MoneyRecordType extends mongoose.Document {
   money_record_updateDt: Date;
 }
 
-// 1. schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema(
   {
     user_id: {
@@ -134,7 +134,7 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. index ---------------------------------------------------------------------------------------
 schema.index({
   user_id: 1,
   money_record_dateStart: 1,
@@ -146,7 +146,7 @@ schema.index({
   money_record_dateStart: 1,
 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. counter --------------------------------------------------------------------------------------
 schema.pre<MoneyRecordType>(`save`, async function () {
   if (this.isNew) {
     this.money_record_number = await incrementSeq(
@@ -156,7 +156,7 @@ schema.pre<MoneyRecordType>(`save`, async function () {
   }
 });
 
-// 5. model ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. model ----------------------------------------------------------------------------------------
 export const MoneyRecord = mongoose.model<MoneyRecordType>(
   `MoneyRecord`,
   schema,

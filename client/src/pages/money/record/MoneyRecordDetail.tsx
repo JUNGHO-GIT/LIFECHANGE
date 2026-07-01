@@ -13,16 +13,16 @@ import { axios } from "@exportLibs";
 import { insertComma, sync, handleNumberInput } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@exportContainers";
-import { Img, Bg, Div, Paper, Grid, Br } from "@exportComponents";
+import { Icons, Img, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 import { Checkbox, MenuItem } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const MoneyRecordDetail = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, navigate, sessionId, localCurrency, moneyArray,
-    toList, bgColors, location_dateStart, location_dateEnd,
+    toList, bgColors, location_dateStart, location_dateEnd, chartThemeColors,
   } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { ERRORS, REFS, validate } = useValidateMoney();
@@ -30,7 +30,7 @@ export const MoneyRecordDetail = memo(() => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<MoneyRecordType>(MoneyRecord);
   const [ EXIST, setEXIST ] = useState({
@@ -63,11 +63,11 @@ export const MoneyRecordDetail = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
-  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useDeferredValue ----------------------------------------------------------------------
   // 섹션 항목 렌더를 비긴급으로 분리: 진입 시 화면 틀이 먼저 그려지고 상세 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<
     MoneyRecordType
   > = useRef(OBJECT);
@@ -82,14 +82,14 @@ export const MoneyRecordDetail = memo(() => {
     dateEnd: string;
   }> = useRef(DATE);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     COUNT !== countRef.current && (countRef.current = COUNT);
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -119,7 +119,7 @@ export const MoneyRecordDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.money_record_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -143,7 +143,7 @@ export const MoneyRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -193,7 +193,7 @@ export const MoneyRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const totals = OBJECT?.money_section.reduce((acc: any, cur: any) => {
       // 미래예정(scheduled === "Y" && scheduled_done === "N")은 실적이 아니므로 합산에서 제외
@@ -222,7 +222,7 @@ export const MoneyRecordDetail = memo(() => {
     }));
   }, [OBJECT?.money_section]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection: any = {
       money_record_part: moneyArray[1]?.money_record_part ?? ``,
@@ -244,7 +244,7 @@ export const MoneyRecordDetail = memo(() => {
 
   }, [COUNT?.newSectionCnt]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `record`)) {
@@ -301,7 +301,7 @@ export const MoneyRecordDetail = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `delete`)) {
@@ -356,7 +356,7 @@ export const MoneyRecordDetail = memo(() => {
     });
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -368,11 +368,11 @@ export const MoneyRecordDetail = memo(() => {
     }));
   }, []);
 
-  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -393,7 +393,7 @@ export const MoneyRecordDetail = memo(() => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         {/** row 1 * */}
         <Grid container={true} spacing={1}>
           <Grid size={12}>
@@ -403,13 +403,9 @@ export const MoneyRecordDetail = memo(() => {
               label={translate(`totalIncome`)}
               value={insertComma(OBJECT?.money_record_total_income ?? `0`)}
               startadornment={(
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`money2.webp`}
-                />
+                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
+                  {`●`}
+                </Div>
               )}
               endadornment={
                 localCurrency
@@ -427,13 +423,9 @@ export const MoneyRecordDetail = memo(() => {
               label={translate(`totalExpense`)}
               value={insertComma(OBJECT?.money_record_total_expense ?? `0`)}
               startadornment={(
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`money2.webp`}
-                />
+                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.expense }}>
+                  {`●`}
+                </Div>
               )}
               endadornment={
                 localCurrency
@@ -455,8 +447,8 @@ export const MoneyRecordDetail = memo(() => {
             <Grid
               container={true}
               spacing={2}
-              key={`detail-${i}`}
-              className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
+              key={`detail-${item.money_record_part}-${item.money_record_title}-${item.money_record_amount}-${item.money_record_content}-${item.money_record_include}-${item.money_record_scheduled_date}`}
+              className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
             >
               {/** row 1 * */}
               <Grid container={true} spacing={1}>
@@ -501,7 +493,7 @@ export const MoneyRecordDetail = memo(() => {
                   >
                     {moneyArray.map((part: any, idx: number) => (
                       <MenuItem
-                        key={idx}
+                        key={part.money_record_part}
                         value={part.money_record_part}
                         className={`fs-0-8rem`}
                       >
@@ -532,7 +524,7 @@ export const MoneyRecordDetail = memo(() => {
                   >
                     {(currentPartData?.money_record_title ?? []).map((title: any, idx: number) => (
                       <MenuItem
-                        key={idx}
+                        key={title}
                         value={title}
                         className={`fs-0-8rem`}
                       >
@@ -553,13 +545,9 @@ export const MoneyRecordDetail = memo(() => {
                     inputRef={REFS?.[i]?.money_record_amount}
                     error={ERRORS?.[i]?.money_record_amount}
                     startadornment={(
-                      <Img
-                        max={10}
-                        hover={true}
-                        shadow={false}
-                        radius={false}
-                        src={`money2.webp`}
-                      />
+                      <Div className={`fs-0-6rem`} style={{ color: bgColors?.[partIndex] ?? chartThemeColors.expense }}>
+                        {`●`}
+                      </Div>
                     )}
                     endadornment={
                       localCurrency
@@ -702,7 +690,7 @@ export const MoneyRecordDetail = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
         <Br m={20} />
         {totalSection()}
@@ -712,7 +700,7 @@ export const MoneyRecordDetail = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -722,7 +710,7 @@ export const MoneyRecordDetail = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -737,7 +725,7 @@ export const MoneyRecordDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {detailNode()}

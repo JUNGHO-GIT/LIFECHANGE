@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Bank assets</title>
+  <desc id="desc">은행과 보유 자산</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m31 91 97-57 97 57z" fill="#A7DCF3"/><path d="M47 91h162M57 91v89m40-89v89m62-89v89m40-89v89M39 180h178v31H39z" fill="#F8FAFC"/><circle cx="188" cy="183" r="38" fill="#FFED9B"/><text x="188" y="195" text-anchor="middle" font-family="Arial, sans-serif" font-size="37" font-weight="900" fill="#343942" stroke="none">₩</text>
+  </g>
+</svg>

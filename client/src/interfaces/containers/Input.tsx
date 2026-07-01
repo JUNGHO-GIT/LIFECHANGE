@@ -8,7 +8,7 @@
 import { memo } from "@exportReacts";
 import { InputBase } from "@interfaces/containers/InputBase";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const Input = memo((props: any) => {
   return (
     <InputBase {...props} asSelect={false} />

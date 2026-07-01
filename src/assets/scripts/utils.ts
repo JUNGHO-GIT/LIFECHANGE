@@ -11,9 +11,9 @@ import bcrypt from "bcryptjs";
 
 loadEnv();
 
-// 1-1. number ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. number -------------------------------------------------------------------------------------
 export const randomNumber = (data: number) => Math.floor(Math.random() * data);
-// 1-2. time ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. time ---------------------------------------------------------------------------------------
 export const randomTime = () => {
   const hour: string = Math.floor(Math.random() * 23)
     .toString()
@@ -24,7 +24,7 @@ export const randomTime = () => {
 
   return `${hour}:${minute}`;
 };
-// 1-3. date ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-3. date ---------------------------------------------------------------------------------------
 export const calcDate = (startTime: string, endTime: string) => {
   const start: Date = new Date(`1970/01/01 ${startTime}`);
   const end: Date = new Date(`1970/01/01 ${endTime}`);
@@ -37,7 +37,7 @@ export const calcDate = (startTime: string, endTime: string) => {
   return `${duration.getUTCHours().toString().padStart(2, `0`)}:${duration.getUTCMinutes().toString().padStart(2, `0`)}`;
 };
 
-// 1-2. format ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. format -------------------------------------------------------------------------------------
 export const timeToDecimal = (data: string) => {
   if (
     typeof data !== `string` ||
@@ -77,7 +77,7 @@ export const decimalToTime = (data: number) => {
   return `${hours.toString().padStart(2, `0`)}:${minutes.toString().padStart(2, `0`)}`;
 };
 
-// 1-2. convert ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. convert ------------------------------------------------------------------------------------
 export const strToDecimal = (data: string) => {
   if (!data || data === null || data === undefined) {
     return 0;
@@ -101,10 +101,10 @@ export const decimalToStr = (data: number) => {
   return `${String(adjustedHours).padStart(2, `0`)}:${String(adjustedMinutes).padStart(2, `0`)}`;
 };
 
-// 4-1. token ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-1. token --------------------------------------------------------------------------------------
 export const token: string = crypto.randomBytes(20).toString(`hex`);
 
-// 4-2. adminCheck ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-2. adminCheck ---------------------------------------------------------------------------------
 export const isAdmin = (user_id: string) => {
   const adminId: string | undefined = process.env.ADMIN_ID;
 
@@ -114,17 +114,17 @@ export const isAdmin = (user_id: string) => {
   return false;
 };
 
-// 4-3. combinePw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-3. combinePw ----------------------------------------------------------------------------------
 export const combinePw = async (inputPw: string, tokenParam: string) => {
   return `${inputPw}_${tokenParam}`;
 };
 
-// 4-4. hashPw ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-4. hashPw -------------------------------------------------------------------------------------
 export const hashPw = async (combinedPw: string) => {
   return bcrypt.hash(combinedPw, 10);
 };
 
-// 4-5. comparePw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-5. comparePw ----------------------------------------------------------------------------------
 export const comparePw = async (inputPw: string, storedPw: string) => {
   return bcrypt.compare(inputPw, storedPw);
 };

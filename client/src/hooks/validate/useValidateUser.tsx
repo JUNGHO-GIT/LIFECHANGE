@@ -9,25 +9,25 @@ import { React, createRef, useCallback, useRef, useState } from "@exportReacts";
 import { useStoreAlert, useStoreLanguage } from "@exportStores";
 import { UserType } from "@exportSchemas";
 
-// 구조 타입 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 구조 타입 -------------------------------------------------------------------------------------
 type FieldRefs = Record<string, React.RefObject<unknown>>;
 type FieldErrors = Record<string, boolean>;
 type UserValidate = (
   OBJECT: UserType, extra: string, email: string
 ) => Promise<boolean>;
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const useValidateUser = () => {
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common -------------------------------------------------------------------------------------
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState ---------------------------------------------------------------------------------
   const REFS: React.RefObject<FieldRefs[]> = useRef<FieldRefs[]>([]);
   const validate: React.RefObject<UserValidate> = useRef<UserValidate>(async () => false);
   const [ ERRORS, setERRORS ] = useState<FieldErrors[]>([]);
 
-  // alert 표시 및 focus ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // alert 표시 및 focus ---------------------------------------------------------------------------
   const alert = useCallback((field: string, msg: string, idx: number) => {
     setALERT({
       open: true,
@@ -47,19 +47,19 @@ export const useValidateUser = () => {
     });
   }, [ setALERT, translate ]);
 
-  // 이메일 형식 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 이메일 형식 -----------------------------------------------------------------------------------
   const validateEmail = (email: string) => {
     const emailRegex: RegExp = /^[\w%+.-]+@[\d.A-Za-z-]+\.[A-Za-z]{2,}$/;
     return emailRegex.test(email);
   };
 
-  // 8자 이상, 문자, 숫자, 특수문자 포함 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8자 이상, 문자, 숫자, 특수문자 포함 -----------------------------------------------------------
   const validatePw = (password: string) => {
     const passwordRegex: RegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!#$%&*?@])[\d!#$%&*?@A-Za-z]{8,}$/;
     return passwordRegex.test(password);
   };
 
-  // 7. validate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. validate -----------------------------------------------------------------------------------
   validate.current = async (OBJECT, extra, email) => {
     // 7-1. login
     if (extra === `login`) {
@@ -281,7 +281,7 @@ export const useValidateUser = () => {
     return false;
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return {
     ERRORS: ERRORS,
     REFS: REFS.current,

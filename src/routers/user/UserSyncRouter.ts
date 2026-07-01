@@ -11,7 +11,7 @@ import * as service from "@services/user/UserSyncService";
 import * as middleware from "@middlewares/user/UserSyncMiddleware";
 export const router: Router = express.Router();
 
-// 0. category (카테고리 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. category (카테고리 조회) ---------------------------------------------------------------------
 router.get(`/category`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.category(
@@ -49,7 +49,7 @@ router.get(`/category`, async (req: Request, res: Response) => {
   }
 });
 
-// 1. percent (퍼센트 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. percent (퍼센트 조회) ------------------------------------------------------------------------
 router.get(`/percent`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.percent(
@@ -89,7 +89,7 @@ router.get(`/percent`, async (req: Request, res: Response) => {
   }
 });
 
-// 2. scale (체중 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. scale (체중 조회) ----------------------------------------------------------------------------
 router.get(`/scale`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.scale(
@@ -128,7 +128,7 @@ router.get(`/scale`, async (req: Request, res: Response) => {
   }
 });
 
-// 3-1. nutrition (영양정보 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-1. nutrition (영양정보 조회) ------------------------------------------------------------------
 router.get(`/nutrition`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.nutrition(
@@ -167,7 +167,7 @@ router.get(`/nutrition`, async (req: Request, res: Response) => {
   }
 });
 
-// 3-2. favorite (즐겨찾기 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. favorite (즐겨찾기 조회) -------------------------------------------------------------------
 router.get(`/favorite`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.favorite(
@@ -206,7 +206,7 @@ router.get(`/favorite`, async (req: Request, res: Response) => {
   }
 });
 
-// 4. property (자산 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. property (자산 조회) -------------------------------------------------------------------------
 router.get(`/property`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.property(

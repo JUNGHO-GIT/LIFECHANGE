@@ -8,7 +8,7 @@
 import { decimalToTime, timeToDecimal } from "@assets/scripts/utils";
 import * as repository from "@repositories/user/UserSyncRepository";
 
-// 0. category (카테고리 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. category (카테고리 조회) ---------------------------------------------------------------------
 export const category = async (user_id_param: string) => {
   // result 변수 선언
   let findCategory: any = null;
@@ -31,7 +31,7 @@ export const category = async (user_id_param: string) => {
   };
 };
 
-// 1. percent (퍼센트 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. percent (퍼센트 조회) ------------------------------------------------------------------------
 export const percent = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findExerciseGoal: any = null;
@@ -243,7 +243,7 @@ export const percent = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 2. scale (체중 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. scale (체중 조회) ----------------------------------------------------------------------------
 export const scale = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;
@@ -321,7 +321,7 @@ export const scale = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 3-1. nutrition (영양소 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-1. nutrition (영양소 조회) --------------------------------------------------------------------
 export const nutrition = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;
@@ -457,7 +457,7 @@ export const nutrition = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 3-2. favorite (저장 음식 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. favorite (저장 음식 조회) ------------------------------------------------------------------
 export const favorite = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;
@@ -494,7 +494,7 @@ export const favorite = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 4. property (자산 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. property (자산 조회) -------------------------------------------------------------------------
 export const property = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findRegDt: any = null;

@@ -11,7 +11,7 @@ import * as service from "@services/food/FoodFindService";
 import * as middleware from "@middlewares/food/FoodFindMiddleware";
 export const router: Router = express.Router();
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list ---------------------------------------------------------------------------------------
 router.get(`/list`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.list(

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Compact kettlebell</title>
+  <desc id="desc">작은 아이콘용 케틀벨 실루엣</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M83 94V67c0-24 20-42 45-42s45 18 45 42v27"/><path d="M69 87h118c25 29 39 64 39 96 0 27-22 45-51 45H81c-29 0-51-18-51-45 0-32 14-67 39-96z" fill="#61C9EC"/><path d="M94 181h68"/><circle cx="128" cy="145" r="23" fill="#FFFFFF"/>
+  </g>
+</svg>

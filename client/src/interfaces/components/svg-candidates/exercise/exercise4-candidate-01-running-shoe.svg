@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Running shoe</title>
+  <desc id="desc">속도감 있는 유산소 러닝화</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M72 58c16 48 42 78 84 94l47 18c18 7 24 25 13 39-8 10-22 15-39 15H77c-27 0-47-14-53-34l37-38c14-15 18-43 11-94z" fill="#E8E4FF"/><path d="m48 174 45 19h103"/><path d="m88 99 28 21m-42 7 29 21M19 104h32M14 136h34"/>
+  </g>
+</svg>

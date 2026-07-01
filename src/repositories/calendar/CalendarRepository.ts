@@ -11,7 +11,7 @@ import { MoneyRecord } from "@schemas/money/MoneyRecord";
 import { SleepRecord } from "@schemas/sleep/SleepRecord";
 import mongoose from "mongoose";
 
-// 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
   user_id_param: string,
   dateType_param: string,
@@ -128,7 +128,7 @@ export const exist = async (
   return finalResult;
 };
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (
   user_id_param: string,
   dateType_param: string,
@@ -321,7 +321,7 @@ export const list = async (
   return finalResult;
 };
 
-// 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (
   user_id_param: string,
   dateType_param: string,

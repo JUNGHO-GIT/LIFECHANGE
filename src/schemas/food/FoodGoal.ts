@@ -8,7 +8,7 @@
 import { incrementSeq } from "@schemas/Counter";
 import mongoose from "mongoose";
 
-// 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. types ---------------------------------------------------------------------------------------
 declare interface FoodGoalType extends mongoose.Document {
   user_id: string;
   food_goal_number: number;
@@ -23,7 +23,7 @@ declare interface FoodGoalType extends mongoose.Document {
   food_goal_updateDt: Date;
 }
 
-// 1. schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema(
   {
     user_id: {
@@ -91,15 +91,15 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 2. index ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. index ----------------------------------------------------------------------------------------
 schema.index({ user_id: 1, food_goal_dateStart: 1, food_goal_dateEnd: 1 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. counter --------------------------------------------------------------------------------------
 schema.pre<FoodGoalType>(`save`, async function () {
   if (this.isNew) {
     this.food_goal_number = await incrementSeq(`food_goal_number`, `FoodGoal`);
   }
 });
 
-// 5. model ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. model ----------------------------------------------------------------------------------------
 export const FoodGoal = mongoose.model<FoodGoalType>(`FoodGoal`, schema);

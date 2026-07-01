@@ -8,7 +8,7 @@
 import { React, useCallback, useRef, useState } from "@exportReacts";
 import { useStoreAlert, useStoreConfirm, useStoreLanguage } from "@exportStores";
 
-// 구조 타입 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 구조 타입 -------------------------------------------------------------------------------------
 type FieldRefs = Record<string, React.RefObject<unknown>>;
 type FieldErrors = Record<string, boolean>;
 type CalendarSection = Record<string, string>;
@@ -25,20 +25,20 @@ type CalendarValidate = (
   OBJECT: CalendarObject, COUNT: CalendarCount, extra: string
 ) => Promise<boolean>;
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const useValidateCalendar = () => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common -------------------------------------------------------------------------------------
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setCONFIRM } = useStoreConfirm();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState ---------------------------------------------------------------------------------
   const REFS: React.RefObject<FieldRefs[]> = useRef<FieldRefs[]>([]);
   const validate: React.RefObject<CalendarValidate> = useRef<CalendarValidate>(async () => false);
   const [ ERRORS, setERRORS ] = useState<FieldErrors[]>([]);
 
-  // alert 표시 및 focus ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // alert 표시 및 focus ---------------------------------------------------------------------------
   const alert = useCallback((field: string, msg: string, idx: number) => {
     setALERT({
       open: true,
@@ -58,7 +58,7 @@ export const useValidateCalendar = () => {
     });
   }, [ setALERT, translate ]);
 
-  // 7. validate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. validate -----------------------------------------------------------------------------------
   validate.current = async (OBJECT, COUNT, extra) => {
     // 7-1. record
     if (extra === `record`) {
@@ -176,7 +176,7 @@ export const useValidateCalendar = () => {
     return false;
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return {
     ERRORS: ERRORS,
     REFS: REFS.current,

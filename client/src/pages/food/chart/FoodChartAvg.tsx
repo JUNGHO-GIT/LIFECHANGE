@@ -10,27 +10,27 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { FoodAvgKcal, FoodAvgNut, FoodAvgType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDate } from "@exportScripts";
+import { formatY, formatDateMmDd } from "@exportScripts";
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface FoodChartAvgProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const { URL_OBJECT, PATH, sessionId, chartColors, foodChartArray } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { URL_OBJECT, PATH, sessionId, chartThemeColors, foodChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `avg`, PATH, {
       section: `week`,
@@ -38,7 +38,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -54,58 +54,56 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK ] = useState<[FoodAvgType]>([FoodAvgKcal]);
   const [ OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK ] = useState<[FoodAvgType]>([FoodAvgNut]);
   const [ OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH ] = useState<[FoodAvgType]>([FoodAvgKcal]);
   const [ OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH ] = useState<[FoodAvgType]>([FoodAvgNut]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  useEffect(() => {
-    (async () => {
-      setLOADING(true);
-      try {
-        const params = {
-          user_id: sessionId,
-          DATE: DATE,
-        };
-        const [ resWeek, resMonth ] = await Promise.all([
-          axios.get(`${URL_OBJECT}/chart/avg/week`, {
-            params: params,
-          }),
-          axios.get(`${URL_OBJECT}/chart/avg/month`, {
-            params: params,
-          }),
-        ]);
-        setOBJECT_KCAL_WEEK(
-					resWeek.data.result.kcal?.length > 0 ? resWeek.data.result.kcal : [FoodAvgKcal]
-        );
-        setOBJECT_NUT_WEEK(
-					resWeek.data.result.nut?.length > 0 ? resWeek.data.result.nut : [FoodAvgNut]
-        );
-        setOBJECT_KCAL_MONTH(
-					resMonth.data.result.kcal?.length > 0 ? resMonth.data.result.kcal : [FoodAvgKcal]
-        );
-        setOBJECT_NUT_MONTH(
-					resMonth.data.result.nut?.length > 0 ? resMonth.data.result.nut : [FoodAvgNut]
-        );
-      }
-      catch (error: any) {
-        setLOADING(false);
-        setALERT({
-          open: true,
-          msg: translate(error.response.data.msg as string),
-          severity: `error`,
-        });
-        console.error(error);
-      }
-      finally {
-        setLOADING(false);
-      }
-    })();
-  }, [ URL_OBJECT, DATE, sessionId ]);
+  // 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {(async () => {
+    setLOADING(true);
+    try {
+      const params = {
+        user_id: sessionId,
+        DATE: DATE,
+      };
+      const [ resWeek, resMonth ] = await Promise.all([
+        axios.get(`${URL_OBJECT}/chart/avg/week`, {
+          params: params,
+        }),
+        axios.get(`${URL_OBJECT}/chart/avg/month`, {
+          params: params,
+        }),
+      ]);
+      setOBJECT_KCAL_WEEK(
+        resWeek.data.result.kcal?.length > 0 ? resWeek.data.result.kcal : [FoodAvgKcal]
+      );
+      setOBJECT_NUT_WEEK(
+        resWeek.data.result.nut?.length > 0 ? resWeek.data.result.nut : [FoodAvgNut]
+      );
+      setOBJECT_KCAL_MONTH(
+        resMonth.data.result.kcal?.length > 0 ? resMonth.data.result.kcal : [FoodAvgKcal]
+      );
+      setOBJECT_NUT_MONTH(
+        resMonth.data.result.nut?.length > 0 ? resMonth.data.result.nut : [FoodAvgNut]
+      );
+    }
+    catch (error: any) {
+      setLOADING(false);
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    }
+    finally {
+      setLOADING(false);
+    }
+  })()}, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -115,7 +113,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -128,7 +126,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
     let object: any = null;
@@ -221,7 +219,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 		      {TYPE_STATE.line === (`kcal`) && (
 		        <Bar
 		          dataKey={`kcal`}
-		          fill={chartColors[3]}
+		          fill={chartThemeColors.kcal}
 		          radius={[ 10, 10, 0, 0 ]}
 		          minPointSize={1}
 		          isAnimationActive={true}
@@ -234,7 +232,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 		        <>
 		          <Bar
 		            dataKey={`carb`}
-		            fill={chartColors[1]}
+		            fill={chartThemeColors.carb}
 		            radius={[ 10, 10, 0, 0 ]}
 		            minPointSize={1}
 		            isAnimationActive={true}
@@ -244,7 +242,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 		          />
 		          <Bar
 		            dataKey={`protein`}
-		            fill={chartColors[4]}
+		            fill={chartThemeColors.protein}
 		            radius={[ 10, 10, 0, 0 ]}
 		            minPointSize={1}
 		            isAnimationActive={true}
@@ -254,7 +252,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 		          />
 		          <Bar
 		            dataKey={`fat`}
-		            fill={chartColors[2]}
+		            fill={chartThemeColors.fat}
 		            radius={[ 10, 10, 0, 0 ]}
 		            minPointSize={1}
 		            isAnimationActive={true}
@@ -268,7 +266,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 		        labelFormatter={(_label: any, payload: any) => {
 		          const name: string = payload?.length > 0 ? payload[0]?.payload.name : ``;
 		          const date: string = payload?.length > 0 ? payload[0]?.payload.date : ``;
-		          return `${translate(name)} (${formatDate(date)})`;
+		          return `${translate(name)} (${formatDateMmDd(date)})`;
 		        }}
 		        formatter={(value: any, name: any) => {
 		          const customName: string = translate(name as string);
@@ -306,7 +304,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 		);
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

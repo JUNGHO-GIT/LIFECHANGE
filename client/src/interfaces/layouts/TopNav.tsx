@@ -5,25 +5,26 @@
  * @since 2025-12-26
  */
 
-import { Br, Div, Grid, Hr, Img, Paper } from "@exportComponents";
+import { Br, Div, Grid, Hr, Icons, Paper } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
 import { useCommonDate } from "@hooks/common/useCommonDate";
 import { useCommonValue } from "@hooks/common/useCommonValue";
 import { useStorageLocal } from "@hooks/storage/useStorageLocal";
 import { Checkbox, Menu, MenuItem, Tab, Tabs } from "@exportMuis";
 import { memo, useEffect, useMemo, useState } from "@exportReacts";
-import { formatDate, insertComma } from "@exportScripts";
+import { formatDateYyyyMmDd, insertComma } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
+import { type SessionSyncPercent } from "@exportTypes";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const TopNav = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { firstStr, secondStr, localCurrency, localUnit, navigate, sessionPercent, sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ selectedAnchorEl, setSelectedAnchorEl ] = useState<Record<string, HTMLElement | null>>({});
   const [ selectedTab, setSelectedTab ] = useStorageLocal(
     `tabs`, `top`, ``, {
@@ -37,11 +38,11 @@ export const TopNav = memo(() => {
     },
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ includingExclusions, setIncludingExclusions ] = useState<boolean>(false);
   const [ nutritionType, setNutritionType ] = useState(`avg`);
 
-  // 2-2. variable ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. variable -------------------------------------------------------------------------------
   const scale = sessionScale || {
     initScale: `0`,
     minScale: `0`,
@@ -75,14 +76,15 @@ export const TopNav = memo(() => {
     dateEnd: ``,
   };
 
-  // 2-3. useMemo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useMemo --------------------------------------------------------------------------------
   const smileScore = useMemo(() => {
+    const percent = sessionPercent as SessionSyncPercent;
     return {
-      total: sessionPercent?.total?.average?.score ?? `0`,
-      exercise: sessionPercent?.exercise?.average?.score ?? `0`,
-      food: sessionPercent?.food?.average?.score ?? `0`,
-      money: sessionPercent?.money?.average?.score ?? `0`,
-      sleep: sessionPercent?.sleep?.average?.score ?? `0`,
+      total: percent?.total?.average?.score ?? `0`,
+      exercise: percent?.exercise?.average?.score ?? `0`,
+      food: percent?.food?.average?.score ?? `0`,
+      money: percent?.money?.average?.score ?? `0`,
+      sleep: percent?.sleep?.average?.score ?? `0`,
     };
   }, [sessionPercent]);
 
@@ -151,7 +153,7 @@ export const TopNav = memo(() => {
     admin: [`dashboard`],
   });
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   // - 페이지 변경시 초기화
   useEffect(() => {
     const mapping: Record<string, Record<string, { key: string; value: string }>> = {
@@ -193,7 +195,7 @@ export const TopNav = memo(() => {
     entry && setSelectedTab((prev) => ({ ...prev, [entry.key]: entry.value }));
   }, [ firstStr, secondStr ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ----------------------------------------------------------------------------------
   const handleClickTobNav = (value: string) => {
 
     // 1. today - goal
@@ -250,17 +252,17 @@ export const TopNav = memo(() => {
 		}));
   };
 
-  // 7. topNav ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. topNav -------------------------------------------------------------------------------------
   const topNavNode = () => {
 
-    // 7-1. smile ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 7-1. smile ------------------------------------------------------------------------------------
     const smileSection = () => (
       <PopUp
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
         contents={(
-          <Div className={`w-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px`}>
+          <Div className={`w-70vw h-max-70vh radius-2 border-light-1 shadow-0 px-10px py-20px`}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={`d-col-center`}>
                 <Div className={`fs-1-0rem fw-600`}>
@@ -268,23 +270,21 @@ export const TopNav = memo(() => {
                 </Div>
                 <Br m={10} />
                 <Div className={`fs-0-8rem fw-500 dark`}>
-                  {`[${formatDate(getMonthStartFmt())} - ${formatDate(getMonthEndFmt())}]`}
+                  {`[${formatDateYyyyMmDd(getMonthStartFmt())} - ${formatDateYyyyMmDd(getMonthEndFmt())}]`}
                 </Div>
               </Grid>
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-center`}>
-                <Img
-                  max={30}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`${smileImage.total}.webp`}
-                  className={`mr-5px`}
+              <Grid size={6} className={`d-row-right`}>
+                <Icons
+                  key={smileImage.total}
+                  name={smileImage.total}
+                  isIconButton={false}
+                  className={`w-32px h-32px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
+              <Grid size={8} className={`d-row-center`}>
                 <Div className={`fs-1-3rem fw-500 dark`}>
                   {`${translate(`total`)} : `}
                 </Div>
@@ -297,17 +297,15 @@ export const TopNav = memo(() => {
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-center`}>
-                <Img
-                  max={25}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`${smileImage.exercise}.webp`}
-                  className={`mr-5px`}
+              <Grid size={6} className={`d-row-right`}>
+                <Icons
+                  key={smileImage.exercise}
+                  name={smileImage.exercise}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
+              <Grid size={8} className={`d-row-center`}>
                 <Div className={`fs-1-1rem fw-500 dark`}>
                   {`${translate(`exercise`)} : `}
                 </Div>
@@ -320,17 +318,15 @@ export const TopNav = memo(() => {
             </Grid>
             <Br m={10} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-center`}>
-                <Img
-                  max={25}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`${smileImage.food}.webp`}
-                  className={`mr-5px`}
+              <Grid size={6} className={`d-row-right`}>
+                <Icons
+                  key={smileImage.food}
+                  name={smileImage.food}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
+              <Grid size={8} className={`d-row-center`}>
                 <Div className={`fs-1-1rem fw-500 dark`}>
                   {`${translate(`food`)} : `}
                 </Div>
@@ -343,17 +339,15 @@ export const TopNav = memo(() => {
             </Grid>
             <Br m={10} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-center`}>
-                <Img
-                  max={25}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`${smileImage.money}.webp`}
-                  className={`mr-5px`}
+              <Grid size={6} className={`d-row-right`}>
+                <Icons
+                  key={smileImage.money}
+                  name={smileImage.money}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
+              <Grid size={8} className={`d-row-center`}>
                 <Div className={`fs-1-1rem fw-500 dark`}>
                   {`${translate(`money`)} : `}
                 </Div>
@@ -366,17 +360,15 @@ export const TopNav = memo(() => {
             </Grid>
             <Br m={10} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-center`}>
-                <Img
-                  max={25}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`${smileImage.sleep}.webp`}
-                  className={`mr-5px`}
+              <Grid size={6} className={`d-row-right`}>
+                <Icons
+                  key={smileImage.sleep}
+                  name={smileImage.sleep}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
+              <Grid size={8} className={`d-row-center`}>
                 <Div className={`fs-1-1rem fw-500 dark`}>
                   {`${translate(`sleep`)} : `}
                 </Div>
@@ -398,13 +390,12 @@ export const TopNav = memo(() => {
           </Div>
         )}
         children={(popTrigger: any) => (
-          <Div className={`mx-auto d-center`}>
-            <Img
-              max={27}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`${mainSmileImage}.webp`}
+          <Div className={`d-center`}>
+            <Icons
+              key={mainSmileImage}
+              name={mainSmileImage}
+              isIconButton={true}
+              className={`w-35px h-35px hover`}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -414,14 +405,14 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 7-2. scale ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 7-2. scale ------------------------------------------------------------------------------------
     const scaleSection = () => (
       <PopUp
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
         contents={(
-          <Div className={`w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px`}>
+          <Div className={`w-max-70vw h-max-70vh radius-2 border-light-1 shadow-0 px-10px py-20px`}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={`d-col-center`}>
                 <Div className={`fs-1-3rem fw-600`}>
@@ -429,24 +420,22 @@ export const TopNav = memo(() => {
                 </Div>
                 <Br m={10} />
                 <Div className={`fs-0-8rem fw-500 dark`}>
-                  {`[${formatDate(scale?.dateStart)} - ${formatDate(scale?.dateEnd)}]`}
+                  {`[${formatDateYyyyMmDd(scale?.dateStart)} - ${formatDateYyyyMmDd(scale?.dateEnd)}]`}
                 </Div>
               </Grid>
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`exercise5.webp`}
-                  className={`mr-5px`}
+              <Grid size={3} className={`d-row-right`}>
+                <Icons
+                  key={`exercise5`}
+                  name={`exercise5`}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-500 dark`}>
+              <Grid size={8} className={`d-row-center`}>
+                <Div className={`fs-1-0rem fw-500 dark`}>
                   {`${translate(`initValue`)} : `}
                 </Div>
               </Grid>
@@ -461,20 +450,18 @@ export const TopNav = memo(() => {
                 </Div>
               </Grid>
             </Grid>
-            <Br m={10} />
+            <Br m={20} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`exercise5.webp`}
-                  className={`mr-5px`}
+              <Grid size={3} className={`d-row-right`}>
+                <Icons
+                  key={`exercise5`}
+                  name={`exercise5`}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-500 dark`}>
+              <Grid size={8} className={`d-row-center`}>
+                <Div className={`fs-1-0rem fw-500 dark`}>
                   {`${translate(`curValue`)} : `}
                 </Div>
               </Grid>
@@ -497,12 +484,11 @@ export const TopNav = memo(() => {
                   label={translate(`minScale`)}
                   value={insertComma(scale.minScale ?? `0`)}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise5.webp`}
+                    <Icons
+                      key={`exercise5`}
+                      name={`exercise5`}
+                      isIconButton={false}
+                      className={`w-15px h-15px hover`}
                     />
                   )}
                   endadornment={
@@ -519,12 +505,11 @@ export const TopNav = memo(() => {
                   label={translate(`maxScale`)}
                   value={insertComma(scale.maxScale ?? `0`)}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise5.webp`}
+                    <Icons
+                      key={`exercise5`}
+                      name={`exercise5`}
+                      isIconButton={false}
+                      className={`w-15px h-15px hover`}
                     />
                   )}
                   endadornment={
@@ -536,13 +521,12 @@ export const TopNav = memo(() => {
           </Div>
         )}
         children={(popTrigger: any) => (
-          <Div className={`mr-auto d-center`}>
-            <Img
-              max={27}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`exercise6.webp`}
+          <Div className={`d-center`}>
+            <Icons
+              key={`exercise6`}
+              name={`exercise6`}
+              isIconButton={true}
+              className={`w-35px h-35px hover`}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -552,14 +536,14 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 7-3. nutrition ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 7-3. nutrition --------------------------------------------------------------------------------
     const nutritionSection = () => (
       <PopUp
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
         contents={(
-          <Div className={`w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px`}>
+          <Div className={`w-max-70vw h-max-70vh radius-2 border-light-1 shadow-0 px-10px py-20px`}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={`d-col-center`}>
                 <Div className={`fs-1-3rem fw-600`}>
@@ -567,7 +551,7 @@ export const TopNav = memo(() => {
                 </Div>
                 <Br m={10} />
                 <Div className={`fs-0-8rem fw-500 dark`}>
-                  {`[${formatDate(nutrition?.dateStart)} - ${formatDate(nutrition?.dateEnd)}]`}
+                  {`[${formatDateYyyyMmDd(nutrition?.dateStart)} - ${formatDateYyyyMmDd(nutrition?.dateEnd)}]`}
                 </Div>
                 <Br m={10} />
                 <Div className={`d-row-center`}>
@@ -596,17 +580,16 @@ export const TopNav = memo(() => {
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`food2.webp`}
+              <Grid size={3} className={`d-row-right`}>
+                <Icons
+                  key={`food2`}
+                  name={`food2`}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-500 dark`}>
+              <Grid size={8} className={`d-row-center`}>
+                <Div className={`fs-1-0rem fw-500 dark`}>
                   {`${translate(`initAvg`)} : `}
                 </Div>
               </Grid>
@@ -621,19 +604,18 @@ export const TopNav = memo(() => {
                 </Div>
               </Grid>
             </Grid>
-            <Br m={10} />
+            <Br m={20} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`food2.webp`}
+              <Grid size={3} className={`d-row-right`}>
+                <Icons
+                  key={`food2`}
+                  name={`food2`}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-500 dark`}>
+              <Grid size={8} className={`d-row-center`}>
+                <Div className={`fs-1-0rem fw-500 dark`}>
                   {nutritionType === `avg` ? (
 										(`${translate(`curAvg`)} : `)
 									) : (
@@ -676,12 +658,11 @@ export const TopNav = memo(() => {
 										)
                   }
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food3.webp`}
+                    <Icons
+                      key={`food3`}
+                      name={`food3`}
+                      isIconButton={false}
+                      className={`w-15px h-15px hover`}
                     />
                   )}
                   endadornment={
@@ -710,12 +691,11 @@ export const TopNav = memo(() => {
 										)
                   }
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food4.webp`}
+                    <Icons
+                      key={`food4`}
+                      name={`food4`}
+                      isIconButton={false}
+                      className={`w-15px h-15px hover`}
                     />
                   )}
                   endadornment={
@@ -744,12 +724,11 @@ export const TopNav = memo(() => {
 										)
                   }
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food5.webp`}
+                    <Icons
+                      key={`food5`}
+                      name={`food5`}
+                      isIconButton={false}
+                      className={`w-15px h-15px hover`}
                     />
                   )}
                   endadornment={
@@ -761,13 +740,12 @@ export const TopNav = memo(() => {
           </Div>
         )}
         children={(popTrigger: any) => (
-          <Div className={`mr-auto d-center`}>
-            <Img
-              max={27}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`food6.webp`}
+          <Div className={`d-center`}>
+            <Icons
+              key={`food6`}
+              name={`food6`}
+              isIconButton={true}
+              className={`w-35px h-35px hover`}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -777,14 +755,14 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 7-4. property ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 7-4. property ---------------------------------------------------------------------------------
     const propertySection = () => (
       <PopUp
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
         contents={(
-          <Div className={`w-max-70vw h-max-70vh border-1 radius-2 shadow-0 px-10px py-20px`}>
+          <Div className={`w-max-70vw h-max-70vh radius-2 border-light-1 shadow-0 px-10px py-20px`}>
             <Grid container={true} spacing={0}>
               <Grid size={12} className={`d-col-center`}>
                 <Div className={`fs-1-3rem fw-600`}>
@@ -792,7 +770,7 @@ export const TopNav = memo(() => {
                 </Div>
                 <Br m={10} />
                 <Div className={`fs-0-8rem fw-500 dark`}>
-                  {`[${formatDate(property?.dateStart)} - ${formatDate(property?.dateEnd)}]`}
+                  {`[${formatDateYyyyMmDd(property?.dateStart)} - ${formatDateYyyyMmDd(property?.dateEnd)}]`}
                 </Div>
                 <Br m={10} />
                 <Div className={`d-row-center`}>
@@ -811,22 +789,21 @@ export const TopNav = memo(() => {
             </Grid>
             <Hr m={30} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`money2.webp`}
+              <Grid size={3} className={`d-row-right`}>
+                <Icons
+                  key={`money2`}
+                  name={`money2`}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-500 dark`}>
+              <Grid size={8} className={`d-row-center`}>
+                <Div className={`fs-1-0rem fw-500 dark`}>
                   {`${translate(`initValue`)} : `}
                 </Div>
               </Grid>
               <Grid size={7} className={`d-row-right`}>
-                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
+                <Div className={`fs-1-1rem fw-600 black mr-5px`} compact={true}>
                   {insertComma(property.initProperty ?? `0`)}
                 </Div>
               </Grid>
@@ -836,24 +813,23 @@ export const TopNav = memo(() => {
                 </Div>
               </Grid>
             </Grid>
-            <Br m={10} />
+            <Br m={20} />
             <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`money2.webp`}
+              <Grid size={3} className={`d-row-right`}>
+                <Icons
+                  key={`money2`}
+                  name={`money2`}
+                  isIconButton={false}
+                  className={`w-25px h-25px hover`}
                 />
               </Grid>
-              <Grid size={8} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-500 dark`}>
+              <Grid size={8} className={`d-row-center`}>
+                <Div className={`fs-1-0rem fw-500 dark`}>
                   {`${translate(`curValue`)} : `}
                 </Div>
               </Grid>
               <Grid size={7} className={`d-row-right`}>
-                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
+                <Div className={`fs-1-1rem fw-600 black mr-5px`} compact={true}>
                   {includingExclusions ? (
 										insertComma(property.curPropertyAll ?? `0`)
 									) : (
@@ -881,12 +857,11 @@ export const TopNav = memo(() => {
 										)
                   }
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`money2.webp`}
+                    <Icons
+                      key={`money2`}
+                      name={`money2`}
+                      isIconButton={false}
+                      className={`w-15px h-15px hover`}
                     />
                   )}
                   endadornment={
@@ -909,12 +884,11 @@ export const TopNav = memo(() => {
 										)
                   }
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`money2.webp`}
+                    <Icons
+                      key={`money2`}
+                      name={`money2`}
+                      isIconButton={false}
+                      className={`w-15px h-15px hover`}
                     />
                   )}
                   endadornment={
@@ -926,13 +900,12 @@ export const TopNav = memo(() => {
           </Div>
         )}
         children={(popTrigger: any) => (
-          <Div className={`mr-auto d-center`}>
-            <Img
-              max={27}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`money4.webp`}
+          <Div className={`d-center`}>
+            <Icons
+              key={`money4`}
+              name={`money4`}
+              isIconButton={true}
+              className={`w-35px h-35px hover`}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -942,7 +915,7 @@ export const TopNav = memo(() => {
       />
     );
 
-    // 7-5. tabs ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 7-5. tabs -------------------------------------------------------------------------------------
     const tabsSection = () => {
       const currentTabValue: any = (
 				firstStr ? (
@@ -1020,17 +993,17 @@ export const TopNav = memo(() => {
 			) : null;
     };
 
-    // 7-9. return ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 7-9. return -----------------------------------------------------------------------------------
     return (
-      <Paper className={`layout-wrapper p-sticky top-8vh h-8vh radius-2 border-1 shadow-1 p-0px`}>
+      <Paper className={`layout-wrapper p-sticky top-8vh h-8vh radius-2 border-light-1 shadow-1 p-0px`}>
         <Grid container={true} spacing={0}>
-          <Grid size={7} className={`d-row-center`}>
+          <Grid size={8} className={`d-row-center`}>
             {smileSection()}
             {scaleSection()}
             {nutritionSection()}
             {propertySection()}
           </Grid>
-          <Grid size={5} className={`d-row-center border-left-2`}>
+          <Grid size={4} className={`d-row-center border-left-2`}>
             {tabsSection()}
           </Grid>
         </Grid>
@@ -1038,7 +1011,7 @@ export const TopNav = memo(() => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {topNavNode()}

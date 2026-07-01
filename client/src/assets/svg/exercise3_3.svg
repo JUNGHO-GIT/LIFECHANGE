@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Classic kettlebell</title>
+  <desc id="desc">기본 케틀벨 중량</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M83 91c0-35 18-56 45-56s45 21 45 56"/><path d="M77 91h102c25 25 39 58 39 91 0 27-22 42-50 42H88c-28 0-50-15-50-42 0-33 14-66 39-91z" fill="#E8E4FF"/><circle cx="128" cy="163" r="28" fill="#61C9EC"/><text x="128" y="172" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="900" fill="#343942" stroke="none">KG</text>
+  </g>
+</svg>

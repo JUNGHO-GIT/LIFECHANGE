@@ -15,10 +15,10 @@ import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@exportContainers";
 import { Bg, Paper, Grid, Br } from "@exportComponents";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const SleepGoalDetail = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, PATH, sessionId, navigate, toList,
     location_dateType, location_dateStart, location_dateEnd,
@@ -29,7 +29,7 @@ export const SleepGoalDetail = memo(() => {
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateSleep();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<SleepGoalType>(SleepGoal);
   const [ EXIST, setEXIST ] = useState({
@@ -62,7 +62,7 @@ export const SleepGoalDetail = memo(() => {
     dateEnd: location_dateEnd ?? getMonthEndFmt(),
   });
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<
     SleepGoalType
   > = useRef(OBJECT);
@@ -77,17 +77,17 @@ export const SleepGoalDetail = memo(() => {
     dateEnd: string;
   }> = useRef(DATE);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     COUNT !== countRef.current && (countRef.current = COUNT);
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, `goal`);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -117,7 +117,7 @@ export const SleepGoalDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.sleep_goal_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/goal/exist`, {
       params: {
@@ -143,7 +143,7 @@ export const SleepGoalDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -179,7 +179,7 @@ export const SleepGoalDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `goal`)) {
@@ -229,7 +229,7 @@ export const SleepGoalDetail = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `delete`)) {
@@ -282,7 +282,7 @@ export const SleepGoalDetail = memo(() => {
     });
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((_index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -296,11 +296,11 @@ export const SleepGoalDetail = memo(() => {
     }));
   }, []);
 
-  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -326,8 +326,8 @@ export const SleepGoalDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${i}`}
-            className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
+            key={`detail-${OBJECT._id || OBJECT.sleep_goal_dateStart || OBJECT.sleep_goal_number}`}
+            className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}
             <Grid container={true} spacing={1}>
@@ -399,7 +399,7 @@ export const SleepGoalDetail = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
         <Br m={20} />
         {COUNT?.newSectionCnt > 0 && detailSection()}
@@ -407,7 +407,7 @@ export const SleepGoalDetail = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -419,7 +419,7 @@ export const SleepGoalDetail = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -434,7 +434,7 @@ export const SleepGoalDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {detailNode()}

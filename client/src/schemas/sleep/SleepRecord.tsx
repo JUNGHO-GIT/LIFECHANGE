@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-// Types ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Types ------------------------------------------------------------------------------------------
 export interface SleepRecordType {
   _id: string;
   sleep_record_number: number;
@@ -34,7 +34,7 @@ export interface SleepRecordType {
   sleep_record_updateDt: string;
 }
 
-// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Schema -----------------------------------------------------------------------------------------
 export const SleepRecord: SleepRecordType = {
   _id: ``,
   sleep_record_number: 0,

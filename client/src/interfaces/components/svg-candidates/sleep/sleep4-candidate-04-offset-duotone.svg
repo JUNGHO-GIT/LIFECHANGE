@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">sleep4 offset-duotone</title>
+  <desc id="desc">수면 시간 - 입체감 있는 듀오톤</desc>
+  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#61C9EC}.s{fill:#FFE08A}.t{fill:#E8E4FF}.paper{fill:#fff}</style>
+  <rect x="18" y="18" width="220" height="220" rx="48" fill="#E8E4FF"/><path d="M39 190c34 38 126 54 181-1" fill="none" stroke="#FFE08A" stroke-width="12" opacity=".65"/>
+  <g transform="translate(8 9)" opacity=".14"><path class="s o" d="M39 118h178v79H39z"/><path class="p o" d="M39 91h42v106H39z"/><path class="paper o" d="M81 110h72c25 0 45 20 45 45H81z"/><circle class="paper o" cx="179" cy="73" r="42"/><path class="o" d="M179 49v26l17 11"/><path class="o detail" d="M39 197v23m178-23v23"/></g>
+  <g transform="translate(13 9) scale(.9)"><path class="s o" d="M39 118h178v79H39z"/><path class="p o" d="M39 91h42v106H39z"/><path class="paper o" d="M81 110h72c25 0 45 20 45 45H81z"/><circle class="paper o" cx="179" cy="73" r="42"/><path class="o" d="M179 49v26l17 11"/><path class="o detail" d="M39 197v23m178-23v23"/></g>
+</svg>

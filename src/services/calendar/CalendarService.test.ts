@@ -9,7 +9,7 @@
 
 import { describe, expect, mock, test } from "bun:test";
 
-// 1. mock 정의 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. mock 정의 -------------------------------------------------------------------------------------
 // detail 은 섹션 존재 여부를 도메인별로 제어할 수 있게 가변 row 를 반환
 let detailRows: any[] = [];
 const detailMock = mock(async () => detailRows);
@@ -50,7 +50,7 @@ const DATE = {
   dateEnd: `2026-01-01`,
 };
 
-// 2. CalendarService.deletes ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. CalendarService.deletes ----------------------------------------------------------------------
 describe(`CalendarService.deletes 합산 규칙`, () => {
   // 2-1. 한 도메인(exercise)만 존재 -> 부재 도메인의 fail 은 무시되고 전체 success
   test(`일부 도메인만 존재하면 부재 도메인 fail 을 무시하고 success 반환`, async () => {

@@ -8,7 +8,7 @@
 import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
 import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 
-// 1-1. chart (bar - goal) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. chart (bar - goal) -------------------------------------------------------------------------
 export const barGoal = async (
   user_id_param: string,
   dateStart_param: string,
@@ -48,7 +48,7 @@ export const barGoal = async (
   return finalResult;
 };
 
-// 1-2. chart (bar - record) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. chart (bar - record) -------------------------------------------------------------------------
 export const barRecord = async (
   user_id_param: string,
   dateStart_param: string,
@@ -88,7 +88,7 @@ export const barRecord = async (
   return finalResult;
 };
 
-// 2-1. chart (pie - part) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-1. chart (pie - part) -------------------------------------------------------------------------
 export const piePart = async (
   user_id_param: string,
   dateStart_param: string,
@@ -141,7 +141,7 @@ export const piePart = async (
   return finalResult;
 };
 
-// 2-2. chart (pie - title) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-2. chart (pie - title) ------------------------------------------------------------------------
 export const pieTitle = async (
   user_id_param: string,
   dateStart_param: string,
@@ -194,7 +194,7 @@ export const pieTitle = async (
   return finalResult;
 };
 
-// 3-1. chart (line - scale) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-1. chart (line - scale) -----------------------------------------------------------------------
 export const lineScale = async (
   user_id_param: string,
   dateStart_param: string,
@@ -232,7 +232,7 @@ export const lineScale = async (
   return finalResult;
 };
 
-// 3-2. chart (line - volume) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. chart (line - volume) ----------------------------------------------------------------------
 export const lineVolume = async (
   user_id_param: string,
   dateStart_param: string,
@@ -270,7 +270,7 @@ export const lineVolume = async (
   return finalResult;
 };
 
-// 3-3. chart (line - cardio) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-3. chart (line - cardio) ----------------------------------------------------------------------
 export const lineCardio = async (
   user_id_param: string,
   dateStart_param: string,
@@ -308,7 +308,7 @@ export const lineCardio = async (
   return finalResult;
 };
 
-// 4-1. chart (avg - volume) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-1. chart (avg - volume) -----------------------------------------------------------------------
 export const avgVolume = async (
   user_id_param: string,
   dateStart_param: string,
@@ -346,7 +346,7 @@ export const avgVolume = async (
   return finalResult;
 };
 
-// 4-2. chart (avg - cardio) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-2. chart (avg - cardio) -----------------------------------------------------------------------
 export const avgCardio = async (
   user_id_param: string,
   dateStart_param: string,

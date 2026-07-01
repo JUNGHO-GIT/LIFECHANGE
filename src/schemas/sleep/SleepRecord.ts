@@ -8,7 +8,7 @@
 import { incrementSeq } from "@schemas/Counter";
 import mongoose from "mongoose";
 
-// 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. types ---------------------------------------------------------------------------------------
 declare interface SleepRecordSection {
   sleep_record_bedTime: string;
   sleep_record_wakeTime: string;
@@ -25,7 +25,7 @@ declare interface SleepRecordType extends mongoose.Document {
   sleep_record_updateDt: Date;
 }
 
-// 1. schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema(
   {
     user_id: {
@@ -92,7 +92,7 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. counter --------------------------------------------------------------------------------------
 schema.pre<SleepRecordType>(`save`, async function () {
   if (this.isNew) {
     this.sleep_record_number = await incrementSeq(
@@ -102,14 +102,14 @@ schema.pre<SleepRecordType>(`save`, async function () {
   }
 });
 
-// 4. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. index ---------------------------------------------------------------------------------------
 schema.index({
   user_id: 1,
   sleep_record_dateStart: 1,
   sleep_record_dateEnd: 1,
 });
 
-// 5. model ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. model ----------------------------------------------------------------------------------------
 export const SleepRecord = mongoose.model<SleepRecordType>(
   `SleepRecord`,
   schema,

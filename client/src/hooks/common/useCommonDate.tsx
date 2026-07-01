@@ -5,17 +5,17 @@
  * @since 2025-12-25
  */
 
-import { useCallback } from "@exportReacts";
+import { useCallback, useMemo } from "@exportReacts";
 import { useCommonValue } from "@exportHooks";
 import { moment, type Moment } from "@exportLibs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const useCommonDate = () => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ------------------------------------------------------------------------------------
   const { localTimeZone } = useCommonValue();
 
-  // 2. helper ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2. helper -------------------------------------------------------------------------------------
   const getMoment = useCallback((params?: Moment | Date | string) => (!params || params === `0000-00-00` ? moment() : moment(new Date(params as string))), []);
 
   const createMomentWithTimezone = useCallback(
@@ -38,8 +38,8 @@ export const useCommonDate = () => {
     [createMomentWithTimezone],
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  return {
+  // 10. return ----------------------------------------------------------------------------------
+  return useMemo(() => ({
     // Base Functions
     getMoment: getMoment,
 
@@ -108,5 +108,5 @@ export const useCommonDate = () => {
     getPrevYearEndFmt: createDateFunctionWithFormat((m) => m.subtract(1, `years`).endOf(`year`)),
     getNextYearStartFmt: createDateFunctionWithFormat((m) => m.add(1, `years`).startOf(`year`)),
     getNextYearEndFmt: createDateFunctionWithFormat((m) => m.add(1, `years`).endOf(`year`)),
-  };
+  }), [ createDateFunction, createDateFunctionWithFormat, getMoment ]);
 };

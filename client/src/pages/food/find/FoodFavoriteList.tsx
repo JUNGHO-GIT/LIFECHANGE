@@ -16,21 +16,21 @@ import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
 import { Checkbox, Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const FoodFavoriteList = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, PATH, sessionId,
     location_dateType, location_dateStart, location_dateEnd,
-    sessionFoodSection,
+    sessionFoodSection, chartThemeColors,
   } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ PAGING, setPAGING ] = useStorageLocal(
     `paging`, PATH, ``, {
       sort: `asc`,
@@ -46,7 +46,7 @@ export const FoodFavoriteList = memo(() => {
     ]
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT, setOBJECT ] = useState<[FoodFindType]>([FoodFind]);
   const [ checkedQueries, setCheckedQueries ] = useState<Record<string, boolean[]>>({});
   const [ SEND, setSEND ] = useState({
@@ -66,12 +66,12 @@ export const FoodFavoriteList = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
-  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useDeferredValue ----------------------------------------------------------------------
   // - 항목 렌더를 비긴급으로 분리
   // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   // - 페이지 번호 변경 시 flowFind 호출
   useEffect(() => {
     if (PAGING?.query === ``) {
@@ -80,7 +80,7 @@ export const FoodFavoriteList = memo(() => {
     void flowFind();
   }, [PAGING.page]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   // - 페이지 로드시 체크박스 상태 초기화
   useEffect(() => {
     let sectionArray: typeof sessionFoodSection = [];
@@ -103,7 +103,7 @@ export const FoodFavoriteList = memo(() => {
     });
   }, [OBJECT]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   async function flowFind() {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/favorite/list`, {
@@ -140,7 +140,7 @@ export const FoodFavoriteList = memo(() => {
     });
   }
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowUpdateFavorite = (foodFavorite: any) => {
     axios.put(`${URL_OBJECT}/favorite/update`, {
       user_id: sessionId,
@@ -173,7 +173,7 @@ export const FoodFavoriteList = memo(() => {
     });
   };
 
-  // 4. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ---------------------------------------------------------------------------------
   // - 체크박스 변경 시
   const handleCheckboxChange = (index: number) => {
     const queryKey: string = `${PAGING.query}_${PAGING.page}`;
@@ -221,14 +221,14 @@ export const FoodFavoriteList = memo(() => {
     setSession(`section`, `food`, ``, sectionArray);
   };
 
-  // 7. favorite ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. favorite ---------------------------------------------------------------------------------------
   const favoriteNode = () => {
     const listSection = () => (
       <Grid container={true} spacing={0}>
         {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
+          <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`} key={i}>
             <Grid size={12} className={`p-2px`}>
-              <Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>
+              <Accordion className={`radius-2 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded}>
                 <AccordionSummary
                   expandIcon={(
                     <Icons
@@ -248,7 +248,7 @@ export const FoodFavoriteList = memo(() => {
                   <Grid container={true} spacing={1}>
                     <Grid size={2} className={`d-row-center`}>
                       <Checkbox
-                        key={`check-${i}`}
+                        key={`check-${item.food_record_key}`}
                         color={`primary`}
                         size={`small`}
                         checked={
@@ -295,13 +295,9 @@ export const FoodFavoriteList = memo(() => {
                     {/** row 1 * */}
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-row-center`}>
-                        <Img
-                          max={10}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`food2.webp`}
-                        />
+                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                          {`●`}
+                        </Div>
                       </Grid>
                       <Grid size={3} className={`d-row-left`}>
                         <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
@@ -329,13 +325,9 @@ export const FoodFavoriteList = memo(() => {
                     {/** row 2 * */}
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
-                        <Img
-                          max={10}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`food3.webp`}
-                        />
+                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                          {`●`}
+                        </Div>
                       </Grid>
                       <Grid size={3} className={`d-row-left`}>
                         <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
@@ -363,13 +355,9 @@ export const FoodFavoriteList = memo(() => {
                     {/** row 3 * */}
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
-                        <Img
-                          max={10}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`food4.webp`}
-                        />
+                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                          {`●`}
+                        </Div>
                       </Grid>
                       <Grid size={3} className={`d-row-left`}>
                         <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
@@ -397,13 +385,9 @@ export const FoodFavoriteList = memo(() => {
                     {/** row 3 * */}
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
-                        <Img
-                          max={10}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`food5.webp`}
-                        />
+                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                          {`●`}
+                        </Div>
                       </Grid>
                       <Grid size={3} className={`d-row-left`}>
                         <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
@@ -435,13 +419,13 @@ export const FoodFavoriteList = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`food`} /> : listSection()}
       </Paper>
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -450,7 +434,7 @@ export const FoodFavoriteList = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -465,7 +449,7 @@ export const FoodFavoriteList = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {favoriteNode()}

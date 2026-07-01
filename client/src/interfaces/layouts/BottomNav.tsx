@@ -11,18 +11,18 @@ import { useCommonValue } from "@hooks/common/useCommonValue";
 import { useStorageLocal } from "@hooks/storage/useStorageLocal";
 import { getLocal } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
-import { Img, Paper } from "@exportComponents";
+import { Icons, Img, Paper } from "@exportComponents";
 import { BottomNavigation, BottomNavigationAction } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const BottomNav = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { navigate, firstStr } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ selectedTab, setSelectedTab ] = useStorageLocal(
     `tabs`, `bottom`, ``, {
       exercise: false,
@@ -33,7 +33,7 @@ export const BottomNav = memo(() => {
     },
   );
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setSelectedTab((prev: any) => {
       const updatedTabs: any = Object.keys(prev).reduce<any>((acc, key) => {
@@ -44,7 +44,7 @@ export const BottomNav = memo(() => {
     });
   }, [firstStr]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ----------------------------------------------------------------------------------
   const handleClickBottomNav = (value: string) => {
 
     // top selected 값 가져오기
@@ -60,7 +60,7 @@ export const BottomNav = memo(() => {
     });
   };
 
-  // 7. bottomNav ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. bottomNav ----------------------------------------------------------------------------------
   const bottomNavNode = () => {
 
     // 7-1. tabsSection
@@ -74,12 +74,11 @@ export const BottomNav = memo(() => {
           label={translate(`exercise`)}
           value={`exercise`}
           icon={(
-            <Img
-              max={20}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`exercise1.webp`}
+            <Icons
+              key={`exercise1`}
+              name={`exercise1`}
+              isIconButton={false}
+              className={`w-20px h-20px hover`}
             />
           )}
           onClick={() => {
@@ -90,12 +89,11 @@ export const BottomNav = memo(() => {
           label={translate(`food`)}
           value={`food`}
           icon={(
-            <Img
-              max={20}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`food1.webp`}
+            <Icons
+              key={`food1`}
+              name={`food1`}
+              isIconButton={false}
+              className={`w-20px h-20px hover`}
             />
           )}
           onClick={() => {
@@ -106,12 +104,11 @@ export const BottomNav = memo(() => {
           label={translate(`calendar`)}
           value={`calendar`}
           icon={(
-            <Img
-              max={20}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`calendar1.webp`}
+            <Icons
+              key={`calendar1`}
+              name={`calendar1`}
+              isIconButton={false}
+              className={`w-20px h-20px hover`}
             />
           )}
           onClick={() => {
@@ -122,12 +119,11 @@ export const BottomNav = memo(() => {
           label={translate(`money`)}
           value={`money`}
           icon={(
-            <Img
-              max={20}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`money1.webp`}
+            <Icons
+              key={`money1`}
+              name={`money1`}
+              isIconButton={false}
+              className={`w-20px h-20px hover`}
             />
           )}
           onClick={() => {
@@ -138,12 +134,11 @@ export const BottomNav = memo(() => {
           label={translate(`sleep`)}
           value={`sleep`}
           icon={(
-            <Img
-              max={20}
-              hover={true}
-              shadow={false}
-              radius={false}
-              src={`sleep1.webp`}
+            <Icons
+              key={`sleep1`}
+              name={`sleep1`}
+              isIconButton={false}
+              className={`w-20px h-20px hover`}
             />
           )}
           onClick={() => {
@@ -155,13 +150,13 @@ export const BottomNav = memo(() => {
 
     // 7-2. return
     return (
-      <Paper className={`layout-wrapper p-sticky bottom-0vh h-8vh radius-2 border-1 shadow-1`}>
+      <Paper className={`layout-wrapper p-sticky bottom-0vh h-8vh radius-2 border-light-1 shadow-1`}>
         {tabsSection()}
       </Paper>
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {bottomNavNode()}

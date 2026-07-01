@@ -5,10 +5,10 @@
  * @since 2025-12-26
  */
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -27,7 +27,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
     let finalResult: string = ``;
@@ -45,7 +45,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 1. compareValue ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. compareValue -------------------------------------------------------------------------------
   const compareValue = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: number = Number.parseFloat(goalParam);
@@ -62,7 +62,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 4. calcDiffColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. calcDiffColor ------------------------------------------------------------------------------
   const calcDiffColor = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: number = Number.parseFloat(goalParam);
@@ -124,7 +124,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
     item.money_record_total_income = calcOverTenMillion(
       item?.money_record_total_income

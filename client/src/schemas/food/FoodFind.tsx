@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-// Types ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Types ------------------------------------------------------------------------------------------
 export interface FoodFindType {
   food_record_query: string;
   food_record_perNumber: number;
@@ -31,7 +31,7 @@ export interface FoodFindType {
   food_record_fat_color: string;
 }
 
-// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Schema -----------------------------------------------------------------------------------------
 export const FoodFind: FoodFindType = {
   food_record_query: ``,
   food_record_perNumber: 1,

@@ -9,17 +9,17 @@ import { memo, useCallback, useMemo, useId } from "@exportReacts";
 import { bindPopover, PopoverOrigin, usePopupState, PopupState } from "@exportMuis";
 import { Popover } from "@exportComponents";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const PopUp = memo((props: any) => {
 
-  // 1. Popup State ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. Popup State ------------------------------------------------------------------------------
   const id: string = useId();
   const popupState: PopupState = usePopupState({
     variant: `popover`,
     popupId: props?.id ?? id,
   });
 
-  // 2. popupStyle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2. popupStyle -------------------------------------------------------------------------------
   const popupStyle = useMemo<React.CSSProperties>(() => {
     const baseStyle: React.CSSProperties = {
       display: `flex`,
@@ -62,7 +62,7 @@ export const PopUp = memo((props: any) => {
     }
   }, [props?.type]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ------------------------------------------------------------------------------------
   const handleClose = useCallback((_event: any, reason: string) => {
     if (reason === `backdropClick`) {
       popupState.close();
@@ -78,7 +78,7 @@ export const PopUp = memo((props: any) => {
     popupState.close();
   }, [popupState]);
 
-  // 4. memoized values ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. memoized values ---------------------------------------------------------------------------
   const popupContents = useMemo(() => (
     typeof props?.contents === `function`
       ? props?.contents({ closePopup: closePopup })
@@ -112,7 +112,7 @@ export const PopUp = memo((props: any) => {
     left: typeof window !== `undefined` ? window.innerWidth / 2 : 0,
   }), []);
 
-  // 5. chainedPopUp ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5. chainedPopUp -------------------------------------------------------------------------------
   const chainedPopUp = useMemo(() => (
     <>
       <Popover
@@ -139,7 +139,7 @@ export const PopUp = memo((props: any) => {
     popupState, handleClose, anchorOrigin, transformOrigin, popupStyle, popupContents, popupChildren,
   ]);
 
-  // 6. innerCenterPopUp ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 6. innerCenterPopUp ---------------------------------------------------------------------------
   const innerCenterPopUp = useMemo(() => (
     <>
       <Popover
@@ -174,7 +174,7 @@ export const PopUp = memo((props: any) => {
     popupState, handleClose, innerCenterAnchorPosition, popupStyle, popupContents, popupChildren,
   ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {props?.type === `innerCenter` && innerCenterPopUp}

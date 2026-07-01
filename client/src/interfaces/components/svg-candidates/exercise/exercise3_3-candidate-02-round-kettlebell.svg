@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Round kettlebell</title>
+  <desc id="desc">둥근 케틀벨과 넓은 손잡이</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M78 103V72c0-24 20-43 50-43s50 19 50 43v31"/><circle cx="128" cy="151" r="80" fill="#61C9EC"/><circle cx="128" cy="151" r="48" fill="#F8FAFC"/><path d="M104 151h48m-24-24v48"/><path d="M83 212h90"/>
+  </g>
+</svg>

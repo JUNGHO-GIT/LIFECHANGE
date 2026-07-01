@@ -118,6 +118,7 @@
   padding: 0px 0px 0px 0px !important;
 }
 .MuiPopover-paper {
+  border-radius: 10px !important;
   z-index: 1000000 !important;
 }
 .MuiBackdrop-root {
@@ -194,4 +195,11 @@
 }
 .MuiPickersCalendarHeader-labelContainer {
   margin: 0 auto !important;
+}
+
+.MuiAccordionSummary-root {
+  padding: 0px 5px !important;
+}
+.MuiAccordionDetails-root {
+  padding: 8px 5px 16px 5px !important;
 }

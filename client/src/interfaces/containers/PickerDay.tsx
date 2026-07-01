@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { React, memo, useEffect, useState } from "@exportReacts";
+import { React, memo, useEffect, useMemo, useState } from "@exportReacts";
 import { Btn, Div, Grid, Icons, Img } from "@exportComponents";
 import { Input, PopUp, Select } from "@exportContainers";
 import { useCommonDate, useCommonValue, useStorageLocal } from "@exportHooks";
@@ -13,7 +13,7 @@ import { AdapterMoment, Badge, DateCalendar, LocalizationProvider, MenuItem, Pic
 import { setSession } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface PickerDayProps {
   DATE: {
     dateType: string;
@@ -34,12 +34,12 @@ declare interface PickerDayProps {
   };
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const PickerDay = memo((
   { DATE, setDATE, EXIST }: PickerDayProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     PATH, localLang, localTimeZone,
     isGoalList, isGoalDetail,
@@ -48,27 +48,24 @@ export const PickerDay = memo((
     isList, isDetail,
   } = useCommonValue();
   const isCalendarList: boolean = PATH.includes(`/calendar/list`);
-  const { getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt } = useCommonDate();
-  const { getPrevDayStartFmt, getPrevDayEndFmt } = useCommonDate();
-  const { getNextDayStartFmt, getNextDayEndFmt } = useCommonDate();
-  const { getWeekStartFmt, getWeekEndFmt } = useCommonDate();
-  const { getPrevWeekStartFmt, getPrevWeekEndFmt } = useCommonDate();
-  const { getNextWeekStartFmt, getNextWeekEndFmt } = useCommonDate();
-  const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
-  const { getPrevMonthStartFmt, getPrevMonthEndFmt } = useCommonDate();
-  const { getNextMonthStartFmt, getNextMonthEndFmt } = useCommonDate();
-  const { getYearStartFmt, getYearEndFmt } = useCommonDate();
-  const { getPrevYearStartFmt, getPrevYearEndFmt } = useCommonDate();
-  const { getNextYearStartFmt, getNextYearEndFmt } = useCommonDate();
+  const {
+    getDayFmt, getDayNotFmt, getDayStartFmt, getDayEndFmt,
+    getPrevDayStartFmt, getPrevDayEndFmt, getNextDayStartFmt, getNextDayEndFmt,
+    getWeekStartFmt, getWeekEndFmt, getPrevWeekStartFmt, getPrevWeekEndFmt,
+    getNextWeekStartFmt, getNextWeekEndFmt,
+    getMonthStartFmt, getMonthEndFmt, getPrevMonthStartFmt, getPrevMonthEndFmt,
+    getNextMonthStartFmt, getNextMonthEndFmt,
+    getYearStartFmt, getYearEndFmt, getPrevYearStartFmt, getPrevYearEndFmt,
+    getNextYearStartFmt, getNextYearEndFmt,
+  } = useCommonDate();
   const { translate } = useStoreLanguage();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const [ dateStrInSave, setDateStrInSave ] = useState<string>(``);
-  const [ dateStrInList, setDateStrInList ] = useState<string>(``);
-  const [ dateClassInSave, setDateClassInSave ] = useState<string>(``);
-  const [ dateClassInList, setDateClassInList ] = useState<string>(``);
+  const dateClassInSave: string = isList
+    ? `h-min-0px h-5vh fs-0-8rem pointer`
+    : `h-min-40px fs-0-8rem pointer`;
+  const dateClassInList: string = dateClassInSave;
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ dateTypeInSave, setDateTypeInSave ] = useState<string>(``);
   const [ dateTypeInList, setDateTypeInList ] = useStorageLocal(
     `type`, `list`, PATH, (
@@ -76,90 +73,7 @@ export const PickerDay = memo((
     ),
   );
 
-  // 2-2. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // - 화면 로딩시 초기값 설정 1
-  // - 클래스 설정
-  useEffect(() => {
-    if (isList) {
-      setDateClassInSave(`h-min-0px h-5vh fs-0-8rem pointer`);
-      setDateClassInList(`h-min-0px h-5vh fs-0-8rem pointer`);
-    }
-    else {
-      setDateClassInSave(`h-min-40px fs-0-8rem pointer`);
-      setDateClassInList(`h-min-40px fs-0-8rem pointer`);
-    }
-  }, []);
-
-  // 2-2. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // - 화면 로딩시 초기값 설정 2
-  // - 리스트 설정
-  useEffect(() => {
-    // 1. Goal
-    if (isGoalList) {
-      if (dateTypeInList === `day`) {
-        setDATE({
-          dateType: `day`,
-          dateStart: DATE?.dateStart ?? getDayFmt(),
-          dateEnd: DATE?.dateEnd ?? getDayFmt(),
-        });
-      }
-      else if (dateTypeInList === `week`) {
-        setDATE({
-          dateType: `week`,
-          dateStart: DATE?.dateStart ?? getWeekStartFmt(),
-          dateEnd: DATE?.dateEnd ?? getWeekEndFmt(),
-        });
-      }
-      else if (dateTypeInList === `month`) {
-        setDATE({
-          dateType: `month`,
-          dateStart: DATE?.dateStart ?? getMonthStartFmt(),
-          dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
-        });
-      }
-      else if (dateTypeInList === `year`) {
-        setDATE({
-          dateType: `year`,
-          dateStart: DATE?.dateStart ?? getYearStartFmt(),
-          dateEnd: DATE?.dateEnd ?? getYearEndFmt(),
-        });
-      }
-    }
-
-    // 4. Record
-    else if (isRecordList) {
-      if (dateTypeInList === `day`) {
-        setDATE({
-          dateType: `day`,
-          dateStart: DATE?.dateStart ?? getDayFmt(),
-          dateEnd: DATE?.dateEnd ?? getDayFmt(),
-        });
-      }
-      else if (dateTypeInList === `week`) {
-        setDATE({
-          dateType: `week`,
-          dateStart: DATE?.dateStart ?? getWeekStartFmt(),
-          dateEnd: DATE?.dateEnd ?? getWeekEndFmt(),
-        });
-      }
-      else if (dateTypeInList === `month`) {
-        setDATE({
-          dateType: `month`,
-          dateStart: DATE?.dateStart ?? getMonthStartFmt(),
-          dateEnd: DATE?.dateEnd ?? getMonthEndFmt(),
-        });
-      }
-      else if (dateTypeInList === `year`) {
-        setDATE({
-          dateType: `year`,
-          dateStart: DATE?.dateStart ?? getYearStartFmt(),
-          dateEnd: DATE?.dateEnd ?? getYearEndFmt(),
-        });
-      }
-    }
-  }, []);
-
-  // 2-2. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useEffect -----------------------------------------------------------------------------
   // - 화면 로딩시 초기값 설정 3
   // - 상세 설정
   // - 리스트에서 디테일로 들어가기 때문에 dateTypeInList 사용
@@ -203,7 +117,7 @@ export const PickerDay = memo((
     }
   }, []);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   // - 리스트에서 타입 변경시 처리 (일, 주, 월, 년)
   useEffect(() => {
     // 1. Goal - List
@@ -279,7 +193,7 @@ export const PickerDay = memo((
     }
   }, [dateTypeInList]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   // - 상세에서 타입 변경시 처리 (일, 주, 월, 년)
   useEffect(() => {
     // 1. Goal - Detail
@@ -355,92 +269,21 @@ export const PickerDay = memo((
     }
   }, [dateTypeInSave]);
 
-  // ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  // 2-3. useEffect
-  // - 타입 및 날짜 변경시 표시 날짜 텍스트 변경
-  // - handle 사용해서 월, 일만 표시
-  useEffect(() => {
-
-    // 1. List
-    if (isList) {
-      // ex. 2026-01-15
-      if (DATE?.dateType === `day`) {
-        setDateStrInList(
-          handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
-        );
-      }
-      // ex. 01/15 - 01/21
-      else if (DATE?.dateType === `week`) {
-        setDateStrInList(
-          `${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
-        );
-      }
-      // ex. 01/01 - 01/31
-      else if (DATE?.dateType === `month`) {
-        setDateStrInList(
-          `${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
-        );
-      }
-      // ex. 2026
-      else if (DATE?.dateType === `year`) {
-        setDateStrInList(
-          handleDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
-        );
-      }
-      else {
-        setDateStrInList(
-          handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
-        );
-      }
-    }
-
-    // 2. Detail
-    else if (isDetail) {
-      // ex. 2026-01-15
-      if (DATE?.dateType === `day`) {
-        setDateStrInSave(
-          handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
-        );
-      }
-      // ex. 01/15 - 01/21
-      else if (DATE?.dateType === `week`) {
-        setDateStrInSave(
-          `${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`,
-        );
-      }
-      // ex. 01/01 - 01/31
-      else if (DATE?.dateType === `month`) {
-        setDateStrInSave(
-          `${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`,
-        );
-      }
-      // ex. 2026
-      else if (DATE?.dateType === `year`) {
-        setDateStrInSave(
-          handleDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`),
-        );
-      }
-      else {
-        setDateStrInSave(
-          handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`),
-        );
-      }
-    }
-  }, [ isList, isDetail, DATE?.dateType, DATE?.dateStart, DATE?.dateEnd ]);
-
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-1. 표시 날짜 형식 변환 --------------------------------------------------------------------
   const handleDateFormat = (str: string, format?: string): string => {
+    const parts = str.split(`-`);
+
     // 1. yyyy
     if (format === `yyyy`) {
-      if (str?.split(`-`).length >= 1) {
-        return str.split(`-`)[0];
+      if (parts.length >= 1) {
+        return parts[0];
       }
       return ``;
     }
     // 2. mm/dd
     else if (format === `mm-dd`) {
-      if (str?.split(`-`).length === 3) {
-        return `${str.split(`-`)[1]}/${str.split(`-`)[2]}`;
+      if (parts.length === 3) {
+        return `${parts[1]}/${parts[2]}`;
       }
       return ``;
     }
@@ -451,10 +294,28 @@ export const PickerDay = memo((
     return str;
   };
 
-  // 7. pickerNode  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-2. 표시 날짜 계산 -------------------------------------------------------------------------
+  const dateText = useMemo<string>(() => {
+    if (DATE?.dateType === `week`) {
+      return `${handleDateFormat(getWeekStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getWeekEndFmt(DATE?.dateStart), `mm-dd`)}`;
+    }
+    if (DATE?.dateType === `month`) {
+      return `${handleDateFormat(getMonthStartFmt(DATE?.dateStart), `mm-dd`)} - ${handleDateFormat(getMonthEndFmt(DATE?.dateStart), `mm-dd`)}`;
+    }
+    if (DATE?.dateType === `year`) {
+      return handleDateFormat(getYearStartFmt(DATE?.dateStart), `yyyy`);
+    }
+    return handleDateFormat(getDayFmt(DATE?.dateStart), `yyyy-mm-dd`);
+  }, [
+    DATE?.dateType, DATE?.dateStart,
+    getDayFmt, getWeekStartFmt, getWeekEndFmt,
+    getMonthStartFmt, getMonthEndFmt, getYearStartFmt,
+  ]);
+
+  // 7. pickerNode  ----------------------------------------------------------------------------
   const pickerNode = () => {
 
-    // 1. dateTypeInList ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 1. dateTypeInList ---------------------------------------------------------------------------------
     const dateTypeInListSection = () => (
       <Select
         label={translate(`dateType`)}
@@ -478,7 +339,7 @@ export const PickerDay = memo((
       </Select>
     );
 
-    // 2. dateTypeInSave ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 2. dateTypeInSave ---------------------------------------------------------------------------------
     const dateTypeInSaveSection = () => (
       <Select
         label={translate(`dateType`)}
@@ -528,7 +389,7 @@ export const PickerDay = memo((
       </Select>
     );
 
-    // 3. day ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 3. day --------------------------------------------------------------------------------------
     const daySection = () => (
       <PopUp
         type={`innerCenter`}
@@ -551,7 +412,7 @@ export const PickerDay = memo((
                   views={[`day`]}
                   readOnly={false}
                   value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
-                  className={`border-1 radius-2`}
+                  className={`radius-2 border-light-1`}
                   showDaysOutsideCurrentMonth={true}
                   slotProps={{
                     calendarHeader: {
@@ -674,16 +535,15 @@ export const PickerDay = memo((
         children={(popTrigger: any) => (
           <Input
             label={translate(`date`)}
-            value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
+            value={isList || isDetail ? dateText : ``}
             inputclass={`pointer ${dateClassInList}`}
             readOnly={true}
             startadornment={(
-              <Img
-                max={25}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={`common1.webp`}
+              <Icons
+                key={`common1`}
+                name={`common1`}
+                isIconButton={false}
+                className={`w-25px h-25px hover`}
               />
             )}
             endadornment={(
@@ -730,7 +590,7 @@ export const PickerDay = memo((
       />
     );
 
-    // 4. week ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 4. week -------------------------------------------------------------------------------------
     const weekSection = () => (
       <PopUp
         type={`innerCenter`}
@@ -753,7 +613,7 @@ export const PickerDay = memo((
                   views={[`day`]}
                   readOnly={false}
                   value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
-                  className={`border-1 radius-2`}
+                  className={`radius-2 border-light-1`}
                   showDaysOutsideCurrentMonth={true}
                   slotProps={{
                     calendarHeader: {
@@ -895,16 +755,15 @@ export const PickerDay = memo((
         children={(popTrigger: any) => (
           <Input
             label={translate(`duration`)}
-            value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
+            value={isList || isDetail ? dateText : ``}
             inputclass={`pointer ${dateClassInList}`}
             readOnly={true}
             startadornment={(
-              <Img
-                max={25}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={`common1.webp`}
+              <Icons
+                key={`common1`}
+                name={`common1`}
+                isIconButton={false}
+                className={`w-25px h-25px hover`}
               />
             )}
             endadornment={(
@@ -949,7 +808,7 @@ export const PickerDay = memo((
       />
     );
 
-    // 5. month ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 5. month ------------------------------------------------------------------------------------
     const monthSection = () => (
       <PopUp
         type={`innerCenter`}
@@ -973,7 +832,7 @@ export const PickerDay = memo((
                   openTo={`day`}
                   readOnly={false}
                   value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
-                  className={`border-1 radius-2`}
+                  className={`radius-2 border-light-1`}
                   showDaysOutsideCurrentMonth={true}
                   sx={{
                     maxWidth: `100%`,
@@ -1124,16 +983,15 @@ export const PickerDay = memo((
           ) : (
           <Input
             label={translate(`duration`)}
-            value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
+            value={isList || isDetail ? dateText : ``}
             inputclass={`pointer ${dateClassInList}`}
             readOnly={true}
             startadornment={(
-              <Img
-                max={25}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={`common1.webp`}
+              <Icons
+                key={`common1`}
+                name={`common1`}
+                isIconButton={false}
+                className={`w-25px h-25px hover`}
               />
             )}
             endadornment={(
@@ -1179,7 +1037,7 @@ export const PickerDay = memo((
       />
     );
 
-    // 6. year ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 6. year -------------------------------------------------------------------------------------
     const yearSection = () => (
       <PopUp
         type={`innerCenter`}
@@ -1202,7 +1060,7 @@ export const PickerDay = memo((
                   views={[`day`]}
                   readOnly={false}
                   value={getDayNotFmt(DATE?.dateStart ?? DATE?.dateEnd)}
-                  className={`border-1 radius-2`}
+                  className={`radius-2 border-light-1`}
                   showDaysOutsideCurrentMonth={true}
                   slotProps={{
                     calendarHeader: {
@@ -1328,16 +1186,15 @@ export const PickerDay = memo((
         children={(popTrigger: any) => (
           <Input
             label={translate(`duration`)}
-            value={isList ? dateStrInList : isDetail ? dateStrInSave : ``}
+            value={isList || isDetail ? dateText : ``}
             inputclass={`pointer ${dateClassInList}`}
             readOnly={true}
             startadornment={(
-              <Img
-                max={25}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={`common1.webp`}
+              <Icons
+                key={`common1`}
+                name={`common1`}
+                isIconButton={false}
+                className={`w-25px h-25px hover`}
               />
             )}
             endadornment={(
@@ -1382,7 +1239,7 @@ export const PickerDay = memo((
       />
     );
 
-    // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+    // 10. return ----------------------------------------------------------------------------------
     return (
 
 			// 1-1. 리스트 (Goal)
@@ -1466,7 +1323,7 @@ export const PickerDay = memo((
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {pickerNode()}

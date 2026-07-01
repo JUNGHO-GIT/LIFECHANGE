@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-// Types ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Types ------------------------------------------------------------------------------------------
 export interface MoneyRecordType {
   _id: string;
   money_record_number: number;
@@ -33,7 +33,7 @@ export interface MoneyRecordType {
   money_record_updateDt: string;
 }
 
-// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Schema -----------------------------------------------------------------------------------------
 export const MoneyRecord: MoneyRecordType = {
   _id: ``,
   money_record_number: 0,

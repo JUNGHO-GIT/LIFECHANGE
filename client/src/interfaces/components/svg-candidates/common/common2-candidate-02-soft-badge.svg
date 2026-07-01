@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">common2 soft-badge</title>
+  <desc id="desc">항목 추가 - 파스텔 원형 배지</desc>
+  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#80C84D}.s{fill:#CDEFAF}.t{fill:#F8FAFC}.paper{fill:#fff}</style>
+  <circle cx="128" cy="128" r="119" fill="#CDEFAF"/>
+  
+  <g transform="translate(20 20) scale(.84)"><path class="paper o" d="M51 28h116l38 38v158H51z"/><path class="s o" d="M167 28v40h38"/><g class="o detail"><path d="M82 91h54M82 126h72M82 161h45"/><rect x="68" y="82" width="8" height="8"/><rect x="68" y="117" width="8" height="8"/><rect x="68" y="152" width="8" height="8"/></g><circle class="t o" cx="180" cy="183" r="40"/><path class="o" d="M180 162v42m-21-21h42"/></g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">sleep1 source-faithful</title>
+  <desc id="desc">수면 메뉴 - 원본 의미를 가장 직접적으로 유지</desc>
+  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#61C9EC}.s{fill:#FFE08A}.t{fill:#E8E4FF}.paper{fill:#fff}</style>
+  
+  
+  <g><path class="p o" d="m49 165 58-69H58V66h101l-58 69h58v30z"/><path class="s o" d="m142 107 43-50h-36V35h75l-43 50h43v22z"/><path class="t o detail" d="m28 213 35-41H34v-18h60l-35 41h35v18z"/></g>
+</svg>

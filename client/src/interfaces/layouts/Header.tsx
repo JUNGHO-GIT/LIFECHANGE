@@ -10,14 +10,14 @@ import { useCommonDate } from "@hooks/common/useCommonDate";
 import { useCommonValue } from "@hooks/common/useCommonValue";
 import { memo } from "@exportReacts";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const Header = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { navigate, firstStr } = useCommonValue();
   const { getDayFmt } = useCommonDate();
 
-  // 7. header ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. header -------------------------------------------------------------------------------------
   const headerNode = () => {
     const iconSection = () => (
       <Div
@@ -72,14 +72,14 @@ export const Header = memo(() => {
 			)
     );
     return (
-      <Paper className={`layout-wrapper d-row-between p-sticky top-0vh h-8vh radius-2 border-1 shadow-1`}>
+      <Paper className={`layout-wrapper d-row-between p-sticky top-0vh h-8vh radius-2 border-light-1 shadow-1`}>
         {iconSection()}
         {btnSection()}
       </Paper>
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {headerNode()}

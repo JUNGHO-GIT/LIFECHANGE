@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Track runner</title>
+  <desc id="desc">트랙 위 러닝 동작</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="128" cy="166" rx="100" ry="52" fill="#E8E4FF"/><ellipse cx="128" cy="166" rx="64" ry="27" fill="#FFFFFF"/><circle cx="144" cy="56" r="15" fill="#FFDFB8"/><path d="m130 79 28 33 37 8m-65-41-31 36-40 6m91-11-31 39-18 52m18-52 48 43" stroke-width="13"/><path d="M44 168c29-17 58-21 86-14"/>
+  </g>
+</svg>

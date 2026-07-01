@@ -9,7 +9,7 @@ import { ExerciseGoal } from "@schemas/exercise/ExerciseGoal";
 import { ExerciseRecord } from "@schemas/exercise/ExerciseRecord";
 import mongoose from "mongoose";
 
-// 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
   user_id_param: string,
   dateType_param: string,
@@ -47,7 +47,7 @@ export const exist = async (
   return finalResult;
 };
 
-// 1-1. list (goal) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. list (goal) --------------------------------------------------------------------------------
 export const listGoal = async (
   user_id_param: string,
   dateType_param: string,
@@ -91,7 +91,7 @@ export const listGoal = async (
   return finalResult;
 };
 
-// 1-2. list (record) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. list (record) --------------------------------------------------------------------------------
 export const listRecord = async (
   user_id_param: string,
   dateType_param: string,
@@ -150,7 +150,7 @@ export const listRecord = async (
   return finalResult;
 };
 
-// 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (
   user_id_param: string,
   dateType_param: string,
@@ -167,7 +167,7 @@ export const detail = async (
   return finalResult;
 };
 
-// 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. create ---------------------------------------------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -192,7 +192,7 @@ export const create = async (
   return finalResult;
 };
 
-// 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. update ---------------------------------------------------------------------------------------
 export const update = {
   // 1. update (기존항목 유지 + 타겟항목으로 수정)
   update: async (
@@ -263,7 +263,7 @@ export const update = {
   },
 };
 
-// 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. delete ---------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   dateType_param: string,

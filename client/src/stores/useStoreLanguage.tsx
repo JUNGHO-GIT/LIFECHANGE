@@ -7,14 +7,14 @@
 
 import { create, type StoreApi, type UseBoundStore } from "zustand";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface LanguageState {
   lang: string;
   setLang: (lang: string) => void;
   translate: (key: string) => string;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 let __resourcesCache: Record<string, any> | null = null;
 export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<LanguageState>((set, get) => ({
   lang: `en`,
@@ -25,7 +25,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
     const { lang } = get();
     __resourcesCache ??= {
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // a
       all: {
         ko: `전체`,
@@ -52,8 +52,12 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Amount`,
       },
       avg: {
-        ko: `평균값`,
+        ko: `평균`,
         en: `Avg`,
+      },
+      avgDeviation: {
+        ko: `평균 편차`,
+        en: `Avg Deviation`,
       },
       analyze: {
         ko: `분석`,
@@ -70,6 +74,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
       average: {
         ko: `평균`,
         en: `Avg`,
+      },
+      avgKcal: {
+        ko: `평균 칼로리`,
+        en: `Avg Kcal`,
       },
       avgKcalIntake: {
         ko: `평균 칼로리 섭취량`,
@@ -92,7 +100,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Avg`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // b
       brand: {
         ko: `브랜드`,
@@ -107,7 +115,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Bed`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // c
       c: {
         ko: `cnt`,
@@ -132,6 +140,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
       cur: {
         ko: `현재`,
         en: `Current`,
+      },
+      ca: {
+        ko: `탄수`,
+        en: `Carb`,
       },
       carb: {
         ko: `탄수화물`,
@@ -242,7 +254,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Current Value`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // d
       done: {
         ko: `완료`,
@@ -357,7 +369,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Do you want to delete?`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // e
       Empty: {
         ko: `Empty`,
@@ -396,7 +408,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Exercise`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // f
       favorite: {
         ko: `즐겨찾기`,
@@ -475,7 +487,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Forgot Password`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // g
       g: {
         ko: `g`,
@@ -590,8 +602,16 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Signup with Google`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // h
+      highestRecord: {
+        ko: `최고 기록`,
+        en: `Highest Record`,
+      },
+      highestKcal: {
+        ko: `최고 칼로리`,
+        en: `Highest Kcal`,
+      },
       hm: {
         ko: `h:m`,
         en: `h:m`,
@@ -637,7 +657,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Please enter your current property`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // i
       item: {
         ko: `항목`,
@@ -716,7 +736,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Initial Value`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // j
       join: {
         ko: `가입`,
@@ -727,7 +747,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Join Date`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // k
       kc: {
         ko: `kcal`,
@@ -742,8 +762,16 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Kcal-Nutrition`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // l
+      lowestRecord: {
+        ko: `최저 기록`,
+        en: `Lowest Record`,
+      },
+      lowestKcal: {
+        ko: `최저 칼로리`,
+        en: `Lowest Kcal`,
+      },
       locale: {
         ko: `언어`,
         en: `Locale`,
@@ -797,11 +825,19 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Withdrawal`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // m
       monthScore: {
         ko: `월간 목표 달성 점수`,
         en: `Monthly Achievement Score`,
+      },
+      maxExpense: {
+        ko: `최고 지출`,
+        en: `Max Expense`,
+      },
+      maxSleepTime: {
+        ko: `최고 수면`,
+        en: `Max Sleep`,
       },
       minScale: {
         ko: `최저 체중`,
@@ -810,6 +846,14 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
       maxScale: {
         ko: `최고 체중`,
         en: `Max BodyWeight`,
+      },
+      minExpense: {
+        ko: `최저 지출`,
+        en: `Min Expense`,
+      },
+      minSleepTime: {
+        ko: `최저 수면`,
+        en: `Min Sleep`,
       },
       memo: {
         ko: `메모`,
@@ -880,7 +924,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Month12`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // n
       nation: {
         ko: `국가`,
@@ -919,7 +963,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `New PW Confirm`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // o
       others: {
         ko: `기타`,
@@ -938,10 +982,14 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Close All`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // p
       p: {
         ko: `per`,
+        en: `per`,
+      },
+      per: {
+        ko: `회`,
         en: `per`,
       },
       part: {
@@ -981,7 +1029,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Passwords do not match`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // q
       query: {
         ko: `검색어`,
@@ -996,7 +1044,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Question`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // r
       r: {
         ko: `rep`,
@@ -1035,7 +1083,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Data for the date already exists.\nPlease select replace or insert`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // s
       s: {
         ko: `set`,
@@ -1138,7 +1186,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Total Expense`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // t
       transportation: {
         ko: `교통`,
@@ -1269,7 +1317,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Total Intake`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // u
       update: {
         ko: `수정`,
@@ -1288,7 +1336,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `User Count`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // v
       verify: {
         ko: `인증`,
@@ -1323,7 +1371,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Volume-Cardio`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // w
       won: {
         ko: `₩`,
@@ -1370,21 +1418,21 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Week6`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // x
       xl: {
         ko: `대`,
         en: `XL`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // y
       year: {
         ko: `년별`,
         en: `Year`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // day
       mon: {
         ko: `월`,
@@ -1443,7 +1491,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Sun`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // exercise
       chest: {
         ko: `가슴`,
@@ -1686,7 +1734,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Rest`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // alert
       searchSuccessful: {
         ko: `조회 성공`,
@@ -1893,7 +1941,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `This is a Google user. You cannot use password reset`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // error
       errorExerciseGoalCount: {
         ko: `횟수 목표를 입력해주세요`,
@@ -2124,7 +2172,7 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         en: `Please enter Goal BodyWeight`,
       },
 
-      // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      // -------------------------------------------------------------------------------------------
       // errorBoundary
       errorBoundaryTitle: {
         ko: `오류가 발생했습니다`,

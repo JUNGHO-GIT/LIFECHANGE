@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-// Types ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Types ------------------------------------------------------------------------------------------
 export interface ExerciseRecordType {
   _id: string;
   exercise_record_number: number;
@@ -38,7 +38,7 @@ export interface ExerciseRecordType {
   exercise_record_updateDt: string;
 }
 
-// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Schema -----------------------------------------------------------------------------------------
 export const ExerciseRecord: ExerciseRecordType = {
   _id: ``,
   exercise_record_number: 0,

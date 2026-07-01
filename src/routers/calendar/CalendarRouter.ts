@@ -10,7 +10,7 @@ import { type Router, Request, Response } from "express";
 import * as service from "@services/calendar/CalendarService";
 export const router: Router = express.Router();
 
-// 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. exist ----------------------------------------------------------------------------------------
 router.get(`/exist`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.exist(
@@ -49,7 +49,7 @@ router.get(`/exist`, async (req: Request, res: Response) => {
   }
 });
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 router.get(`/list`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.list(
@@ -92,7 +92,7 @@ router.get(`/list`, async (req: Request, res: Response) => {
   }
 });
 
-// 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. detail ---------------------------------------------------------------------------------------
 router.get(`/detail`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.detail(
@@ -134,7 +134,7 @@ router.get(`/detail`, async (req: Request, res: Response) => {
   }
 });
 
-// 3. create ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. create --------------------------------------------------------------------------------------
 router.post(`/create`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.update(
@@ -175,7 +175,7 @@ router.post(`/create`, async (req: Request, res: Response) => {
   }
 });
 
-// 4. update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. update --------------------------------------------------------------------------------------
 router.put(`/update`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.update(
@@ -216,7 +216,7 @@ router.put(`/update`, async (req: Request, res: Response) => {
   }
 });
 
-// 5. delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. delete --------------------------------------------------------------------------------------
 router.delete(`/delete`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.deletes(

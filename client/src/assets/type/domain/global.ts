@@ -7,7 +7,7 @@
 
 import type { Location, NavigateFunction } from "@exportReacts";
 
-// 공통 리터럴 · 유틸 타입 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 공통 리터럴 · 유틸 타입 -------------------------------------------------------------------------
 export type FirstPathType =
 	| `today`
 	| `calendar`
@@ -55,7 +55,7 @@ export type SleepChartMetricType =
 	| `sleepTime`
 	| (string & {});
 
-// 라우팅 상태 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 라우팅 상태 -------------------------------------------------------------------------------------
 export interface LocationStateType {
   id?: string | number;
   from?: string;
@@ -65,7 +65,7 @@ export interface LocationStateType {
   category?: string;
 }
 
-// 환경변수 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 환경변수 -----------------------------------------------------------------------------------------
 export interface EnvType {
   VITE_APP_TITLE?: string;
   VITE_APP_SERVER_URL?: string;
@@ -84,7 +84,7 @@ export interface EnvType {
   [key: `VITE_APP_${string}`]: string | undefined;
 }
 
-// 로컬 스토리지 스키마 (인라인) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 로컬 스토리지 스키마 (인라인) -------------------------------------------------------------------
 export interface LocalSettingType {
   id?: {
     autoLogin?: `true` | `false`;
@@ -176,7 +176,7 @@ export interface LocalTitleType {
   [key: string]: unknown;
 }
 
-// 세션 스토리지 스키마 (인라인) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 세션 스토리지 스키마 (인라인) -------------------------------------------------------------------
 export interface ExerciseCategoryItem {
   exercise_record_part: string;
   exercise_record_title?: string[];
@@ -323,10 +323,10 @@ export interface SessionTitleType {
   [key: string]: unknown;
 }
 
-// 공용 Title 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 공용 Title 타입 ----------------------------------------------------------------------------------
 export type AppTitleType = LocalTitleType & SessionTitleType;
 
-// useCommonValue 반환 타입 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// useCommonValue 반환 타입 ------------------------------------------------------------------------
 export interface CommonValueType {
   navigate: NavigateFunction;
   location: Location<LocationStateType> & Record<string, unknown>;
@@ -497,4 +497,6 @@ export interface CommonValueType {
   todayColors: string[];
   bgColors: string[];
   chartColors: string[];
+  chartThemeColors: Record<string, string>;
+  macroColors: Record<string, string>;
 }

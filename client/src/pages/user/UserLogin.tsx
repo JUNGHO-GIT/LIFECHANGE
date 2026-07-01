@@ -12,35 +12,35 @@ import { axios } from "@exportLibs";
 import { sync, getLocal, setLocal, setSession } from "@exportScripts";
 import { User, UserType } from "@exportSchemas";
 import { Input } from "@exportContainers";
-import { Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
+import { Icons, Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
 import { Checkbox } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const UserLogin = memo(() => {
 
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common -------------------------------------------------------------------------------------
   const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, navigate } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateUser();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [ OBJECT, setOBJECT ] = useState<UserType>(User);
   const [ loginTrigger, setLoginTrigger ] = useState<boolean>(false);
   const [ checkedSaveId, setCheckedSaveId ] = useState<boolean>(false);
   const [ checkedAutoLogin, setCheckedAutoLogin ] = useState<boolean>(false);
   const [ _clickCount, setClickCount ] = useState<number>(0);
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<UserType> = useRef(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   // 트리거가 활성화된 경우
   useEffect(() => {
     if (loginTrigger) {
@@ -55,7 +55,7 @@ export const UserLogin = memo(() => {
     }
   }, [loginTrigger]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   // 초기 로드 시 자동로그인 설정 가져오기
   useEffect(() => {
     const { autoLogin, autoLoginId, autoLoginPw } = getLocal(`setting`, `id`, ``) || {};
@@ -82,7 +82,7 @@ export const UserLogin = memo(() => {
     }
   }, []);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   // 초기 로드 시 아이디 저장 설정 가져오기
   useEffect(() => {
     const { isSaved, isSavedId } = getLocal(`setting`, `id`, ``) || {};
@@ -104,7 +104,7 @@ export const UserLogin = memo(() => {
     }
   }, []);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   // 자동로그인 활성화된 경우
   useEffect(() => {
     if (checkedAutoLogin) {
@@ -123,7 +123,7 @@ export const UserLogin = memo(() => {
     }
   }, [ checkedAutoLogin, OBJECT.user_id ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   // 아이디 저장 활성화된 경우
   useEffect(() => {
     if (checkedSaveId) {
@@ -140,7 +140,7 @@ export const UserLogin = memo(() => {
     }
   }, [ checkedSaveId, OBJECT.user_id ]);
 
-  // 3. flow ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ---------------------------------------------------------------------------------------
   async function flowSave() {
     setLOADING(true);
     if (!await validate(objectRef.current, `login`, ``)) {
@@ -201,7 +201,7 @@ export const UserLogin = memo(() => {
     });
   }
 
-  // 3. flow ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ---------------------------------------------------------------------------------------
   const flowGoogle = () => {
     axios.get(`${URL_GOOGLE}/login`)
     .then((res: any) => {
@@ -229,7 +229,7 @@ export const UserLogin = memo(() => {
     });
   };
 
-  // 7. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. userLogin ----------------------------------------------------------------------------------
   const userLoginNode = () => {
     // 7-1. title
     const titleSection = () => (
@@ -264,7 +264,7 @@ export const UserLogin = memo(() => {
     const loginSection = () => (
       <Grid container={true} spacing={0}>
         {[OBJECT]?.map((item, i) => (
-          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
+          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${item._id || item.user_id}`}>
             {/* row 1 */}
             <Grid container={true} spacing={0}>
               <Grid size={12}>
@@ -375,12 +375,11 @@ export const UserLogin = memo(() => {
               }}
             >
               <Div className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`user1.webp`}
+                <Icons
+                  key={`user1`}
+                  name={`user1`}
+                  isIconButton={false}
+                  className={`w-10px h-10px hover`}
                 />
                 <Div className={`fs-0-8rem black ml-10px`}>
                   {translate(`googleLogin`)}
@@ -431,7 +430,7 @@ export const UserLogin = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper d-center radius-2 border-1 shadow-1 h-min-100vh`}>
+      <Paper className={`content-wrapper d-center radius-3 border-light-1 shadow-1 h-min-100vh`}>
         {titleSection()}
         <Hr m={30} className={`bg-light`} />
         {loginSection()}
@@ -445,7 +444,7 @@ export const UserLogin = memo(() => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {userLoginNode()}

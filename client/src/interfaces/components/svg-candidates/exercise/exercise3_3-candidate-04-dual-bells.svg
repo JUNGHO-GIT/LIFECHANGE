@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Dual kettlebells</title>
+  <desc id="desc">운동 세트를 나타내는 두 케틀벨</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M45 92c0-23 13-38 33-38s33 15 33 38"/><path d="M37 92h82c18 20 27 45 27 70 0 23-17 37-39 37H49c-22 0-39-14-39-37 0-25 9-50 27-70z" fill="#A7DCF3"/><path d="M145 91c0-23 13-38 33-38s33 15 33 38"/><path d="M137 91h82c18 20 27 45 27 70 0 23-17 37-39 37h-58c-22 0-39-14-39-37 0-25 9-50 27-70z" fill="#E8E4FF"/><circle cx="78" cy="146" r="12" fill="#FFED9B"/><circle cx="178" cy="146" r="12" fill="#FFED9B"/>
+  </g>
+</svg>

@@ -15,10 +15,10 @@ import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@exportContainers";
 import { Bg, Paper, Grid, Br } from "@exportComponents";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const SleepRecordDetail = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, PATH, sessionId, navigate, toList,
     location_dateStart, location_dateEnd,
@@ -29,7 +29,7 @@ export const SleepRecordDetail = memo(() => {
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateSleep();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<SleepRecordType>(SleepRecord);
   const [ EXIST, setEXIST ] = useState({
@@ -62,12 +62,12 @@ export const SleepRecordDetail = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
-  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useDeferredValue ----------------------------------------------------------------------
   // - 항목 렌더를 비긴급으로 분리
   // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<
     SleepRecordType
   > = useRef(OBJECT);
@@ -82,17 +82,17 @@ export const SleepRecordDetail = memo(() => {
     dateEnd: string;
   }> = useRef(DATE);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     COUNT !== countRef.current && (countRef.current = COUNT);
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, `record`);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length <= 0) {
       return;
@@ -122,7 +122,7 @@ export const SleepRecordDetail = memo(() => {
     }));
   }, [ EXIST, DATE?.dateEnd, OBJECT.sleep_record_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -148,7 +148,7 @@ export const SleepRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -202,7 +202,7 @@ export const SleepRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection: any = {
       sleep_record_bedTime: `00:00`,
@@ -219,7 +219,7 @@ export const SleepRecordDetail = memo(() => {
 
   }, [COUNT?.newSectionCnt]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `record`)) {
@@ -275,7 +275,7 @@ export const SleepRecordDetail = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `delete`)) {
@@ -327,7 +327,7 @@ export const SleepRecordDetail = memo(() => {
     });
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -339,11 +339,11 @@ export const SleepRecordDetail = memo(() => {
     }));
   }, []);
 
-  // 7. save ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. save --------------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -369,8 +369,8 @@ export const SleepRecordDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${i}`}
-            className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
+            key={`detail-${item.sleep_record_bedTime}-${item.sleep_record_wakeTime}-${item.sleep_record_sleepTime}`}
+            className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}
             <Grid container={true} spacing={1}>
@@ -442,7 +442,7 @@ export const SleepRecordDetail = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
         <Br m={20} />
         {COUNT?.newSectionCnt > 0 && detailSection()}
@@ -450,7 +450,7 @@ export const SleepRecordDetail = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -462,7 +462,7 @@ export const SleepRecordDetail = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -477,7 +477,7 @@ export const SleepRecordDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {detailNode()}

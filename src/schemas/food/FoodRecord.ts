@@ -8,7 +8,7 @@
 import { incrementSeq } from "@schemas/Counter";
 import mongoose from "mongoose";
 
-// 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. types ---------------------------------------------------------------------------------------
 declare interface FoodRecordSection {
   food_record_part: string;
   food_record_name: string;
@@ -36,7 +36,7 @@ declare interface FoodRecordType extends mongoose.Document {
   food_record_updateDt: Date;
 }
 
-// 1. schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema(
   {
     user_id: {
@@ -158,10 +158,10 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 2. index ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. index ----------------------------------------------------------------------------------------
 schema.index({ user_id: 1, food_record_dateStart: 1, food_record_dateEnd: 1 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. counter --------------------------------------------------------------------------------------
 schema.pre<FoodRecordType>(`save`, async function () {
   if (this.isNew) {
     this.food_record_number = await incrementSeq(
@@ -171,5 +171,5 @@ schema.pre<FoodRecordType>(`save`, async function () {
   }
 });
 
-// 5. model ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. model ----------------------------------------------------------------------------------------
 export const FoodRecord = mongoose.model<FoodRecordType>(`FoodRecord`, schema);

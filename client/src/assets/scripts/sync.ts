@@ -8,7 +8,7 @@
 import { axios, moment } from "@exportLibs";
 import { getLocal, getSession, setSession } from "@exportScripts";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const sync = async (
   extra?: string,
   dateOverride?: {
@@ -18,14 +18,14 @@ export const sync = async (
     monthEnd?: string;
   },
 ) => {
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const URL: string = import.meta.env.VITE_APP_SERVER_URL ?? ``;
   const SUBFIX: string = import.meta.env.VITE_APP_USER ?? ``;
   const URL_OBJECT: string = URL + SUBFIX;
   const sessionId: any = getSession(`setting`, `id`, `sessionId`);
   const localTimeZone: any = getLocal(`setting`, `locale`, `timeZone`);
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState ---------------------------------------------------------------------------------
   const DATE = {
     dateType: `day`,
     dateStart: moment()
@@ -43,35 +43,33 @@ export const sync = async (
       .endOf(`month`)
       .format(`YYYY-MM-DD`),
   };
-  // 임의 기간 조회: dateOverride 병합 후 isCustom 플래그 주입 (서버 영속 update 스킵 신호) ――――――――――――――――――――
-  const dateMerged: any = dateOverride
-    ? { ...DATE, ...dateOverride, isCustom: true }
-    : DATE;
+  // 임의 기간 조회: dateOverride 병합 후 isCustom 플래그 주입
+  const dateMerged: any = dateOverride ? { ...DATE, ...dateOverride, isCustom: true } : DATE;
   const params = {
     user_id: sessionId as string,
     DATE: dateMerged,
   };
 
-  // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // -----------------------------------------------------------------------------------------------
   if (extra) {
     const [resExtra] = await Promise.allSettled([
       axios.get(`${URL_OBJECT}/sync/${extra}`, {
         params: params,
       }),
     ]);
-    // 성공분만 반영, 실패 도메인은 기록 후 기존 세션값 유지 ――――――――――――――――――――――――――――――――――――――――――――――
+    // 성공분만 반영, 실패 도메인은 기록 후 기존 세션값 유지
     if (resExtra.status === `fulfilled`) {
       setSession(`setting`, `sync`, ``, {
         [extra]: resExtra.value.data.result,
       });
-      // 단건 호출 시 갱신된 도메인 데이터를 호출자에 반환 (재조회 후 표시 갱신용) ―――――――――――――――――――――――――――
+      // 단건 호출 시 갱신된 도메인 데이터를 호출자에 반환 (재조회 후 표시 갱신용)
       return resExtra.value.data.result;
     } else {
       console.error(`[sync] failed: ${extra}`, resExtra.reason);
     }
   }
 
-  // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // -----------------------------------------------------------------------------------------------
   else {
     const [
       resCategory,
@@ -100,7 +98,7 @@ export const sync = async (
         params: params,
       }),
     ]);
-    // 성공한 도메인만 부분 반영, 실패 도메인은 기록 후 기존 세션값 유지 ―――――――――――――――――――――――――――――――――――――――
+    // 성공한 도메인만 부분 반영, 실패 도메인은 기록 후 기존 세션값 유지
     const settledEntries: [string, PromiseSettledResult<any>][] = [
       [`category`, resCategory],
       [`percent`, resPercent],

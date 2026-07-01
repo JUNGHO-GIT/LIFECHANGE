@@ -12,7 +12,7 @@ import { moneyArray } from "@assets/arrays/moneyArray";
 import { foodArray } from "@assets/arrays/foodArray";
 import { sleepArray } from "@assets/arrays/sleepArray";
 
-// 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. types ---------------------------------------------------------------------------------------
 declare interface UserFavoriteItem {
   food_record_key: string;
   food_record_name: string;
@@ -58,7 +58,7 @@ declare interface UserType extends mongoose.Document {
   user_updateDt: Date;
 }
 
-// 1. schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema({
   user_id: {
     type: String,
@@ -290,17 +290,17 @@ const schema = new mongoose.Schema({
   },
 });
 
-// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. index ---------------------------------------------------------------------------------------
 schema.index({
   user_id: 1,
 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. counter --------------------------------------------------------------------------------------
 schema.pre<UserType>(`save`, async function() {
   if (this.isNew) {
     this.user_number = await incrementSeq(`user_number`, `User`);
   }
 });
 
-// 5. model ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. model ----------------------------------------------------------------------------------------
 export const User = mongoose.model<UserType>(`User`, schema);

@@ -9,7 +9,8 @@ import { React, memo, useCallback, useEffect, useMemo, useRef, useState } from "
 import { useCommonValue } from "@exportHooks";
 import { Skeleton } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+const EMPTY_IMAGE_SRC: string = new URL(`../../assets/svg/empty.svg`, import.meta.url).href;
+// -------------------------------------------------------------------------------------------------
 declare interface ImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   group?: string;
   src?: any;
@@ -26,7 +27,7 @@ declare interface ImageCacheEntry {
   promise?: Promise<void>;
 }
 
-// image cache ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// image cache ------------------------------------------------------------------------------------
 const IMAGE_CACHE_MAX: number = 200;
 const imageCache: Map<string, ImageCacheEntry> = new Map();
 const preloadImage = (src: string): Promise<void> => {
@@ -66,36 +67,36 @@ const preloadImage = (src: string): Promise<void> => {
   return promise;
 };
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const Img = memo((
   {
     group, src, hover, shadow, radius, border, min, max, loading, ...props
   }: ImgProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { GCLOUD_URL } = useCommonValue();
 
-  // 2-1. useRef ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useRef -----------------------------------------------------------------------------------
   const currentImgSrcRef = useRef<string>(``);
   const isEmptyHandledRef = useRef<boolean>(false);
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [ fileName, setFileName ] = useState<string>(``);
   const [ imgSrc, setImgSrc ] = useState<string>(``);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
   const [ isEmptyHandled, setIsEmptyHandled ] = useState<boolean>(false);
   const { onLoad: userOnLoad, onError: userOnError, ...restProps } = props as any;
 
-  // 3. memoized imageClass ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. memoized imageClass ------------------------------------------------------------------------
   const imageClass = useMemo(() => [
     `w-100p`,
     `h-100p`,
     `object-contain`,
     hover && `hover`,
-    shadow && `shadow-2`,
     radius && `radius-3`,
-    border && `border-1`,
+    border && `border-light-1`,
+    shadow && `shadow-2`,
     min && `w-min-${min}px h-min-${min}px`,
     max && `w-max-${max}px h-max-${max}px`,
     props?.className,
@@ -103,16 +104,15 @@ export const Img = memo((
     hover, shadow, radius, border, min, max, props.className,
   ]);
 
-  // 4. callbacks ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. callbacks ----------------------------------------------------------------------------------
   const handleImageError = useCallback(() => {
     const current: string = currentImgSrcRef.current;
     const cached: ImageCacheEntry | undefined = imageCache.get(current);
     cached && (cached.status = `error`);
+    const fallback: string = EMPTY_IMAGE_SRC;
 
-    const fallback: string = `${GCLOUD_URL}/main/empty.webp`;
-
-		// empty.webp 자체가 에러난 경우 다시 호출하지 않도록 차단 (ref로 제어해서 무한 루프 방지)
-		!isEmptyHandledRef.current && !current.includes(`empty.webp`)
+		// empty.svg 자체가 에러난 경우 다시 호출하지 않도록 차단 (ref로 제어해서 무한 루프 방지)
+		!isEmptyHandledRef.current && current !== EMPTY_IMAGE_SRC
 			? (() => {
 			  isEmptyHandledRef.current = true;
 			  setIsEmptyHandled(true);
@@ -121,15 +121,14 @@ export const Img = memo((
 			  setIsLoading(false);
 			})()
 			: setIsLoading(false);
-  }, [GCLOUD_URL]);
+  }, []);
 
-  // 5. useEffect (src 설정 + 이미지 로딩 캐시) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5. useEffect (src 설정 + 이미지 로딩 캐시) -------------------------------------------------------
   useEffect(() => {
     setIsLoading(true);
     setIsEmptyHandled(false);
     isEmptyHandledRef.current = false;
-
-    const fallback: string = `${GCLOUD_URL}/main/empty.webp`;
+    const fallback: string = EMPTY_IMAGE_SRC;
     const trimmed: string = typeof src === `string` ? src.trim() : ``;
 
     const isBlob: boolean = typeof trimmed === `string` && trimmed.startsWith(`blob:`);
@@ -193,7 +192,7 @@ export const Img = memo((
     };
   }, [ GCLOUD_URL, group, src, handleImageError ]);
 
-  // 7. skeletonNode ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. skeletonNode -------------------------------------------------------------------------------
   const skeletonNode = useMemo(() => {
     const sizeClass: string = [
       `w-100p`,
@@ -211,7 +210,7 @@ export const Img = memo((
     );
   }, [min, max]);
 
-  // 8. imageNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. imageNode ----------------------------------------------------------------------------------
   const imageNode = useMemo(() => (
     <img
       {...restProps}
@@ -238,7 +237,7 @@ export const Img = memo((
     restProps, fileName, imgSrc, loading, imageClass, handleImageError, userOnLoad, userOnError,
   ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {isLoading ? skeletonNode : imageNode}

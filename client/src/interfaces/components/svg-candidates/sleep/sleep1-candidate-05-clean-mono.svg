@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">sleep1 clean-mono</title>
+  <desc id="desc">수면 메뉴 - 선 중심의 절제형</desc>
+  <style>.o{stroke:#48505A;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FFFFFF}.s{fill:#E8EEF2}.t{fill:#D7E0E6}.paper{fill:#fff}.detail{display:none}</style>
+  
+  
+  <g><path class="p o" d="m49 165 58-69H58V66h101l-58 69h58v30z"/><path class="s o" d="m142 107 43-50h-36V35h75l-43 50h43v22z"/><path class="t o detail" d="m28 213 35-41H34v-18h60l-35 41h35v18z"/></g>
+</svg>

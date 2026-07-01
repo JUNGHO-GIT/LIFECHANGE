@@ -10,27 +10,27 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { SleepAvg, SleepAvgType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDate } from "@exportScripts";
+import { formatY, formatDateMmDd } from "@exportScripts";
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface SleepChartAvgProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const { URL_OBJECT, PATH, sessionId, chartColors, sleepChartArray } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { URL_OBJECT, PATH, sessionId, chartThemeColors, sleepChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `avg`, PATH, {
       section: `week`,
@@ -38,7 +38,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -54,11 +54,11 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[SleepAvgType]>([SleepAvg]);
   const [ OBJECT_MONTH, setOBJECT_MONTH ] = useState<[SleepAvgType]>([SleepAvg]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -97,7 +97,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -107,7 +107,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -120,7 +120,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
     let object: any = null;
@@ -202,7 +202,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 		      {TYPE_STATE.line.includes(`bedTime`) && (
 		        <Bar
 		          dataKey={`bedTime`}
-		          fill={chartColors[4]}
+		          fill={chartThemeColors.bedTime}
 		          radius={[ 10, 10, 0, 0 ]}
 		          minPointSize={1}
 		          isAnimationActive={true}
@@ -214,7 +214,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 		      {TYPE_STATE.line.includes(`wakeTime`) && (
 		        <Bar
 		          dataKey={`wakeTime`}
-		          fill={chartColors[1]}
+		          fill={chartThemeColors.wakeTime}
 		          radius={[ 10, 10, 0, 0 ]}
 		          minPointSize={1}
 		          isAnimationActive={true}
@@ -226,7 +226,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 		      {TYPE_STATE.line.includes(`sleepTime`) && (
 		        <Bar
 		          dataKey={`sleepTime`}
-		          fill={chartColors[2]}
+		          fill={chartThemeColors.sleepTime}
 		          radius={[ 10, 10, 0, 0 ]}
 		          minPointSize={1}
 		          isAnimationActive={true}
@@ -239,7 +239,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 		        labelFormatter={(_label: any, payload: any) => {
 		          const name: string = payload?.length > 0 ? payload[0]?.payload.name : ``;
 		          const date: string = payload?.length > 0 ? payload[0]?.payload.date : ``;
-		          return `${translate(name)} (${formatDate(date)})`;
+		          return `${translate(name)} (${formatDateMmDd(date)})`;
 		        }}
 		        formatter={(value: any, name: any) => {
 		          const customName: string = translate(name as string);
@@ -277,7 +277,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 		);
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Cardio stopwatch</title>
+  <desc id="desc">유산소 시간을 나타내는 스톱워치</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="128" cy="137" r="79" fill="#A7DCF3"/><path d="M105 28h46M128 28v29m58 16 18-18"/><path d="M128 89v51l32 20"/><circle cx="128" cy="137" r="48" fill="#FFFFFF"/><path d="M54 52 36 70"/><path d="m90 151 20-22 18 17 34-39" stroke="#FF756F"/>
+  </g>
+</svg>

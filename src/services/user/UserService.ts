@@ -12,7 +12,7 @@ import * as repository from "@repositories/user/UserRepository";
 import { sendEmail } from "@assets/scripts/email";
 loadEnv();
 
-// 1-1. sendEmailCode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. sendEmailCode ----------------------------------------------------------------------------------
 export const sendEmailCode = async (
   user_id_param: string,
   type_param: string,
@@ -71,7 +71,7 @@ export const sendEmailCode = async (
   };
 };
 
-// 1-2. verifyEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. verifyEmail --------------------------------------------------------------------------------
 export const verifyEmail = async (
   user_id_param: string,
   code_param: string,
@@ -107,7 +107,7 @@ export const verifyEmail = async (
   };
 };
 
-// 2-1. userSignup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-1. userSignup ---------------------------------------------------------------------------------
 export const userSignup = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -156,7 +156,7 @@ export const userSignup = async (
   };
 };
 
-// 2-2. userResetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-2. userResetPw --------------------------------------------------------------------------------
 export const userResetPw = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -215,7 +215,7 @@ export const userResetPw = async (
   };
 };
 
-// 2-3. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-3. userLogin ----------------------------------------------------------------------------------
 export const userLogin = async (
   user_id_param: string,
   user_pw_param: string,
@@ -277,7 +277,7 @@ export const userLogin = async (
   };
 };
 
-// 2-4. userDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-4. userDetail ---------------------------------------------------------------------------------
 export const userDetail = async (
   user_id_param: string,
 ) => {
@@ -306,7 +306,7 @@ export const userDetail = async (
   };
 };
 
-// 2-5. userUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-5. userUpdate ---------------------------------------------------------------------------------
 export const userUpdate = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -336,7 +336,7 @@ export const userUpdate = async (
   };
 };
 
-// 2-6. userDelete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-6. userDelete --------------------------------------------------------------------------------
 export const userDelete = async (
   user_id_param: string,
   user_pw_param: string,
@@ -396,7 +396,7 @@ export const userDelete = async (
   };
 };
 
-// 3-2. categoryDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. categoryDetail -----------------------------------------------------------------------------
 export const categoryDetail = async (
   user_id_param: string,
 ) => {
@@ -425,7 +425,7 @@ export const categoryDetail = async (
   };
 };
 
-// 3-2. categoryUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. categoryUpdate -----------------------------------------------------------------------------
 export const categoryUpdate = async (
   user_id_param: string,
   OBJECT_param: any,

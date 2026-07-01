@@ -10,27 +10,27 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { FoodLineKcal, FoodLineNut, FoodLineType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDate } from "@exportScripts";
+import { formatY, formatDateMmDd } from "@exportScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface FoodChartLineProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const FoodChartLine = memo((props: FoodChartLineProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const { URL_OBJECT, PATH, sessionId, chartColors, foodChartArray } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { URL_OBJECT, PATH, sessionId, chartThemeColors, foodChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `line`, PATH, {
       section: `week`,
@@ -38,7 +38,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -54,13 +54,13 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK ] = useState<[FoodLineType]>([FoodLineKcal]);
   const [ OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK ] = useState<[FoodLineType]>([FoodLineNut]);
   const [ OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH ] = useState<[FoodLineType]>([FoodLineKcal]);
   const [ OBJECT_NUT_MONTH, setOBJECT_NUT_MONTH ] = useState<[FoodLineType]>([FoodLineNut]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -105,7 +105,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -115,7 +115,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -128,7 +128,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
     let object: any = null;
@@ -218,7 +218,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		        <Line
 		          dataKey={`kcal`}
 		          type={`monotone`}
-		          stroke={chartColors[3]}
+		          stroke={chartThemeColors.kcal}
 		          strokeWidth={2}
 		          activeDot={{ r: 4 }}
 		          dot={false}
@@ -233,7 +233,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		          <Line
 		            dataKey={`carb`}
 		            type={`monotone`}
-		            stroke={chartColors[1]}
+		            stroke={chartThemeColors.carb}
 		            strokeWidth={2}
 		            activeDot={{ r: 4 }}
 		            dot={false}
@@ -245,7 +245,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		          <Line
 		            dataKey={`protein`}
 		            type={`monotone`}
-		            stroke={chartColors[4]}
+		            stroke={chartThemeColors.protein}
 		            strokeWidth={2}
 		            activeDot={{ r: 4 }}
 		            dot={false}
@@ -257,7 +257,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		          <Line
 		            dataKey={`fat`}
 		            type={`monotone`}
-		            stroke={chartColors[2]}
+		            stroke={chartThemeColors.fat}
 		            strokeWidth={2}
 		            activeDot={{ r: 4 }}
 		            dot={false}
@@ -272,7 +272,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		        labelFormatter={(_label: any, payload: any) => {
 		          const name: string = payload?.length > 0 ? payload[0]?.payload.name : ``;
 		          const date: string = payload?.length > 0 ? payload[0]?.payload.date : ``;
-		          return `${translate(name)} (${formatDate(date)})`;
+		          return `${translate(name)} (${formatDateMmDd(date)})`;
 		        }}
 		        formatter={(value: any, name: any) => {
 		          const customName: string = translate(name as string);
@@ -310,7 +310,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		);
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

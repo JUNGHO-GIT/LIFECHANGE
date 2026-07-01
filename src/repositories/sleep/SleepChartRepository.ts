@@ -8,7 +8,7 @@
 import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { SleepRecord } from "@schemas/sleep/SleepRecord";
 
-// 1-1. chart (bar - goal) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. chart (bar - goal) -------------------------------------------------------------------------
 export const barGoal = async (
   user_id_param: string,
   dateStart_param: string,
@@ -48,7 +48,7 @@ export const barGoal = async (
   return finalResult;
 };
 
-// 1-2. chart (bar - record) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. chart (bar - record) -------------------------------------------------------------------------
 export const barRecord = async (
   user_id_param: string,
   dateStart_param: string,
@@ -86,7 +86,7 @@ export const barRecord = async (
   return finalResult;
 };
 
-// 2-1. chart (pie - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-1. chart (pie - all) --------------------------------------------------------------------------
 export const pieAll = async (
   user_id_param: string,
   dateStart_param: string,
@@ -124,7 +124,7 @@ export const pieAll = async (
   return finalResult;
 };
 
-// 3-1. chart (line - all) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-1. chart (line - all) -------------------------------------------------------------------------
 export const lineAll = async (
   user_id_param: string,
   dateStart_param: string,
@@ -162,7 +162,7 @@ export const lineAll = async (
   return finalResult;
 };
 
-// 4-1. chart (avg - all) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-1. chart (avg - all) --------------------------------------------------------------------------
 export const avgAll = async (
   user_id_param: string,
   dateStart_param: string,

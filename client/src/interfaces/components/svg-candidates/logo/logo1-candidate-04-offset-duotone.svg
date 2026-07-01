@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">logo1 offset-duotone</title>
+  <desc id="desc">전체 브랜드 로고 - 입체감 있는 듀오톤</desc>
+  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#167AB9}.s{fill:#61C9EC}.t{fill:#F8FAFC}.paper{fill:#fff}</style>
+  <rect x="18" y="18" width="220" height="220" rx="48" fill="#F8FAFC"/><path d="M39 190c34 38 126 54 181-1" fill="none" stroke="#61C9EC" stroke-width="12" opacity=".65"/>
+  <g transform="translate(8 9)" opacity=".14"><circle fill="#167AB9" class="o" cx="128" cy="91" r="66"/><circle fill="#fff" cx="133" cy="52" r="11"/><path fill="#fff" d="M118 68c13-6 25 1 28 12l8 26 25 18-10 16-33-22-10 27 24 19-12 16-40-28 15-40-18 8-8-18z"/><text x="128" y="210" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="900" fill="#167AB9">LIFECHANGE</text></g>
+  <g transform="translate(13 9) scale(.9)"><circle fill="#167AB9" class="o" cx="128" cy="91" r="66"/><circle fill="#fff" cx="133" cy="52" r="11"/><path fill="#fff" d="M118 68c13-6 25 1 28 12l8 26 25 18-10 16-33-22-10 27 24 19-12 16-40-28 15-40-18 8-8-18z"/><text x="128" y="210" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="900" fill="#167AB9">LIFECHANGE</text></g>
+</svg>

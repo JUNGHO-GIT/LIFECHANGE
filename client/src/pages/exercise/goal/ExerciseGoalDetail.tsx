@@ -13,14 +13,14 @@ import { axios } from "@exportLibs";
 import { insertComma, sync, handleNumberInput } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@exportContainers";
-import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
+import { Icons, Img, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const ExerciseGoalDetail = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
-    URL_OBJECT, PATH, sessionId, toList, navigate, localUnit,
+    URL_OBJECT, PATH, sessionId, toList, navigate, localUnit, chartColors, chartThemeColors,
     location_dateType, location_dateStart, location_dateEnd,
   } = useCommonValue();
   const { getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -29,7 +29,7 @@ export const ExerciseGoalDetail = memo(() => {
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateExercise();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<ExerciseGoalType>(ExerciseGoal);
   const [ EXIST, setEXIST ] = useState({
@@ -62,7 +62,7 @@ export const ExerciseGoalDetail = memo(() => {
     dateEnd: location_dateEnd ?? getMonthEndFmt(),
   });
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<
     ExerciseGoalType
   > = useRef(OBJECT);
@@ -77,17 +77,17 @@ export const ExerciseGoalDetail = memo(() => {
     dateEnd: string;
   }> = useRef(DATE);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     COUNT !== countRef.current && (countRef.current = COUNT);
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, `record`);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -117,7 +117,7 @@ export const ExerciseGoalDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.exercise_goal_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/goal/exist`, {
       params: {
@@ -141,7 +141,7 @@ export const ExerciseGoalDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -177,7 +177,7 @@ export const ExerciseGoalDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `goal`)) {
@@ -234,7 +234,7 @@ export const ExerciseGoalDetail = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `delete`)) {
@@ -287,7 +287,7 @@ export const ExerciseGoalDetail = memo(() => {
     });
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((_index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -302,11 +302,11 @@ export const ExerciseGoalDetail = memo(() => {
     }));
   }, []);
 
-  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -332,8 +332,8 @@ export const ExerciseGoalDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${i}`}
-            className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
+            key={`detail-${item._id || item.exercise_goal_dateStart || item.exercise_goal_number}`}
+            className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}
             <Grid container={true} spacing={1}>
@@ -368,13 +368,9 @@ export const ExerciseGoalDetail = memo(() => {
 									)
                   }
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise2.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartColors[5] }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`c`)
@@ -407,13 +403,9 @@ export const ExerciseGoalDetail = memo(() => {
 									)
                   }
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise3_1.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`vol`)
@@ -457,13 +449,9 @@ export const ExerciseGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_goal_scale}
                   error={ERRORS?.[i]?.exercise_goal_scale}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise5.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     localUnit
@@ -485,7 +473,7 @@ export const ExerciseGoalDetail = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
         <Br m={20} />
         {COUNT?.newSectionCnt > 0 && detailSection()}
@@ -493,7 +481,7 @@ export const ExerciseGoalDetail = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -505,7 +493,7 @@ export const ExerciseGoalDetail = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -520,7 +508,7 @@ export const ExerciseGoalDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {detailNode()}

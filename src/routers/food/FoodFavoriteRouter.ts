@@ -10,7 +10,7 @@ import * as service from "@services/food/FoodFavoriteService";
 import express, { Request, Response, type Router } from "express";
 export const router: Router = express.Router();
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -------------------------------------------------------------------------------
 router.get(`/list`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.list(req.query.user_id as string);
@@ -47,7 +47,7 @@ router.get(`/list`, async (req: Request, res: Response) => {
   }
 });
 
-// 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. update -----------------------------------------------------------------------------
 router.put(`/update`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.update(

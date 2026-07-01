@@ -1,6 +1,6 @@
-# .gitignore-public
+# .gitignore-private
 
-# Directories ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Directories ---------------------------------------------------------------------------------
 
 # 1. Build outputs
 **/build/
@@ -52,27 +52,27 @@
 **/.direnv/
 
 # 5. Project-private areas
-**/admin/
-**/private/
-**/auth/
-**/secrets/
-**/.secret/
-**/.secrets/
-**/.docs/
+# **/admin/
+# **/private/
+# **/auth/
+# **/secrets/
+# **/.secret/
+# **/.secrets/
 
 # 6. IDE / editor
-**/.vscode/
-**/.idea/
+# **/.vscode/
+# **/.idea/
 **/.history/
 **/.backup/
 **/.bookmark/
 **/.tmp/
+**/.etc/
 **/.grunt/
 **/.gulp/
 
 # 7. Java / runtime artifacts
-**/META-INF/
-**/.META-INF/
+# **/META-INF/
+# **/.META-INF/
 **/hs_err_pid*/
 **/replay_pid*/
 
@@ -83,9 +83,8 @@
 **/.playwright/
 **/.cypress/
 **/storybook-static/
-**/test-results/
 
-# Files ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+# Files ---------------------------------------------------------------------------------------
 
 # 1. OS / editor noise
 **/.DS_Store
@@ -106,37 +105,37 @@
 
 # 3. Secrets / env / credentials
 # 3-1. env files
-/.env
-/.env.*
-**/.env*
-**/.envrc
+# /.env
+# /.env.*
+# **/.env*
+# **/.envrc
 
 # 3-2. common rc files that often contain tokens
-**/.npmrc
-**/.yarnrc
-**/.pnpmrc
+# **/.npmrc
+# **/.yarnrc
+# **/.pnpmrc
 
 # 3-3. properties/props (keep templates)
-**/*.properties
-**/*.properties.*
-**/*.props
-**/*.props.*
+# **/*.properties
+# **/*.properties.*
+# **/*.props
+# **/*.props.*
 
 # 3-4. json config
-**/app.json
-**/app.json.*
+# **/app.json
+# **/app.json.*
 
 # 3-5. keys / certs
-**/*.keystore
-**/*.jks
-**/*.p12
-**/*.pfx
-**/*.pem
-**/*.key
-**/*.crt
-**/*.cer
-**/*.der
-**/*.csr
+# **/*.keystore
+# **/*.jks
+# **/*.p12
+# **/*.pfx
+# **/*.pem
+# **/*.key
+# **/*.crt
+# **/*.cer
+# **/*.der
+# **/*.csr
 
 # 4. Java/IDE project files
 **/.classpath
@@ -184,8 +183,8 @@
 **/.stylelintcache
 
 # 8. Process managers / local runtime
-**/ecosystem.config.js
-**/ecosystem.config.*
+# **/ecosystem.config.js
+# **/ecosystem.config.*
 
 # 99. case of env
-**/*[eE][nN][vV]*
+# **/*[eE][nN][vV]*

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">exercise2 clean-mono</title>
+  <desc id="desc">운동 계획 - 선 중심의 절제형</desc>
+  <style>.o{stroke:#48505A;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FFFFFF}.s{fill:#E8EEF2}.t{fill:#D7E0E6}.paper{fill:#fff}.detail{display:none}</style>
+  
+  
+  <g><rect class="paper o" x="43" y="39" width="170" height="178" rx="24"/><path class="p o" d="M43 83h170"/><path class="o" d="M78 28v37m50-37v37m50-37v37"/><path class="o detail" d="M75 112h106"/><g transform="translate(0 38)"><path class="o" d="M77 137h102"/><rect class="s o" x="88" y="117" width="18" height="40" rx="5"/><rect class="s o" x="150" y="117" width="18" height="40" rx="5"/></g></g>
+</svg>

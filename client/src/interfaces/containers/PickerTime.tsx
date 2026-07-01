@@ -6,14 +6,14 @@
  */
 
 import { JSX, React, memo, useCallback, useEffect, useMemo, useState } from "@exportReacts";
-import { Grid, Img } from "@exportComponents";
+import { Icons, Grid, Img } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
 import { useCommonValue } from "@exportHooks";
 import { moment } from "@exportLibs";
 import { AdapterMoment, DigitalClock, LocalizationProvider } from "@exportMuis";
 import { useStoreLanguage } from "@exportStores";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface PickerTimeProps {
   OBJECT: any;
   setOBJECT: React.Dispatch<React.SetStateAction<any>>;
@@ -25,23 +25,23 @@ declare interface PickerTimeProps {
   i: number;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const PickerTime = memo((
   {
     OBJECT, setOBJECT, REFS, ERRORS, DATE, LOCKED, extra, i,
   }: PickerTimeProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { firstStr, secondStr, localLang, localTimeZone } = useCommonValue();
   const { translate } = useStoreLanguage();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [ image, setImage ] = useState<string>(``);
   const [ targetStr, setTargetStr ] = useState<string>(``);
   const [ translateStr, setTranslateStr ] = useState<string>(``);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ----------------------------------------------------------------------------
   useEffect(() => {
     // 1. today & calendar
     (firstStr === `today` || firstStr === `calendar`) && (() => {
@@ -145,7 +145,7 @@ export const PickerTime = memo((
     })();
   }, [ firstStr, secondStr, extra, DATE, translate ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ----------------------------------------------------------------------------------
   const handleTodayChange = useCallback((e: any, closePopup: any) => {
     setOBJECT((prev: any) => ({
       ...prev,
@@ -159,7 +159,7 @@ export const PickerTime = memo((
     closePopup();
   }, [ setOBJECT, targetStr, i, extra ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ----------------------------------------------------------------------------------
   const handleGoalChange = useCallback((e: any, closePopup: any) => {
     setOBJECT((prev: any) => ({
       ...prev,
@@ -168,7 +168,7 @@ export const PickerTime = memo((
     closePopup();
   }, [ setOBJECT, extra ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ----------------------------------------------------------------------------------
   const handleRecordChange = useCallback((e: any, closePopup: any) => {
     setOBJECT((prev: any) => ({
       ...prev,
@@ -182,18 +182,17 @@ export const PickerTime = memo((
     closePopup();
   }, [ setOBJECT, firstStr, i, extra ]);
 
-  // 4. memoized values ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. memoized values ---------------------------------------------------------------------------
   const imgAdornment: JSX.Element = useMemo(() => (
-    <Img
-      max={10}
-      hover={true}
-      shadow={false}
-      radius={false}
-      src={`${image}.webp`}
+    <Icons
+      key={image}
+      name={image}
+      isIconButton={false}
+      className={`w-10px h-10px hover`}
     />
   ), [image]);
 
-  // 4. memoized values ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. memoized values ---------------------------------------------------------------------------
   const digitalClockProps: any = useMemo(() => ({
     timeStep: 10,
     ampm: false,
@@ -204,12 +203,12 @@ export const PickerTime = memo((
     },
   }), [localTimeZone]);
 
-  // 7. time ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. time ---------------------------------------------------------------------------------------
   const timeNode: JSX.Element = useMemo(() => {
     // 1. today & calendar
     const todaySection = () => (
       <PopUp
-        key={`${firstStr}-${extra}-${i}`}
+        key={`${firstStr}-${extra}-${OBJECT?.[`calendar_${targetStr}_section`]?.[i]?.[extra]}`}
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
@@ -250,7 +249,7 @@ export const PickerTime = memo((
     // 2. goal
     const goalSection = () => (
       <PopUp
-        key={`${firstStr}-${extra}-goal-${i}`}
+        key={`${firstStr}-${extra}-goal-${OBJECT?.[extra]}`}
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
@@ -290,7 +289,7 @@ export const PickerTime = memo((
     // 3. record
     const recordSection = () => (
       <PopUp
-        key={`${firstStr}-${extra}-record-${i}`}
+        key={`${firstStr}-${extra}-record-${OBJECT?.[`${firstStr}_section`]?.[i]?.[extra]}`}
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
@@ -339,7 +338,7 @@ export const PickerTime = memo((
     firstStr, secondStr, extra, i, OBJECT, REFS, ERRORS, LOCKED, targetStr, translateStr, imgAdornment, digitalClockProps, localLang, translate, handleTodayChange, handleGoalChange, handleRecordChange,
   ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {timeNode}

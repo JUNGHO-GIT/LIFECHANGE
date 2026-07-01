@@ -11,29 +11,29 @@ import { Accordion, AccordionSummary } from "@exportMuis";
 import { memo } from "@exportReacts";
 import { useStoreLanguage } from "@exportStores";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface EmptyProps {
   DATE: any;
   extra: string;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const Empty = memo((
   { DATE, extra }: EmptyProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common -------------------------------------------------------------------------------------
   const { navigate, isFind, isGoal, isRecord, toDetail } = useCommonValue();
   const { getDayStartFmt, getDayEndFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
-  // 7. emptyNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. emptyNode ----------------------------------------------------------------------------------
   const emptyNode = () => {
     // 2. isFindSection
     const isFindSection = () => (
-      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`}>
+      <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`}>
         <Grid size={12} className={`p-2px`}>
-          <Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
+          <Accordion className={`radius-3 border-0 shadow-0`} expanded={false}>
             <AccordionSummary>
               <Grid container={true} spacing={1}>
                 <Grid size={4} className={`d-row-left`}>
@@ -54,9 +54,9 @@ export const Empty = memo((
     );
     // 3. isGoalSection
     const isGoalSection = () => (
-      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`}>
+      <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`}>
         <Grid size={12} className={`p-2px`}>
-          <Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
+          <Accordion className={`radius-3 border-0 shadow-0`} expanded={false}>
             <AccordionSummary
               onClick={() => {
                 void navigate(toDetail, {
@@ -95,9 +95,9 @@ export const Empty = memo((
     );
     // 4. isRecordSection
     const isRecordSection = () => (
-      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`}>
+      <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`}>
         <Grid size={12} className={`p-2px`}>
-          <Accordion className={`border-0 shadow-0 radius-2`} expanded={false}>
+          <Accordion className={`radius-3 border-0 shadow-0`} expanded={false}>
             <AccordionSummary
               onClick={() => {
                 void navigate(toDetail, {
@@ -144,7 +144,7 @@ export const Empty = memo((
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {emptyNode()}

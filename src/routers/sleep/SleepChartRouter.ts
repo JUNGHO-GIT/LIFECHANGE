@@ -9,7 +9,7 @@ import * as service from "@services/sleep/SleepChartService";
 import express, { Request, Response, type Router } from "express";
 export const router: Router = express.Router();
 
-// 1-1. chart (bar - today) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. chart (bar - today) ------------------------------------------------------------------------
 router.get(`/bar`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.bar(
@@ -45,7 +45,7 @@ router.get(`/bar`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-2. chart (pie - week) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-2. chart (pie - week) -------------------------------------------------------------------------
 router.get(`/pie/week`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.pieWeek(
@@ -81,7 +81,7 @@ router.get(`/pie/week`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-3. chart (pie - month) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-3. chart (pie - month) ------------------------------------------------------------------------
 router.get(`/pie/month`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.pieMonth(
@@ -117,7 +117,7 @@ router.get(`/pie/month`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-4. chart (pie - year) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-4. chart (pie - year) -------------------------------------------------------------------------
 router.get(`/pie/year`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.pieYear(
@@ -153,7 +153,7 @@ router.get(`/pie/year`, async (req: Request, res: Response) => {
   }
 });
 
-// 3-1. chart (line - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-1. chart (line - week) ------------------------------------------------------------------------
 router.get(`/line/week`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.lineWeek(
@@ -189,7 +189,7 @@ router.get(`/line/week`, async (req: Request, res: Response) => {
   }
 });
 
-// 3-2. chart (line - month) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. chart (line - month) -----------------------------------------------------------------------
 router.get(`/line/month`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.lineMonth(
@@ -225,7 +225,7 @@ router.get(`/line/month`, async (req: Request, res: Response) => {
   }
 });
 
-// 4-1. chart (avg - week) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-1. chart (avg - week) -------------------------------------------------------------------------
 router.get(`/avg/week`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.avgWeek(
@@ -261,7 +261,7 @@ router.get(`/avg/week`, async (req: Request, res: Response) => {
   }
 });
 
-// 4-2. chart (avg - month) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-2. chart (avg - month) ------------------------------------------------------------------------
 router.get(`/avg/month`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.avgMonth(

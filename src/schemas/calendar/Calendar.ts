@@ -8,7 +8,7 @@
 import { incrementSeq } from "@schemas/Counter";
 import mongoose from "mongoose";
 
-// 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. types ---------------------------------------------------------------------------------------
 declare interface CalendarExerciseSection {
   exercise_part: string;
   exercise_title: string;
@@ -64,7 +64,7 @@ declare interface CalendarType extends mongoose.Document {
   calendar_regDt: Date;
   calendar_updateDt: Date;
 }
-// 1. schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema(
   {
     user_id: {
@@ -298,19 +298,19 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. index -----------------------------------------------------------------------------------------------------------------------
 schema.index({
   user_id: 1,
   calendar_exercise_dateStart: 1,
   calendar_exercise_dateEnd: 1,
 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. counter --------------------------------------------------------------------------------------
 schema.pre<CalendarType>(`save`, async function () {
   if (this.isNew) {
     this.calendar_number = await incrementSeq(`calendar_number`, `Calendar`);
   }
 });
 
-// 5. model ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. model ----------------------------------------------------------------------------------------
 export const Calendar = mongoose.model<CalendarType>(`Calendar`, schema);

@@ -5,10 +5,10 @@
  * @since 2025-12-25
  */
 
-// 1. random ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. random ----------------------------------------------------------------------------------
 export const randomNumber = (data: number) => Math.floor(Math.random() * (Number.isNaN(Number(data)) ? 100 : data));
 
-// 2. time ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. time ------------------------------------------------------------------------------------
 export const randomTime = (): string => {
   const hour: string = Math.floor(Math.random() * 23)
   .toString()
@@ -19,7 +19,7 @@ export const randomTime = (): string => {
   return `${hour}:${minute}`;
 };
 
-// 3. date ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. date ------------------------------------------------------------------------------------
 export const calcDate = (startTime: string, endTime: string) => {
   const start: Date = new Date(`1970/01/01 ${startTime}`);
   const end: Date = new Date(`1970/01/01 ${endTime}`);
@@ -27,7 +27,7 @@ export const calcDate = (startTime: string, endTime: string) => {
   return `${duration.getHours().toString().padStart(2, `0`)}:${duration.getMinutes().toString().padStart(2, `0`)}`;
 };
 
-// 4. decimal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. decimal ---------------------------------------------------------------------------------
 export const strToDecimal = (time: string): number => {
   if (!time) {
     return 0;
@@ -39,7 +39,7 @@ export const strToDecimal = (time: string): number => {
   return adjustedHours + adjustedMinutes / 60;
 };
 
-// 5. decimal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. decimal ---------------------------------------------------------------------------------
 export const decimalToStr = (time: number) => {
   if (time === null || time === undefined || Number.isNaN(time)) {
     return `00:00`;
@@ -52,7 +52,7 @@ export const decimalToStr = (time: number) => {
   return `${String(adjustedHours).padStart(2, `0`)}:${String(adjustedMinutes).padStart(2, `0`)}`;
 };
 
-// 6. insertComma ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 6. insertComma -----------------------------------------------------------------------------
 // - 세자리 마다 콤마(,) 삽입
 export const insertComma = (param: string | number) => {
   let str: string | number = param;
@@ -77,7 +77,7 @@ export const insertComma = (param: string | number) => {
   return (isNegative ? `-` : ``) + formattedNum + (decimalPart !== undefined ? `.${decimalPart}` : ``);
 };
 
-// 7. makeForm ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 7. makeForm --------------------------------------------------------------------------------
 export const makeForm = (object: Record<string, unknown> | null, fileList: File[] | null, extra?: Record<string, string>) => {
   const form: FormData = new FormData();
 
@@ -111,7 +111,7 @@ export const makeForm = (object: Record<string, unknown> | null, fileList: File[
   return form;
 };
 
-// 8. handleNumberInput ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 8. handleNumberInput -----------------------------------------------------------------------
 /**
  * 숫자 입력 처리 유틸
  * - 콤마(,) 제거, 최대값 제한, 소수점 자리 제한, 선행 0 제거를 수행합니다.
@@ -136,7 +136,7 @@ export const handleNumberInput = (val: string, max: number, decimalPlaces: numbe
   return processedValue;
 };
 
-// 9. formatY ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 9. formatY ---------------------------------------------------------------------------------
 // - 차트 Y축 범위 및 눈금 계산
 const formatYCache: WeakMap<any, unknown> = new WeakMap();
 
@@ -236,9 +236,23 @@ export const formatY = (OBJECT: unknown, array: unknown, type: string, _extra?: 
   );
 };
 
-// 10. formatDate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 10. formatDateMmDd ---------------------------------------------------------------------------------
 // - 날짜 형식 변환 (YYYY-MM-DD -> MM/DD)
-export const formatDate = (dateStr?: string) => {
+export const formatDateMmDd = (dateStr?: string) => {
   const datePattern: RegExp = /\d{4}-(\d{2})-(\d{2})/g;
   return (dateStr ?? ``).replaceAll(datePattern, `$1/$2`);
+};
+
+// 10. formatDateYyMmDd -----------------------------------------------------------------------------
+// - 날짜 형식 변환 (YYYY-MM-DD -> YY/MM/DD)
+export const formatDateYyMmDd = (dateStr?: string) => {
+  const datePattern: RegExp = /\d{2}(\d{2})-(\d{2})-(\d{2})/g;
+  return (dateStr ?? ``).replaceAll(datePattern, `$1/$2/$3`);
+};
+
+// 10. formatDateYyyyMmDd -----------------------------------------------------------------------------
+// - 날짜 형식 변환 (YYYY-MM-DD -> YYYY/MM/DD)
+export const formatDateYyyyMmDd = (dateStr?: string) => {
+  const datePattern: RegExp = /(\d{4})-(\d{2})-(\d{2})/g;
+  return (dateStr ?? ``).replaceAll(datePattern, `$1/$2/$3`);
 };

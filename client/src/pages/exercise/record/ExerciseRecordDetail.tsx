@@ -14,16 +14,16 @@ import { handleNumberInput } from "@exportScripts";
 import { ExerciseRecord, ExerciseRecordType } from "@exportSchemas";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@exportContainers";
-import { Img, Bg, Paper, Grid, Br } from "@exportComponents";
+import { Icons, Img, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const ExerciseRecordDetail = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, PATH, navigate, toList,
-    sessionId, localUnit, bgColors, exerciseArray,
+    sessionId, localUnit, bgColors, exerciseArray, chartThemeColors,
     location_dateStart, location_dateEnd,
   } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -32,7 +32,7 @@ export const ExerciseRecordDetail = memo(() => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<ExerciseRecordType>(ExerciseRecord);
   const [ EXIST, setEXIST ] = useState({
@@ -65,12 +65,12 @@ export const ExerciseRecordDetail = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
-  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useDeferredValue ----------------------------------------------------------------------
   // - 항목 렌더를 비긴급으로 분리
   // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<
     ExerciseRecordType
   > = useRef(OBJECT);
@@ -85,17 +85,17 @@ export const ExerciseRecordDetail = memo(() => {
     dateEnd: string;
   }> = useRef(DATE);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     COUNT !== countRef.current && (countRef.current = COUNT);
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useTime(OBJECT, setOBJECT, PATH, `record`);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -125,7 +125,7 @@ export const ExerciseRecordDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.exercise_record_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -149,7 +149,7 @@ export const ExerciseRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -199,7 +199,7 @@ export const ExerciseRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const totals = OBJECT?.exercise_section?.reduce((acc: any, cur: any) => {
       return {
@@ -228,7 +228,7 @@ export const ExerciseRecordDetail = memo(() => {
 
   }, [OBJECT?.exercise_section]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
       exercise_record_part: exerciseArray[1]?.exercise_record_part ?? ``,
@@ -255,7 +255,7 @@ export const ExerciseRecordDetail = memo(() => {
 
   }, [COUNT?.newSectionCnt]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `record`)) {
@@ -312,7 +312,7 @@ export const ExerciseRecordDetail = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `delete`)) {
@@ -367,7 +367,7 @@ export const ExerciseRecordDetail = memo(() => {
     });
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
     setOBJECT((prev) => ({
       ...prev,
@@ -379,11 +379,11 @@ export const ExerciseRecordDetail = memo(() => {
     }));
   }, []);
 
-  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -404,7 +404,7 @@ export const ExerciseRecordDetail = memo(() => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         {/** row 1 * */}
         <Grid container={true} spacing={1}>
           <Grid size={12}>
@@ -414,13 +414,9 @@ export const ExerciseRecordDetail = memo(() => {
               label={translate(`totalVolume`)}
               value={insertComma(OBJECT?.exercise_record_total_volume ?? `0`)}
               startadornment={(
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`exercise3_1.webp`}
-                />
+                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                  {`●`}
+                </Div>
               )}
               endadornment={
                 translate(`vol`)
@@ -438,13 +434,9 @@ export const ExerciseRecordDetail = memo(() => {
               label={translate(`totalCardio`)}
               value={OBJECT?.exercise_record_total_cardio}
               startadornment={(
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`exercise4.webp`}
-                />
+                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.cardio }}>
+                  {`●`}
+                </Div>
               )}
               endadornment={
                 translate(`hm`)
@@ -460,13 +452,9 @@ export const ExerciseRecordDetail = memo(() => {
               label={translate(`scale`)}
               value={insertComma(OBJECT?.exercise_record_total_scale ?? `0`)}
               startadornment={(
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`exercise5.webp`}
-                />
+                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                  {`●`}
+                </Div>
               )}
               endadornment={
                 localUnit
@@ -493,8 +481,8 @@ export const ExerciseRecordDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${i}`}
-            className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
+            key={`detail-${item.exercise_record_part}-${item.exercise_record_title}-${item.exercise_record_set}-${item.exercise_record_rep}-${item.exercise_record_weight}-${item.exercise_record_cardio}`}
+            className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}
             <Grid container={true} spacing={1}>
@@ -540,7 +528,7 @@ export const ExerciseRecordDetail = memo(() => {
                 >
                   {exerciseArray.map((part: any, idx: number) => (
                     <MenuItem
-                      key={idx}
+                      key={part.exercise_record_part}
                       value={part.exercise_record_part}
                       className={`fs-0-8rem`}
                     >
@@ -574,7 +562,7 @@ export const ExerciseRecordDetail = memo(() => {
                     const foundItem: any = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
                     return foundItem?.exercise_record_title?.map((title: any, idx: number) => (
                       <MenuItem
-                        key={idx}
+                        key={title}
                         value={title}
                         className={`fs-0-8rem`}
                       >
@@ -596,13 +584,9 @@ export const ExerciseRecordDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_set}
                   error={ERRORS?.[i]?.exercise_record_set}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise3_1.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`s`)
@@ -632,13 +616,9 @@ export const ExerciseRecordDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_rep}
                   error={ERRORS?.[i]?.exercise_record_rep}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise3_2.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`r`)
@@ -672,13 +652,9 @@ export const ExerciseRecordDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_weight}
                   error={ERRORS?.[i]?.exercise_record_weight}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise3_3.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     localUnit
@@ -719,7 +695,7 @@ export const ExerciseRecordDetail = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
         <Br m={20} />
         {totalSection()}
@@ -729,7 +705,7 @@ export const ExerciseRecordDetail = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -741,7 +717,7 @@ export const ExerciseRecordDetail = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -756,7 +732,7 @@ export const ExerciseRecordDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {detailNode()}

@@ -41,12 +41,12 @@ import helmet from "helmet";
 import cors from "cors";
 import qs from "qs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 loadEnv();
 const app: Express = express();
 const preFix: string = process.env.HTTP_PREFIX ?? ``;
 
-// 필수 환경변수 검증 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 필수 환경변수 검증 -----------------------------------------------------------------------------
 (function validateEnv() {
   const requiredKeys: string[] = [
     `HTTP_PORT`,
@@ -77,7 +77,7 @@ const preFix: string = process.env.HTTP_PREFIX ?? ``;
   }
 })();
 
-// 서버 포트 설정 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 서버 포트 설정 ----------------------------------------------------------------------------------
 const httpPort: number = Number(process.env.HTTP_PORT);
 const httpsPort: number = Number(process.env.HTTPS_PORT);
 const MAX_PORT_RETRY: number = 10;
@@ -109,7 +109,7 @@ let httpServer: ReturnType<typeof app.listen>;
   });
 })(httpPort, httpsPort, 0);
 
-// MongoDB 설정 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// MongoDB 설정 ------------------------------------------------------------------------------------
 const id: string | undefined = process.env.DB_USER;
 const pw: string | undefined = process.env.DB_PASS;
 const host: string | undefined = process.env.DB_HOST;
@@ -140,7 +140,7 @@ mongoose.connect(
     process.exit(1);
   });
 
-// 로그 설정 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 로그 설정 -------------------------------------------------------------------------------------------
 if (isDev) {
   const color = {
     reset: `\u001B[0m`,
@@ -170,7 +170,7 @@ if (isDev) {
     .filter((x) => x !== undefined)
     .map((element) => fmtJson(element));
 
-    console.log(`\n―――――――――――――――――――――――――――――――――――――――――――――`);
+    console.log(`\n---------------------------------------------`);
     log(
       `db.getCollection('${fmtColl(coll)}').${fmtMethod(method)}(`,
       args.join(`, `),
@@ -179,21 +179,21 @@ if (isDev) {
   });
 }
 
-// qs 파서 적용 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// qs 파서 적용 ------------------------------------------------------------------------------------
 app.set(`query parser`, (str: string) => qs.parse(str));
 
-// 미들웨어 설정 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 미들웨어 설정 -----------------------------------------------------------------------------------
 const bodyLimit: string = process.env.HTTP_BODY_LIMIT ?? `1mb`;
 app.use(express.json({ limit: bodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: bodyLimit }));
-// helmet 보안 헤더 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// helmet 보안 헤더 -----------------------------------------------------------------------------
 app.use(
   helmet({
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
   }),
 );
-// CORS origin 정책 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// CORS origin 정책 ----------------------------------------------------------------------------
 const corsOrigin = (
   reqOrigin: string | undefined,
   callback: (err: Error | null, allow?: boolean) => void,
@@ -243,7 +243,7 @@ app.use(
 );
 app.use(compression());
 
-// NoSQL 주입 방어(sanitize) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// NoSQL 주입 방어(sanitize) -------------------------------------------------------------------
 const sanitizeMongoKeys = (value: unknown, depth: number): void => {
   // 순환/과대 중첩 방어용 깊이 상한
   if (depth > 20 || value === null || typeof value !== `object`) {
@@ -272,7 +272,7 @@ app.use((req: Request, _res: Response, next: Function) => {
   next();
 });
 
-// rate-limit 설정 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// rate-limit 설정 ------------------------------------------------------------------------------
 const limitWindowMs: number = Number(
   process.env.RATE_LIMIT_WINDOW_MS ?? 15 * 60 * 1000,
 );
@@ -286,7 +286,7 @@ const sensitiveLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-// 헬스체크/레디니스 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 헬스체크/레디니스 -----------------------------------------------------------------------------
 app.get(`${preFix}/health`, (_req: Request, res: Response) => {
   res.status(200).json({ status: `ok` });
 });
@@ -297,7 +297,7 @@ app.get(`${preFix}/ready`, (_req: Request, res: Response) => {
     .json({ status: isReady ? `ready` : `not-ready` });
 });
 
-// 라우터 설정 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 라우터 설정 -------------------------------------------------------------------------------------
 // calendar
 app.use(`${preFix}/calendar`, CalendarRouter);
 
@@ -331,7 +331,7 @@ app.use(`${preFix}/user`, sensitiveLimiter, UserRouter);
 app.use(`${preFix}/admin`, AdminRouter);
 app.use(`${preFix}/auth/google`, sensitiveLimiter, GoogleRouter);
 
-// 0. 에러처리 미들웨어 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. 에러처리 미들웨어 -----------------------------------------------------------------------
 app.use((err: Error, req: Request, res: Response, _next: Function) => {
   console.error(err.stack);
   res.status(500).send({
@@ -340,7 +340,7 @@ app.use((err: Error, req: Request, res: Response, _next: Function) => {
   });
 });
 
-// 1. graceful shutdown ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. graceful shutdown -----------------------------------------------------------------------
 let shuttingDown: boolean = false;
 const gracefulShutdown = async (signal: string) => {
   if (shuttingDown) {
@@ -375,7 +375,7 @@ process.on(`SIGINT`, () => {
   void gracefulShutdown(`SIGINT`);
 });
 
-// 2. 전역 예외 핸들러 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. 전역 예외 핸들러 -----------------------------------------------------------------------
 process.on(`unhandledRejection`, (reason: unknown) => {
   console.error(`unhandledRejection: ${reason}`);
 });

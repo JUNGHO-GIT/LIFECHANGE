@@ -15,18 +15,18 @@ import { axios } from "@exportLibs";
 import { insertComma, handleNumberInput, sync } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input, Select, Memo } from "@exportContainers";
-import { Img, Bg, Paper, Grid, Div, Br } from "@exportComponents";
+import { Icons, Img, Bg, Paper, Grid, Div, Br } from "@exportComponents";
 import { Checkbox, MenuItem } from "@exportMuis";
 import { MoneyCategoryItem, ExerciseCategoryItem, FoodCategoryItem } from "@exportTypes";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const CalendarDetail = memo(() => {
-  // 1. common ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common -------------------------------------------------------------------------------------
   const {
     URL_OBJECT, navigate, toCalendarList, sessionId, localCurrency,
     bgColors, localUnit,
     exerciseArray, foodArray, moneyArray,
-    location_dateType, location_dateStart, location_dateEnd,
+    location_dateType, location_dateStart, location_dateEnd, chartThemeColors,
   } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
@@ -34,7 +34,7 @@ export const CalendarDetail = memo(() => {
   const { setLOADING } = useStoreLoading();
   const { ERRORS, REFS, validate } = useValidateCalendar();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<CalendarType>(Calendar);
   const [ EXIST, setEXIST ] = useState({
@@ -67,10 +67,10 @@ export const CalendarDetail = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
-  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useDeferredValue ----------------------------------------------------------------------
   // 섹션 항목 렌더를 비긴급으로 분리: 진입 시 화면 틀이 먼저 그려지고 상세 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<
     CalendarType
   > = useRef(OBJECT);
@@ -85,14 +85,14 @@ export const CalendarDetail = memo(() => {
     dateEnd: string;
   }> = useRef(DATE);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     COUNT !== countRef.current && (countRef.current = COUNT);
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
       const dateRange: string = (
@@ -120,7 +120,7 @@ export const CalendarDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.calendar_exercise_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/exist`, {
       params: {
@@ -144,7 +144,7 @@ export const CalendarDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -202,7 +202,7 @@ export const CalendarDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect (exercise total 계산) ――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect (exercise total 계산) ------------------------------------------------------
   useEffect(() => {
     const totals: any = OBJECT?.calendar_exercise_section?.reduce((acc: any, cur: any) => ({
       totalVolume: (
@@ -228,7 +228,7 @@ export const CalendarDetail = memo(() => {
     }));
   }, [OBJECT?.calendar_exercise_section]);
 
-  // 2-3. useEffect (food total 계산) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect (food total 계산) ----------------------------------------------------------
   useEffect(() => {
     const totals: any = OBJECT?.calendar_food_section?.reduce((acc: any, cur: any) => ({
       totalCalorie: Number(acc.totalCalorie) + Number(cur.food_record_kcal),
@@ -251,7 +251,7 @@ export const CalendarDetail = memo(() => {
     }));
   }, [OBJECT?.calendar_food_section]);
 
-  // 2-3. useEffect (money total 계산) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect (money total 계산) ---------------------------------------------------------
   useEffect(() => {
     const totals: any = OBJECT?.calendar_money_section?.reduce((acc: any, cur: any) => {
       const amount: number = Number(cur.money_record_amount);
@@ -271,7 +271,7 @@ export const CalendarDetail = memo(() => {
     }));
   }, [OBJECT?.calendar_money_section]);
 
-  // 2-3. useEffect (sleep total 계산) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect (sleep total 계산) ---------------------------------------------------------
   useEffect(() => {
     const totals: any = OBJECT?.calendar_sleep_section?.reduce((acc: any, cur: any) => {
       const sleepTime: any = cur.sleep_record_sleepTime?.split(`:`) ?? [ `0`, `0` ];
@@ -289,7 +289,7 @@ export const CalendarDetail = memo(() => {
     }));
   }, [OBJECT?.calendar_sleep_section]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `record`)) {
@@ -346,7 +346,7 @@ export const CalendarDetail = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `delete`)) {
@@ -401,7 +401,7 @@ export const CalendarDetail = memo(() => {
     });
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-3. handle ----------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number, section?: string) => {
     section && (() => {
       setOBJECT((prev: CalendarType) => ({
@@ -417,11 +417,11 @@ export const CalendarDetail = memo(() => {
     })();
   }, []);
 
-  // 7. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. detail -------------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -446,16 +446,14 @@ export const CalendarDetail = memo(() => {
     const exerciseSection = () => (
       <>
         {/** header * */}
-        <Grid container={true} spacing={0} className={`${OBJECT?.calendar_exercise_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 shadow-1 p-10px`}>
+        <Grid container={true} spacing={0} className={`${OBJECT?.calendar_exercise_section?.length === 0 ? `radius-2` : `radius-top-2`} border-light-1 shadow-bottom-1 p-10px`}>
           <Grid size={12} className={`d-row`}>
             <Div className={`d-row-left`}>
-              <Img
-                max={10}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={`exercise1.webp`}
-                className={`ml-5px mr-10px`}
+              <Icons
+                key={`exercise1`}
+                name={`exercise1`}
+                isIconButton={false}
+                className={`w-10px h-10px hover ml-5px mr-10px`}
               />
               <Div className={`fs-0-9rem fw-600`}>
                 {translate(`exercise`)}
@@ -469,8 +467,8 @@ export const CalendarDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`exercise-detail-${i}`}
-            className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 border-top-0 shadow-1 p-20px`}
+            key={`exercise-detail-${item.exercise_record_part}-${item.exercise_record_title}-${item.exercise_record_set}-${item.exercise_record_rep}-${item.exercise_record_weight}-${item.exercise_record_cardio}`}
+            className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-light-1 border-top-0 shadow-1 p-20px`}
           >
             {/** row 1 * */}
             <Grid container={true} spacing={1}>
@@ -518,7 +516,7 @@ export const CalendarDetail = memo(() => {
                 >
                   {exerciseArray.map((part: any, idx: number) => (
                     <MenuItem
-                      key={idx}
+                      key={part.exercise_record_part}
                       value={part.exercise_record_part}
                       className={`fs-0-8rem`}
                     >
@@ -552,7 +550,7 @@ export const CalendarDetail = memo(() => {
                     const foundItem: ExerciseCategoryItem | null = foundIndex !== -1 ? exerciseArray[foundIndex] : null;
                     return (foundItem as any)?.exercise_record_title?.map((title: any, idx: number) => (
                       <MenuItem
-                        key={idx}
+                        key={title}
                         value={title}
                         className={`fs-0-8rem`}
                       >
@@ -574,13 +572,9 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_set}
                   error={ERRORS?.[i]?.exercise_record_set}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise3_1.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`s`)
@@ -609,13 +603,9 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_rep}
                   error={ERRORS?.[i]?.exercise_record_rep}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise3_2.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`r`)
@@ -648,13 +638,9 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_weight}
                   error={ERRORS?.[i]?.exercise_record_weight}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`exercise3_3.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     localUnit
@@ -697,16 +683,14 @@ export const CalendarDetail = memo(() => {
     const foodSection = () => (
       <>
         {/** header * */}
-        <Grid container={true} spacing={0} className={`${OBJECT?.calendar_food_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 shadow-1 p-10px`}>
+        <Grid container={true} spacing={0} className={`${OBJECT?.calendar_food_section?.length === 0 ? `radius-2` : `radius-top-2`} border-light-1 shadow-bottom-1 p-10px`}>
           <Grid size={12} className={`d-row`}>
             <Div className={`d-row-left`}>
-              <Img
-                max={10}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={`food1.webp`}
-                className={`ml-5px mr-10px`}
+              <Icons
+                key={`food1`}
+                name={`food1`}
+                isIconButton={false}
+                className={`w-10px h-10px hover ml-5px mr-10px`}
               />
               <Div className={`fs-0-9rem fw-600`}>
                 {translate(`food`)}
@@ -720,8 +704,8 @@ export const CalendarDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`food-detail-${i}`}
-            className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 border-top-0 shadow-1 p-20px`}
+            key={`food-detail-${item.food_record_part}-${item.food_record_name}-${item.food_record_brand}-${item.food_record_count}-${item.food_record_serv}-${item.food_record_gram}`}
+            className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-light-1 border-top-0 shadow-1 p-20px`}
           >
             {/** row 1 * */}
             <Grid container={true} spacing={1}>
@@ -766,7 +750,7 @@ export const CalendarDetail = memo(() => {
                 >
                   {foodArray.map((part: any, idx: number) => (
                     <MenuItem
-                      key={idx}
+                      key={part.food_record_part}
                       value={part.food_record_part}
                       className={`fs-0-8rem`}
                     >
@@ -903,13 +887,9 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_record_kcal}
                   error={ERRORS?.[i]?.food_record_kcal}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food2.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`kc`)
@@ -938,13 +918,9 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_record_carb}
                   error={ERRORS?.[i]?.food_record_carb}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food3.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`g`)
@@ -977,13 +953,9 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_record_protein}
                   error={ERRORS?.[i]?.food_record_protein}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food4.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`g`)
@@ -1012,13 +984,9 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_record_fat}
                   error={ERRORS?.[i]?.food_record_fat}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food5.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     translate(`g`)
@@ -1049,16 +1017,14 @@ export const CalendarDetail = memo(() => {
     const moneySection = () => (
       <>
         {/** header * */}
-        <Grid container={true} spacing={0} className={`${OBJECT?.calendar_money_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 shadow-1 p-10px`}>
+        <Grid container={true} spacing={0} className={`${OBJECT?.calendar_money_section?.length === 0 ? `radius-2` : `radius-top-2`} border-light-1 shadow-bottom-1 p-10px`}>
           <Grid size={12} className={`d-row`}>
             <Div className={`d-row-left`}>
-              <Img
-                max={10}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={`money1.webp`}
-                className={`ml-5px mr-10px`}
+              <Icons
+                key={`money1`}
+                name={`money1`}
+                isIconButton={false}
+                className={`w-10px h-10px hover ml-5px mr-10px`}
               />
               <Div className={`fs-0-9rem fw-600`}>
                 {translate(`money`)}
@@ -1072,8 +1038,8 @@ export const CalendarDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`money-detail-${i}`}
-            className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 border-top-0 shadow-1 p-20px`}
+            key={`money-detail-${item.money_record_part}-${item.money_record_title}-${item.money_record_amount}-${item.money_record_content}-${item.money_record_include}`}
+            className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-light-1 border-top-0 shadow-1 p-20px`}
           >
             {/** row 1 * */}
             <Grid container={true} spacing={1}>
@@ -1121,7 +1087,7 @@ export const CalendarDetail = memo(() => {
                 >
                   {moneyArray.map((part: any, idx: number) => (
                     <MenuItem
-                      key={idx}
+                      key={part.money_record_part}
                       value={part.money_record_part}
                       className={`fs-0-8rem`}
                     >
@@ -1155,7 +1121,7 @@ export const CalendarDetail = memo(() => {
                     const foundItem: MoneyCategoryItem | null = foundIndex !== -1 ? moneyArray[foundIndex] : null;
                     return (foundItem as any)?.money_record_title?.map((title: any, idx: number) => (
                       <MenuItem
-                        key={idx}
+                        key={title}
                         value={title}
                         className={`fs-0-8rem`}
                       >
@@ -1177,13 +1143,9 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.money_record_amount}
                   error={ERRORS?.[i]?.money_record_amount}
                   startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`money2.webp`}
-                    />
+                    <Div className={`fs-0-6rem`} style={{ color: bgColors?.[moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part)] ?? chartThemeColors.expense }}>
+                      {`●`}
+                    </Div>
                   )}
                   endadornment={
                     localCurrency
@@ -1250,16 +1212,14 @@ export const CalendarDetail = memo(() => {
     const sleepSection = () => (
       <>
         {/** header * */}
-        <Grid container={true} spacing={0} className={`${OBJECT?.calendar_sleep_section?.length === 0 ? `radius-2` : `radius-top-2`} border-1 shadow-1 p-10px`}>
+        <Grid container={true} spacing={0} className={`${OBJECT?.calendar_sleep_section?.length === 0 ? `radius-2` : `radius-top-2`} border-light-1 shadow-bottom-1 p-10px`}>
           <Grid size={12} className={`d-row`}>
             <Div className={`d-row-left`}>
-              <Img
-                max={10}
-                hover={true}
-                shadow={false}
-                radius={false}
-                src={`sleep1.webp`}
-                className={`ml-5px mr-10px`}
+              <Icons
+                key={`sleep1`}
+                name={`sleep1`}
+                isIconButton={false}
+                className={`w-10px h-10px hover ml-5px mr-10px`}
               />
               <Div className={`fs-0-9rem fw-600`}>
                 {translate(`sleep`)}
@@ -1273,8 +1233,8 @@ export const CalendarDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`sleep-detail-${i}`}
-            className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-1 border-top-0 shadow-1 p-20px`}
+            key={`sleep-detail-${_item.sleep_record_bedTime}-${_item.sleep_record_wakeTime}-${_item.sleep_record_sleepTime}`}
+            className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-light-1 border-top-0 shadow-1 p-20px`}
           >
             {/** row 1 * */}
             <Grid container={true} spacing={1}>
@@ -1349,7 +1309,7 @@ export const CalendarDetail = memo(() => {
 
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
         <Br m={20} />
         {exerciseSection()}
@@ -1363,7 +1323,7 @@ export const CalendarDetail = memo(() => {
     );
   };
 
-  // 8. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. dialog -------------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -1375,7 +1335,7 @@ export const CalendarDetail = memo(() => {
     />
   );
 
-  // 9. footer ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer -------------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -1390,7 +1350,7 @@ export const CalendarDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {detailNode()}

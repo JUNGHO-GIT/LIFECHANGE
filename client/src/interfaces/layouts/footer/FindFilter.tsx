@@ -12,25 +12,25 @@ import { TablePagination } from "@exportMuis";
 import { memo, useMemo } from "@exportReacts";
 import { useStoreLanguage } from "@exportStores";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface FindFilterProps {
   state: any;
   setState: any;
   flow: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const FindFilter = memo((
   { state, setState, flow }: FindFilterProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     navigate, toDetail, isFind, isFavorite,
   } = useCommonValue();
   const { translate } = useStoreLanguage();
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ------------------------------------------------------------------------------------
   const handleSearch = () => {
     flow.flowFind();
     setState?.setPAGING((prev: any) => ({
@@ -40,7 +40,7 @@ export const FindFilter = memo((
     window.scrollTo(0, 0);
   };
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ------------------------------------------------------------------------------------
   const handleNavigateToDetail = () => {
     void navigate(toDetail, {
       state: {
@@ -51,7 +51,7 @@ export const FindFilter = memo((
     });
   };
 
-  // 7. find ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. find -------------------------------------------------------------------------------------
   const findSection = useMemo(() => (
     <Div className={`d-center`}>
       <Input
@@ -91,7 +91,7 @@ export const FindFilter = memo((
     </Div>
   ), [ state?.PAGING.query, translate, setState, handleSearch, handleNavigateToDetail ]);
 
-  // 7. favorite ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. favorite ---------------------------------------------------------------------------------
   const favoriteSection = useMemo(() => (
     <Div className={`d-center`}>
       <Input
@@ -130,7 +130,7 @@ export const FindFilter = memo((
     </Div>
   ), [ translate, handleSearch, handleNavigateToDetail ]);
 
-  // 7. pagination ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. pagination ------------------------------------------------------------------------------
   const paginationSection = useMemo(() => (
     <TablePagination
       rowsPerPageOptions={[10]}
@@ -161,7 +161,7 @@ export const FindFilter = memo((
     />
   ), [ state?.COUNT.totalCnt, state?.PAGING.page, isFavorite, setState ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <Grid container={true} spacing={0}>
       <Grid size={7} className={`d-row-center`}>

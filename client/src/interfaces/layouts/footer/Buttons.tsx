@@ -12,38 +12,38 @@ import { useCommonValue } from "@exportHooks";
 import { setSession } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface ButtonsProps {
   state: any;
   flow: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const Buttons = memo((
   { state, flow }: ButtonsProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     toFind, toFavorite, navigate,
     isFoodRecordDetail, isUserCategory, isUserDetail, isDetail, isSleep, isCalendarDetail,
   } = useCommonValue();
   const { translate } = useStoreLanguage();
 
-  // 2. useMemo ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2. useMemo ---------------------------------------------------------------------------------
   const navigationState = useMemo(() => ({
     dateType: state?.DATE?.dateType,
     dateStart: state?.DATE?.dateStart,
     dateEnd: state?.DATE?.dateEnd,
   }), [ state?.DATE?.dateType, state?.DATE?.dateStart, state?.DATE?.dateEnd ]);
 
-  // 3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. handle ------------------------------------------------------------------------------------
   const handleSave = (type: string) => {
     flow?.flowSave(type);
     setSession(`section`, `food`, ``, []);
   };
 
-  // 7-1. btn - toFind ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7-1. btn - toFind -------------------------------------------------------------------------------
   const toFindBtn = useMemo(() => (
     <Btn
       color={`success`}
@@ -58,7 +58,7 @@ export const Buttons = memo((
     </Btn>
   ), [ navigate, toFind, navigationState, translate ]);
 
-  // 7-2. btn - toFavorite ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7-2. btn - toFavorite ----------------------------------------------------------------------------
   const favoriteBtn = useMemo(() => (
     <Btn
       color={`warning`}
@@ -73,7 +73,7 @@ export const Buttons = memo((
     </Btn>
   ), [ navigate, toFavorite, navigationState, translate ]);
 
-  // 8. btn - delete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. btn - delete --------------------------------------------------------------------------------
   const deleteBtn = useMemo(() => (
     <Btn
       color={`error`}
@@ -86,7 +86,7 @@ export const Buttons = memo((
     </Btn>
   ), [ flow, translate ]);
 
-  // 9. btn - save ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. btn - save ----------------------------------------------------------------------------------
   const saveBtn = useMemo(() => (
     <PopUp
       key={`innerCenter`}
@@ -156,7 +156,7 @@ export const Buttons = memo((
     />
   ), [ isSleep, handleSave, state.FLOW, translate ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
 		(isUserCategory || isUserDetail) ? (
 			<Grid container={true} spacing={1}>

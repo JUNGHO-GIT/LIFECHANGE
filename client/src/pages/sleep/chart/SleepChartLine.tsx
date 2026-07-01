@@ -10,27 +10,27 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { SleepLine, SleepLineType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDate } from "@exportScripts";
+import { formatY, formatDateMmDd } from "@exportScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface SleepChartLineProps {
   TYPE?: any;
   setTYPE?: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const SleepChartLine = memo((props: SleepChartLineProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const { URL_OBJECT, PATH, sessionId, chartColors, sleepChartArray } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { URL_OBJECT, PATH, sessionId, chartThemeColors, sleepChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `line`, PATH, {
       section: `week`,
@@ -38,7 +38,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -54,11 +54,11 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[SleepLineType]>([SleepLine]);
   const [ OBJECT_MONTH, setOBJECT_MONTH ] = useState<[SleepLineType]>([SleepLine]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -97,7 +97,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -107,7 +107,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -120,7 +120,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
     let object: any = null;
@@ -198,7 +198,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		        <Line
 		          dataKey={`bedTime`}
 		          type={`monotone`}
-		          stroke={chartColors[4]}
+		          stroke={chartThemeColors.bedTime}
 		          strokeWidth={2}
 		          activeDot={{ r: 4 }}
 		          dot={false}
@@ -212,7 +212,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		        <Line
 		          dataKey={`wakeTime`}
 		          type={`monotone`}
-		          stroke={chartColors[1]}
+		          stroke={chartThemeColors.wakeTime}
 		          strokeWidth={2}
 		          activeDot={{ r: 4 }}
 		          dot={false}
@@ -226,7 +226,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		        <Line
 		          dataKey={`sleepTime`}
 		          type={`monotone`}
-		          stroke={chartColors[2]}
+		          stroke={chartThemeColors.sleepTime}
 		          strokeWidth={2}
 		          activeDot={{ r: 4 }}
 		          dot={false}
@@ -240,7 +240,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		        labelFormatter={(_label: any, payload: any) => {
 		          const name: string = payload?.length > 0 ? payload[0]?.payload.name : ``;
 		          const date: string = payload?.length > 0 ? payload[0]?.payload.date : ``;
-		          return `${translate(name)} (${formatDate(date)})`;
+		          return `${translate(name)} (${formatDateMmDd(date)})`;
 		        }}
 		        formatter={(value: any, name: any) => {
 		          const customName: string = translate(name as string);
@@ -278,7 +278,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		);
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

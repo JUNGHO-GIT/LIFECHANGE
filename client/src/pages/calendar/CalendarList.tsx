@@ -14,7 +14,7 @@ import { Footer } from "@exportLayouts";
 import { PickerDay } from "@exportContainers";
 import { Icons, Div, Br, Paper, Grid } from "@exportComponents";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface CalendarDayItems {
   exercise: CalendarType[];
   food: CalendarType[];
@@ -23,10 +23,10 @@ declare interface CalendarDayItems {
   sectionCount: number;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const CalendarList = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, PATH, sessionId, navigate, localLang,
   } = useCommonValue();
@@ -38,7 +38,7 @@ export const CalendarList = memo(() => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [ DATE, setDATE ] = useStorageLocal(
     `date`, PATH, ``, {
       dateType: ``,
@@ -53,7 +53,7 @@ export const CalendarList = memo(() => {
     },
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT, setOBJECT ] = useState([Calendar]);
   const [ EXIST, setEXIST ] = useState({
     day: [``],
@@ -70,12 +70,12 @@ export const CalendarList = memo(() => {
     dateEnd: `0000-00-00`,
   });
 
-  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useDeferredValue ----------------------------------------------------------------------
   // - 달력 타일의 날짜별 항목 계산·렌더를 비긴급으로 분리
   // - 달력 틀이 먼저 그려지고 표식은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
-  // 2-3. useMemo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useMemo --------------------------------------------------------------------------------
   const calendarDayMap = useMemo(() => {
     const result: Record<string, CalendarDayItems> = {};
     const ensureDay = (dateKey: string) => {
@@ -120,7 +120,7 @@ export const CalendarList = memo(() => {
     return result;
   }, [ deferredObject, getMoment, getDayFmt, getDayStartFmt, getDayEndFmt ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/list`, {
@@ -151,7 +151,7 @@ export const CalendarList = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 7. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
 
     // 7-2. title
@@ -217,7 +217,7 @@ export const CalendarList = memo(() => {
         formatYear={(_locale, date) => getDayNotFmt(date).format(`YYYY`)}
         formatLongDate={(_locale, date) => getDayNotFmt(date).format(`YYYY-MM-DD`)}
         formatMonthYear={(_locale, date) => getDayNotFmt(date).format(`YYYY-MM`)}
-        className={`border-1 shadow-1 radius-1 over-hidden`}
+        className={`radius-1 border-light-1 shadow-1 over-hidden`}
         onActiveStartDateChange={({ activeStartDate }) => {
           setDATE((prev) => ({
             ...prev,
@@ -333,7 +333,7 @@ export const CalendarList = memo(() => {
 
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {titleSection()}
         <Br m={20} />
         {reactCalendarSection()}
@@ -341,7 +341,7 @@ export const CalendarList = memo(() => {
     );
   };
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -353,7 +353,7 @@ export const CalendarList = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {listNode()}

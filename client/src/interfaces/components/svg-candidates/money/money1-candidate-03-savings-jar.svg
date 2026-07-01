@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Savings jar</title>
+  <desc id="desc">차곡차곡 모으는 저축함</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M74 58h108"/><rect x="67" y="45" width="122" height="35" rx="12" fill="#A7DCF3"/><path d="M78 80h100l14 126c1 12-8 22-20 22H84c-12 0-21-10-20-22z" fill="#F8FAFC"/><circle cx="128" cy="155" r="45" fill="#FFED9B"/><text x="128" y="167" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="900" fill="#343942" stroke="none">₩</text><path d="M95 104h66"/>
+  </g>
+</svg>

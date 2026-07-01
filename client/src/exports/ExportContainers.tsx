@@ -5,7 +5,7 @@
  * @since 2025-12-25
  */
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export { PopUp } from "@interfaces/containers/PopUp";
 export { Count } from "@interfaces/containers/Count";
 export { Delete } from "@interfaces/containers/Delete";

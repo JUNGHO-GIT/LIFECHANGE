@@ -9,7 +9,7 @@ import { timeToDecimal } from "@assets/scripts/utils";
 import * as repository from "@repositories/sleep/SleepChartRepository";
 import moment from "moment-timezone";
 
-// 1-1. chart (bar - today) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. chart (bar - today) ------------------------------------------------------------------------
 export const bar = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResultGoal: any[] = [];
@@ -80,7 +80,7 @@ export const bar = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 2-2. chart (pie - week) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-2. chart (pie - week) -------------------------------------------------------------------------
 // pie 차트는 무조건 int 리턴
 export const pieWeek = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
@@ -165,7 +165,7 @@ export const pieWeek = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 2-3. chart (pie - month) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-3. chart (pie - month) ------------------------------------------------------------------------
 // pie 차트는 무조건 int 리턴
 export const pieMonth = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
@@ -250,7 +250,7 @@ export const pieMonth = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 2-4. chart (pie - year) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-4. chart (pie - year) -------------------------------------------------------------------------
 // pie 차트는 무조건 int 리턴
 export const pieYear = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
@@ -335,7 +335,7 @@ export const pieYear = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 3-1. chart (line - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-1. chart (line - week) ------------------------------------------------------------------------
 export const lineWeek = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResult: any[] = [];
@@ -439,7 +439,7 @@ export const lineWeek = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 3-2. chart (line - month) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. chart (line - month) -----------------------------------------------------------------------
 export const lineMonth = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResult: any[] = [];
@@ -524,7 +524,7 @@ export const lineMonth = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 4-1. chart (avg - week) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-1. chart (avg - week) ------------------------------------------------------------------------
 export const avgWeek = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResult: any[] = [];
@@ -638,7 +638,7 @@ export const avgWeek = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 4-2. chart (avg - month) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-2. chart (avg - month) ------------------------------------------------------------------------
 export const avgMonth = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResult: any[] = [];

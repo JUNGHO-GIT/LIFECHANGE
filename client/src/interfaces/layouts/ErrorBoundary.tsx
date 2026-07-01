@@ -9,7 +9,7 @@ import { Box, Button } from "@exportMuis";
 import { useStoreLanguage } from "@exportStores";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface ErrorBoundaryProps {
   children: ReactNode;
 }
@@ -18,28 +18,28 @@ declare interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export class ErrorBoundary extends Component<
   ErrorBoundaryProps,
   ErrorBoundaryState
 > {
-  // 1. state ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. state ---------------------------------------------------------------------------------------
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
 
-  // 2. derive ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2. derive --------------------------------------------------------------------------------------
   static getDerivedStateFromError(): ErrorBoundaryState {
     return { hasError: true };
   }
 
-  // 3. catch ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. catch ----------------------------------------------------------------------------------------
   override componentDidCatch(error: Error, info: ErrorInfo): void {
     console.error(`[ErrorBoundary]`, error, info?.componentStack);
   }
 
-  // 7. fallback ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. fallback -------------------------------------------------------------------------------------
   fallbackNode(): ReactNode {
     const { translate } = useStoreLanguage.getState();
     return (
@@ -68,7 +68,7 @@ export class ErrorBoundary extends Component<
     );
   }
 
-  // 10. render ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. render --------------------------------------------------------------------------------------
   override render(): ReactNode {
     if (this.state.hasError) {
       return this.fallbackNode();

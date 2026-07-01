@@ -8,17 +8,17 @@
 import { React, memo, useCallback, useMemo, useRef } from "@exportReacts";
 import { TextField } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const InputBase = memo((props: any) => {
 
-  // 0. variant ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. variant ------------------------------------------------------------------------------------
   const asSelect: boolean = !!props?.asSelect;
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ------------------------------------------------------------------------------------
   const fullWidth: any = props?.fullWidth !== undefined ? props.fullWidth : true;
   const debounceRef: React.RefObject<any> = useRef<any>(null);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ------------------------------------------------------------------------------------
   const handleClick = useCallback((e: React.MouseEvent) => {
     if (props?.locked === `locked` || props?.disabled) {
       e.preventDefault();
@@ -34,7 +34,7 @@ export const InputBase = memo((props: any) => {
     }
   }, [ props?.locked, props?.disabled, props?.onClick ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ------------------------------------------------------------------------------------
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const debounceMs: any = props?.debounceMs;
     const original: any = props?.onChange;
@@ -64,7 +64,7 @@ export const InputBase = memo((props: any) => {
     }, debounceMs);
   }, [ props?.onChange, props?.debounceMs ]);
 
-  // 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5. memo --------------------------------------------------------------------------------------
   const sxMemo = useMemo(() => ({
     ...props?.sx,
     "& .MuiSelect-icon": {
@@ -104,7 +104,7 @@ export const InputBase = memo((props: any) => {
     },
   }), [ props?.sx, props?.disabled, props?.readOnly, props?.onClick ]);
 
-  // 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5. memo --------------------------------------------------------------------------------------
   const slotPropsMemo = useMemo(() => ({
     ...props?.slotProps,
     input: {
@@ -166,7 +166,7 @@ export const InputBase = memo((props: any) => {
     props?.disabled,
   ]);
 
-  // 9. variant props ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. variant props ------------------------------------------------------------------------------
   // select 모드(Select)와 input 모드(Input) 의 유일 차이만 분기
   const { asSelect: _asSelect, ...rest } = props;
   const variantProps: any = asSelect ? {
@@ -179,7 +179,7 @@ export const InputBase = memo((props: any) => {
     onChange: props?.onChange ? handleChange : undefined,
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <TextField
       {...rest}

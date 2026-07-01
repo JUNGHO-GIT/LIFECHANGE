@@ -7,11 +7,11 @@
 
 import axios from "axios";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 let registered: boolean = false;
 
-// 네트워크 오류 등으로 response 가 없는 axios error 를 안전한 형태로 보강한다 ―――――――――――――――――――――――――――――――――
-// 88곳의 catch 가 error.response.data.msg 에 접근해도 크래시하지 않도록 전역 1회만 등록한다.
+// 네트워크 오류 등으로 response 가 없는 axios error 를 안전한 형태로 보강
+// 88곳의 catch 가 error.response.data.msg 에 접근해도 크래시하지 않도록 전역 1회만 등록
 export const registerInterceptor = (): void => {
   if (registered) {
     return;
@@ -32,7 +32,7 @@ export const registerInterceptor = (): void => {
         };
         return Promise.reject(safeError);
       }
-      // response 는 있으나 data 가 비정상인 경우도 최소 형태를 보강한다 ―――――――――――――――――――――――――――――――――――――
+      // response 는 있으나 data 가 비정상인 경우도 최소 형태를 보강
       const data: any = error.response.data;
       if (!data || typeof data !== `object`) {
         error.response.data = {

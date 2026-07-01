@@ -7,10 +7,10 @@
 
 import { differenceInMinutes } from "date-fns";
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -29,7 +29,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
     let finalResult: string = ``;
@@ -47,7 +47,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 1. compareValue ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. compareValue -------------------------------------------------------------------------------
   const compareValue = (goalParam: string, recordParam: string) => {
 
     let goal: number = Number.parseFloat(goalParam);
@@ -59,7 +59,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 2. compareTime ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2. compareTime --------------------------------------------------------------------------------
   const compareTime = (goalParam: string, recordParam: string) => {
 
     let goal: string = goalParam;
@@ -84,7 +84,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 4. calcDiffColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. calcDiffColor ------------------------------------------------------------------------------
   const calcDiffColor = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: number = Number.parseFloat(goalParam);
@@ -227,7 +227,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 10. result ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. result ------------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
     item.exercise_record_total_count = calcOverTenMillion(
       item?.exercise_record_total_count

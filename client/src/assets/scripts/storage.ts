@@ -7,7 +7,7 @@
 
 const TITLE: string = import.meta.env.VITE_APP_TITLE ?? ``;
 
-// 0. safe parse ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. safe parse ----------------------------------------------------------------------------------
 const safeParse = (raw: string | null): any => {
   try {
     return JSON.parse(raw ?? `{}`);
@@ -21,7 +21,7 @@ const isPlainObject = (v: any): boolean => {
   return !!v && typeof v === `object` && !Array.isArray(v);
 };
 
-// 0-1. root cache ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0-1. root cache --------------------------------------------------------------------------------
 // 동일 raw 문자열이면 재파싱 생략. 페이지 전환마다 useCommonValue 등 다수 컴포넌트가 전체 객체를
 // 각각 JSON.parse 하던 비용을 제거한다(set 시점에만 캐시 갱신, 멀티탭 변경 시 raw 불일치로 재파싱).
 let localRaw: string | null = null;
@@ -29,7 +29,7 @@ let localRoot: any = {};
 let sessionRaw: string | null = null;
 let sessionRoot: any = {};
 
-// getLocalRoot ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// getLocalRoot ------------------------------------------------------------------------------------
 export const getLocalRoot = (): any => {
   const raw: string | null = localStorage.getItem(TITLE);
   if (raw !== localRaw) {
@@ -39,7 +39,7 @@ export const getLocalRoot = (): any => {
   return localRoot;
 };
 
-// getSessionRoot ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// getSessionRoot ----------------------------------------------------------------------------------
 export const getSessionRoot = (): any => {
   const raw: string | null = sessionStorage.getItem(TITLE);
   if (raw !== sessionRaw) {
@@ -49,7 +49,7 @@ export const getSessionRoot = (): any => {
   return sessionRoot;
 };
 
-// writeLocalRoot ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// writeLocalRoot ----------------------------------------------------------------------------------
 const writeLocalRoot = (next: any): void => {
   const str: string = JSON.stringify(next);
   localRoot = next;
@@ -57,7 +57,7 @@ const writeLocalRoot = (next: any): void => {
   localStorage.setItem(TITLE, str);
 };
 
-// writeSessionRoot ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// writeSessionRoot ---------------------------------------------------------------------------------
 const writeSessionRoot = (next: any): void => {
   const str: string = JSON.stringify(next);
   sessionRoot = next;
@@ -65,7 +65,7 @@ const writeSessionRoot = (next: any): void => {
   sessionStorage.setItem(TITLE, str);
 };
 
-// 1. getLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. getLocal -------------------------------------------------------------------------------------
 export const getLocal = (key1: string, key2: string, key3: string) => {
   const localTitle: any = getLocalRoot();
 
@@ -85,7 +85,7 @@ export const getLocal = (key1: string, key2: string, key3: string) => {
   }
 };
 
-// 2. setLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. setLocal -------------------------------------------------------------------------------------
 export const setLocal = (key1: string, key2: string, key3: string, value: any) => {
   const localTitle: any = getLocalRoot();
 
@@ -144,7 +144,7 @@ export const setLocal = (key1: string, key2: string, key3: string, value: any) =
   }
 };
 
-// 3. getSession ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. getSession -----------------------------------------------------------------------------------
 export const getSession = (key1: string, key2: string, key3: string) => {
   const sessionTitle: any = getSessionRoot();
 
@@ -166,7 +166,7 @@ export const getSession = (key1: string, key2: string, key3: string) => {
   return {};
 };
 
-// 4. setSession ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. setSession -----------------------------------------------------------------------------------
 export const setSession = (key1: string, key2: string, key3: string, value: any) => {
   const sessionTitle: any = getSessionRoot();
 

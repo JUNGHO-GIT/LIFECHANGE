@@ -8,7 +8,7 @@
 import { decimalToStr, strToDecimal } from "@assets/scripts/utils";
 import * as repository from "@repositories/exercise/ExerciseGoalRepository";
 
-// 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResult: any = null;
@@ -58,7 +58,7 @@ export const exist = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (
   user_id_param: string,
   DATE_param: any,
@@ -190,7 +190,7 @@ export const list = async (
   };
 };
 
-// 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let findResult: any = null;
@@ -229,7 +229,7 @@ export const detail = async (user_id_param: string, DATE_param: any) => {
   };
 };
 
-// 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. create ---------------------------------------------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -300,7 +300,7 @@ export const create = async (
   };
 };
 
-// 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. update ---------------------------------------------------------------------------------------
 export const update = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -391,7 +391,7 @@ export const update = async (
   };
 };
 
-// 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. delete ---------------------------------------------------------------------------------------
 export const deletes = async (user_id_param: string, DATE_param: any) => {
   // result 변수 선언
   let deleteResult: any = null;

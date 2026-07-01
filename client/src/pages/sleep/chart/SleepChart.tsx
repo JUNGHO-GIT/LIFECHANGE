@@ -15,14 +15,14 @@ import { Select } from "@exportContainers";
 import { Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const SleepChart = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { PATH } = useCommonValue();
   const { translate } = useStoreLanguage();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE_PIE, setTYPE_PIE ] = useStorageLocal(
     `type`, `pie`, PATH, {
       section: `week`,
@@ -42,13 +42,13 @@ export const SleepChart = memo(() => {
     }
   );
 
-  // 7. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
 
     // 7-1. pie
     const pieSection = () => (
-      <Grid container={true} spacing={0} className={`w-100p border-1 radius-2 shadow-1`}>
-        <Grid size={12} className={`d-col-center p-10px border-bottom-1 radius-top-2 shadow-bottom-2`}>
+      <Grid container={true} spacing={0} className={`w-100p radius-3 border-light-1 shadow-1`}>
+        <Grid size={12} className={`d-col-center p-10px radius-top-3 border-bottom-1 shadow-0`}>
           <Grid container={true} spacing={1} className={`d-row-between`}>
             <Grid size={4} className={`d-row-center`}>
               <Select
@@ -93,8 +93,8 @@ export const SleepChart = memo(() => {
 
     // 7-2. line
     const lineSection = () => (
-      <Grid container={true} spacing={0} className={`w-100p border-1 radius-2 shadow-1`}>
-        <Grid size={12} className={`d-col-center p-10px border-bottom-1 radius-top-2 shadow-bottom-2`}>
+      <Grid container={true} spacing={0} className={`w-100p radius-3 border-light-1 shadow-1`}>
+        <Grid size={12} className={`d-col-center p-10px radius-top-3 border-bottom-1 shadow-0`}>
           <Grid container={true} spacing={1} className={`d-row-between`}>
             <Grid size={4} className={`d-row-center`}>
               <Select
@@ -138,8 +138,8 @@ export const SleepChart = memo(() => {
 
     // 7-3. avg
     const avgSection = () => (
-      <Grid container={true} spacing={0} className={`w-100p border-1 radius-2 shadow-1`}>
-        <Grid size={12} className={`d-col-center p-10px border-bottom-1 radius-top-2 shadow-bottom-2`}>
+      <Grid container={true} spacing={0} className={`w-100p radius-3 border-light-1 shadow-1`}>
+        <Grid size={12} className={`d-col-center p-10px radius-top-3 border-bottom-1 shadow-0`}>
           <Grid container={true} spacing={1} className={`d-row-between`}>
             <Grid size={4} className={`d-row-center`}>
               <Select
@@ -183,7 +183,7 @@ export const SleepChart = memo(() => {
 
     // 9. return
     return (
-      <Paper className={`w-100p radius-2 border-1 shadow-1 p-20px`}>
+      <Paper className={`w-100p radius-3 border-light-1 shadow-1 p-20px`}>
         {pieSection()}
         <Br m={30} />
         {lineSection()}
@@ -193,7 +193,7 @@ export const SleepChart = memo(() => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

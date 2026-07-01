@@ -10,7 +10,7 @@ import { type Router, Request, Response } from "express";
 import * as service from "@services/user/UserService";
 export const router: Router = express.Router();
 
-// 1-1. sendEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. sendEmail ----------------------------------------------------------------------------------
 router.post(`/email/send`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.sendEmailCode(
@@ -70,7 +70,7 @@ router.post(`/email/send`, async (req: Request, res: Response) => {
   }
 });
 
-// 1-2. verifyEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. verifyEmail --------------------------------------------------------------------------------
 router.post(`/email/verify`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.verifyEmail(
@@ -109,7 +109,7 @@ router.post(`/email/verify`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-1. userSignup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-1. userSignup ---------------------------------------------------------------------------------
 router.post(`/signup`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userSignup(
@@ -155,7 +155,7 @@ router.post(`/signup`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-2. userResetPw ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-2. userResetPw --------------------------------------------------------------------------------
 router.post(`/resetPw`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userResetPw(
@@ -208,7 +208,7 @@ router.post(`/resetPw`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-3. userLogin ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-3. userLogin ----------------------------------------------------------------------------------
 router.post(`/login`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userLogin(
@@ -266,7 +266,7 @@ router.post(`/login`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-4. userDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-4. userDetail ---------------------------------------------------------------------------------
 router.get(`/detail`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userDetail(
@@ -304,7 +304,7 @@ router.get(`/detail`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-5. userUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-5. userUpdate ---------------------------------------------------------------------------------
 router.put(`/update`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userUpdate(
@@ -350,7 +350,7 @@ router.put(`/update`, async (req: Request, res: Response) => {
   }
 });
 
-// 2-6. userDelete ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-6. userDelete --------------------------------------------------------------------------------
 router.delete(`/delete`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.userDelete(
@@ -396,7 +396,7 @@ router.delete(`/delete`, async (req: Request, res: Response) => {
   }
 });
 
-// 3-2. categoryDetail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. categoryDetail -----------------------------------------------------------------------------
 router.get(`/category/detail`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.categoryDetail(
@@ -434,7 +434,7 @@ router.get(`/category/detail`, async (req: Request, res: Response) => {
   }
 });
 
-// 3-2. categoryUpdate ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. categoryUpdate -----------------------------------------------------------------------------
 router.post(`/category/update`, async (req: Request, res: Response) => {
   try {
     let finalResult = await service.categoryUpdate(

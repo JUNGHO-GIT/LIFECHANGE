@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Dumbbell load</title>
+  <desc id="desc">간결한 덤벨 중량</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="rotate(-24 128 128)"><path d="M49 128h158"/><rect x="54" y="94" width="26" height="68" rx="8" fill="#61C9EC"/><rect x="82" y="107" width="18" height="42" rx="6" fill="#E8E4FF"/><rect x="156" y="107" width="18" height="42" rx="6" fill="#E8E4FF"/><rect x="176" y="94" width="26" height="68" rx="8" fill="#61C9EC"/></g><circle cx="190" cy="62" r="31" fill="#FFED9B"/><text x="190" y="71" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="900" fill="#343942" stroke="none">KG</text>
+  </g>
+</svg>

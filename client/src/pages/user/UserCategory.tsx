@@ -17,10 +17,10 @@ import { Div, Icons, Paper, Grid } from "@exportComponents";
 import { TableContainer, Table, TableFooter } from "@exportMuis";
 import { TableHead, TableBody, TableRow, TableCell } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const UserCategory = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, PATH, sessionId,
     location_dateStart, location_dateEnd, location_dateType,
@@ -30,7 +30,7 @@ export const UserCategory = memo(() => {
   const { setLOADING } = useStoreLoading();
   const { translate } = useStoreLanguage();
 
-  // 2-1. useStorageLocal ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal ------------------------------------------------------------------------
   const [ DATE, setDATE ] = useStorageLocal(
     `date`, PATH, ``, {
       dateType: location_dateType ?? `day`,
@@ -39,7 +39,7 @@ export const UserCategory = memo(() => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const REFS: React.RefObject<any> = useRef<any>({});
   const [ OBJECT, setOBJECT ] = useState<CategoryType>(Category);
   const [ dataType, setDataType ] = useState<keyof CategoryType>(`exercise`);
@@ -56,15 +56,15 @@ export const UserCategory = memo(() => {
     dateEnd: `0000-00-00`,
   });
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<CategoryType> = useRef(OBJECT);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
   }, [OBJECT]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/category/detail`, {
@@ -101,7 +101,7 @@ export const UserCategory = memo(() => {
     });
   }, [ URL_OBJECT, sessionId ]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   async function flowSave() {
     setLOADING(true);
     axios.post(`${URL_OBJECT}/category/update`, {
@@ -141,7 +141,7 @@ export const UserCategory = memo(() => {
     });
   }
 
-  // 4-1. handle――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-1. handle----------------------------------------------------------------------------------
   const handleAdd = (type: string) => {
     if (type === `part`) {
       setOBJECT((prev) => {
@@ -199,7 +199,7 @@ export const UserCategory = memo(() => {
     }
   };
 
-  // 4-2. handle――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-2. handle----------------------------------------------------------------------------------
   const handleRename = (type: string, index: number) => {
     setIsEditable(`${dataType}_${type}_${index}`);
     if (type === `record_part`) {
@@ -214,7 +214,7 @@ export const UserCategory = memo(() => {
     }
   };
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleRemove = (type: string, index: number) => {
     if (type === `record_part`) {
       if (OBJECT?.[dataType]?.length <= 1) {
@@ -278,13 +278,13 @@ export const UserCategory = memo(() => {
     }
   };
 
-  // 7. userCategory ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. userCategory -------------------------------------------------------------------------------
   const userCategoryNode = () => {
     // 7-1. popup
     const popupSection = () => (
       <Grid container={true} spacing={0}>
         <Grid size={12} className={`w-85vw h-60vh d-row`}>
-          <TableContainer className={`border-1 radius-2 over-x-hidden over-y-auto`}>
+          <TableContainer className={`radius-2 border-light-1 over-x-hidden over-y-auto`}>
             <Table>
               <TableHead className={`table-thead`}>
                 <TableRow className={`table-thead-tr p-sticky top-0px z-900`}>
@@ -295,7 +295,7 @@ export const UserCategory = memo(() => {
               </TableHead>
               <TableBody className={`table-tbody`}>
                 {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
-                  <TableRow className={`table-tbody-tr border-bottom-1`} key={index}>
+                  <TableRow className={`table-tbody-tr border-bottom-1`} key={item[`${dataType}_record_part`]}>
                     <TableCell className={selectedIdx.category2Idx === index ? `bg-light` : ``}>
                       <Div className={`d-center`}>
                         <Div className={`fs-0-9rem mr-auto`}>
@@ -401,7 +401,7 @@ export const UserCategory = memo(() => {
             </Table>
           </TableContainer>
           {(dataType === `exercise` || dataType === `money`) && (
-            <TableContainer className={`border-1 radius-2 over-x-hidden`}>
+            <TableContainer className={`radius-2 border-light-1 over-x-hidden`}>
               <Table>
                 <TableHead className={`table-thead`}>
                   <TableRow className={`table-thead-tr p-sticky top-0px z-900`}>
@@ -415,7 +415,7 @@ export const UserCategory = memo(() => {
                     ? OBJECT?.exercise?.[selectedIdx?.category2Idx]?.exercise_record_title
                     : OBJECT?.money?.[selectedIdx?.category2Idx]?.money_record_title
                   )?.map((item: any, index: number) => (index > 0) && (
-                    <TableRow key={index} className={`table-tbody-tr border-bottom-1`}>
+                    <TableRow key={item} className={`table-tbody-tr border-bottom-1`}>
                       <TableCell>
                         <Div className={`d-center`}>
                           <Div className={`fs-0-9rem mr-auto`}>
@@ -520,11 +520,11 @@ export const UserCategory = memo(() => {
     );
     // 7-2. detail
     const detailSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1`}>
         {[OBJECT]?.map((item, i) => (
-          <Grid size={12} key={`detail-${i}`}>
+          <Grid size={12} key={`detail-${dataType}`}>
             <Grid container={true} spacing={1}>
-              <TableContainer className={`border-1 radius-2 over-x-hidden`}>
+              <TableContainer className={`radius-2 border-light-1 over-x-hidden`}>
                 <Table>
                   <TableHead className={`table-thead`}>
                     <TableRow className={`table-thead-tr`}>
@@ -535,7 +535,7 @@ export const UserCategory = memo(() => {
                   </TableHead>
                   <TableBody className={`table-tbody`}>
                     {Object.keys(item).map((item: any, idx: number) => (
-                      <TableRow className={`table-tbody-tr border-top-1`} key={idx}>
+                      <TableRow className={`table-tbody-tr border-top-1`} key={item}>
                         <TableCell className={dataType === item ? `bg-light` : ``}>
                           <Div className={`d-center`}>
                             <Div className={`fs-0-95rem ml-0px`}>
@@ -582,13 +582,13 @@ export const UserCategory = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-90vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-90vh`}>
         {detailSection()}
       </Paper>
     );
   };
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -603,7 +603,7 @@ export const UserCategory = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {userCategoryNode()}

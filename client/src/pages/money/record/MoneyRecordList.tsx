@@ -11,25 +11,32 @@ import { useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { MoneyRecord, MoneyRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatDate, insertComma } from "@exportScripts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "@exportLibs";
+import { formatDateMmDd, formatDateYyyyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+declare interface MoneyAmountStat {
+  dateStart: string;
+  dateEnd: string;
+  amount: number;
+}
+
+// ---------------------------------------------------------------------------------------------
 export const MoneyRecordList = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, PATH, sessionId, localCurrency, toDetail,
-    navigate, location_dateType, location_dateStart, location_dateEnd,
+    navigate, location_dateType, location_dateStart, location_dateEnd, chartThemeColors,
   } = useCommonValue();
   const { getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ DATE, setDATE ] = useStorageLocal(
     `date`, PATH, ``, {
       dateType: location_dateType ?? ``,
@@ -53,7 +60,7 @@ export const MoneyRecordList = memo(() => {
     ]
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT, setOBJECT ] = useState<[MoneyRecordType]>([MoneyRecord]);
   const [ EXIST, setEXIST ] = useState({
     day: [``],
@@ -74,11 +81,11 @@ export const MoneyRecordList = memo(() => {
     newSectionCnt: 0,
   });
 
-  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useDeferredValue ----------------------------------------------------------------------
   // 목록 항목 렌더를 비긴급으로 분리: 전환·데이터 반영 시 화면 틀이 먼저 그려지고 목록은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -102,7 +109,7 @@ export const MoneyRecordList = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     axios.get(`${URL_OBJECT}/record/list`, {
@@ -128,7 +135,7 @@ export const MoneyRecordList = memo(() => {
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
         if (res.data.result?.length !== isExpanded.length) {
-          return Array.from({ length: res.data.result?.length }).fill({ expanded: true });
+          return Array.from({ length: res.data.result?.length }, () => ({ expanded: true }));
         }
         return isExpanded;
       });
@@ -148,148 +155,254 @@ export const MoneyRecordList = memo(() => {
     URL_OBJECT, sessionId, PAGING?.sort, PAGING.page, PAGING?.part, PAGING?.title, DATE?.dateStart, DATE?.dateEnd,
   ]);
 
-  // 6. useMemo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const summary = useMemo(() => {
-    const totalIncome = OBJECT.reduce((sum, item) => {
-      return sum + parseFloat(item.money_record_total_income || `0`);
-    }, 0);
-    const totalExpense = OBJECT.reduce((sum, item) => {
-      return sum + parseFloat(item.money_record_total_expense || `0`);
-    }, 0);
-    const balance = totalIncome - totalExpense;
-    return {
-      totalIncome,
-      totalExpense,
-      balance,
-      balanceColor: balance >= 0 ? `primary` : balance < 0 ? `red` : ``,
-    };
-  }, [ OBJECT ]);
+  // 3. summary ----------------------------------------------------------------------------------
+  // - 선택 기간의 자산 흐름과 최고·최저 지출 계산
+  const recordSummary = useMemo(() => {
+    // 쉼표와 k/m 단위를 일반 숫자로 변환
+    const toNumber = (value?: string | number | null): number => {
+      const normalized = String(value ?? `0`)
+      .replaceAll(`,`, ``)
+      .trim()
+      .toLowerCase();
+      const unit = normalized.slice(-1);
+      const numericText = unit === `k` || unit === `m`
+      ? normalized.slice(0, -1)
+      : normalized;
+      const multiplier = unit === `m`
+      ? 1_000_000
+      : unit === `k`
+      ? 1_000
+      : 1;
+      const result = Number(numericText) * multiplier;
 
-  // 7. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+      return Number.isFinite(result) ? result : 0;
+    };
+
+    // 금액을 화면 표시용 천 단위 또는 k 단위로 변환
+    const formatNumber = (value: number): string => {
+      const roundedValue = Math.round(value);
+      return Math.abs(roundedValue) >= 100_000
+      ? `${Math.round(roundedValue / 1_000)}k`
+      : insertComma(roundedValue);
+    };
+
+    const formatRecordDate = (item: MoneyAmountStat): string => (
+      item.dateStart && item.dateStart !== `0000-00-00`
+        ? `${formatDateYyyyMmDd(item.dateStart)} - ${formatDateYyyyMmDd(item.dateEnd)}`
+        : `-`
+    );
+
+    const validRecords = OBJECT.filter((item) => Boolean(item._id));
+    const totalIncome = validRecords.reduce((sum, item) => (
+      sum + toNumber(item.money_record_total_income)
+    ), 0);
+    const totalExpense = validRecords.reduce((sum, item) => (
+      sum + toNumber(item.money_record_total_expense)
+    ), 0);
+    const expenseStats = validRecords
+    .map((item) => ({
+      dateStart: item.money_record_dateStart,
+      dateEnd: item.money_record_dateEnd,
+      amount: toNumber(item.money_record_total_expense),
+    }))
+    .filter((item) => item.amount > 0);
+    const emptyExpense: MoneyAmountStat = {
+      dateStart: ``,
+      dateEnd: ``,
+      amount: 0,
+    };
+    const highestExpense = expenseStats.reduce((highest, item) => (
+      item.amount > highest.amount ? item : highest
+    ), emptyExpense);
+    const lowestExpense = expenseStats.reduce((lowest, item) => (
+      item.amount < lowest.amount ? item : lowest
+    ), expenseStats[0] ?? emptyExpense);
+    // 수입·지출 구성 비율 계산
+    const incomeExpenseTotal = totalIncome + totalExpense;
+    const incomePercent = incomeExpenseTotal > 0
+      ? Math.round((totalIncome / incomeExpenseTotal) * 100)
+      : 0;
+    const expensePercent = incomeExpenseTotal > 0
+      ? 100 - incomePercent
+      : 0;
+    const chartData = incomeExpenseTotal > 0
+      ? [
+        { name: `income`, value: totalIncome, percent: incomePercent, color: chartThemeColors.income },
+        { name: `expense`, value: totalExpense, percent: expensePercent, color: chartThemeColors.expense },
+      ].filter((item) => item.value > 0)
+      : [
+        { name: `Empty`, value: 1, percent: 0, color: `#edf0f4` },
+      ];
+
+    return {
+      totalIncomeText: formatNumber(totalIncome),
+      totalExpenseText: formatNumber(totalExpense),
+      recordCnt: COUNT.totalCnt,
+      highestExpenseText: formatNumber(highestExpense.amount),
+      highestDateText: formatRecordDate(highestExpense),
+      lowestExpenseText: formatNumber(lowestExpense.amount),
+      lowestDateText: formatRecordDate(lowestExpense),
+      incomePercent,
+      expensePercent,
+      chartData,
+    };
+  }, [ OBJECT, COUNT.totalCnt, chartThemeColors ]);
+
+  // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
     // 7-0. summary
-    /* const summarySection = () => (
-      <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`}>
-        <Grid size={12} className={`p-10px`}>
-          <Grid container={true} spacing={1}>
-            <Grid size={12} className={`d-row-left mb-5px`}>
-              <Icons
-                key={`Calculator`}
-                name={`Calculator`}
-                className={`w-16px h-16px mr-5px`}
-              />
-              <Div className={`fs-0-9rem fw-700 black`}>
-                {translate(`search_result_summary`)}
+    const summarySection = () => (
+      <Grid container={true} spacing={0} className={`money-record-summary radius-3 border-light-1 shadow-1 p-15px`}>
+        {/** row 1 **/}
+        <Grid container={true} spacing={0}>
+          <Grid size={12} className={`d-row-left`}>
+            <Div className={`fs-0-95rem fw-600`}>
+              {formatDateYyyyMmDd(DATE?.dateStart)}
+              {` - `}
+              {formatDateYyyyMmDd(DATE?.dateEnd)}
+            </Div>
+          </Grid>
+        </Grid>
+
+        <Hr m={20} className={`bg-light`} />
+
+        {/** row 2 **/}
+        <Grid container={true} spacing={2}>
+          <Grid size={6} className={`d-row-center p-relative money-record-chart w-124px h-124px`}>
+            <ResponsiveContainer width={`100%`} height={`100%`}>
+              <PieChart>
+                <Pie
+                  data={recordSummary.chartData}
+                  cx={`50%`}
+                  cy={`50%`}
+                  innerRadius={40}
+                  outerRadius={58}
+                  dataKey={`value`}
+                  nameKey={`name`}
+                  startAngle={90}
+                  endAngle={-270}
+                  paddingAngle={recordSummary.chartData.length > 1 ? 2 : 0}
+                  stroke={`#fff`}
+                  strokeWidth={2}
+                  isAnimationActive={true}
+                  animationBegin={0}
+                  animationDuration={520}
+                  animationEasing={`ease-out`}
+                >
+                  {recordSummary.chartData.map((item) => (
+                    <Cell key={item.name} fill={item.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+            <Div className={`money-record-chart-center`}>
+              <Div className={`fs-0-5rem fw-700 mb-5px`} style={{
+                color: chartThemeColors.income,
+                lineHeight: `1.15`
+              }}>
+                {`수입 ${recordSummary.incomePercent}%`}
               </Div>
-            </Grid>
+              <Div className={`fs-0-5rem fw-700`} style={{
+                color: chartThemeColors.expense,
+                lineHeight: `1.15`
+              }}>
+                {`지출 ${recordSummary.expensePercent}%`}
+              </Div>
+            </Div>
+          </Grid>
 
-            <Hr m={0} className={`bg-light`} />
-
-            <Grid container={true} spacing={1} className={`mt-5px`}>
-              <Grid size={2} className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`money2.webp`}
-                />
-              </Grid>
-              <Grid size={3} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+          <Grid size={6} className={`money-record-legend p-relative d-col-center`}>
+            <Div className={`d-row-between mb-5px w-100p`}>
+              <Div className={`d-row-center mb-5px`}>
+                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.income }}>
+                  {`●`}
+                </Div>
+                <Div className={`fs-0-6rem fw-600 dark`}>
                   {translate(`income`)}
                 </Div>
-              </Grid>
-              <Grid size={7}>
-                <Grid container={true} spacing={1}>
-                  <Grid size={10} className={`d-row-right`}>
-                    <Div className={`fs-0-8rem fw-600 primary`}>
-                      {insertComma(summary.totalIncome.toString())}
-                    </Div>
-                  </Grid>
-                  <Grid size={2} className={`d-row-center`}>
-                    <Div className={`fs-0-6rem`}>
-                      {translate(localCurrency)}
-                    </Div>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-
-            <Hr m={1} className={`bg-light`} />
-
-            <Grid container={true} spacing={1}>
-              <Grid size={2} className={`d-row-center`}>
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`money2.webp`}
-                />
-              </Grid>
-              <Grid size={3} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+              </Div>
+              <Div className={`d-row-right mb-5px`}>
+                <Div className={`fs-0-7rem fw-600 black mr-5px`}>
+                  {recordSummary.totalIncomeText}
+                </Div>
+                <Div className={`fs-0-6rem fw-600 dark`}>
+                  {translate(localCurrency)}
+                </Div>
+              </Div>
+            </Div>
+            <Div className={`d-row-between w-100p`}>
+              <Div className={`d-row-center mb-5px`}>
+                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.expense }}>
+                  {`●`}
+                </Div>
+                <Div className={`fs-0-6rem fw-600 dark`}>
                   {translate(`expense`)}
                 </Div>
-              </Grid>
-              <Grid size={7}>
-                <Grid container={true} spacing={1}>
-                  <Grid size={10} className={`d-row-right`}>
-                    <Div className={`fs-0-8rem fw-600 red`}>
-                      {insertComma(summary.totalExpense.toString())}
-                    </Div>
-                  </Grid>
-                  <Grid size={2} className={`d-row-center`}>
-                    <Div className={`fs-0-6rem`}>
-                      {translate(localCurrency)}
-                    </Div>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-
-            <Hr m={1} className={`bg-light`} />
-
-            <Grid container={true} spacing={1}>
-              <Grid size={2} className={`d-row-center`}>
-                <Icons
-                  key={`TrendingUp`}
-                  name={`TrendingUp`}
-                  className={`w-14px h-14px`}
-                />
-              </Grid>
-              <Grid size={3} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-                  {translate(`balance`)}
+              </Div>
+              <Div className={`d-row-right mb-5px`}>
+                <Div className={`fs-0-7rem fw-600 black mr-5px`}>
+                  {recordSummary.totalExpenseText}
                 </Div>
-              </Grid>
-              <Grid size={7}>
-                <Grid container={true} spacing={1}>
-                  <Grid size={10} className={`d-row-right`}>
-                    <Div className={`fs-0-8rem fw-700 ${summary.balanceColor}`}>
-                      {insertComma(summary.balance.toString())}
-                    </Div>
-                  </Grid>
-                  <Grid size={2} className={`d-row-center`}>
-                    <Div className={`fs-0-6rem`}>
-                      {translate(localCurrency)}
-                    </Div>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+                <Div className={`fs-0-6rem fw-600 dark`}>
+                  {translate(localCurrency)}
+                </Div>
+              </Div>
+            </Div>
+          </Grid>
+        </Grid>
+
+        <Hr m={20} className={`bg-light`} />
+
+        {/** row 3 **/}
+        <Grid container={true} spacing={2}>
+          <Grid size={12} className={`money-record-stat-grid`}>
+            <Div className={`money-record-stat-card`}>
+              <Div className={`money-record-stat-label`}>
+                <Div className={`fs-0-65rem fw-600 dark`}>
+                  {translate(`maxExpense`)}
+                </Div>
+                <Div className={`money-record-stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.highestDateText}>
+                  {recordSummary.highestDateText}
+                </Div>
+              </Div>
+              <Div className={`d-row-right money-record-stat-value`}>
+                <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
+                  {recordSummary.highestExpenseText}
+                </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(localCurrency)}
+                </Div>
+              </Div>
+            </Div>
+            <Div className={`money-record-stat-card`}>
+              <Div className={`money-record-stat-label`}>
+                <Div className={`fs-0-65rem fw-600 dark`}>
+                  {translate(`minExpense`)}
+                </Div>
+                <Div className={`money-record-stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.lowestDateText}>
+                  {recordSummary.lowestDateText}
+                </Div>
+              </Div>
+              <Div className={`d-row-right money-record-stat-value`}>
+                <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
+                  {recordSummary.lowestExpenseText}
+                </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(localCurrency)}
+                </Div>
+              </Div>
+            </Div>
           </Grid>
         </Grid>
       </Grid>
-    ); */
+    );
     // 7-1. list
     const listSection = () => (
       <Grid container={true} spacing={0}>
         {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-2 border-1 shadow-1 mb-10px`} key={`list-${i}`}>
+          <Grid container={true} spacing={0} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`} key={i}>
             <Grid size={12} className={`p-2px`}>
-              <Accordion className={`border-0 shadow-0 radius-2`} expanded={isExpanded?.[i]?.expanded}>
+              <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded}>
                 <AccordionSummary
                   expandIcon={(
                     <Icons
@@ -316,7 +429,7 @@ export const MoneyRecordList = memo(() => {
                     });
                   }}
                 >
-                  <Grid container={true} spacing={1}>
+                  <Grid container={true} spacing={0}>
                     <Grid size={2} className={`d-row-center`}>
                       <Icons
                         key={`Search`}
@@ -324,28 +437,35 @@ export const MoneyRecordList = memo(() => {
                         className={`w-16px h-16px`}
                       />
                     </Grid>
-                    <Grid size={10} className={`d-row-left`}>
+                    <Grid size={7} className={`d-row-left`}>
                       <Div className={`fs-0-9rem fw-600 black mr-5px`}>
-                        {formatDate(item.money_record_dateStart)}
+                        {formatDateMmDd(item.money_record_dateStart)}
                       </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      <Div className={`fs-0-9rem fw-500 dark mr-5px`}>
                         {translate(getDayNotFmt(item.money_record_dateStart).format(`ddd`))}
                       </Div>
-                      <Img
-                        max={14}
-                        hover={false}
-                        shadow={false}
-                        radius={false}
-                        src={`${item.money_record_score_smile ?? `smile3`}.webp`}
-                        className={`ml-5px`}
-                      />
+                      <Div className={`d-center`}>
+                        <Icons
+                          name={(item.money_record_score_smile ?? `smile3`)}
+                          className={`w-14px h-14px`}
+                          sx={{ padding: 0 }}
+                        />
+                      </Div>
                       {item.money_section?.some((sec) => (
                         sec.money_record_scheduled === `Y` && sec.money_record_scheduled_done === `N`
                       )) && (
-                        <Div className={`fs-0-7rem fw-600 red ml-10px`}>
+                        <Div className={`fs-0-7rem fw-600 fifthScore ml-5px`}>
                           {translate(`scheduledExpense`)}
                         </Div>
                       )}
+                    </Grid>
+                    <Grid size={3} className={`d-row-right pr-5px`}>
+                      <Div className={`fs-0-85rem fw-700 fifthScore`}>
+                        {insertComma(item.money_record_total_expense ?? `0`)}
+                      </Div>
+                      <Div className={`fs-0-6rem fw-500 dark ml-4px`}>
+                        {translate(localCurrency)}
+                      </Div>
                     </Grid>
                   </Grid>
                 </AccordionSummary>
@@ -354,13 +474,9 @@ export const MoneyRecordList = memo(() => {
                     {/** row 1 * */}
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-row-center`}>
-                        <Img
-                          max={10}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`money2.webp`}
-                        />
+                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
+                          {`●`}
+                        </Div>
                       </Grid>
                       <Grid size={3} className={`d-row-left`}>
                         <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
@@ -388,13 +504,9 @@ export const MoneyRecordList = memo(() => {
                     {/** row 2 * */}
                     <Grid container={true} spacing={1}>
                       <Grid size={2} className={`d-center`}>
-                        <Img
-                          max={10}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`money2.webp`}
-                        />
+                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.expense }}>
+                          {`●`}
+                        </Div>
                       </Grid>
                       <Grid size={3} className={`d-row-left`}>
                         <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
@@ -426,13 +538,15 @@ export const MoneyRecordList = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
+        {summarySection()}
+        <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`money`} /> : listSection()}
       </Paper>
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -441,7 +555,7 @@ export const MoneyRecordList = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -453,7 +567,7 @@ export const MoneyRecordList = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {listNode()}

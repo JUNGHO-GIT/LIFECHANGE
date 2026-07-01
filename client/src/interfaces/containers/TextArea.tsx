@@ -8,14 +8,14 @@
 import { React, memo, useCallback, useMemo, useRef } from "@exportReacts";
 import { TextField } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const TextArea = memo((props: any) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ------------------------------------------------------------------------------------
   const fullWidth: boolean = props?.fullWidth !== undefined ? props.fullWidth : true;
   const debounceRef: React.RefObject<any> = useRef<any>(null);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ------------------------------------------------------------------------------------
   const handleClick = useCallback((e: React.MouseEvent) => {
     if (props?.locked === `locked` || props?.disabled) {
       e.preventDefault();
@@ -31,7 +31,7 @@ export const TextArea = memo((props: any) => {
     }
   }, [ props?.locked, props?.disabled, props?.onClick ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ------------------------------------------------------------------------------------
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const debounceMs: number | undefined = props?.debounceMs;
     const original: any = props?.onChange;
@@ -53,7 +53,7 @@ export const TextArea = memo((props: any) => {
     }, debounceMs);
   }, [ props?.onChange, props?.debounceMs ]);
 
-  // 5. memo ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5. memo --------------------------------------------------------------------------------------
   const slotPropsMemo = useMemo(() => ({
     ...props?.slotProps,
     input: {
@@ -115,7 +115,7 @@ export const TextArea = memo((props: any) => {
     props?.disabled,
   ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <TextField
       {...props}

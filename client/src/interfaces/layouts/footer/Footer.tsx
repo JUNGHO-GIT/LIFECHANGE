@@ -12,28 +12,28 @@ import { Buttons } from "./Buttons";
 import { FindFilter } from "./FindFilter";
 import { ListFilter } from "./ListFilter";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface FooterProps {
   state: any;
   setState: any;
   flow?: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const Footer = memo((
   { state, setState, flow }: FooterProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { PATH } = useCommonValue();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ typeName, setTypeName ] = useState<string>(``);
   const [ styleClass, setStyleClass ] = useState<string>(``);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    const commonStr: string = `layout-wrapper p-sticky h-8vh radius-2 border-1 shadow-1 p-5px`;
+    const commonStr: string = `layout-wrapper p-sticky h-8vh radius-2 border-light-1 shadow-1 p-5px`;
     const isUser: boolean = PATH.includes(`/user/category`) || PATH.includes(`/user/detail`);
     const isFood: boolean = PATH.includes(`/food/find/list`) || PATH.includes(`/food/favorite/list`);
     const isList: boolean = PATH.includes(`/goal/list`) || PATH.includes(`/record/list`);
@@ -66,7 +66,7 @@ export const Footer = memo((
     })();
   }, [PATH]);
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => {
     // 1. btn
     const btnSection = () => (
@@ -100,7 +100,7 @@ export const Footer = memo((
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {footerNode()}

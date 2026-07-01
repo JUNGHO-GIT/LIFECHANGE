@@ -16,13 +16,13 @@ import { PickerDay, Count, Delete, Input, Select } from "@exportContainers";
 import { Img, Bg, Icons, Div, Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const FoodRecordDetail = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, navigate, toList, sessionId,
-    foodArray, bgColors, sessionFoodSection,
+    foodArray, bgColors, sessionFoodSection, chartThemeColors,
     location_dateStart, location_dateEnd,
   } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -31,7 +31,7 @@ export const FoodRecordDetail = memo(() => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<FoodRecordType>(FoodRecord);
   const [ FAVORITE, setFAVORITE ] = useState([]);
@@ -65,12 +65,12 @@ export const FoodRecordDetail = memo(() => {
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
 
-  // 2-2. useDeferredValue ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useDeferredValue ----------------------------------------------------------------------
   // - 항목 렌더를 비긴급으로 분리
   // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
 
-  // 2-3. useRef ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<
     FoodRecordType
   > = useRef(OBJECT);
@@ -85,14 +85,14 @@ export const FoodRecordDetail = memo(() => {
     dateEnd: string;
   }> = useRef(DATE);
 
-  // 2-3. useEffect ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
     COUNT !== countRef.current && (countRef.current = COUNT);
     OBJECT !== objectRef.current && (objectRef.current = OBJECT);
     DATE !== dateRef.current && (dateRef.current = DATE);
   }, [ COUNT, OBJECT, DATE ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
 
@@ -122,7 +122,7 @@ export const FoodRecordDetail = memo(() => {
     }
   }, [ EXIST, DATE?.dateEnd, OBJECT.food_record_dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/record/exist`, {
       params: {
@@ -146,7 +146,7 @@ export const FoodRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     axios.get(`${URL_OBJECT}/favorite/list`, {
       params: {
@@ -167,7 +167,7 @@ export const FoodRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
@@ -231,7 +231,7 @@ export const FoodRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, DATE?.dateStart, DATE?.dateEnd ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const totals = OBJECT?.food_section.reduce((acc: any, cur: any) => {
       return {
@@ -256,7 +256,7 @@ export const FoodRecordDetail = memo(() => {
     }));
   }, [OBJECT?.food_section]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
       food_record_part: foodArray[1]?.food_record_part ?? ``,
@@ -281,7 +281,7 @@ export const FoodRecordDetail = memo(() => {
 
   }, [COUNT?.newSectionCnt]);
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowSave = async (type: string) => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `record`)) {
@@ -338,7 +338,7 @@ export const FoodRecordDetail = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowDelete = async () => {
     setLOADING(true);
     if (!await validate(objectRef.current, countRef.current, `delete`)) {
@@ -393,7 +393,7 @@ export const FoodRecordDetail = memo(() => {
     });
   };
 
-  // 3. flow ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. flow ------------------------------------------------------------------------------------
   const flowUpdateFavorite = useCallback((foodFavorite: any) => {
     (!foodFavorite.food_record_name || foodFavorite.food_record_name.trim() === ``) && (() => {
       setALERT({
@@ -436,7 +436,7 @@ export const FoodRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, setLOADING, setALERT, translate ]);
 
-  // 4-3. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
 
     let sectionArray: typeof sessionFoodSection = [];
@@ -455,7 +455,7 @@ export const FoodRecordDetail = memo(() => {
     }));
   }, [sessionFoodSection]);
 
-  // 4-5. handle (favorite 추가) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-5. handle (favorite 추가) -------------------------------------------------------------------
   const handleFoodFavorite = useCallback((index: number) => {
 
     const food_record_name: string = OBJECT?.food_section[index]?.food_record_name;
@@ -494,11 +494,11 @@ export const FoodRecordDetail = memo(() => {
     };
   }, [OBJECT]);
 
-  // 7. detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. detail ----------------------------------------------------------------------------------
   const detailNode = () => {
     // 7-1. date + count
     const dateCountSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         <Grid size={12}>
           <PickerDay
             DATE={DATE}
@@ -519,7 +519,7 @@ export const FoodRecordDetail = memo(() => {
     );
     // 7-2. total
     const totalSection = () => (
-      <Grid container={true} spacing={2} className={`radius-2 border-1 shadow-1 p-20px`}>
+      <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-1 p-20px`}>
         {/** row 1 * */}
         <Grid container={true} spacing={1}>
           <Grid size={6}>
@@ -529,13 +529,9 @@ export const FoodRecordDetail = memo(() => {
               label={translate(`totalKcal`)}
               value={insertComma(OBJECT?.food_record_total_kcal ?? `0`)}
               startadornment={(
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`food2.webp`}
-                />
+                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                  {`●`}
+                </Div>
               )}
               endadornment={
                 translate(`kc`)
@@ -549,13 +545,9 @@ export const FoodRecordDetail = memo(() => {
               label={translate(`totalCarb`)}
               value={insertComma(OBJECT?.food_record_total_carb ?? `0`)}
               startadornment={(
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`food3.webp`}
-                />
+                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                  {`●`}
+                </Div>
               )}
               endadornment={
                 translate(`g`)
@@ -573,13 +565,9 @@ export const FoodRecordDetail = memo(() => {
               label={translate(`totalProtein`)}
               value={insertComma(OBJECT?.food_record_total_protein ?? `0`)}
               startadornment={(
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`food4.webp`}
-                />
+                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                  {`●`}
+                </Div>
               )}
               endadornment={
                 translate(`g`)
@@ -593,13 +581,9 @@ export const FoodRecordDetail = memo(() => {
               label={translate(`totalFat`)}
               value={insertComma(OBJECT?.food_record_total_fat ?? `0`)}
               startadornment={(
-                <Img
-                  max={10}
-                  hover={true}
-                  shadow={false}
-                  radius={false}
-                  src={`food5.webp`}
-                />
+                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                  {`●`}
+                </Div>
               )}
               endadornment={
                 translate(`g`)
@@ -611,372 +595,354 @@ export const FoodRecordDetail = memo(() => {
     );
     // 7-3. detail
     const detailSection = () => (
-      <>
-        {deferredObject.food_section?.map((item, i) => (
-          <Grid
-            container={true}
-            spacing={2}
-            key={`detail-${i}`}
-            className={`${LOCKED === `locked` ? `locked` : ``} radius-2 border-1 shadow-1 p-20px`}
-          >
-            {/** row 1 * */}
-            <Grid container={true} spacing={1}>
-              <Grid size={6} className={`d-row-left`}>
-                <Bg
-                  badgeContent={i + 1}
-                  bgcolor={bgColors?.[foodArray.findIndex((f: any) => f.food_record_part === item?.food_record_part)]}
-                />
-                <Div className={`mt-n10px ml-15px`}>
-                  <Icons
-                    key={`Star`}
-                    name={`Star`}
-                    className={`w-20px h-20px`}
-                    color={`darkslategrey`}
-                    fill={
-										FAVORITE?.length > 0 && FAVORITE.some((item: any) => (
-										  item.food_record_key === handleFoodFavorite(i).food_record_key
-										)) ? `gold` : `white`
-                    }
-                    onClick={(e: any) => {
-                      e.stopPropagation();
-                      flowUpdateFavorite(handleFoodFavorite(i));
-                    }}
-                  />
-                </Div>
-              </Grid>
-              <Grid size={6} className={`d-row-right`}>
-                <Delete
-                  index={i}
-                  handleDelete={handleDelete}
-                  LOCKED={LOCKED}
-                />
-              </Grid>
-            </Grid>
-
-            {/** row 2 * */}
-            <Grid container={true} spacing={1}>
-              <Grid size={6}>
-                <Select
-                  locked={LOCKED}
-                  label={translate(`part`)}
-                  value={item?.food_record_part ?? ``}
-                  inputRef={REFS?.[i]?.food_record_part}
-                  error={ERRORS?.[i]?.food_record_part}
-                  onChange={(e: any) => {
-                    let value: string = String(e.target.value ?? ``);
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((section: any, idx: number) => (
-											idx === i ? {
-											  ...section,
-											  food_record_part: value,
-											} : section
-                      )),
-                    }));
-                  }}
-                >
-                  {foodArray.map((part: any, idx: number) => (
-                    <MenuItem
-                      key={idx}
-                      value={part.food_record_part}
-                      className={`fs-0-8rem`}
-                    >
-                      {translate(part.food_record_part as string)}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Grid>
-              <Grid size={3}>
-                <Input
-                  locked={LOCKED}
-                  label={translate(`foodCount`)}
-                  value={insertComma(item?.food_record_count ?? `0`)}
-                  inputRef={REFS?.[i]?.food_record_count}
-                  error={ERRORS?.[i]?.food_record_count}
-                  onChange={(e: any) => {
-                    const processedValue: string | null = handleNumberInput(e.target.value, 99, 1);
-                    if (processedValue === null) {
-                      return;
-                    }
-                    // 영양소 설정 함수
-                    const setNutrient = (nut: string | number, extra: string) => {
-                      const numericValue: number = Number(processedValue) ?? 1;
-                      const foodCount: number = Number(item?.food_record_count) ?? 1;
-                      if (!Number.isNaN(numericValue) && !Number.isNaN(foodCount)) {
-                        return (
-												extra === `kcal`
-												? (numericValue * Number(nut) / foodCount).toFixed(0)
-												: (numericValue * Number(nut) / foodCount).toFixed(1)
-                        );
-                      }
-                      return nut;
-                    };
-                    // object 설정
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((section: any, idx: number) => (
-											idx === i ? {
-											  ...section,
-											  food_record_count: processedValue,
-											  food_record_kcal: setNutrient(item?.food_record_kcal, `kcal`),
-											  food_record_fat: setNutrient(item?.food_record_fat, `fat`),
-											  food_record_carb: setNutrient(item?.food_record_carb, `carb`),
-											  food_record_protein: setNutrient(item?.food_record_protein, `protein`),
-											} : section
-                      )),
-                    }));
-                  }}
-                />
-              </Grid>
-              <Grid size={3}>
-                <Input
-                  locked={LOCKED}
-                  label={translate(`gram`)}
-                  value={insertComma(item?.food_record_gram ?? `0`)}
-                  inputRef={REFS?.[i]?.food_record_gram}
-                  error={ERRORS?.[i]?.food_record_gram}
-                  onChange={(e: any) => {
-                    const processedValue: string | null = handleNumberInput(e.target.value, 999);
-                    if (processedValue === null) {
-                      return;
-                    }
-                    // object 설정
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((section: any, idx: number) => (
-											idx === i ? {
-											  ...section,
-											  food_record_gram: processedValue,
-											} : section
-                      )),
-                    }));
-                  }}
-                />
-              </Grid>
-            </Grid>
-
-            {/** row 3 * */}
-            <Grid container={true} spacing={1}>
-              <Grid size={6}>
-                <Input
-                  locked={LOCKED}
-                  shrink={`shrink`}
-                  label={translate(`foodName`)}
-                  value={item?.food_record_name ?? ``}
-                  inputRef={REFS?.[i]?.food_record_name}
-                  error={ERRORS?.[i]?.food_record_name}
-                  onChange={(e: any) => {
-                    // 빈값 처리
-                    const value: string = e.target.value ?? ``;
-                    // 30 제한
-                    if (value?.length > 30) {
-                      return;
-                    }
-                    // object 설정
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((section: any, idx: number) => (
-											idx === i ? {
-											  ...section,
-											  food_record_name: value,
-											} : section
-                      )),
-                    }));
-                  }}
-                />
-              </Grid>
-              <Grid size={6}>
-                <Input
-                  locked={LOCKED}
-                  shrink={`shrink`}
-                  label={translate(`brand`)}
-                  value={item?.food_record_brand ?? ``}
-                  inputRef={REFS?.[i]?.food_record_brand}
-                  error={ERRORS?.[i]?.food_record_brand}
-                  onChange={(e: any) => {
-                    // 빈값 처리
-                    const value: string = e.target.value ?? ``;
-                    // 30 제한
-                    if (value?.length > 30) {
-                      return;
-                    }
-                    // object 설정
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((section: any, idx: number) => (
-											idx === i ? {
-											  ...section,
-											  food_record_brand: value,
-											} : section
-                      )),
-                    }));
-                  }}
-                />
-              </Grid>
-            </Grid>
-
-            {/** row 4 * */}
-            <Grid container={true} spacing={1}>
-              <Grid size={6}>
-                <Input
-                  locked={LOCKED}
-                  label={translate(`kcal`)}
-                  value={insertComma(item?.food_record_kcal ?? `0`)}
-                  inputRef={REFS?.[i]?.food_record_kcal}
-                  error={ERRORS?.[i]?.food_record_kcal}
-                  startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food2.webp`}
-                    />
-                  )}
-                  endadornment={
-                    translate(`kc`)
+      deferredObject.food_section?.map((item, i) => (
+        <Grid
+          container={true}
+          spacing={2}
+          key={`detail-${item.food_record_part}-${item.food_record_name}-${item.food_record_brand}-${item.food_record_count}-${item.food_record_serv}-${item.food_record_gram}`}
+          className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
+        >
+          {/** row 1 * */}
+          <Grid container={true} spacing={1}>
+            <Grid size={6} className={`d-row-left`}>
+              <Bg
+                badgeContent={i + 1}
+                bgcolor={bgColors?.[foodArray.findIndex((f: any) => f.food_record_part === item?.food_record_part)]}
+              />
+              <Div className={`mt-n10px ml-15px`}>
+                <Icons
+                  key={`Star`}
+                  name={`Star`}
+                  className={`w-20px h-20px`}
+                  color={`darkslategrey`}
+                  fill={
+                  FAVORITE?.length > 0 && FAVORITE.some((item: any) => (
+                    item.food_record_key === handleFoodFavorite(i).food_record_key
+                  )) ? `gold` : `white`
                   }
-                  onChange={(e: any) => {
-                    const processedValue: string | null = handleNumberInput(e.target.value, 9999);
-                    if (processedValue === null) {
-                      return;
-                    }
-                    // object 설정
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((section: any, idx: number) => (
-											idx === i ? {
-											  ...section,
-											  food_record_kcal: processedValue,
-											} : section
-                      )),
-                    }));
+                  onClick={(e: any) => {
+                    e.stopPropagation();
+                    flowUpdateFavorite(handleFoodFavorite(i));
                   }}
                 />
-              </Grid>
-              <Grid size={6}>
-                <Input
-                  locked={LOCKED}
-                  label={translate(`carb`)}
-                  value={insertComma(item?.food_record_carb ?? `0`)}
-                  inputRef={REFS?.[i]?.food_record_carb}
-                  error={ERRORS?.[i]?.food_record_carb}
-                  startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food3.webp`}
-                    />
-                  )}
-                  endadornment={
-                    translate(`g`)
-                  }
-                  onChange={(e: any) => {
-                    const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
-                    if (processedValue === null) {
-                      return;
-                    }
-                    // object 설정
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((section: any, idx: number) => (
-											idx === i ? {
-											  ...section,
-											  food_record_carb: processedValue,
-											} : section
-                      )),
-                    }));
-                  }}
-                />
-              </Grid>
+              </Div>
             </Grid>
-
-            {/** row 5 * */}
-            <Grid container={true} spacing={1}>
-              <Grid size={6}>
-                <Input
-                  locked={LOCKED}
-                  label={translate(`protein`)}
-                  value={insertComma(item?.food_record_protein ?? `0`)}
-                  inputRef={REFS?.[i]?.food_record_protein}
-                  error={ERRORS?.[i]?.food_record_protein}
-                  startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food4.webp`}
-                    />
-                  )}
-                  endadornment={
-                    translate(`g`)
-                  }
-                  onChange={(e: any) => {
-                    const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
-                    if (processedValue === null) {
-                      return;
-                    }
-                    // object 설정
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((section: any, idx: number) => (
-											idx === i ? {
-											  ...section,
-											  food_record_protein: processedValue,
-											} : section
-                      )),
-                    }));
-                  }}
-                />
-              </Grid>
-              <Grid size={6}>
-                <Input
-                  locked={LOCKED}
-                  label={translate(`fat`)}
-                  value={insertComma(item?.food_record_fat ?? `0`)}
-                  inputRef={REFS?.[i]?.food_record_fat}
-                  error={ERRORS?.[i]?.food_record_fat}
-                  startadornment={(
-                    <Img
-                      max={10}
-                      hover={true}
-                      shadow={false}
-                      radius={false}
-                      src={`food5.webp`}
-                    />
-                  )}
-                  endadornment={
-                    translate(`g`)
-                  }
-                  onChange={(e: any) => {
-                    const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
-                    if (processedValue === null) {
-                      return;
-                    }
-                    // object 설정
-                    setOBJECT((prev: any) => ({
-                      ...prev,
-                      food_section: prev.food_section?.map((section: any, idx: number) => (
-											idx === i ? {
-											  ...section,
-											  food_record_fat: processedValue,
-											} : section
-                      )),
-                    }));
-                  }}
-                />
-              </Grid>
+            <Grid size={6} className={`d-row-right`}>
+              <Delete
+                index={i}
+                handleDelete={handleDelete}
+                LOCKED={LOCKED}
+              />
             </Grid>
           </Grid>
-        ))}
-      </>
+
+          {/** row 2 * */}
+          <Grid container={true} spacing={1}>
+            <Grid size={6}>
+              <Select
+                locked={LOCKED}
+                label={translate(`part`)}
+                value={item?.food_record_part ?? ``}
+                inputRef={REFS?.[i]?.food_record_part}
+                error={ERRORS?.[i]?.food_record_part}
+                onChange={(e: any) => {
+                  let value: string = String(e.target.value ?? ``);
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_record_part: value,
+                    } : section
+                    )),
+                  }));
+                }}
+              >
+                {foodArray.map((part: any, idx: number) => (
+                  <MenuItem
+                    key={part.food_record_part}
+                    value={part.food_record_part}
+                    className={`fs-0-8rem`}
+                  >
+                    {translate(part.food_record_part as string)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid size={3}>
+              <Input
+                locked={LOCKED}
+                label={translate(`foodCount`)}
+                value={insertComma(item?.food_record_count ?? `0`)}
+                inputRef={REFS?.[i]?.food_record_count}
+                error={ERRORS?.[i]?.food_record_count}
+                onChange={(e: any) => {
+                  const processedValue: string | null = handleNumberInput(e.target.value, 99, 1);
+                  if (processedValue === null) {
+                    return;
+                  }
+                  // 영양소 설정 함수
+                  const setNutrient = (nut: string | number, extra: string) => {
+                    const numericValue: number = Number(processedValue) ?? 1;
+                    const foodCount: number = Number(item?.food_record_count) ?? 1;
+                    if (!Number.isNaN(numericValue) && !Number.isNaN(foodCount)) {
+                      return (
+                      extra === `kcal`
+                      ? (numericValue * Number(nut) / foodCount).toFixed(0)
+                      : (numericValue * Number(nut) / foodCount).toFixed(1)
+                      );
+                    }
+                    return nut;
+                  };
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_record_count: processedValue,
+                      food_record_kcal: setNutrient(item?.food_record_kcal, `kcal`),
+                      food_record_fat: setNutrient(item?.food_record_fat, `fat`),
+                      food_record_carb: setNutrient(item?.food_record_carb, `carb`),
+                      food_record_protein: setNutrient(item?.food_record_protein, `protein`),
+                    } : section
+                    )),
+                  }));
+                }}
+              />
+            </Grid>
+            <Grid size={3}>
+              <Input
+                locked={LOCKED}
+                label={translate(`gram`)}
+                value={insertComma(item?.food_record_gram ?? `0`)}
+                inputRef={REFS?.[i]?.food_record_gram}
+                error={ERRORS?.[i]?.food_record_gram}
+                onChange={(e: any) => {
+                  const processedValue: string | null = handleNumberInput(e.target.value, 999);
+                  if (processedValue === null) {
+                    return;
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_record_gram: processedValue,
+                    } : section
+                    )),
+                  }));
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          {/** row 3 * */}
+          <Grid container={true} spacing={1}>
+            <Grid size={6}>
+              <Input
+                locked={LOCKED}
+                shrink={`shrink`}
+                label={translate(`foodName`)}
+                value={item?.food_record_name ?? ``}
+                inputRef={REFS?.[i]?.food_record_name}
+                error={ERRORS?.[i]?.food_record_name}
+                onChange={(e: any) => {
+                  // 빈값 처리
+                  const value: string = e.target.value ?? ``;
+                  // 30 제한
+                  if (value?.length > 30) {
+                    return;
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_record_name: value,
+                    } : section
+                    )),
+                  }));
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <Input
+                locked={LOCKED}
+                shrink={`shrink`}
+                label={translate(`brand`)}
+                value={item?.food_record_brand ?? ``}
+                inputRef={REFS?.[i]?.food_record_brand}
+                error={ERRORS?.[i]?.food_record_brand}
+                onChange={(e: any) => {
+                  // 빈값 처리
+                  const value: string = e.target.value ?? ``;
+                  // 30 제한
+                  if (value?.length > 30) {
+                    return;
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_record_brand: value,
+                    } : section
+                    )),
+                  }));
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          {/** row 4 * */}
+          <Grid container={true} spacing={1}>
+            <Grid size={6}>
+              <Input
+                locked={LOCKED}
+                label={translate(`kcal`)}
+                value={insertComma(item?.food_record_kcal ?? `0`)}
+                inputRef={REFS?.[i]?.food_record_kcal}
+                error={ERRORS?.[i]?.food_record_kcal}
+                startadornment={(
+                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                    {`●`}
+                  </Div>
+                )}
+                endadornment={
+                  translate(`kc`)
+                }
+                onChange={(e: any) => {
+                  const processedValue: string | null = handleNumberInput(e.target.value, 9999);
+                  if (processedValue === null) {
+                    return;
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_record_kcal: processedValue,
+                    } : section
+                    )),
+                  }));
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <Input
+                locked={LOCKED}
+                label={translate(`carb`)}
+                value={insertComma(item?.food_record_carb ?? `0`)}
+                inputRef={REFS?.[i]?.food_record_carb}
+                error={ERRORS?.[i]?.food_record_carb}
+                startadornment={(
+                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                    {`●`}
+                  </Div>
+                )}
+                endadornment={
+                  translate(`g`)
+                }
+                onChange={(e: any) => {
+                  const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
+                  if (processedValue === null) {
+                    return;
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_record_carb: processedValue,
+                    } : section
+                    )),
+                  }));
+                }}
+              />
+            </Grid>
+          </Grid>
+
+          {/** row 5 * */}
+          <Grid container={true} spacing={1}>
+            <Grid size={6}>
+              <Input
+                locked={LOCKED}
+                label={translate(`protein`)}
+                value={insertComma(item?.food_record_protein ?? `0`)}
+                inputRef={REFS?.[i]?.food_record_protein}
+                error={ERRORS?.[i]?.food_record_protein}
+                startadornment={(
+                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                    {`●`}
+                  </Div>
+                )}
+                endadornment={
+                  translate(`g`)
+                }
+                onChange={(e: any) => {
+                  const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
+                  if (processedValue === null) {
+                    return;
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_record_protein: processedValue,
+                    } : section
+                    )),
+                  }));
+                }}
+              />
+            </Grid>
+            <Grid size={6}>
+              <Input
+                locked={LOCKED}
+                label={translate(`fat`)}
+                value={insertComma(item?.food_record_fat ?? `0`)}
+                inputRef={REFS?.[i]?.food_record_fat}
+                error={ERRORS?.[i]?.food_record_fat}
+                startadornment={(
+                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                    {`●`}
+                  </Div>
+                )}
+                endadornment={
+                  translate(`g`)
+                }
+                onChange={(e: any) => {
+                  const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
+                  if (processedValue === null) {
+                    return;
+                  }
+                  // object 설정
+                  setOBJECT((prev: any) => ({
+                    ...prev,
+                    food_section: prev.food_section?.map((section: any, idx: number) => (
+                    idx === i ? {
+                      ...section,
+                      food_record_fat: processedValue,
+                    } : section
+                    )),
+                  }));
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      ))
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-2 border-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
         {dateCountSection()}
         <Br m={20} />
         {totalSection()}
@@ -986,7 +952,7 @@ export const FoodRecordDetail = memo(() => {
     );
   };
 
-  // 8. dialog ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
     <Dialog
       COUNT={COUNT}
@@ -998,7 +964,7 @@ export const FoodRecordDetail = memo(() => {
     />
   );
 
-  // 9. footer ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 9. footer ----------------------------------------------------------------------------------
   const footerNode = () => (
     <Footer
       state={{
@@ -1013,7 +979,7 @@ export const FoodRecordDetail = memo(() => {
     />
   );
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {detailNode()}

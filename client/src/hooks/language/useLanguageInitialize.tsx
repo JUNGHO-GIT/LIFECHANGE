@@ -9,14 +9,14 @@ import { useCommonValue } from "@hooks/common/useCommonValue";
 import { useEffect } from "@exportReacts";
 import { useStoreLanguage } from "@exportStores";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const useLanguageInitialize = () => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { localLang } = useCommonValue();
   const { setLang } = useStoreLanguage();
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     localLang === `ko` ? setLang(`ko`) : setLang(`en`);
   }, [localLang]);

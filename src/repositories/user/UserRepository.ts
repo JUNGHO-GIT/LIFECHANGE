@@ -21,7 +21,7 @@ import { User } from "@schemas/user/User";
 import { Verify } from "@schemas/Verify";
 import mongoose from "mongoose";
 
-// 1-1. email - findId ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. email - findId -----------------------------------------------------------------------------
 export const emailFindId = async (user_id_param: string) => {
   const finalResult: any = await User.findOne({
     user_id: user_id_param,
@@ -30,7 +30,7 @@ export const emailFindId = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 1-2. email - sendEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. email - sendEmail --------------------------------------------------------------------------
 export const emailSendEmail = async (
   user_id_param: string,
   code_param: string,
@@ -54,7 +54,7 @@ export const emailSendEmail = async (
   return finalResult;
 };
 
-// 1-3. email - verifyEmail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-3. email - verifyEmail ------------------------------------------------------------------------
 export const emailVerifyEmail = async (user_id_param: string) => {
   const finalResult: any = await Verify.findOne({
     verify_id: user_id_param,
@@ -63,7 +63,7 @@ export const emailVerifyEmail = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 2-1. user - checkId ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-1. user - checkId -----------------------------------------------------------------------------
 export const userCheckId = async (user_id_param: string) => {
   const finalResult: any = await User.findOne({
     user_id: user_id_param,
@@ -72,7 +72,7 @@ export const userCheckId = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 2-2. user - signup ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-2. user - signup -----------------------------------------------------------------------------
 export const userSignup = async (user_id_param: string, OBJECT_param: any) => {
   const finalResult: any = await User.create({
     _id: new mongoose.Types.ObjectId(),
@@ -129,7 +129,7 @@ export const userSignup = async (user_id_param: string, OBJECT_param: any) => {
   return finalResult;
 };
 
-// 2-3. user - resetPw ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-3. user - resetPw -----------------------------------------------------------------------------
 export const userResetPw = async (user_id_param: string, OBJECT_param: any) => {
   const finalResult: any = await User.findOneAndUpdate(
     {
@@ -150,7 +150,7 @@ export const userResetPw = async (user_id_param: string, OBJECT_param: any) => {
   return finalResult;
 };
 
-// 2-4. user - login ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-4. user - login -------------------------------------------------------------------------------
 export const userLogin = async (
   user_id_param: string,
   user_pw_param: string,
@@ -163,7 +163,7 @@ export const userLogin = async (
   return finalResult;
 };
 
-// 2-5. user - detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-5. user - detail ------------------------------------------------------------------------------
 export const userDetail = async (user_id_param: string) => {
   const finalResult: any = await User.findOne({
     user_id: user_id_param,
@@ -172,7 +172,7 @@ export const userDetail = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 2-6. user - update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-6. user - update ------------------------------------------------------------------------------
 export const userUpdate = async (user_id_param: string, OBJECT_param: any) => {
   const finalResult: any = await User.findOneAndUpdate(
     {
@@ -195,7 +195,7 @@ export const userUpdate = async (user_id_param: string, OBJECT_param: any) => {
   return finalResult;
 };
 
-// 2-7. user - delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-7. user - delete -----------------------------------------------------------------------------
 export const userDelete = async (user_id_param: string) => {
   // 도메인 데이터 8건은 병렬 삭제, User 삭제는 마지막에 유지
   const domainResults = await Promise.all([
@@ -235,7 +235,7 @@ export const userDelete = async (user_id_param: string) => {
   return finalResult;
 };
 
-// 3-2. category - detail ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. category - detail --------------------------------------------------------------------------
 export const categoryDetail = async (user_id_param: string) => {
   const finalResult: any = await User.aggregate([
     {
@@ -257,7 +257,7 @@ export const categoryDetail = async (user_id_param: string) => {
   return finalResult[0];
 };
 
-// 3-4. category - update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-4. category - update --------------------------------------------------------------------------
 export const categoryUpdate = async (
   user_id_param: string,
   OBJECT_param: any,

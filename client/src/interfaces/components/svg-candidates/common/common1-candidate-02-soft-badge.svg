@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">common1 soft-badge</title>
+  <desc id="desc">날짜 선택 달력 - 파스텔 원형 배지</desc>
+  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FF756F}.s{fill:#FFD0CC}.t{fill:#F8FAFC}.paper{fill:#fff}</style>
+  <circle cx="128" cy="128" r="119" fill="#FFD0CC"/>
+  
+  <g transform="translate(20 20) scale(.84)"><path class="paper o" d="M47 61h146a20 20 0 0 1 20 20v125H47z"/><path class="p o" d="M47 61h166v48H47z"/><path class="o" d="M78 38v42m50-42v42m50-42v42"/><path class="o detail" d="M78 138h22m28 0h22m28 0h10M78 172h22m28 0h22m28 0h10M78 204h22m28 0h22"/></g>
+</svg>

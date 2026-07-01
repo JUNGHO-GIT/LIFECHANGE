@@ -11,7 +11,7 @@ import { Input } from "@exportContainers";
 import { useCommonValue } from "@exportHooks";
 import { useStoreAlert, useStoreLanguage } from "@exportStores";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface CountProps {
   COUNT: {
     totalCnt: number;
@@ -30,24 +30,24 @@ declare interface CountProps {
   onCountChange?: (_newSectionCnt: number) => void;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const Count = memo((
   {
     COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled, onCountChange,
   }: CountProps,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { PATH, localLang, isCalendarDetail } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ----------------------------------------------------------------------------------
   const handleLockToggle = useCallback(() => {
     disabled ?? setLOCKED(LOCKED === `locked` ? `unlocked` : `locked`);
   }, [ disabled, LOCKED, setLOCKED ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ----------------------------------------------------------------------------------
   const handleMinus = useCallback(() => {
     !disabled && LOCKED !== `locked` && !PATH.includes(`/food/find/list`) &&
 		setCOUNT((prev) => (prev.newSectionCnt > prev.sectionCnt ? (
@@ -68,7 +68,7 @@ export const Count = memo((
     disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit,
   ]);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ----------------------------------------------------------------------------------
   const handlePlus = useCallback(() => {
     !disabled && LOCKED !== `locked` && !PATH.includes(`/food/find/list`) &&
 		setCOUNT((prev) => (prev.newSectionCnt < limit ? (
@@ -89,7 +89,7 @@ export const Count = memo((
     disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit,
   ]);
 
-  // 3. useMEMO ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. useMEMO ----------------------------------------------------------------------------------
   const lockIcon = useMemo(() => (
 		LOCKED === `locked` ? (
 			<Icons
@@ -106,7 +106,7 @@ export const Count = memo((
 		)
   ), [LOCKED]);
 
-  // 3. useMEMO ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 3. useMEMO ----------------------------------------------------------------------------------
   const countEndAdornment = useMemo(() => (
 		!disabled || LOCKED === `unlocked` ? (
 			<Div className={`d-row-center`}>
@@ -132,7 +132,7 @@ export const Count = memo((
 		) : null
   ), [ disabled, LOCKED, handleMinus, handlePlus ]);
 
-  // 7. countNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. countNode ----------------------------------------------------------------------------------
   const countNode = useMemo(() => {
     // 7-1. lock
     const lockSection = () => (
@@ -163,12 +163,11 @@ export const Count = memo((
           },
         }}
         startadornment={(
-          <Img
-            max={25}
-            hover={true}
-            shadow={false}
-            radius={false}
-            src={`common2.webp`}
+          <Icons
+            key={`common2`}
+            name={`common2`}
+            isIconButton={false}
+            className={`w-25px h-25px hover`}
           />
         )}
         endadornment={!isCalendarDetail ? countEndAdornment : null}
@@ -189,7 +188,7 @@ export const Count = memo((
     translate, LOCKED, disabled, handleLockToggle, lockIcon, COUNT.newSectionCnt, countEndAdornment,
   ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {countNode}

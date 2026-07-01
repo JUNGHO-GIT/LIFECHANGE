@@ -8,7 +8,7 @@
 import { useCommonDate } from "@hooks/common/useCommonDate";
 import { useEffect, useMemo } from "@exportReacts";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const useTime = (
   OBJECT: Record<string, unknown>,
   setOBJECT: any,
@@ -16,7 +16,7 @@ export const useTime = (
   type: string,
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { getDayFmt } = useCommonDate();
   const match: RegExpMatchArray | null = PATH.match(/\/([^/]+)\//);
   const strLow: string | null = match ? match[1] : null;
@@ -33,7 +33,7 @@ export const useTime = (
     }).join(`|`);
   }, [OBJECT, strLow, type]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const isGoalExercise: boolean = type === `goal` && strLow === `exercise`;
     const isGoalSleep: boolean = type === `goal` && strLow === `sleep`;

@@ -12,7 +12,7 @@ import { FoodPie, FoodPieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@exportLibs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface FoodChartPieProps {
   TYPE?: any;
   setTYPE?: any;
@@ -27,18 +27,18 @@ declare interface PieProps {
   index?: number;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const FoodChartPie = memo((props: FoodChartPieProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { URL_OBJECT, PATH, chartColors, chartThemeColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `pie`, PATH, {
       section: `week`,
@@ -46,7 +46,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -62,7 +62,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK ] = useState<[FoodPieType]>([FoodPie]);
   const [ OBJECT_NUT_WEEK, setOBJECT_NUT_WEEK ] = useState<[FoodPieType]>([FoodPie]);
   const [ OBJECT_KCAL_MONTH, setOBJECT_KCAL_MONTH ] = useState<[FoodPieType]>([FoodPie]);
@@ -70,7 +70,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
   const [ OBJECT_KCAL_YEAR, setOBJECT_KCAL_YEAR ] = useState<[FoodPieType]>([FoodPie]);
   const [ OBJECT_NUT_YEAR, setOBJECT_NUT_YEAR ] = useState<[FoodPieType]>([FoodPie]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -145,7 +145,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -155,7 +155,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -168,7 +168,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 4-1. render ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-1. render -----------------------------------------------------------------------------------
   const renderPie = ({
     cx, cy, midAngle, innerRadius, outerRadius, value, index,
   }: PieProps) => {
@@ -238,7 +238,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
 		);
   };
 
-  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
     let object: any[] = [FoodPie];
@@ -327,7 +327,18 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
             animationEasing={`linear`}
           >
             {object?.map((_entry: any, index: number) => (
-              <Cell key={`cell-${index}`} fill={chartColors[index % chartColors?.length]} />
+              <Cell
+                key={`cell-${_entry.name ?? _entry.dataKey ?? _entry.value}`}
+                fill={_entry.name === `Empty`
+                  ? `#edf0f4`
+                  : chartThemeColors[_entry.name]
+                    ?? chartThemeColors[TYPE_STATE.line]
+                    ?? chartColors[index % chartColors.length]}
+                fillOpacity={chartThemeColors[_entry.name] === undefined
+                  && chartThemeColors[TYPE_STATE.line] !== undefined
+                  ? Math.max(0.6, 1 - (index * 0.1))
+                  : 1}
+              />
             ))}
           </Pie>
           <Tooltip
@@ -361,7 +372,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

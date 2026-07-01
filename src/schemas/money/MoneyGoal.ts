@@ -8,7 +8,7 @@
 import { incrementSeq } from "@schemas/Counter";
 import mongoose from "mongoose";
 
-// 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. types ---------------------------------------------------------------------------------------
 declare interface MoneyGoalType extends mongoose.Document {
   user_id: string;
   money_goal_number: number;
@@ -21,7 +21,7 @@ declare interface MoneyGoalType extends mongoose.Document {
   money_goal_updateDt: Date;
 }
 
-// 1. schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema(
   {
     user_id: {
@@ -82,11 +82,11 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. index ---------------------------------------------------------------------------------------
 schema.index({ user_id: 1, money_goal_dateStart: 1, money_goal_dateEnd: 1 });
 schema.index({ user_id: 1, money_goal_dateType: 1, money_goal_dateStart: 1 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. counter --------------------------------------------------------------------------------------
 schema.pre<MoneyGoalType>(`save`, async function () {
   if (this.isNew) {
     this.money_goal_number = await incrementSeq(
@@ -96,5 +96,5 @@ schema.pre<MoneyGoalType>(`save`, async function () {
   }
 });
 
-// 5. model ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. model ----------------------------------------------------------------------------------------
 export const MoneyGoal = mongoose.model<MoneyGoalType>(`MoneyGoal`, schema);

@@ -8,7 +8,7 @@
 import { Div, Icons } from "@exportComponents";
 import { memo, useCallback, useMemo } from "@exportReacts";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface DeleteProps {
   index: number;
   section?: string;
@@ -17,14 +17,14 @@ declare interface DeleteProps {
   disabled?: boolean;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const Delete = memo((
   {
     index, section, handleDelete, LOCKED, disabled,
   }: DeleteProps,
 ) => {
 
-  // 1. callbacks ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. callbacks ----------------------------------------------------------------------------------
   const handleClick = useCallback(() => {
     if (disabled) {
       return;
@@ -32,7 +32,7 @@ export const Delete = memo((
     handleDelete(index, section);
   }, [ disabled, handleDelete, index, section ]);
 
-  // 2. deleteNode ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2. deleteNode --------------------------------------------------------------------------------
   const deleteNode = useMemo(() => (
     <Div className={`mt-n10px mr-n10px`}>
       <Icons
@@ -51,7 +51,7 @@ export const Delete = memo((
     </Div>
   ), [ LOCKED, handleClick ]);
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ------------------------------------------------------------------------------------
   return (
     <>
       {deleteNode}

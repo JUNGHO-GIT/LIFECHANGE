@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Barbell gauge</title>
+  <desc id="desc">중량 증가를 나타내는 바벨</desc>
+  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38 148h180"/><rect x="43" y="111" width="21" height="74" rx="7" fill="#A7DCF3"/><rect x="68" y="124" width="18" height="48" rx="6" fill="#E8E4FF"/><rect x="170" y="124" width="18" height="48" rx="6" fill="#E8E4FF"/><rect x="192" y="111" width="21" height="74" rx="7" fill="#A7DCF3"/><path d="m91 92 28-28 20 20 34-40"/><path d="M148 44h25v25"/><circle cx="128" cy="148" r="13" fill="#FFED9B"/>
+  </g>
+</svg>

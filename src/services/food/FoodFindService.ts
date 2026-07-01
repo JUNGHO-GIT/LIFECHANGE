@@ -8,7 +8,7 @@
 import axios from "axios";
 import { JSDOM } from "jsdom";
 
-// 0. 로케일별 정규식 상수 (모듈 스코프, 요청마다 재컴파일 방지) ―――――――――――――――――――――――――――――――――――――
+// 0. 로케일별 정규식 상수 (모듈 스코프, 요청마다 재컴파일 방지) -------------------------------------
 const SERV_REGEX_KO: RegExp = /(\s*)(\d+\s*.*\n*)(\s*당\s*)(\s*-\s*)/;
 const NUTRITION_REGEX_KO: RegExp =
   /(\s*)(\s*칼로리\s*:\s*)(\d+\s*.*\n*)(kcal)(\s*\|\s*)(\s*지방\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*탄수화물\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*단백질\s*:\s*)(\d+\s*.*\n*)(g)/;
@@ -19,9 +19,9 @@ const SERV_REGEX_EN: RegExp = /\s*(\s*Per\s*)(\d+\s*.*\n*)(\s*-\s*)/;
 const NUTRITION_REGEX_EN: RegExp =
   /(\s*)(\s*Calories\s*:\s*)(\d+\s*.*\n*)(kcal)(\s*\|\s*)(\s*Fat\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*Carbs\s*:\s*)(\d+\s*.*\n*)(g)(\s*\|\s*)(\s*Protein\s*:\s*)(\d+\s*.*\n*)(g)/;
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list ---------------------------------------------------------------------------------------
 export const list = async (PAGING_param: any, isoCode_param: string) => {
-  // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // -----------------------------------------------------------------------------------------------
   // M-44: PAGING_param/isoCode_param 누락 시 프로퍼티 접근/toLowerCase 크래시 방지, 기본 로케일(en) 폴백
   const query: string = PAGING_param?.query ?? ``;
   const isoCode: string =
@@ -39,7 +39,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
   let totalCntResult: any = null;
   let statusResult: string = ``;
 
-  // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // -----------------------------------------------------------------------------------------------
   const getLangSettingsByIsoCode = (isoCodeParam: string) => {
     let langType: string = ``;
     let servUnit: string = ``;
@@ -231,7 +231,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
   // L-70: list 진입부 1회 호출로 통합, URL/정규식 등 전 구간 재사용
   const settings = getLangSettingsByIsoCode(isoCode);
 
-  // 전체 갯수 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 전체 갯수 -------------------------------------------------------------------------------------
   const getTotalCnt = (document: any) => {
     const count: any =
       document.querySelector(`.searchResultSummary`)?.textContent;
@@ -247,7 +247,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
     return totalCnt;
   };
 
-  // 음식 이름 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 음식 이름 -------------------------------------------------------------------------------------
   const getFoodName = (item: any) => {
     if (!item) {
       return ``;
@@ -259,7 +259,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
     return foodName;
   };
 
-  // 브랜드 이름 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 브랜드 이름 -----------------------------------------------------------------------------------
   const getBrand = (item: any) => {
     if (!item) {
       return ``;
@@ -282,7 +282,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
     return secondResult;
   };
 
-  // 영양정보 ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 영양정보 --------------------------------------------------------------------------------------
   const getServ = (item: any) => {
     // L-70: 진입부에서 1회 계산한 settings 재사용 (요청마다 N회 재호출 제거)
     const { servUnit, servArray, servRegex, nutritionRegex } = settings;
@@ -340,7 +340,7 @@ export const list = async (PAGING_param: any, isoCode_param: string) => {
     };
   };
 
-  // 음식 검색 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 음식 검색 -------------------------------------------------------------------------------------
   const getFoodList = async (
     URL: string,
     URL_DEFAULT: string,

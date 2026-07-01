@@ -12,7 +12,7 @@ import { SleepPie, SleepPieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface SleepChartPieProps {
   TYPE?: any;
   setTYPE?: any;
@@ -27,18 +27,18 @@ declare interface PieProps {
   index?: number;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const SleepChartPie = memo((props: SleepChartPieProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
+  // 1. common ----------------------------------------------------------------------------------
+  const { URL_OBJECT, PATH, chartColors, chartThemeColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `pie`, PATH, {
       section: `week`,
@@ -46,7 +46,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -62,12 +62,12 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[SleepPieType]>([SleepPie]);
   const [ OBJECT_MONTH, setOBJECT_MONTH ] = useState<[SleepPieType]>([SleepPie]);
   const [ OBJECT_YEAR, setOBJECT_YEAR ] = useState<[SleepPieType]>([SleepPie]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -124,7 +124,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -134,7 +134,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -147,7 +147,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 4-1. render ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-1. render -----------------------------------------------------------------------------------
   const renderPie = (
     {
       cx, cy, midAngle, innerRadius, outerRadius, value, index,
@@ -205,7 +205,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     );
   };
 
-  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
     let object: any[] = [SleepPie];
@@ -276,7 +276,13 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
             animationEasing={`linear`}
           >
             {object?.map((_entry: any, index: number) => (
-              <Cell key={`cell-${index}`} fill={chartColors[index % chartColors?.length]} />
+              <Cell
+                key={`cell-${_entry.name ?? _entry.dataKey ?? _entry.value}`}
+                fill={_entry.name === `Empty`
+                  ? `#edf0f4`
+                  : chartThemeColors[_entry.name]
+                    ?? chartColors[index % chartColors.length]}
+              />
             ))}
           </Pie>
           <Tooltip
@@ -310,7 +316,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

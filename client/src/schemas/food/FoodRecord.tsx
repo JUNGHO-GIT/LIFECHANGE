@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-// Types ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Types ------------------------------------------------------------------------------------------
 export interface FoodRecordType {
   _id: string;
   food_record_number: number;
@@ -15,6 +15,9 @@ export interface FoodRecordType {
   food_record_score_smile: string;
   food_record_total_kcal: string;
   food_record_total_kcal_color: string;
+  food_goal_dateType: string;
+  food_goal_dateStart: string;
+  food_goal_dateEnd: string;
   food_goal_kcal: string;
   food_record_total_carb: string;
   food_record_total_carb_color: string;
@@ -41,7 +44,7 @@ export interface FoodRecordType {
   food_record_updateDt: string;
 }
 
-// Schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// Schema -----------------------------------------------------------------------------------------
 export const FoodRecord: FoodRecordType = {
   _id: ``,
   food_record_number: 0,
@@ -51,6 +54,9 @@ export const FoodRecord: FoodRecordType = {
   food_record_score_smile: `smile3`,
   food_record_total_kcal: `0`,
   food_record_total_kcal_color: ``,
+  food_goal_dateType: ``,
+  food_goal_dateStart: `0000-00-00`,
+  food_goal_dateEnd: `0000-00-00`,
   food_goal_kcal: `0`,
   food_record_total_carb: `0`,
   food_record_total_carb_color: ``,

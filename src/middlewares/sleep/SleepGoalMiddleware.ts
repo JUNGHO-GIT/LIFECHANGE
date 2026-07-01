@@ -7,10 +7,10 @@
 
 import { differenceInMinutes } from "date-fns";
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -29,7 +29,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
     let finalResult: string = ``;
@@ -47,7 +47,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 1. compareTime ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. compareTime --------------------------------------------------------------------------------
   const compareTime = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: string = goalParam;
@@ -94,7 +94,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 4. calcDiffColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. calcDiffColor ------------------------------------------------------------------------------
   const calcDiffColor = (goalParam: string, recordParam: string, extra: string) => {
 
     let goal: string = goalParam;
@@ -166,7 +166,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
     item.sleep_record_bedTime = calcOverTenMillion(
       item?.sleep_record_bedTime

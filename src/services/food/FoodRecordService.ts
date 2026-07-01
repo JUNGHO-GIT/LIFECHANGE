@@ -8,7 +8,7 @@
 import * as repository from "@repositories/food/FoodRecordRepository";
 import * as goalRepository from "@repositories/food/FoodGoalRepository";
 
-// 0. exist ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. exist ----------------------------------------------------------------------------------------
 export const exist = async (
   user_id_param: string,
   DATE_param: any,
@@ -57,7 +57,7 @@ export const exist = async (
   };
 };
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (
   user_id_param: string,
   DATE_param: any,
@@ -120,6 +120,9 @@ export const list = async (
 
       return {
         ...record,
+        food_goal_dateType: goal?.food_goal_dateType ?? ``,
+        food_goal_dateStart: goal?.food_goal_dateStart ?? `0000-00-00`,
+        food_goal_dateEnd: goal?.food_goal_dateEnd ?? `0000-00-00`,
         food_goal_kcal: goal?.food_goal_kcal ?? `0`,
         food_goal_carb: goal?.food_goal_carb ?? `0`,
         food_goal_protein: goal?.food_goal_protein ?? `0`,
@@ -137,7 +140,7 @@ export const list = async (
   };
 };
 
-// 2. detail ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. detail ---------------------------------------------------------------------------------------
 export const detail = async (
   user_id_param: string,
   DATE_param: any,
@@ -178,7 +181,7 @@ export const detail = async (
   };
 };
 
-// 3. create ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. create ---------------------------------------------------------------------------------------
 export const create = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -239,7 +242,7 @@ export const create = async (
   };
 };
 
-// 4. update ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. update ---------------------------------------------------------------------------------------
 export const update = async (
   user_id_param: string,
   OBJECT_param: any,
@@ -348,7 +351,7 @@ export const update = async (
   };
 };
 
-// 5. delete ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. delete ---------------------------------------------------------------------------------------
 export const deletes = async (
   user_id_param: string,
   DATE_param: any,

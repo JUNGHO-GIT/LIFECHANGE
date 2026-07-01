@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">food1 compact-tile</title>
+  <desc id="desc">식단 메뉴 - 작은 크기용 사각 타일</desc>
+  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FFCC45}.s{fill:#FF9AA6}.t{fill:#8FE8D3}.paper{fill:#fff}</style>
+  <rect x="12" y="12" width="232" height="232" rx="34" fill="#F8FAFC" stroke="#D8DEE5" stroke-width="5"/>
+  
+  <g transform="translate(17 17) scale(.87)"><circle class="paper o" cx="128" cy="128" r="86"/><path class="p o" d="M128 42a86 86 0 0 1 74 43l-39 22a41 41 0 0 0-35-20z"/><path class="s o" d="M202 85a86 86 0 0 1 0 86l-39-22a41 41 0 0 0 0-42z"/><path class="t o" d="M202 171a86 86 0 0 1-148 0l39-22a41 41 0 0 0 70 0z"/><text x="128" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="33" font-weight="800" fill="#3B3D46">Kcal</text></g>
+</svg>

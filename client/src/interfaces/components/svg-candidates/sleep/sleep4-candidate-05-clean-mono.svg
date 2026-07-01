@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">sleep4 clean-mono</title>
+  <desc id="desc">수면 시간 - 선 중심의 절제형</desc>
+  <style>.o{stroke:#48505A;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FFFFFF}.s{fill:#E8EEF2}.t{fill:#D7E0E6}.paper{fill:#fff}.detail{display:none}</style>
+  
+  
+  <g><path class="s o" d="M39 118h178v79H39z"/><path class="p o" d="M39 91h42v106H39z"/><path class="paper o" d="M81 110h72c25 0 45 20 45 45H81z"/><circle class="paper o" cx="179" cy="73" r="42"/><path class="o" d="M179 49v26l17 11"/><path class="o detail" d="M39 197v23m178-23v23"/></g>
+</svg>

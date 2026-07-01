@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">user1 soft-badge</title>
+  <desc id="desc">Google 계정 - 파스텔 원형 배지</desc>
+  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#4285F4}.s{fill:#EA4335}.t{fill:#FBBC05}.paper{fill:#fff}</style>
+  <circle cx="128" cy="128" r="119" fill="#EA4335"/>
+  
+  <g transform="translate(20 20) scale(.84)"><circle fill="#fff" class="o" cx="128" cy="128" r="91"/><path fill="none" stroke="#4285F4" stroke-width="28" d="M196 128a68 68 0 0 1-68 68 68 68 0 1 1 48-116"/><path fill="none" stroke="#34A853" stroke-width="28" d="M128 196a68 68 0 0 1-58-32"/><path fill="none" stroke="#FBBC05" stroke-width="28" d="M70 164a68 68 0 0 1-5-61"/><path fill="none" stroke="#EA4335" stroke-width="28" d="M65 103a68 68 0 0 1 111-23"/><path fill="none" stroke="#4285F4" stroke-width="24" d="M127 128h75"/></g>
+</svg>

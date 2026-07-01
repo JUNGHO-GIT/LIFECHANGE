@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">flag2 clean-mono</title>
+  <desc id="desc">영어 - 선 중심의 절제형</desc>
+  <style>.o{stroke:#48505A;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FFFFFF}.s{fill:#E8EEF2}.t{fill:#D7E0E6}.paper{fill:#fff}.detail{display:none}</style>
+  
+  
+  <g><rect fill="#F8FAFC" class="o" x="31" y="55" width="194" height="146" rx="22"/><path stroke="#E64B61" stroke-width="12" d="M38 82h180M38 112h180M38 142h180M38 172h180"/><path fill="#3159A5" d="M36 60h88v78H36z"/><g fill="#fff" class="detail"><circle cx="54" cy="77" r="4"/><circle cx="80" cy="77" r="4"/><circle cx="106" cy="77" r="4"/><circle cx="54" cy="100" r="4"/><circle cx="80" cy="100" r="4"/><circle cx="106" cy="100" r="4"/><circle cx="54" cy="123" r="4"/><circle cx="80" cy="123" r="4"/><circle cx="106" cy="123" r="4"/></g></g>
+</svg>

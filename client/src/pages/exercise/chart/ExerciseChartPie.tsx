@@ -12,7 +12,7 @@ import { ExercisePie, ExercisePieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@exportLibs";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface ExerciseChartPieProps {
   TYPE?: any;
   setTYPE?: any;
@@ -27,10 +27,10 @@ declare interface PieProps {
   index?: number;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -38,7 +38,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
 
-  // 2-1. useStorageLocal ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-1. useStorageLocal -----------------------------------------------------------------------
   const [ TYPE, setTYPE ] = useStorageLocal(
     `type`, `pie`, PATH, {
       section: `week`,
@@ -46,7 +46,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     }
   );
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
@@ -62,7 +62,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     yearEndFmt: getYearEndFmt(),
   });
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_PART_WEEK, setOBJECT_PART_WEEK ] = useState<[ExercisePieType]>([ExercisePie]);
   const [ OBJECT_TITLE_WEEK, setOBJECT_TITLE_WEEK ] = useState<[ExercisePieType]>([ExercisePie]);
   const [ OBJECT_PART_MONTH, setOBJECT_PART_MONTH ] = useState<[ExercisePieType]>([ExercisePie]);
@@ -70,7 +70,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
   const [ OBJECT_PART_YEAR, setOBJECT_PART_YEAR ] = useState<[ExercisePieType]>([ExercisePie]);
   const [ OBJECT_TITLE_YEAR, setOBJECT_TITLE_YEAR ] = useState<[ExercisePieType]>([ExercisePie]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     (async () => {
       setLOADING(true);
@@ -145,7 +145,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     })();
   }, [ URL_OBJECT, DATE, sessionId ]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.TYPE !== undefined) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -155,7 +155,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     }
   }, [props?.TYPE]);
 
-  // 2-3. useEffect ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     if (props?.setTYPE) {
       const isSame: boolean = JSON.stringify(props.TYPE) === JSON.stringify(TYPE_STATE);
@@ -168,7 +168,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     }
   }, [TYPE_STATE]);
 
-  // 4-1. render ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-1. render -----------------------------------------------------------------------------------
   const renderPie = (
     {
       cx, cy, midAngle, innerRadius, outerRadius, value, index,
@@ -232,7 +232,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     );
   };
 
-  // 5-1. chart ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5-1. chart ------------------------------------------------------------------------------------
   const chartNode = () => {
 
     let object: any[] = [ExercisePie];
@@ -324,7 +324,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
             animationEasing={`linear`}
           >
             {object?.map((_entry: any, index: number) => (
-              <Cell key={`cell-${index}`} fill={chartColors[index % chartColors?.length]} />
+              <Cell key={`cell-${_entry.name ?? _entry.dataKey ?? _entry.value}`} fill={chartColors[index % chartColors?.length]} />
             ))}
           </Pie>
           <Tooltip
@@ -358,7 +358,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {chartNode()}

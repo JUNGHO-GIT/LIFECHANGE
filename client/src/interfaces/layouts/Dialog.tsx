@@ -11,7 +11,7 @@ import { useCommonDate, useCommonValue } from "@exportHooks";
 import { Backdrop, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@exportMuis";
 import { useStoreLanguage } from "@exportStores";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 declare interface DialogProps {
   COUNT?: any;
   setCOUNT?: any;
@@ -22,12 +22,12 @@ declare interface DialogProps {
   setIsExpanded?: any;
 }
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const Dialog = memo((
   { COUNT, setCOUNT, OBJECT, setOBJECT, LOCKED, setLOCKED, setIsExpanded }: DialogProps
 ) => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const {
     PATH, navigate, toDetail, localIsoCode,
     isGoalList, isFindList, isFavoriteList,
@@ -36,10 +36,10 @@ export const Dialog = memo((
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState ---------------------------------------------------------------------------------
   const [ open, setOpen ] = useState(false);
 
-  // 4. handle ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. handle ------------------------------------------------------------------------------------
   const handleSetAllExpanded = (expanded: boolean) => {
     const totalCnt: number = Number(COUNT?.totalCnt ?? 0);
     if (!setIsExpanded || totalCnt <= 0) {
@@ -58,7 +58,7 @@ export const Dialog = memo((
     });
   };
 
-  // 7. dialog ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. dialog -------------------------------------------------------------------------------------
   const dialogNode = () => {
     // 1. goal
     const listGoalSection = () => (
@@ -338,7 +338,7 @@ export const Dialog = memo((
             tooltiptitle={translate(`locale`)}
             className={open ? `` : `d-none`}
             icon={(
-              <Div className={`fw-800 fs-0-8rem`}>
+              <Div className={`fw-700 fs-0-8rem`}>
                 {localIsoCode}
               </Div>
             )}
@@ -553,7 +553,7 @@ export const Dialog = memo((
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {dialogNode()}

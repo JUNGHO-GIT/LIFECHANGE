@@ -10,7 +10,7 @@
 
 import { describe, expect, mock, test } from "bun:test";
 
-// 1. mock 정의 ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. mock 정의 -------------------------------------------------------------------------------------
 // list 반환(null/배열)과 update 성공/실패를 테스트별로 제어
 let listResult: any = null;
 let updateOk: boolean = true;
@@ -23,7 +23,7 @@ mock.module(`@repositories/food/FoodFavoriteRepository`, () => ({
 
 const FoodFavoriteService = await import(`@services/food/FoodFavoriteService`);
 
-// 2. FoodFavoriteService.update ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. FoodFavoriteService.update --------------------------------------------------------------------
 describe(`FoodFavoriteService.update null 가드`, () => {
   // 2-1. list 가 null 이어도 크래시 없이 새 즐겨찾기 추가 -> success (회귀 핵심)
   test(`list 가 null 이면 크래시 없이 신규 추가 success`, async () => {

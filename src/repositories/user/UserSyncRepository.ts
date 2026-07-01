@@ -15,7 +15,7 @@ import { SleepGoal } from "@schemas/sleep/SleepGoal";
 import { SleepRecord } from "@schemas/sleep/SleepRecord";
 import { User } from "@schemas/user/User";
 
-// 0. category (카테고리 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. category (카테고리 조회) ---------------------------------------------------------------------
 export const listCategory = async (user_id_param: string) => {
   const finalResult: any = await User.aggregate([
     {
@@ -37,7 +37,7 @@ export const listCategory = async (user_id_param: string) => {
   return finalResult[0];
 };
 
-// 1. percent (퍼센트 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. percent (퍼센트 조회) ------------------------------------------------------------------------
 export const percent = {
   // 1-1. exercise (goal)
   listExerciseGoal: async (
@@ -322,7 +322,7 @@ export const percent = {
   },
 };
 
-// 2. scale (체중 조회) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. scale (체중 조회) ----------------------------------------------------------------------------
 export const scale = {
   // 2-1. 등록일 조회
   findRegDt: async (user_id_param: string) => {
@@ -481,7 +481,7 @@ export const scale = {
   },
 };
 
-// 3-1. nutrition ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-1. nutrition ----------------------------------------------------------------------------------
 export const nutrition = {
   // 3-1. 등록일 조회
   findRegDt: async (user_id_param: string) => {
@@ -650,7 +650,7 @@ export const nutrition = {
   },
 };
 
-// 3-2. favorite (즐겨찾기 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. favorite (즐겨찾기 조회) -------------------------------------------------------------------
 export const favorite = {
   // 3-1. 등록일 조회
   findRegDt: async (user_id_param: string) => {
@@ -691,7 +691,7 @@ export const favorite = {
   },
 };
 
-// 4. property (자산 조회) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4. property (자산 조회) -------------------------------------------------------------------------
 export const property = {
   // 4-1. 등록일 조회
   findRegDt: async (user_id_param: string) => {

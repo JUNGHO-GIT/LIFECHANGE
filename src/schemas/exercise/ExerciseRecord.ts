@@ -8,7 +8,7 @@
 import { incrementSeq } from "@schemas/Counter";
 import mongoose from "mongoose";
 
-// 0. types ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 0. types ---------------------------------------------------------------------------------------
 declare interface ExerciseRecordSection {
   exercise_record_part: string;
   exercise_record_title: string;
@@ -32,7 +32,7 @@ declare interface ExerciseRecordType extends mongoose.Document {
   exercise_record_updateDt: Date;
 }
 
-// 1. schema ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. schema ---------------------------------------------------------------------------------------
 const schema = new mongoose.Schema(
   {
     user_id: {
@@ -134,14 +134,14 @@ const schema = new mongoose.Schema(
   },
 );
 
-// 2. index ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2. index ---------------------------------------------------------------------------------------
 schema.index({
   user_id: 1,
   exercise_record_dateStart: 1,
   exercise_record_dateEnd: 1,
 });
 
-// 3. counter ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3. counter --------------------------------------------------------------------------------------
 schema.pre<ExerciseRecordType>(`save`, async function () {
   if (this.isNew) {
     this.exercise_record_number = await incrementSeq(
@@ -151,7 +151,7 @@ schema.pre<ExerciseRecordType>(`save`, async function () {
   }
 });
 
-// 5. model ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 5. model ----------------------------------------------------------------------------------------
 export const ExerciseRecord = mongoose.model<ExerciseRecordType>(
   `ExerciseRecord`,
   schema,

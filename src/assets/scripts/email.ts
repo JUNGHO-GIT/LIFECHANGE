@@ -9,7 +9,7 @@ import nodemailer from 'nodemailer';
 import { loadEnv } from "@assets/scripts/env";
 loadEnv();
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const sendEmail = async (email: string, code: string) => {
   try {
     // 이메일 서버 설정
@@ -158,7 +158,7 @@ export const sendEmail = async (email: string, code: string) => {
     });
 
     const consoleStr: string = `
-      ―――――――――――――――――――――――――――――――――――――――――
+      -----------------------------------------
       이메일이 성공적으로 전송되었습니다.
       서비스: ${process.env.EMAIL_SERVICE}
       호스트: ${process.env.EMAIL_HOST}
@@ -167,17 +167,17 @@ export const sendEmail = async (email: string, code: string) => {
       서버 비밀번호: ${process.env.EMAIL_PW}
       클라이언트 이메일: ${email}
       인증 코드: ${code}
-      ―――――――――――――――――――――――――――――――――――――――――
+      -----------------------------------------
     `;
     console.log(consoleStr);
     return `success`;
   }
   catch (error: any) {
     const consoleStr: string = `
-      ―――――――――――――――――――――――――――――――――――――――――
+      -----------------------------------------
       이메일 전송 중 오류가 발생했습니다.
       ${error}
-			―――――――――――――――――――――――――――――――――――――――――
+			-----------------------------------------
     `;
     console.log(consoleStr);
     return `fail`;

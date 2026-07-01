@@ -13,18 +13,18 @@ import { PopUp } from "@exportContainers";
 import { Icons, Img, Div, Br, Paper, Grid } from "@exportComponents";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@exportMuis";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// -------------------------------------------------------------------------------------------------
 export const UserAppSetting = memo(() => {
 
-  // 1. common ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. common ----------------------------------------------------------------------------------
   const { navigate, isAdmin, localLang } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setCONFIRM } = useStoreConfirm();
 
-  // 2-2. useState ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2-2. useState -------------------------------------------------------------------------------
   const [ lang, setLang ] = useState<string | undefined>(localLang);
 
-  // 4-1. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-1. handle -------------------------------------------------------------------------------------
   const handleLogout = () => {
     setLocal(`setting`, `id`, ``, {
       autoLogin: `false`,
@@ -35,14 +35,14 @@ export const UserAppSetting = memo(() => {
     void navigate(`/user/login`);
   };
 
-  // 4-2. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-2. handle -------------------------------------------------------------------------------------
   const handleChangeLanguage = (langStr: string) => {
     setLang(langStr);
     setLocal(`setting`, `locale`, `lang`, langStr);
     window.location.reload();
   };
 
-  // 4-3. handle ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4-3. handle -------------------------------------------------------------------------------------
   const handleClearStorage = async () => {
     const confirmResult: Promise<unknown> = new Promise((resolve) => {
       setCONFIRM({
@@ -57,11 +57,11 @@ export const UserAppSetting = memo(() => {
     }
   };
 
-  // 7. userAppSetting ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 7. userAppSetting ----------------------------------------------------------------------------
   const userAppSettingNode = () => {
     // 7-1. detail
     const detailSection = () => (
-      <Grid container={true} spacing={0} className={`border-1 radius-2 shadow-0`}>
+      <Grid container={true} spacing={0} className={`radius-2 border-light-1 shadow-0`}>
         <Grid size={12}>
           <TableContainer>
             <Table>
@@ -130,13 +130,11 @@ export const UserAppSetting = memo(() => {
                           handleChangeLanguage(`en`);
                         }}
                       >
-                        <Img
-                          max={24}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`flag2.webp`}
-                          className={`mr-15px`}
+                        <Icons
+                          key={`flag2`}
+                          name={`flag2`}
+                          isIconButton={false}
+                          className={`w-24px h-24px hover mr-15px`}
                         />
                         <Div className={lang === `en` ? `fw-700` : ``}>
                           {`English`}
@@ -154,13 +152,11 @@ export const UserAppSetting = memo(() => {
                           handleChangeLanguage(`ko`);
                         }}
                       >
-                        <Img
-                          max={24}
-                          hover={true}
-                          shadow={false}
-                          radius={false}
-                          src={`flag1.webp`}
-                          className={`mr-15px`}
+                        <Icons
+                          key={`flag1`}
+                          name={`flag1`}
+                          isIconButton={false}
+                          className={`w-24px h-24px hover mr-15px`}
                         />
                         <Div className={lang === `ko` ? `fw-700` : ``}>
                           {`한국어`}
@@ -286,13 +282,13 @@ export const UserAppSetting = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper d-center border-1 radius-2 h-min-90vh`}>
+      <Paper className={`content-wrapper d-center radius-2 border-light-1 h-min-90vh`}>
         {detailSection()}
       </Paper>
     );
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   return (
     <>
       {userAppSettingNode()}

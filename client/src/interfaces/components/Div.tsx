@@ -7,14 +7,32 @@
 
 import { memo } from "@exportReacts";
 
-// ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-export const Div = memo((props: any) => {
+// -------------------------------------------------------------------------------------------------
+// - 숫자 문자열을 k, m, b 단위로 축약
+const formatCompactNumber = (value: string | number) => {
+  const numberValue = Number(String(value ?? `0`).replaceAll(`,`, ``).trim());
+  const absoluteValue = Math.abs(numberValue);
 
-  let childrenEl: any = props?.children;
-
-  if (typeof childrenEl === `string` && props?.max) {
-    childrenEl = childrenEl?.length > props?.max ? `${childrenEl.slice(0, props?.max)}...` : childrenEl;
+  if (!Number.isFinite(numberValue) || absoluteValue < 1_000) {
+    return value;
   }
+
+  if (absoluteValue >= 1_000_000_000) {
+    return `${(numberValue / 1_000_000_000).toFixed(1).replace(/\.0$/, ``)}b`;
+  }
+
+  if (absoluteValue >= 1_000_000) {
+    return `${(numberValue / 1_000_000).toFixed(1).replace(/\.0$/, ``)}m`;
+  }
+
+  return `${(numberValue / 1_000).toFixed(1).replace(/\.0$/, ``)}k`;
+};
+
+// -------------------------------------------------------------------------------------------------
+export const Div = memo(({ children, compact, ...props }: any) => {
+  const childrenEl = compact
+    ? formatCompactNumber(children)
+    : children;
 
   return (
     <div {...props}>

@@ -8,7 +8,7 @@
 import { FoodGoal } from "@schemas/food/FoodGoal";
 import { FoodRecord } from "@schemas/food/FoodRecord";
 
-// 1-1. chart (bar - goal) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-1. chart (bar - goal) -------------------------------------------------------------------------
 export const barGoal = async (
   user_id_param: string,
   dateStart_param: string,
@@ -49,7 +49,7 @@ export const barGoal = async (
   return finalResult;
 };
 
-// 1-2. chart (bar - record) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1-2. chart (bar - record) -------------------------------------------------------------------------
 export const barRecord = async (
   user_id_param: string,
   dateStart_param: string,
@@ -90,7 +90,7 @@ export const barRecord = async (
   return finalResult;
 };
 
-// 2-1. chart (pie - kcal) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-1. chart (pie - kcal) -------------------------------------------------------------------------
 export const pieKcal = async (
   user_id_param: string,
   dateStart_param: string,
@@ -136,7 +136,7 @@ export const pieKcal = async (
   return finalResult;
 };
 
-// 2-2. chart (pie - nut) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 2-2. chart (pie - nut) -------------------------------------------------------------------------
 export const pieNut = async (
   user_id_param: string,
   dateStart_param: string,
@@ -189,7 +189,7 @@ export const pieNut = async (
   return finalResult;
 };
 
-// 3-1. chart (line - kcal) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-1. chart (line - kcal) ------------------------------------------------------------------------
 export const lineKcal = async (
   user_id_param: string,
   dateStart_param: string,
@@ -227,7 +227,7 @@ export const lineKcal = async (
   return finalResult;
 };
 
-// 3-2. chart (line - nut) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 3-2. chart (line - nut) ------------------------------------------------------------------------
 export const lineNut = async (
   user_id_param: string,
   dateStart_param: string,
@@ -267,7 +267,7 @@ export const lineNut = async (
   return finalResult;
 };
 
-// 4-1. chart (avg - kcal) ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-1. chart (avg - kcal) -------------------------------------------------------------------------
 export const avgKcal = async (
   user_id_param: string,
   dateStart_param: string,
@@ -305,7 +305,7 @@ export const avgKcal = async (
   return finalResult;
 };
 
-// 4-2. chart (avg - nut) ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 4-2. chart (avg - nut) --------------------------------------------------------------------------
 export const avgNut = async (
   user_id_param: string,
   dateStart_param: string,

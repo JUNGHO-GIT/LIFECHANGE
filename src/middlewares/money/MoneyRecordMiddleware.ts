@@ -5,10 +5,10 @@
  * @since 2025-12-26
  */
 
-// 1. list ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. list -----------------------------------------------------------------------------------------
 export const list = async (object: any) => {
 
-  // 0. calcOverTenMillion ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcOverTenMillion -------------------------------------------------------------------------
   const calcOverTenMillion = (param: string) => {
 
     let finalResult: string = ``;
@@ -27,7 +27,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 0. calcNonValueColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 0. calcNonValueColor --------------------------------------------------------------------------
   const calcNonValueColor = (param: string) => {
 
     let finalResult: string = ``;
@@ -45,7 +45,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 1. calcGoalColor ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 1. calcGoalColor ----------------------------------------------------------------------------
   const calcGoalColor = (goalParam: string, recordParam: string, extra: string) => {
 
     const goal: number = Number.parseFloat(goalParam ?? `0`);
@@ -95,7 +95,7 @@ export const list = async (object: any) => {
     return finalResult;
   };
 
-  // 2. calcScoreSmileImage ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 2. calcScoreSmileImage ----------------------------------------------------------------------
   const calcScoreSmileImage = (colors: string[]) => {
 
     const scoreMap: Record<string, number> = {
@@ -143,7 +143,7 @@ export const list = async (object: any) => {
     }
   };
 
-  // 10. return ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 10. return ----------------------------------------------------------------------------------
   object?.result?.forEach((item: any) => {
     const moneyRecordTotalIncome: string = item?.money_record_total_income;
     const moneyRecordTotalExpense: string = item?.money_record_total_expense;

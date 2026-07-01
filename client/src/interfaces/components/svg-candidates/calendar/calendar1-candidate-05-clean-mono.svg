@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">calendar1 clean-mono</title>
+  <desc id="desc">월간 달력 - 선 중심의 절제형</desc>
+  <style>.o{stroke:#48505A;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FFFFFF}.s{fill:#E8EEF2}.t{fill:#D7E0E6}.paper{fill:#fff}.detail{display:none}</style>
+  
+  
+  <g><rect class="paper o" x="40" y="48" width="176" height="168" rx="22"/><path class="p o" d="M40 91h176V70a22 22 0 0 0-22-22H62a22 22 0 0 0-22 22z"/><path class="o" d="M78 34v30m50-30v30m50-30v30"/><g class="s"><circle cx="78" cy="122" r="8"/><circle cx="128" cy="122" r="8"/><circle cx="178" cy="122" r="8"/><circle cx="78" cy="160" r="8"/><circle cx="128" cy="160" r="8"/><circle cx="178" cy="160" r="8"/><circle cx="78" cy="198" r="8"/><circle cx="128" cy="198" r="8"/><circle cx="178" cy="198" r="8"/></g></g>
+</svg>
