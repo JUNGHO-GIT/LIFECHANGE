@@ -19,7 +19,7 @@ import { Checkbox } from "@exportMuis";
 export const UserLogin = memo(() => {
 
   // 1. common -------------------------------------------------------------------------------------
-  const { URL_OBJECT, URL_GOOGLE, ADMIN_ID, ADMIN_PW, navigate } = useCommonValue();
+  const { URL_OBJECT, URL_GOOGLE, navigate } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
@@ -30,7 +30,6 @@ export const UserLogin = memo(() => {
   const [ loginTrigger, setLoginTrigger ] = useState<boolean>(false);
   const [ checkedSaveId, setCheckedSaveId ] = useState<boolean>(false);
   const [ checkedAutoLogin, setCheckedAutoLogin ] = useState<boolean>(false);
-  const [ _clickCount, setClickCount ] = useState<number>(0);
 
   // 2-3. useRef --------------------------------------------------------------------------------
   const objectRef: React.RefObject<UserType> = useRef(OBJECT);
@@ -235,26 +234,7 @@ export const UserLogin = memo(() => {
     const titleSection = () => (
       <Grid container={true} spacing={1}>
         <Grid size={12}>
-          <Div
-            className={`fs-1-8rem fw-500`}
-            onClick={() => {
-              setClickCount((prevCount) => {
-                const newCount: number = prevCount + 1;
-                if (newCount === 5) {
-                  setOBJECT((prev) => ({
-                    ...prev,
-                    user_id: ADMIN_ID,
-                    user_pw: ADMIN_PW,
-                  }));
-                  setCheckedSaveId(true);
-                  setCheckedAutoLogin(true);
-                  setLoginTrigger(true);
-                  setClickCount(0);
-                }
-                return newCount;
-              });
-            }}
-          >
+          <Div className={`fs-1-8rem fw-500`}>
             {translate(`login`)}
           </Div>
         </Grid>
@@ -379,7 +359,7 @@ export const UserLogin = memo(() => {
                   key={`user1`}
                   name={`user1`}
                   isIconButton={false}
-                  className={`w-10px h-10px hover`}
+                  className={`w-18px h-18px hover`}
                 />
                 <Div className={`fs-0-8rem black ml-10px`}>
                   {translate(`googleLogin`)}

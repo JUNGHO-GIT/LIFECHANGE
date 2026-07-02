@@ -56,6 +56,16 @@
   justify-content: center;
   white-space: nowrap;
 }
+.food-record-chart-center > div,
+.food-goal-chart-center > div,
+.exercise-record-chart-center > div,
+.exercise-goal-chart-center > div,
+.money-record-chart-center > div,
+.money-goal-chart-center > div,
+.sleep-record-chart-center > div,
+.sleep-goal-chart-center > div {
+  font-size: 0.68rem !important;
+}
 .food-goal-track,
 .exercise-goal-track,
 .exercise-record-track,
@@ -101,6 +111,22 @@
 .sleep-goal-legend {
   padding: 10px;
 }
+.food-record-legend div,
+.food-goal-legend div,
+.exercise-record-legend div,
+.exercise-goal-legend div,
+.money-record-legend div,
+.money-goal-legend div,
+.sleep-record-legend div,
+.sleep-goal-legend div {
+  font-size: max(0.76rem, 12px) !important;
+}
+.time-picker-popup {
+  max-width: min(82vw, 380px);
+  max-height: min(70vh, 440px);
+  min-width: 240px;
+  min-height: 280px;
+}
 .food-goal-bars,
 .exercise-goal-bars,
 .exercise-record-goal-bars,
@@ -119,6 +145,14 @@
 .sleep-record-goal-row,
 .sleep-goal-row {
   padding: 9px 10px;
+}
+.food-goal-row div,
+.exercise-goal-row div,
+.exercise-record-goal-row div,
+.money-goal-row div,
+.sleep-record-goal-row div,
+.sleep-goal-row div {
+  font-size: max(0.72rem, 11.5px) !important;
 }
 .food-record-stat-grid,
 .exercise-record-stat-grid,
@@ -158,6 +192,7 @@
 .exercise-record-stat-meta,
 .money-record-stat-meta,
 .sleep-record-stat-meta {
+  font-size: 0.72rem !important;
   max-width: 100%;
   min-width: 0;
   overflow: hidden;
@@ -257,7 +292,7 @@
   border: 1px solid #e7eef3;
   border-radius: 999px;
   color: #4d6170;
-  font-size: 0.62rem;
+  font-size: 0.78rem;
   font-weight: 700;
   line-height: 1;
   padding: 7px 9px;

@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { memo, useEffect } from "@exportReacts";
+import { memo, useCallback, useEffect } from "@exportReacts";
 import { useCommonDate } from "@hooks/common/useCommonDate";
 import { useCommonValue } from "@hooks/common/useCommonValue";
 import { useStorageLocal } from "@hooks/storage/useStorageLocal";
@@ -18,7 +18,7 @@ import { BottomNavigation, BottomNavigationAction } from "@exportMuis";
 export const BottomNav = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
-  const { navigate, firstStr } = useCommonValue();
+  const { navigate, firstStr, PATH } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
@@ -45,12 +45,15 @@ export const BottomNav = memo(() => {
   }, [firstStr]);
 
   // 4. handle ----------------------------------------------------------------------------------
-  const handleClickBottomNav = (value: string) => {
+  const handleClickBottomNav = useCallback((value: string) => {
 
     // top selected 값 가져오기
     const getItem: any = getLocal(`tabs`, `top`, ``);
-    const selectedTop: any = getItem[value];
+    const selectedTop: any = getItem?.[value] ?? `record`;
     const url: string = value === `calendar` ? `/${value}/list` : `/${value}/${selectedTop}/list`;
+    if (PATH === url) {
+      return;
+    }
     void navigate(url, {
       state: {
         dateType: ``,
@@ -58,7 +61,7 @@ export const BottomNav = memo(() => {
         dateEnd: getDayFmt(),
       },
     });
-  };
+  }, [ PATH, getDayFmt, navigate ]);
 
   // 7. bottomNav ----------------------------------------------------------------------------------
   const bottomNavNode = () => {
@@ -78,7 +81,7 @@ export const BottomNav = memo(() => {
               key={`exercise1`}
               name={`exercise1`}
               isIconButton={false}
-              className={`w-20px h-20px hover`}
+              className={`w-30px h-30px hover`}
             />
           )}
           onClick={() => {
@@ -93,7 +96,7 @@ export const BottomNav = memo(() => {
               key={`food1`}
               name={`food1`}
               isIconButton={false}
-              className={`w-20px h-20px hover`}
+              className={`w-30px h-30px hover`}
             />
           )}
           onClick={() => {
@@ -108,7 +111,7 @@ export const BottomNav = memo(() => {
               key={`calendar1`}
               name={`calendar1`}
               isIconButton={false}
-              className={`w-20px h-20px hover`}
+              className={`w-30px h-30px hover`}
             />
           )}
           onClick={() => {
@@ -123,7 +126,7 @@ export const BottomNav = memo(() => {
               key={`money1`}
               name={`money1`}
               isIconButton={false}
-              className={`w-20px h-20px hover`}
+              className={`w-30px h-30px hover`}
             />
           )}
           onClick={() => {
@@ -138,7 +141,7 @@ export const BottomNav = memo(() => {
               key={`sleep1`}
               name={`sleep1`}
               isIconButton={false}
-              className={`w-20px h-20px hover`}
+              className={`w-30px h-30px hover`}
             />
           )}
           onClick={() => {
@@ -150,7 +153,7 @@ export const BottomNav = memo(() => {
 
     // 7-2. return
     return (
-      <Paper className={`layout-wrapper p-sticky bottom-0vh h-8vh radius-2 border-light-1 shadow-1`}>
+      <Paper className={`layout-wrapper p-sticky bottom-0vh radius-2 border-light-1 shadow-1`}>
         {tabsSection()}
       </Paper>
     );

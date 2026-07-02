@@ -64,7 +64,7 @@ export const PopUp = memo((props: any) => {
 
   // 4. handle ------------------------------------------------------------------------------------
   const handleClose = useCallback((_event: any, reason: string) => {
-    if (reason === `backdropClick`) {
+    if (reason === `backdropClick` || reason === `escapeKeyDown`) {
       popupState.close();
     }
   }, [popupState]);

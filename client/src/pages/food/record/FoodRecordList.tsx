@@ -191,7 +191,13 @@ export const FoodRecordList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -219,6 +225,7 @@ export const FoodRecordList = memo(() => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [FoodRecord]);
+      const resultLength: number = res.data.result?.length ?? 0;
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
@@ -227,8 +234,8 @@ export const FoodRecordList = memo(() => {
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return Array.from({ length: res.data.result?.length }, () => ({ expanded: true }));
+        if (resultLength !== isExpanded.length) {
+          return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
         return isExpanded;
       });
@@ -487,7 +494,7 @@ export const FoodRecordList = memo(() => {
                         className={`w-16px h-16px`}
                       />
                     </Grid>
-                    <Grid size={7} className={`d-row-left`}>
+                    <Grid size={5} className={`d-row-left`}>
                       <Div className={`fs-0-9rem fw-600 black mr-5px`}>
                         {formatDateYyMmDd(item.food_record_dateStart)}
                       </Div>
@@ -503,12 +510,14 @@ export const FoodRecordList = memo(() => {
                         />
                       </Div>
                     </Grid>
-                    <Grid size={3} className={`d-row-right pr-5px`}>
-                      <Div className={`fs-0-85rem fw-700 black`}>
-                        {insertComma(item.food_record_total_kcal ?? `0`)}
-                      </Div>
-                      <Div className={`fs-0-6rem fw-500 dark ml-4px`}>
-                        {translate(`kc`)}
+                    <Grid size={5} className={`d-row-right`}>
+                      <Div className={`d-row-center`}>
+                        <Div className={`fs-0-75rem fw-700`}>
+                          {insertComma(item.food_record_total_kcal ?? `0`)}
+                        </Div>
+                        <Div className={`fs-0-6rem fw-600 dark ml-5px`}>
+                          {translate(`kc`)}
+                        </Div>
                       </Div>
                     </Grid>
                   </Grid>

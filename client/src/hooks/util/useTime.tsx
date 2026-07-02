@@ -10,7 +10,7 @@ import { useEffect, useMemo } from "@exportReacts";
 
 // -------------------------------------------------------------------------------------------------
 export const useTime = (
-  OBJECT: Record<string, unknown>,
+  OBJECT: any,
   setOBJECT: any,
   PATH: string,
   type: string,

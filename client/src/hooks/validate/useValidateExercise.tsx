@@ -129,6 +129,8 @@ export const useValidateExercise = () => {
         return false;
       }
       for (let i = 0; i < section.length; i++) {
+        const isCardio: boolean = section[i].exercise_record_part === `cardio`;
+        const isRest: boolean = section[i].exercise_record_part === `rest`;
         if (!section[i].exercise_record_part || section[i].exercise_record_part === `all`) {
           alert(`exercise_record_part`, `errorExercisePart`, i);
           return false;
@@ -137,15 +139,15 @@ export const useValidateExercise = () => {
           alert(`exercise_record_title`, `errorExerciseTitle`, i);
           return false;
         }
-        if (!section[i].exercise_record_set || section[i].exercise_record_set === `0`) {
+        if (!isCardio && !isRest && (!section[i].exercise_record_set || section[i].exercise_record_set === `0`)) {
           alert(`exercise_record_set`, `errorExerciseSet`, i);
           return false;
         }
-        if (!section[i].exercise_record_rep || section[i].exercise_record_rep === `0`) {
+        if (!isCardio && !isRest && (!section[i].exercise_record_rep || section[i].exercise_record_rep === `0`)) {
           alert(`exercise_record_rep`, `errorExerciseRep`, i);
           return false;
         }
-        if (!section[i].exercise_record_weight || section[i].exercise_record_weight === `0`) {
+        if (!isCardio && !isRest && (!section[i].exercise_record_weight || section[i].exercise_record_weight === `0`)) {
           alert(`exercise_record_weight`, `errorExerciseKg`, i);
           return false;
         }

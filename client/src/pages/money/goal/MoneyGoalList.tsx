@@ -222,7 +222,13 @@ export const MoneyGoalList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -250,6 +256,7 @@ export const MoneyGoalList = memo(() => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [MoneyGoal]);
+      const resultLength: number = res.data.result?.length ?? 0;
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
@@ -258,8 +265,8 @@ export const MoneyGoalList = memo(() => {
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return new Array(res.data.result?.length).fill({ expanded: true });
+        if (resultLength !== isExpanded.length) {
+          return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
         return isExpanded;
       });

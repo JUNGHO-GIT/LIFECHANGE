@@ -10,7 +10,7 @@ import { useCommonValue, useCommonDate, useValidateFood } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodRecord, FoodRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { insertComma, setSession, sync, handleNumberInput } from "@exportScripts";
+import { insertComma, setSession, getSession, sync, handleNumberInput } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@exportContainers";
 import { Img, Bg, Icons, Div, Paper, Grid, Br } from "@exportComponents";
@@ -22,7 +22,7 @@ export const FoodRecordDetail = memo(() => {
   // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, navigate, toList, sessionId,
-    foodArray, bgColors, sessionFoodSection, chartThemeColors,
+    foodArray, bgColors, chartThemeColors,
     location_dateStart, location_dateEnd,
   } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -94,33 +94,37 @@ export const FoodRecordDetail = memo(() => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    if (EXIST?.[DATE?.dateType as keyof typeof EXIST]?.length > 0) {
+    const dateRange: string = (
+      `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`
+    );
+    const objectRange: string = (
+      `${OBJECT.food_record_dateStart.trim()} - ${OBJECT.food_record_dateEnd.trim()}`
+    );
+    const isExist: boolean = (
+      EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
+    );
+    const itsMe: boolean = (
+      dateRange === objectRange
+    );
+    const itsNew: boolean = (
+      OBJECT.food_record_dateStart === `0000-00-00` &&
+      OBJECT.food_record_dateEnd === `0000-00-00`
+    );
 
-      const dateRange: string = (
-        `${DATE?.dateStart.trim()} - ${DATE?.dateEnd.trim()}`
-      );
-      const objectRange: string = (
-        `${OBJECT.food_record_dateStart.trim()} - ${OBJECT.food_record_dateEnd.trim()}`
-      );
-      const isExist: boolean = (
-        EXIST?.[DATE?.dateType as keyof typeof EXIST]?.includes(dateRange)
-      );
-      const itsMe: boolean = (
-        dateRange === objectRange
-      );
-      const itsNew: boolean = (
-        OBJECT.food_record_dateStart === `0000-00-00` &&
-        OBJECT.food_record_dateEnd === `0000-00-00`
-      );
-
-      setFLOW((prev) => ({
-        ...prev,
-        exist: isExist,
-        itsMe: itsMe,
-        itsNew: itsNew,
-      }));
-    }
-  }, [ EXIST, DATE?.dateEnd, OBJECT.food_record_dateEnd ]);
+    setFLOW((prev) => ({
+      ...prev,
+      exist: isExist,
+      itsMe: itsMe,
+      itsNew: itsNew,
+    }));
+  }, [
+    EXIST,
+    DATE?.dateType,
+    DATE?.dateStart,
+    DATE?.dateEnd,
+    OBJECT.food_record_dateStart,
+    OBJECT.food_record_dateEnd,
+  ]);
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -135,7 +139,13 @@ export const FoodRecordDetail = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -204,7 +214,8 @@ export const FoodRecordDetail = memo(() => {
         newSectionCnt: res.data.sectionCnt ?? 0,
       }));
 
-      const sectionArray: typeof sessionFoodSection = sessionFoodSection?.length > 0 ? sessionFoodSection : [];
+      const sessionSection: any = getSession(`section`, `food`, ``) ?? [];
+      const sectionArray: any[] = sessionSection?.length > 0 ? sessionSection : [];
 
       setOBJECT((prev) => ({
         ...prev,
@@ -313,6 +324,7 @@ export const FoodRecordDetail = memo(() => {
             dateEnd: dateRef.current.dateEnd,
           },
         });
+        setSession(`section`, `food`, ``, []);
         void sync(`nutrition`);
       }
       else {
@@ -395,14 +407,14 @@ export const FoodRecordDetail = memo(() => {
 
   // 3. flow ------------------------------------------------------------------------------------
   const flowUpdateFavorite = useCallback((foodFavorite: any) => {
-    (!foodFavorite.food_record_name || foodFavorite.food_record_name.trim() === ``) && (() => {
+    if (!foodFavorite.food_record_name || foodFavorite.food_record_name.trim() === ``) {
       setALERT({
         open: true,
         msg: translate(`음식 이름을 입력해주세요.`),
         severity: `error`,
       });
       return;
-    })();
+    }
 
     axios.put(`${URL_OBJECT}/favorite/update`, {
       user_id: sessionId,
@@ -439,10 +451,11 @@ export const FoodRecordDetail = memo(() => {
   // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
 
-    let sectionArray: typeof sessionFoodSection = [];
-    let section: any = sessionFoodSection;
-    section ? sectionArray = section : sectionArray = [];
-    sectionArray.splice(index, 1);
+    const currentItem: any = OBJECT?.food_section?.[index];
+    const sessionSection: any = getSession(`section`, `food`, ``) ?? [];
+    const sectionArray: any[] = (sessionSection?.length > 0 ? sessionSection : []).filter((item: any) => (
+      item.food_record_key !== currentItem?.food_record_key
+    ));
     setSession(`section`, `food`, ``, sectionArray);
 
     setOBJECT((prev) => ({
@@ -453,7 +466,7 @@ export const FoodRecordDetail = memo(() => {
       ...prev,
       newSectionCnt: prev?.newSectionCnt - 1,
     }));
-  }, [sessionFoodSection]);
+  }, [OBJECT?.food_section]);
 
   // 4-5. handle (favorite 추가) -------------------------------------------------------------------
   const handleFoodFavorite = useCallback((index: number) => {
@@ -463,18 +476,20 @@ export const FoodRecordDetail = memo(() => {
     const food_record_gram: string = OBJECT?.food_section[index]?.food_record_gram;
     const food_record_serv: string = OBJECT?.food_section[index]?.food_record_serv;
     const food_record_count: string = OBJECT?.food_section[index]?.food_record_count ?? `1`;
+    const unitCount: number = Number.parseFloat(food_record_count);
+    const divisor: number = Number.isFinite(unitCount) && unitCount > 0 ? unitCount : 1;
 
     const food_record_kcal: string = (
-      Number.parseFloat(OBJECT?.food_section[index]?.food_record_kcal) / Number.parseFloat(food_record_count)
+      Number.parseFloat(OBJECT?.food_section[index]?.food_record_kcal) / divisor
     ).toFixed(0);
     const food_record_carb: string = (
-      Number.parseFloat(OBJECT?.food_section[index]?.food_record_carb) / Number.parseFloat(food_record_count)
+      Number.parseFloat(OBJECT?.food_section[index]?.food_record_carb) / divisor
     ).toFixed(1);
     const food_record_protein: string = (
-      Number.parseFloat(OBJECT?.food_section[index]?.food_record_protein) / Number.parseFloat(food_record_count)
+      Number.parseFloat(OBJECT?.food_section[index]?.food_record_protein) / divisor
     ).toFixed(1);
     const food_record_fat: string = (
-      Number.parseFloat(OBJECT?.food_section[index]?.food_record_fat) / Number.parseFloat(food_record_count)
+      Number.parseFloat(OBJECT?.food_section[index]?.food_record_fat) / divisor
     ).toFixed(1);
     const food_record_key: string = (
       `${food_record_name}_${food_record_brand}_${food_record_kcal}_${food_record_carb}_${food_record_protein}_${food_record_fat}`
@@ -658,7 +673,7 @@ export const FoodRecordDetail = memo(() => {
                   }));
                 }}
               >
-                {foodArray.map((part: any, idx: number) => (
+                {foodArray.filter((part: any) => part.food_record_part !== `all`).map((part: any, idx: number) => (
                   <MenuItem
                     key={part.food_record_part}
                     value={part.food_record_part}
@@ -677,16 +692,16 @@ export const FoodRecordDetail = memo(() => {
                 inputRef={REFS?.[i]?.food_record_count}
                 error={ERRORS?.[i]?.food_record_count}
                 onChange={(e: any) => {
-                  const processedValue: string | null = handleNumberInput(e.target.value, 99, 1);
-                  if (processedValue === null) {
-                    return;
-                  }
-                  // 영양소 설정 함수
-                  const setNutrient = (nut: string | number, extra: string) => {
-                    const numericValue: number = Number(processedValue) ?? 1;
-                    const foodCount: number = Number(item?.food_record_count) ?? 1;
-                    if (!Number.isNaN(numericValue) && !Number.isNaN(foodCount)) {
-                      return (
+                    const processedValue: string | null = handleNumberInput(e.target.value, 99, 1);
+                    if (processedValue === null) {
+                      return;
+                    }
+                    // 영양소 설정 함수
+                    const setNutrient = (nut: string | number, extra: string) => {
+                      const numericValue: number = Number(processedValue) ?? 1;
+                      const foodCount: number = Number(item?.food_record_count) ?? 1;
+                      if (!Number.isNaN(numericValue) && !Number.isNaN(foodCount) && numericValue > 0 && foodCount > 0) {
+                        return (
                       extra === `kcal`
                       ? (numericValue * Number(nut) / foodCount).toFixed(0)
                       : (numericValue * Number(nut) / foodCount).toFixed(1)

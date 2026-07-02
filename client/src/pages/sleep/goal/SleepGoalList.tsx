@@ -103,6 +103,13 @@ export const SleepGoalList = memo(() => {
 
       return Number.isFinite(result) ? result : 0;
     };
+    const toValidMinutes = (value?: string | number | null): number | null => {
+      const rawValue: string = String(value ?? ``);
+      if (!/^\d{1,2}:\d{2}$/.test(rawValue)) {
+        return null;
+      }
+      return toMinutes(rawValue);
+    };
     const formatTime = (value: number): string => {
       const roundedValue = Math.max(0, Math.round(value));
       const hours = Math.floor(roundedValue / 60).toString().padStart(2, `0`);
@@ -157,7 +164,7 @@ export const SleepGoalList = memo(() => {
         return 0;
       }
 
-      const diff = goal - actual;
+      const diff = Math.abs(goal - actual);
       if (diff <= 10) {
         return 100;
       }
@@ -180,22 +187,22 @@ export const SleepGoalList = memo(() => {
       item.sleep_goal_dateStart && item.sleep_goal_dateStart !== `0000-00-00`
     ));
     const bedValues = validGoals
-    .map((item) => toMinutes(item.sleep_record_bedTime))
-    .filter((value) => value > 0);
+    .map((item) => toValidMinutes(item.sleep_record_bedTime))
+    .filter((value): value is number => value !== null);
     const wakeValues = validGoals
-    .map((item) => toMinutes(item.sleep_record_wakeTime))
-    .filter((value) => value > 0);
+    .map((item) => toValidMinutes(item.sleep_record_wakeTime))
+    .filter((value): value is number => value !== null);
     const sleepValues = validGoals
-    .map((item) => toMinutes(item.sleep_record_sleepTime))
+    .map((item) => toValidMinutes(item.sleep_record_sleepTime) ?? 0)
     .filter((value) => value > 0);
     const goalBedValues = validGoals
-    .map((item) => toMinutes(item.sleep_goal_bedTime))
-    .filter((value) => value > 0);
+    .map((item) => toValidMinutes(item.sleep_goal_bedTime))
+    .filter((value): value is number => value !== null);
     const goalWakeValues = validGoals
-    .map((item) => toMinutes(item.sleep_goal_wakeTime))
-    .filter((value) => value > 0);
+    .map((item) => toValidMinutes(item.sleep_goal_wakeTime))
+    .filter((value): value is number => value !== null);
     const goalSleepValues = validGoals
-    .map((item) => toMinutes(item.sleep_goal_sleepTime))
+    .map((item) => toValidMinutes(item.sleep_goal_sleepTime) ?? 0)
     .filter((value) => value > 0);
     const avgBed = calcClockAverage(bedValues);
     const avgWake = calcClockAverage(wakeValues);
@@ -277,9 +284,13 @@ export const SleepGoalList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
-      );
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -306,6 +317,7 @@ export const SleepGoalList = memo(() => {
     })
     .then((res: any) => {
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [SleepGoal]);
+      const resultLength: number = res.data.result?.length ?? 0;
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
@@ -314,8 +326,8 @@ export const SleepGoalList = memo(() => {
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return new Array(res.data.result?.length).fill({ expanded: true });
+        if (resultLength !== isExpanded.length) {
+          return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
         return isExpanded;
       });
@@ -345,7 +357,7 @@ export const SleepGoalList = memo(() => {
           <Grid size={12} className={`d-row-left`}>
             <Div className={`sleep-goal-period fs-0-95rem fw-600`}>
               {formatDateYyyyMmDd(DATE?.dateStart)}
-              {` -`}
+              {` - `}
               {formatDateYyyyMmDd(DATE?.dateEnd)}
             </Div>
           </Grid>
@@ -505,7 +517,7 @@ export const SleepGoalList = memo(() => {
     const listSection = () => (
       <Grid container={true} spacing={0}>
         {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px p-2px`} key={i}>
+          <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px p-2px`} key={item._id || `${item.sleep_goal_dateStart}-${item.sleep_goal_dateEnd}-${i}`}>
             <Accordion className={`radius-2 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded}>
               <AccordionSummary
                 expandIcon={(

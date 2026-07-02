@@ -11,7 +11,7 @@ import { useCommonDate } from "@hooks/common/useCommonDate";
 import { useCommonValue } from "@hooks/common/useCommonValue";
 import { useStorageLocal } from "@hooks/storage/useStorageLocal";
 import { Checkbox, Menu, MenuItem, Tab, Tabs } from "@exportMuis";
-import { memo, useEffect, useMemo, useState } from "@exportReacts";
+import { memo, useCallback, useEffect, useMemo, useState } from "@exportReacts";
 import { formatDateYyyyMmDd, insertComma } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 import { type SessionSyncPercent } from "@exportTypes";
@@ -20,7 +20,7 @@ import { type SessionSyncPercent } from "@exportTypes";
 export const TopNav = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
-  const { firstStr, secondStr, localCurrency, localUnit, navigate, sessionPercent, sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
+  const { firstStr, secondStr, localCurrency, localUnit, navigate, PATH, sessionPercent, sessionScale, sessionNutrition, sessionProperty } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
 
@@ -196,61 +196,27 @@ export const TopNav = memo(() => {
   }, [ firstStr, secondStr ]);
 
   // 4. handle ----------------------------------------------------------------------------------
-  const handleClickTobNav = (value: string) => {
+  const handleClickTobNav = useCallback((value: string) => {
+    if (!firstStr) {
+      return;
+    }
+    const url: string = firstStr === `calendar` && value === `calendar`
+      ? `/${firstStr}/list`
+      : value === `dashboard`
+      ? `/${firstStr}/dashboard`
+      : `/${firstStr}/${value}/list`;
 
-    // 1. today - goal
-    void ((firstStr === `today` && value === `goal`) ? (
-			navigate(`/${firstStr}/goal/list`, {
-			  state: {
-			    dateType: ``,
-			    dateStart: getDayFmt(),
-			    dateEnd: getDayFmt(),
-			  },
-			})
-		)
-
-		// 1. today - record
-		: (firstStr === `today` && value === `record`) ? (
-			navigate(`/${firstStr}/record/list`, {
-			  state: {
-			    dateType: ``,
-			    dateStart: getDayFmt(),
-			    dateEnd: getDayFmt(),
-			  },
-			})
-		)
-
-		// 1. calendar - list
-		: (firstStr === `calendar` && value === `calendar`) ? (
-			navigate(`/${firstStr}/list`, {
-			  state: {
-			    dateType: ``,
-			    dateStart: getDayFmt(),
-			    dateEnd: getDayFmt(),
-			  },
-			})
-		)
-
-		// 2. dashboard
-		: (value === `dashboard`) ? (
-			navigate(`/${firstStr}/dashboard`, {
-			  state: {
-			    dateType: ``,
-			    dateStart: getDayFmt(),
-			    dateEnd: getDayFmt(),
-			  },
-			})
-		)
-
-		// 3. etc
-		: void navigate(`/${firstStr}/${value}/list`, {
-		  state: {
-		    dateType: ``,
-		    dateStart: getDayFmt(),
-		    dateEnd: getDayFmt(),
-		  },
-		}));
-  };
+    if (PATH === url) {
+      return;
+    }
+    void navigate(url, {
+      state: {
+        dateType: ``,
+        dateStart: getDayFmt(),
+        dateEnd: getDayFmt(),
+      },
+    });
+  }, [ PATH, firstStr, getDayFmt, navigate ]);
 
   // 7. topNav -------------------------------------------------------------------------------------
   const topNavNode = () => {
@@ -395,7 +361,7 @@ export const TopNav = memo(() => {
               key={mainSmileImage}
               name={mainSmileImage}
               isIconButton={true}
-              className={`w-35px h-35px hover`}
+              className={`w-45px h-45px hover`}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -526,7 +492,7 @@ export const TopNav = memo(() => {
               key={`exercise6`}
               name={`exercise6`}
               isIconButton={true}
-              className={`w-35px h-35px hover`}
+              className={`w-45px h-45px hover`}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -745,7 +711,7 @@ export const TopNav = memo(() => {
               key={`food6`}
               name={`food6`}
               isIconButton={true}
-              className={`w-35px h-35px hover`}
+              className={`w-45px h-45px hover`}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -905,7 +871,7 @@ export const TopNav = memo(() => {
               key={`money4`}
               name={`money4`}
               isIconButton={true}
-              className={`w-35px h-35px hover`}
+              className={`w-45px h-45px hover`}
               onClick={(e: any) => {
                 popTrigger.openPopup(e.currentTarget);
               }}
@@ -995,7 +961,7 @@ export const TopNav = memo(() => {
 
     // 7-9. return -----------------------------------------------------------------------------------
     return (
-      <Paper className={`layout-wrapper p-sticky top-8vh h-8vh radius-2 border-light-1 shadow-1 p-0px`}>
+      <Paper className={`layout-wrapper p-sticky radius-2 border-light-1 shadow-1 p-0px`}>
         <Grid container={true} spacing={0}>
           <Grid size={8} className={`d-row-center`}>
             {smileSection()}

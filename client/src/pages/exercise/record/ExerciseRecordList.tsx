@@ -17,17 +17,6 @@ import { Div, Hr, Icons, Img, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
-declare interface ExerciseRecordCardProps {
-  expanded: boolean;
-  item: ExerciseRecordType;
-  translate: Function;
-  i: number;
-  onToggle: (i: number) => void;
-  navigate: Function;
-  toDetail: string;
-  localUnit: string;
-}
-
 type ExerciseGoalKey = `count` | `volume` | `cardio` | `scale`;
 
 declare interface ExerciseTotals {
@@ -66,162 +55,6 @@ declare interface ExerciseScaleStat {
   dateEnd: string;
   scale: number;
 }
-
-const ExerciseRecordCard = memo((props: ExerciseRecordCardProps) => {
-  const { expanded, item, translate, i, onToggle, navigate, toDetail, localUnit } = props;
-  const { chartThemeColors } = useCommonValue();
-  const { getDayNotFmt } = useCommonDate();
-  return (
-    <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`}>
-      <Grid size={12} className={`p-2px`}>
-        <Accordion className={`radius-2 border-0 shadow-0`} expanded={expanded}>
-          <AccordionSummary
-            expandIcon={(
-              <Icons
-                key={`ChevronDown`}
-                name={`ChevronDown`}
-                className={`w-16px h-16px`}
-                onClick={(e: any) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onToggle(i);
-                }}
-              />
-            )}
-            onClick={() => {
-              void navigate(toDetail, {
-                state: {
-                  id: item._id,
-                  dateType: item.exercise_record_dateType,
-                  dateStart: item.exercise_record_dateStart,
-                  dateEnd: item.exercise_record_dateEnd,
-                },
-              });
-            }}
-          >
-            <Grid container={true} spacing={1}>
-              <Grid size={2} className={`d-row-center`}>
-                <Icons
-                  key={`Search`}
-                  name={`Search`}
-                  className={`w-16px h-16px`}
-                />
-              </Grid>
-              <Grid size={10} className={`d-row-left`}>
-                <Div className={`fs-0-9rem fw-600 black mr-5px`}>
-                  {formatDateMmDd(item.exercise_record_dateStart)}
-                </Div>
-                <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                  {translate(getDayNotFmt(item.exercise_record_dateStart).format(`ddd`))}
-                </Div>
-                <Icons
-                  name={(item.exercise_record_score_smile ?? `smile3`)}
-                  className={`w-14px h-14px ml-5px`}
-                  sx={{ padding: 0 }}
-                />
-              </Grid>
-            </Grid>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Grid container={true} spacing={1}>
-              {/** row 1 * */}
-              <Grid container={true} spacing={1}>
-                <Grid size={2} className={`d-row-center`}>
-                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
-                    {`●`}
-                  </Div>
-                </Grid>
-                <Grid size={3} className={`d-row-left`}>
-                  <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-                    {translate(`volume`)}
-                  </Div>
-                </Grid>
-                <Grid size={7}>
-                  <Grid container={true} spacing={1}>
-                    <Grid size={10} className={`d-row-right`}>
-                      <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
-                        {insertComma(item.exercise_record_total_volume)}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={`d-row-center`}>
-                      <Div className={`fs-0-6rem`}>
-                        {translate(`vol`)}
-                      </Div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Hr m={1} className={`bg-light`} />
-
-              {/** row 2 * */}
-              <Grid container={true} spacing={1}>
-                <Grid size={2} className={`d-center`}>
-                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.cardio }}>
-                    {`●`}
-                  </Div>
-                </Grid>
-                <Grid size={3} className={`d-row-left`}>
-                  <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-                    {translate(`cardio`)}
-                  </Div>
-                </Grid>
-                <Grid size={7}>
-                  <Grid container={true} spacing={1}>
-                    <Grid size={10} className={`d-row-right`}>
-                      <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_cardio_color}`}>
-                        {item.exercise_record_total_cardio}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={`d-row-center`}>
-                      <Div className={`fs-0-6rem`}>
-                        {translate(`hm`)}
-                      </Div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Hr m={1} className={`bg-light`} />
-
-              {/** row 3 * */}
-              <Grid container={true} spacing={1}>
-                <Grid size={2} className={`d-center`}>
-                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
-                    {`●`}
-                  </Div>
-                </Grid>
-                <Grid size={3} className={`d-row-left`}>
-                  <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
-                    {translate(`scale`)}
-                  </Div>
-                </Grid>
-                <Grid size={7}>
-                  <Grid container={true} spacing={1}>
-                    <Grid size={10} className={`d-row-right`}>
-                      <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_scale_color}`}>
-                        {insertComma(item.exercise_record_total_scale)}
-                      </Div>
-                    </Grid>
-                    <Grid size={2} className={`d-row-center`}>
-                      <Div className={`fs-0-6rem`}>
-                        {localUnit}
-                      </Div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </AccordionDetails>
-        </Accordion>
-      </Grid>
-    </Grid>
-  );
-}, (prev, next) => (
-  prev.expanded === next.expanded &&
-  prev.item === next.item &&
-  prev.translate === next.translate
-));
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseRecordList = memo(() => {
@@ -428,9 +261,13 @@ export const ExerciseRecordList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
-      );
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -458,6 +295,7 @@ export const ExerciseRecordList = memo(() => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [ExerciseRecord]);
+      const resultLength: number = res.data.result?.length ?? 0;
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
@@ -466,8 +304,8 @@ export const ExerciseRecordList = memo(() => {
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return Array.from({ length: res.data.result?.length }, () => ({ expanded: true }));
+        if (resultLength !== isExpanded.length) {
+          return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
         return isExpanded;
       });
@@ -684,7 +522,7 @@ export const ExerciseRecordList = memo(() => {
                     });
                   }}
                 >
-                  <Grid container={true} spacing={1}>
+                  <Grid container={true} spacing={0}>
                     <Grid size={2} className={`d-row-center`}>
                       <Icons
                         key={`Search`}
@@ -692,7 +530,7 @@ export const ExerciseRecordList = memo(() => {
                         className={`w-16px h-16px`}
                       />
                     </Grid>
-                    <Grid size={10} className={`d-row-left`}>
+                    <Grid size={5} className={`d-row-left`}>
                       <Div className={`fs-0-9rem fw-600 black mr-5px`}>
                         {formatDateMmDd(item.exercise_record_dateStart)}
                       </Div>
@@ -704,6 +542,16 @@ export const ExerciseRecordList = memo(() => {
                         className={`w-14px h-14px ml-10px`}
                         sx={{ padding: 0 }}
                       />
+                    </Grid>
+                    <Grid size={5} className={`d-row-right`}>
+                      <Div className={`d-row-center`}>
+                        <Div className={`fs-0-75rem fw-700 ${item.exercise_record_summary_scale_color ?? item.exercise_record_total_scale_color}`}>
+                          {insertComma(item.exercise_record_total_scale ?? `0`)}
+                        </Div>
+                        <Div className={`fs-0-6rem fw-600 dark ml-5px`}>
+                          {localUnit}
+                        </Div>
+                      </Div>
                     </Grid>
                   </Grid>
                 </AccordionSummary>

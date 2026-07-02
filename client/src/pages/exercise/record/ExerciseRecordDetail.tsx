@@ -138,7 +138,13 @@ export const ExerciseRecordDetail = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -461,9 +467,9 @@ export const ExerciseRecordDetail = memo(() => {
               }
               onChange={(e: any) => {
                 const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
-                !processedValue === null && (() => {
-                  return;
-                })();
+                if (processedValue === null) {
+                      return;
+                    }
                 setOBJECT((prev) => ({
                   ...prev,
                   exercise_record_total_scale: processedValue,
@@ -593,9 +599,9 @@ export const ExerciseRecordDetail = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999);
-                    !processedValue === null && (() => {
+                    if (processedValue === null) {
                       return;
-                    })();
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
@@ -625,9 +631,9 @@ export const ExerciseRecordDetail = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999);
-                    !processedValue === null && (() => {
+                    if (processedValue === null) {
                       return;
-                    })();
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
@@ -661,9 +667,9 @@ export const ExerciseRecordDetail = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999);
-                    !processedValue === null && (() => {
+                    if (processedValue === null) {
                       return;
-                    })();
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_section: prev.exercise_section?.map((section: any, idx: number) => (

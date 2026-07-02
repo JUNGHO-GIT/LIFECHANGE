@@ -91,6 +91,13 @@ export const SleepRecordList = memo(() => {
 
       return Number.isFinite(result) ? result : 0;
     };
+    const toValidMinutes = (value?: string | number | null): number | null => {
+      const rawValue: string = String(value ?? ``);
+      if (!/^\d{1,2}:\d{2}$/.test(rawValue)) {
+        return null;
+      }
+      return toMinutes(rawValue);
+    };
 
     // 분 단위 시간을 시:분 형식으로 변환
     const formatTime = (value: number): string => {
@@ -122,15 +129,18 @@ export const SleepRecordList = memo(() => {
       return Math.round((normalized / (Math.PI * 2)) * 1_440) % 1_440;
     };
 
-    const validRecords = OBJECT.filter((item) => Boolean(item._id));
+    const validRecords = OBJECT.filter((item) => (
+      Boolean(item._id) ||
+      Boolean(item.sleep_record_dateStart && item.sleep_record_dateStart !== `0000-00-00`)
+    ));
     const bedValues = validRecords
-    .map((item) => toMinutes(item.sleep_record_bedTime ?? item.sleep_section?.[0]?.sleep_record_bedTime))
-    .filter((value) => value > 0);
+    .map((item) => toValidMinutes(item.sleep_record_bedTime ?? item.sleep_section?.[0]?.sleep_record_bedTime))
+    .filter((value): value is number => value !== null);
     const wakeValues = validRecords
-    .map((item) => toMinutes(item.sleep_record_wakeTime ?? item.sleep_section?.[0]?.sleep_record_wakeTime))
-    .filter((value) => value > 0);
+    .map((item) => toValidMinutes(item.sleep_record_wakeTime ?? item.sleep_section?.[0]?.sleep_record_wakeTime))
+    .filter((value): value is number => value !== null);
     const sleepValues = validRecords
-    .map((item) => toMinutes(item.sleep_record_sleepTime ?? item.sleep_section?.[0]?.sleep_record_sleepTime))
+    .map((item) => toValidMinutes(item.sleep_record_sleepTime ?? item.sleep_section?.[0]?.sleep_record_sleepTime) ?? 0)
     .filter((value) => value > 0);
     const sleepStats = validRecords
     .map((item) => ({
@@ -206,9 +216,13 @@ export const SleepRecordList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(
-        !res.data.result || res.data.result?.length === 0 ? [``] : res.data.result
-      );
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -236,6 +250,7 @@ export const SleepRecordList = memo(() => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [SleepRecord]);
+      const resultLength: number = res.data.result?.length ?? 0;
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
@@ -244,8 +259,8 @@ export const SleepRecordList = memo(() => {
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return Array.from({ length: res.data.result?.length }, () => ({ expanded: true }));
+        if (resultLength !== isExpanded.length) {
+          return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
         return isExpanded;
       });
@@ -442,7 +457,7 @@ export const SleepRecordList = memo(() => {
     const listSection = () => (
       <Grid container={true} spacing={0}>
         {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`} key={i}>
+          <Grid container={true} spacing={0} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`} key={item._id || `${item.sleep_record_dateStart}-${item.sleep_record_dateEnd}-${i}`}>
             <Grid size={12} className={`p-2px`}>
               <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded}>
                 <AccordionSummary
@@ -479,7 +494,7 @@ export const SleepRecordList = memo(() => {
                         className={`w-16px h-16px`}
                       />
                     </Grid>
-                    <Grid size={7} className={`d-row-left`}>
+                    <Grid size={5} className={`d-row-left`}>
                       <Div className={`fs-0-9rem fw-600 black mr-5px`}>
                         {formatDateMmDd(item.sleep_record_dateStart)}
                       </Div>
@@ -494,12 +509,14 @@ export const SleepRecordList = memo(() => {
                         />
                       </Div>
                     </Grid>
-                    <Grid size={3} className={`d-row-right pr-5px`}>
-                      <Div className={`fs-0-85rem fw-700 black`}>
-                        {item.sleep_record_sleepTime ?? item.sleep_section?.[0]?.sleep_record_sleepTime ?? `00:00`}
-                      </Div>
-                      <Div className={`fs-0-6rem fw-500 dark ml-4px`}>
-                        {translate(`hm`)}
+                    <Grid size={5} className={`d-row-right`}>
+                      <Div className={`d-row-center`}>
+                        <Div className={`fs-0-75rem fw-700`}>
+                          {item.sleep_record_sleepTime ?? item.sleep_section?.[0]?.sleep_record_sleepTime ?? `00:00`}
+                        </Div>
+                        <Div className={`fs-0-6rem fw-600 dark ml-5px`}>
+                          {translate(`hm`)}
+                        </Div>
                       </Div>
                     </Grid>
                   </Grid>

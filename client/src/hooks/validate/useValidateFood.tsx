@@ -132,7 +132,7 @@ export const useValidateFood = () => {
         return false;
       }
       for (let i = 0; i < section.length; i++) {
-        if (!section[i].food_record_part || section[i].food_record_part === ``) {
+        if (!section[i].food_record_part || section[i].food_record_part === `` || section[i].food_record_part === `all`) {
           alert(`food_record_part`, `errorFoodPart`, i);
           return false;
         }

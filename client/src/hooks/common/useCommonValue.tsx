@@ -39,7 +39,7 @@ const TODAY_COLORS: string[] = [
   `gray`,
 ];
 const BG_COLORS: string[] = [
-  `#1976d2`,
+  `#0876b9`,
   `#4CAF50`,
   `#FFC107`,
   `#FF5722`,
@@ -293,8 +293,6 @@ export const useCommonValue = (): CommonValueType => {
     TITLE: TITLE,
     URL: env.VITE_APP_SERVER_URL ?? ``,
     GCLOUD_URL: env.VITE_APP_GCLOUD_URL ?? ``,
-    ADMIN_ID: env.VITE_APP_ADMIN_ID ?? ``,
-    ADMIN_PW: env.VITE_APP_ADMIN_PW ?? ``,
     // API Suffixes
     SUBFIX: env[`VITE_APP_${(pathParts[1] ?? ``).toUpperCase()}`] ?? ``,
     SUBFIX_CALENDAR: env.VITE_APP_CALENDAR ?? ``,

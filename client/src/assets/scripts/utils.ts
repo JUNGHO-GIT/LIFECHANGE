@@ -131,26 +131,32 @@ export const handleNumberInput = (val: string, max: number, decimalPlaces: numbe
     return null;
   }
   if (/^0(?!\.)/.test(processedValue)) {
-    processedValue = processedValue.replaceAll(/^0+/g, ``);
+    processedValue = processedValue.replaceAll(/^0+/g, ``) || `0`;
   }
   return processedValue;
 };
 
 // 9. formatY ---------------------------------------------------------------------------------
 // - 차트 Y축 범위 및 눈금 계산
-const formatYCache: WeakMap<any, unknown> = new WeakMap();
+declare interface FormatYResult {
+  domain: [number, number];
+  ticks: number[];
+  formatterY: (_value: number) => string;
+}
 
-export const formatY = (OBJECT: unknown, array: unknown, type: string, _extra?: string) => {
-  const objRef: unknown = OBJECT ?? [];
-  const arrRef: unknown = array ?? [];
+const formatYCache: WeakMap<object, Map<string, FormatYResult>> = new WeakMap();
+
+export const formatY = (OBJECT: unknown, array: unknown, type: string, _extra?: string): FormatYResult => {
+  const objRef: Record<string, unknown>[] = Array.isArray(OBJECT) ? OBJECT as Record<string, unknown>[] : [];
+  const arrRef: string[] = Array.isArray(array) ? array as string[] : [];
   const key: string = `${arrRef.join(`|`)}|${type}|${_extra ?? ``}`;
 
-  const outerCache: unknown = formatYCache.get(objRef) ?? (() => {
-    const newMap: Map<unknown, unknown> = new Map();
+  const outerCache: Map<string, FormatYResult> = formatYCache.get(objRef) ?? (() => {
+    const newMap: Map<string, FormatYResult> = new Map();
     formatYCache.set(objRef, newMap);
     return newMap;
   })();
-  const cached: unknown = outerCache.get(key);
+  const cached: FormatYResult | undefined = outerCache.get(key);
 
   return (
     cached || (() => {
@@ -158,8 +164,8 @@ export const formatY = (OBJECT: unknown, array: unknown, type: string, _extra?: 
 
       // maxValue 계산 (한 번만, 불필요한 중복 계산 제거)
       let maxValue: number = 0;
-      objRef.forEach((item: unknown) => {
-        arrRef.forEach((arrKey: unknown) => {
+      objRef.forEach((item: Record<string, unknown>) => {
+        arrRef.forEach((arrKey: string) => {
           const val: number = Number(item?.[arrKey] ?? 0);
           val > maxValue && (maxValue = val);
         });
@@ -220,11 +226,7 @@ export const formatY = (OBJECT: unknown, array: unknown, type: string, _extra?: 
         ticks.push(i);
         i += config.tickInterval;
       }
-      const result: {
-        domain: [number, number];
-        ticks: number[];
-        formatterY: (_value: number) => string;
-      } = {
+      const result: FormatYResult = {
         domain: [ 0, config.topValue ],
         ticks: ticks,
         formatterY: (value: number) => (value >= 1_000_000_000 ? `${(value / 1_000_000_000).toFixed(1)}b` : value >= 1_000_000 ? `${(value / 1_000_000).toFixed(1)}m` : value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value.toLocaleString()),

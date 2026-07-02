@@ -664,7 +664,13 @@ export const ExerciseGoalList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -692,6 +698,7 @@ export const ExerciseGoalList = memo(() => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [ExerciseGoal]);
+      const resultLength: number = res.data.result?.length ?? 0;
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
@@ -700,8 +707,8 @@ export const ExerciseGoalList = memo(() => {
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return new Array(res.data.result?.length).fill({ expanded: true });
+        if (resultLength !== isExpanded.length) {
+          return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
         return isExpanded;
       });
@@ -908,7 +915,7 @@ export const ExerciseGoalList = memo(() => {
                     });
                   }}
                 >
-                  <Grid container={true} spacing={1}>
+                  <Grid container={true} spacing={0}>
                     <Grid size={2} className={`d-row-center`}>
                       <Icons
                         key={`Search`}
@@ -916,7 +923,7 @@ export const ExerciseGoalList = memo(() => {
                         className={`w-16px h-16px`}
                       />
                     </Grid>
-                    <Grid size={10} className={`d-row-left`}>
+                    <Grid size={5} className={`d-row-left`}>
                       <Div className={`fs-0-8rem fw-600 black`}>
                         {formatDateMmDd(item.exercise_goal_dateStart)}
                       </Div>
@@ -931,6 +938,40 @@ export const ExerciseGoalList = memo(() => {
                       </Div>
                       <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
                         {translate(getDayNotFmt(item.exercise_goal_dateEnd).format(`ddd`))}
+                      </Div>
+                    </Grid>
+                    <Grid size={5} className={`d-row-right pr-5px`} style={{ gap: `6px`, flexWrap: `wrap` }}>
+                      <Div className={`d-row-right`} style={{ gap: `2px` }}>
+                        <Div className={`fs-0-65rem fw-700 ${item.exercise_goal_summary_count_color ?? item.exercise_record_diff_count_color}`}>
+                          {item.exercise_record_diff_count ?? `0`}
+                        </Div>
+                        <Div className={`fs-0-55rem fw-600 dark`}>
+                          {translate(`c`)}
+                        </Div>
+                      </Div>
+                      <Div className={`d-row-right`} style={{ gap: `2px` }}>
+                        <Div className={`fs-0-65rem fw-700 ${item.exercise_goal_summary_volume_color ?? item.exercise_record_diff_volume_color}`}>
+                          {item.exercise_record_diff_volume ?? `0`}
+                        </Div>
+                        <Div className={`fs-0-55rem fw-600 dark`}>
+                          {translate(`vol`)}
+                        </Div>
+                      </Div>
+                      <Div className={`d-row-right`} style={{ gap: `2px` }}>
+                        <Div className={`fs-0-65rem fw-700 ${item.exercise_goal_summary_cardio_color ?? item.exercise_record_diff_cardio_color}`}>
+                          {item.exercise_record_diff_cardio ?? `00:00`}
+                        </Div>
+                        <Div className={`fs-0-55rem fw-600 dark`}>
+                          {translate(`hm`)}
+                        </Div>
+                      </Div>
+                      <Div className={`d-row-right`} style={{ gap: `2px` }}>
+                        <Div className={`fs-0-65rem fw-700 ${item.exercise_goal_summary_scale_color ?? item.exercise_record_diff_scale_color}`}>
+                          {item.exercise_record_diff_scale ?? `0`}
+                        </Div>
+                        <Div className={`fs-0-55rem fw-600 dark`}>
+                          {localUnit}
+                        </Div>
                       </Div>
                     </Grid>
                   </Grid>

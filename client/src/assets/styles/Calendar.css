@@ -41,7 +41,7 @@
   font-weight: 500;
   color: #000000;
   background: #ffffff;
-  font-size: 0.6rem;
+  font-size: 0.82rem;
 }
 .react-calendar .calendar-tile {
   display: inline-grid;
@@ -97,7 +97,7 @@
 .calendar-category {
   margin: 0px 0px 0px 3px;
   color: #ffffff;
-  font-size: 0.6rem;
+  font-size: 0.78rem;
 }
 .calendar-cell {
   display: flex;
@@ -126,7 +126,7 @@
   text-decoration: none;
   color: #000000;
   font-weight: 500;
-  font-size: 0.6rem;
+  font-size: 0.82rem;
 }
 .calendar-sat abbr {
   text-decoration: none;
@@ -140,7 +140,7 @@
   text-decoration: none !important;
   color: #9c9c9c9c;
   font-weight: 500;
-  font-size: 0.6rem;
+  font-size: 0.78rem;
 }
 .calendar-today abbr {
   text-decoration: underline !important;
@@ -155,5 +155,5 @@ abbr[title] {
   color: #ffffff;
   font-weight: 600;
   cursor: pointer;
-  font-size: 0.7rem;
+  font-size: 0.82rem;
 }

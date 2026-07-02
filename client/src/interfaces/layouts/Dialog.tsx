@@ -75,7 +75,7 @@ export const Dialog = memo((
           direction={`up`}
           open={open}
           style={{ zIndex: 600 }}
-          className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
+          className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -89,7 +89,7 @@ export const Dialog = memo((
         >
           <SpeedDialAction
             key={translate(`save`)}
-            tooltiptitle={translate(`save`)}
+            slotProps={{ tooltip: { title: translate(`save`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -110,7 +110,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`openAll`)}
-            tooltiptitle={translate(`openAll`)}
+            slotProps={{ tooltip: { title: translate(`openAll`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -125,7 +125,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltiptitle={translate(`closeAll`)}
+            slotProps={{ tooltip: { title: translate(`closeAll`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -156,7 +156,7 @@ export const Dialog = memo((
           direction={`up`}
           open={open}
           style={{ zIndex: 600 }}
-          className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
+          className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -170,7 +170,7 @@ export const Dialog = memo((
         >
           <SpeedDialAction
             key={translate(`save`)}
-            tooltiptitle={translate(`save`)}
+            slotProps={{ tooltip: { title: translate(`save`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -191,7 +191,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`openAll`)}
-            tooltiptitle={translate(`openAll`)}
+            slotProps={{ tooltip: { title: translate(`openAll`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -206,7 +206,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltiptitle={translate(`closeAll`)}
+            slotProps={{ tooltip: { title: translate(`closeAll`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -236,7 +236,7 @@ export const Dialog = memo((
           ariaLabel={`speedDial`}
           direction={`up`}
           open={open}
-          className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
+          className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -251,7 +251,7 @@ export const Dialog = memo((
           {PATH.includes(`/favorite/list`) ? (
 						<SpeedDialAction
 						  key={translate(`search`)}
-						  tooltiptitle={translate(`search`)}
+						  slotProps={{ tooltip: { title: translate(`search`) } }}
 						  className={open ? `` : `d-none`}
 						  icon={(
 						    <Icons
@@ -267,7 +267,7 @@ export const Dialog = memo((
 					) : (
 						<SpeedDialAction
 						  key={translate(`favorite`)}
-						  tooltiptitle={translate(`favorite`)}
+						  slotProps={{ tooltip: { title: translate(`favorite`) } }}
 						  className={open ? `` : `d-none`}
 						  icon={(
 						    <Icons
@@ -284,7 +284,7 @@ export const Dialog = memo((
 					)}
           <SpeedDialAction
             key={translate(`save`)}
-            tooltiptitle={translate(`save`)}
+            slotProps={{ tooltip: { title: translate(`save`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -305,7 +305,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`openAll`)}
-            tooltiptitle={translate(`openAll`)}
+            slotProps={{ tooltip: { title: translate(`openAll`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -320,7 +320,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltiptitle={translate(`closeAll`)}
+            slotProps={{ tooltip: { title: translate(`closeAll`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -335,7 +335,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`locale`)}
-            tooltiptitle={translate(`locale`)}
+            slotProps={{ tooltip: { title: translate(`locale`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Div className={`fw-700 fs-0-8rem`}>
@@ -361,7 +361,7 @@ export const Dialog = memo((
           direction={`up`}
           open={open}
           style={{ zIndex: 600 }}
-          className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
+          className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -375,7 +375,7 @@ export const Dialog = memo((
         >
           <SpeedDialAction
             key={translate(`itemLock`)}
-            tooltiptitle={translate(`itemLock`)}
+            slotProps={{ tooltip: { title: translate(`itemLock`) } }}
             className={open ? `` : `d-none`}
             icon={
 							LOCKED === `locked` ? (
@@ -405,7 +405,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltiptitle={translate(`closeAll`)}
+            slotProps={{ tooltip: { title: translate(`closeAll`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons
@@ -453,7 +453,7 @@ export const Dialog = memo((
           direction={`up`}
           open={open}
           style={{ zIndex: 600 }}
-          className={`p-fixed bottom-18vh right-6vw ml-5px z-600`}
+          className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
           }
@@ -467,7 +467,7 @@ export const Dialog = memo((
         >
           <SpeedDialAction
             key={translate(`itemLock`)}
-            tooltiptitle={translate(`itemLock`)}
+            slotProps={{ tooltip: { title: translate(`itemLock`) } }}
             className={open ? `` : `d-none`}
             icon={
 							LOCKED === `locked` ? (
@@ -497,7 +497,7 @@ export const Dialog = memo((
           />
           <SpeedDialAction
             key={translate(`closeAll`)}
-            tooltiptitle={translate(`closeAll`)}
+            slotProps={{ tooltip: { title: translate(`closeAll`) } }}
             className={open ? `` : `d-none`}
             icon={(
               <Icons

@@ -146,7 +146,7 @@ export const PickerTime = memo((
   }, [ firstStr, secondStr, extra, DATE, translate ]);
 
   // 4. handle ----------------------------------------------------------------------------------
-  const handleTodayChange = useCallback((e: any, closePopup: any) => {
+  const handleTodayChange = useCallback((e: any) => {
     setOBJECT((prev: any) => ({
       ...prev,
       [`calendar_${targetStr}_section`]: prev?.[`calendar_${targetStr}_section`]?.map((section: any, idx: number) => (
@@ -156,20 +156,18 @@ export const PickerTime = memo((
 				} : section
       )),
     }));
-    closePopup();
   }, [ setOBJECT, targetStr, i, extra ]);
 
   // 4. handle ----------------------------------------------------------------------------------
-  const handleGoalChange = useCallback((e: any, closePopup: any) => {
+  const handleGoalChange = useCallback((e: any) => {
     setOBJECT((prev: any) => ({
       ...prev,
       [extra]: moment(e).format(`HH:mm`),
     }));
-    closePopup();
   }, [ setOBJECT, extra ]);
 
   // 4. handle ----------------------------------------------------------------------------------
-  const handleRecordChange = useCallback((e: any, closePopup: any) => {
+  const handleRecordChange = useCallback((e: any) => {
     setOBJECT((prev: any) => ({
       ...prev,
       [`${firstStr}_section`]: prev?.[`${firstStr}_section`]?.map((section: any, idx: number) => (
@@ -179,7 +177,6 @@ export const PickerTime = memo((
 				} : section
       )),
     }));
-    closePopup();
   }, [ setOBJECT, firstStr, i, extra ]);
 
   // 4. memoized values ---------------------------------------------------------------------------
@@ -188,7 +185,7 @@ export const PickerTime = memo((
       key={image}
       name={image}
       isIconButton={false}
-      className={`w-10px h-10px hover`}
+      className={`w-18px h-18px hover`}
     />
   ), [image]);
 
@@ -198,8 +195,8 @@ export const PickerTime = memo((
     ampm: false,
     timezone: localTimeZone,
     sx: {
-      width: `40vw`,
-      height: `40vh`,
+      width: `clamp(240px, 70vw, 360px)`,
+      height: `clamp(280px, 52vh, 420px)`,
     },
   }), [localTimeZone]);
 
@@ -208,19 +205,19 @@ export const PickerTime = memo((
     // 1. today & calendar
     const todaySection = () => (
       <PopUp
-        key={`${firstStr}-${extra}-${OBJECT?.[`calendar_${targetStr}_section`]?.[i]?.[extra]}`}
+        key={`${firstStr}-${extra}-today-${i}`}
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
-        contents={({ closePopup }: any) => (
-          <Grid container={true} spacing={2} className={`w-max-40vw h-max-40vh`}>
+        contents={() => (
+          <Grid container={true} spacing={2} className={`time-picker-popup`}>
             <Grid size={12} className={`d-center`}>
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
                 <DigitalClock
                   {...digitalClockProps}
                   value={moment(OBJECT?.[`calendar_${targetStr}_section`]?.[i]?.[extra], `HH:mm`)}
                   onChange={(e: any) => {
-                    handleTodayChange(e, closePopup);
+                    handleTodayChange(e);
                   }}
                 />
               </LocalizationProvider>
@@ -249,19 +246,19 @@ export const PickerTime = memo((
     // 2. goal
     const goalSection = () => (
       <PopUp
-        key={`${firstStr}-${extra}-goal-${OBJECT?.[extra]}`}
+        key={`${firstStr}-${extra}-goal`}
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
-        contents={({ closePopup }: any) => (
-          <Grid container={true} spacing={2} className={`w-max-40vw h-max-40vh`}>
+        contents={() => (
+          <Grid container={true} spacing={2} className={`time-picker-popup`}>
             <Grid size={12} className={`d-center`}>
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
                 <DigitalClock
                   {...digitalClockProps}
                   value={moment(OBJECT?.[extra], `HH:mm`)}
                   onChange={(e: any) => {
-                    handleGoalChange(e, closePopup);
+                    handleGoalChange(e);
                   }}
                 />
               </LocalizationProvider>
@@ -289,19 +286,19 @@ export const PickerTime = memo((
     // 3. record
     const recordSection = () => (
       <PopUp
-        key={`${firstStr}-${extra}-record-${OBJECT?.[`${firstStr}_section`]?.[i]?.[extra]}`}
+        key={`${firstStr}-${extra}-record-${i}`}
         type={`innerCenter`}
         position={`center`}
         direction={`center`}
-        contents={({ closePopup }: any) => (
-          <Grid container={true} spacing={2} className={`w-max-40vw h-max-40vh`}>
+        contents={() => (
+          <Grid container={true} spacing={2} className={`time-picker-popup`}>
             <Grid size={12} className={`d-center`}>
               <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={localLang}>
                 <DigitalClock
                   {...digitalClockProps}
                   value={moment(OBJECT?.[`${firstStr}_section`]?.[i]?.[extra], `HH:mm`)}
                   onChange={(e: any) => {
-                    handleRecordChange(e, closePopup);
+                    handleRecordChange(e);
                   }}
                 />
               </LocalizationProvider>

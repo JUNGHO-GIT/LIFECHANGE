@@ -405,7 +405,7 @@ export const UserResetPw = memo(() => {
                   key={`user1`}
                   name={`user1`}
                   isIconButton={false}
-                  className={`w-10px h-10px hover`}
+                  className={`w-18px h-18px hover`}
                 />
                 <Div className={`fs-0-8rem black ml-10px`}>
                   {translate(`googleLogin`)}

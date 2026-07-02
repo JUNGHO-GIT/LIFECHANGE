@@ -133,7 +133,13 @@ export const CalendarDetail = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -453,7 +459,7 @@ export const CalendarDetail = memo(() => {
                 key={`exercise1`}
                 name={`exercise1`}
                 isIconButton={false}
-                className={`w-10px h-10px hover ml-5px mr-10px`}
+                className={`w-18px h-18px hover ml-5px mr-10px`}
               />
               <Div className={`fs-0-9rem fw-600`}>
                 {translate(`exercise`)}
@@ -690,7 +696,7 @@ export const CalendarDetail = memo(() => {
                 key={`food1`}
                 name={`food1`}
                 isIconButton={false}
-                className={`w-10px h-10px hover ml-5px mr-10px`}
+                className={`w-18px h-18px hover ml-5px mr-10px`}
               />
               <Div className={`fs-0-9rem fw-600`}>
                 {translate(`food`)}
@@ -748,7 +754,7 @@ export const CalendarDetail = memo(() => {
                     }));
                   }}
                 >
-                  {foodArray.map((part: any, idx: number) => (
+                  {foodArray.filter((part: any) => part.food_record_part !== `all`).map((part: any, idx: number) => (
                     <MenuItem
                       key={part.food_record_part}
                       value={part.food_record_part}
@@ -768,35 +774,36 @@ export const CalendarDetail = memo(() => {
                   error={ERRORS?.[i]?.food_record_count}
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 99, 1);
-                    processedValue !== null && (() => {
-                      const numericValue: number = Number(processedValue) ?? 1;
-                      const foodCount: number = Number(item?.food_record_count) ?? 1;
-                      const setNutrient = (nut: string | number, extra: string) => (
-												!Number.isNaN(numericValue) && !Number.isNaN(foodCount) ? (
-													extra === `kcal` ? (
-														(numericValue * Number(nut) / foodCount).toFixed(0)
-													) : (
-														(numericValue * Number(nut) / foodCount).toFixed(1)
-													)
-												) : (
-													nut
-												)
-                      );
+                    if (processedValue === null) {
+                      return;
+                    }
+                    const numericValue: number = Number(processedValue) ?? 1;
+                    const foodCount: number = Number(item?.food_record_count) ?? 1;
+                    const setNutrient = (nut: string | number, extra: string) => (
+                      !Number.isNaN(numericValue) && !Number.isNaN(foodCount) && numericValue > 0 && foodCount > 0 ? (
+                        extra === `kcal` ? (
+                          (numericValue * Number(nut) / foodCount).toFixed(0)
+                        ) : (
+                          (numericValue * Number(nut) / foodCount).toFixed(1)
+                        )
+                      ) : (
+                        nut
+                      )
+                    );
 
-                      setOBJECT((prev: CalendarType) => ({
-                        ...prev,
-                        calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  food_record_count: processedValue,
-													  food_record_kcal: setNutrient(section.food_record_kcal, `kcal`) as string,
-													  food_record_carb: setNutrient(section.food_record_carb, `carb`) as string,
-													  food_record_protein: setNutrient(section.food_record_protein, `protein`) as string,
-													  food_record_fat: setNutrient(section.food_record_fat, `fat`) as string,
-													} : section
-                        )),
-                      }));
-                    })();
+                    setOBJECT((prev: CalendarType) => ({
+                      ...prev,
+                      calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
+                        idx === i ? {
+                          ...section,
+                          food_record_count: processedValue,
+                          food_record_kcal: setNutrient(section.food_record_kcal, `kcal`) as string,
+                          food_record_carb: setNutrient(section.food_record_carb, `carb`) as string,
+                          food_record_protein: setNutrient(section.food_record_protein, `protein`) as string,
+                          food_record_fat: setNutrient(section.food_record_fat, `fat`) as string,
+                        } : section
+                      )),
+                    }));
                   }}
                 />
               </Grid>
@@ -1024,7 +1031,7 @@ export const CalendarDetail = memo(() => {
                 key={`money1`}
                 name={`money1`}
                 isIconButton={false}
-                className={`w-10px h-10px hover ml-5px mr-10px`}
+                className={`w-18px h-18px hover ml-5px mr-10px`}
               />
               <Div className={`fs-0-9rem fw-600`}>
                 {translate(`money`)}
@@ -1219,7 +1226,7 @@ export const CalendarDetail = memo(() => {
                 key={`sleep1`}
                 name={`sleep1`}
                 isIconButton={false}
-                className={`w-10px h-10px hover ml-5px mr-10px`}
+                className={`w-18px h-18px hover ml-5px mr-10px`}
               />
               <Div className={`fs-0-9rem fw-600`}>
                 {translate(`sleep`)}
@@ -1241,7 +1248,7 @@ export const CalendarDetail = memo(() => {
               <Grid size={6} className={`d-row-left`}>
                 <Bg
                   badgeContent={i + 1}
-                  bgcolor={`#1976d2`}
+                  bgcolor={`#0876b9`}
                 />
               </Grid>
               <Grid size={6} className={`d-row-right`}>

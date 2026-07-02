@@ -11,7 +11,7 @@
 .recharts-cartesian-axis-tick-value {
   font-weight: 500 !important;
   padding: 0px 0px 0px 0px !important;
-  font-size: 0.600rem !important;
+  font-size: 0.8rem !important;
 }
 .recharts-tooltip-label {
   font-weight: 500 !important;
@@ -21,12 +21,8 @@
 .recharts-tooltip-item-list {
   font-weight: 500 !important;
   padding: 0px 0px 0px 0px !important;
-  font-size: 0.600rem !important;
+  font-size: 0.8rem !important;
 }
 .dash-pie-text {
-  font-size: 0.600rem !important;
-}
-svg.recharts-surface {
-  width: 10px;
-  height: 10px;
+  font-size: 0.8rem !important;
 }

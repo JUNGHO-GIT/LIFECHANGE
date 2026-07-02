@@ -130,7 +130,13 @@ export const ExerciseGoalDetail = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -340,7 +346,7 @@ export const ExerciseGoalDetail = memo(() => {
               <Grid size={6} className={`d-row-left`}>
                 <Bg
                   badgeContent={i + 1}
-                  bgcolor={`#1976d2`}
+                  bgcolor={`#0876b9`}
                 />
               </Grid>
               <Grid size={6} className={`d-row-right`}>
@@ -377,7 +383,9 @@ export const ExerciseGoalDetail = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9999);
-                    !processedValue === null && (() => {})();
+                    if (processedValue === null) {
+                      return;
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_goal_count: processedValue,
@@ -412,7 +420,9 @@ export const ExerciseGoalDetail = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999);
-                    !processedValue === null && (() => {})();
+                    if (processedValue === null) {
+                      return;
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_goal_volume: processedValue,
@@ -458,7 +468,9 @@ export const ExerciseGoalDetail = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
-                    !processedValue === null && (() => {})();
+                    if (processedValue === null) {
+                      return;
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       exercise_goal_scale: processedValue,

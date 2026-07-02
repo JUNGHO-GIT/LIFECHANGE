@@ -36,18 +36,19 @@ export const ListFilter = memo((
   // 2. array -----------------------------------------------------------------------------------
   const dataArray = useMemo(() => {
     let result: any[] = [];
+    const category: any = sessionCategory ?? {};
 
     (isExerciseGoalList || isExerciseRecordList) && (
-      result = sessionCategory?.exercise ?? []
+      result = category?.exercise ?? []
     );
     (isFoodGoalList || isFoodRecordList) && (
-      result = sessionCategory?.food ?? []
+      result = category?.food ?? []
     );
     (isMoneyGoalList || isMoneyRecordList) && (
-      result = sessionCategory?.money ?? []
+      result = category?.money ?? []
     );
     (isSleepGoalList || isSleepRecordList) && (
-      result = sessionCategory?.sleep ?? []
+      result = category?.sleep ?? []
     );
 
     return result;

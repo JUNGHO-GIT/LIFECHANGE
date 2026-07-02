@@ -23,7 +23,7 @@ export const FoodFavoriteList = memo(() => {
   const {
     URL_OBJECT, PATH, sessionId,
     location_dateType, location_dateStart, location_dateEnd,
-    sessionFoodSection, chartThemeColors,
+    chartThemeColors,
   } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
@@ -83,13 +83,8 @@ export const FoodFavoriteList = memo(() => {
   // 2-3. useEffect -----------------------------------------------------------------------------
   // - 페이지 로드시 체크박스 상태 초기화
   useEffect(() => {
-    let sectionArray: typeof sessionFoodSection = [];
-    let section: typeof sessionFoodSection = sessionFoodSection;
-
-    // sectionArray 초기화
-    if (section) {
-      sectionArray = section;
-    }
+    const section: any = getSession(`section`, `food`, ``) ?? [];
+    const sectionArray: any[] = section?.length > 0 ? section : [];
 
     const queryKey: string = `${PAGING.query}_${PAGING.page}`;
     const newChecked: boolean[] = OBJECT.map((item: any) => (
@@ -97,11 +92,11 @@ export const FoodFavoriteList = memo(() => {
         sectionItem.food_record_key === item.food_record_key
       ))
     ));
-    setCheckedQueries({
-      ...checkedQueries,
+    setCheckedQueries((prev) => ({
+      ...prev,
       [queryKey]: newChecked,
-    });
-  }, [OBJECT]);
+    }));
+  }, [OBJECT, PAGING.query, PAGING.page]);
 
   // 3. flow ------------------------------------------------------------------------------------
   async function flowFind() {
@@ -114,14 +109,15 @@ export const FoodFavoriteList = memo(() => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
+      const resultLength: number = res.data.result?.length ?? 0;
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return new Array(res.data.result?.length).fill({ expanded: true });
+        if (resultLength !== isExpanded.length) {
+          return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
         return isExpanded;
       });
@@ -368,7 +364,7 @@ export const FoodFavoriteList = memo(() => {
                         <Grid container={true} spacing={1}>
                           <Grid size={10} className={`d-row-right`}>
                             <Div className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}>
-                              {insertComma(item.food_record_carb ?? `0`)}
+                              {insertComma(item.food_record_protein ?? `0`)}
                             </Div>
                           </Grid>
                           <Grid size={2} className={`d-row-center`}>

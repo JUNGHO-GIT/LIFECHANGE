@@ -167,7 +167,7 @@ export const UserDelete = memo(() => {
       setLOADING(false);
       return;
     }
-    axios.delete(`${URL_OBJECT}/record/delete`, {
+    axios.delete(`${URL_OBJECT}/delete`, {
       data: {
         user_id: objectRef.current.user_id,
         user_pw: objectRef.current.user_pw,

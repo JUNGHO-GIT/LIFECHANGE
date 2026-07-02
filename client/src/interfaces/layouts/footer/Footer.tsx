@@ -33,7 +33,7 @@ export const Footer = memo((
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
-    const commonStr: string = `layout-wrapper p-sticky h-8vh radius-2 border-light-1 shadow-1 p-5px`;
+    const commonStr: string = `layout-wrapper p-sticky radius-2 border-light-1 shadow-1 p-5px`;
     const isUser: boolean = PATH.includes(`/user/category`) || PATH.includes(`/user/detail`);
     const isFood: boolean = PATH.includes(`/food/find/list`) || PATH.includes(`/food/favorite/list`);
     const isList: boolean = PATH.includes(`/goal/list`) || PATH.includes(`/record/list`);

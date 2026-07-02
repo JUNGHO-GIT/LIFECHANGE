@@ -35,10 +35,6 @@ import { registerInterceptor } from "@assets/scripts/interceptor";
 const AdminDashboard = lazy(() => import("@pages/admin/AdminDashboard").then((m) => ({
   default: m.AdminDashboard,
 })));
-const AdminAppInfo = lazy(() => import("@pages/admin/AdminAppInfo").then((m) => ({
-  default: m.AdminAppInfo,
-})));
-
 // auth --------------------------------------------------------------------------------------------
 const AuthError = lazy(() => import("@pages/auth/AuthError").then((m) => ({
   default: m.AuthError
@@ -135,6 +131,9 @@ const SleepRecordDetail = lazy(() => import("@pages/sleep/record/SleepRecordDeta
 // user --------------------------------------------------------------------------------------------
 const UserAppSetting = lazy(() => import("@pages/user/UserAppSetting").then((m) => ({
   default: m.UserAppSetting
+})));
+const UserAppInfo = lazy(() => import("@pages/user/UserAppInfo").then((m) => ({
+  default: m.UserAppInfo
 })));
 const UserSignup = lazy(() => import("@pages/user/UserSignup").then((m) => ({
   default: m.UserSignup
@@ -262,7 +261,7 @@ const App = memo(() => {
           <Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
           <Route path={`/sleep/record/detail/*`} element={<SleepRecordDetail />} />
           {/** user * */}
-          <Route path={`/user/appInfo/*`} element={<AdminAppInfo />} />
+          <Route path={`/user/appInfo/*`} element={<UserAppInfo />} />
           <Route path={`/user/appSetting/*`} element={<UserAppSetting />} />
           <Route path={`/user/signup/*`} element={<UserSignup />} />
           <Route path={`/user/login/*`} element={<UserLogin />} />

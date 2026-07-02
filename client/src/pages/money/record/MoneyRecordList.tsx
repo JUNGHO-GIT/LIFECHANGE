@@ -98,7 +98,13 @@ export const MoneyRecordList = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -126,6 +132,7 @@ export const MoneyRecordList = memo(() => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : [MoneyRecord]);
+      const resultLength: number = res.data.result?.length ?? 0;
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
@@ -134,8 +141,8 @@ export const MoneyRecordList = memo(() => {
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return Array.from({ length: res.data.result?.length }, () => ({ expanded: true }));
+        if (resultLength !== isExpanded.length) {
+          return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
         return isExpanded;
       });
@@ -437,7 +444,7 @@ export const MoneyRecordList = memo(() => {
                         className={`w-16px h-16px`}
                       />
                     </Grid>
-                    <Grid size={7} className={`d-row-left`}>
+                    <Grid size={5} className={`d-row-left`}>
                       <Div className={`fs-0-9rem fw-600 black mr-5px`}>
                         {formatDateMmDd(item.money_record_dateStart)}
                       </Div>
@@ -451,20 +458,15 @@ export const MoneyRecordList = memo(() => {
                           sx={{ padding: 0 }}
                         />
                       </Div>
-                      {item.money_section?.some((sec) => (
-                        sec.money_record_scheduled === `Y` && sec.money_record_scheduled_done === `N`
-                      )) && (
-                        <Div className={`fs-0-7rem fw-600 fifthScore ml-5px`}>
-                          {translate(`scheduledExpense`)}
-                        </Div>
-                      )}
                     </Grid>
-                    <Grid size={3} className={`d-row-right pr-5px`}>
-                      <Div className={`fs-0-85rem fw-700 fifthScore`}>
-                        {insertComma(item.money_record_total_expense ?? `0`)}
-                      </Div>
-                      <Div className={`fs-0-6rem fw-500 dark ml-4px`}>
-                        {translate(localCurrency)}
+                    <Grid size={5} className={`d-row-right`}>
+                      <Div className={`d-row-center`}>
+                        <Div className={`fs-0-75rem fw-700`}>
+                          {insertComma(item.money_record_total_expense ?? `0`)}
+                        </Div>
+                        <Div className={`fs-0-6rem fw-600 dark ml-5px`}>
+                          {translate(localCurrency)}
+                        </Div>
                       </Div>
                     </Grid>
                   </Grid>

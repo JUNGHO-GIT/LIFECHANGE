@@ -179,9 +179,9 @@ export const UserDetail = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
-                    !processedValue === null && (() => {
+                    if (processedValue === null) {
                       return;
-                    })();
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       user_initScale: processedValue,
@@ -230,9 +230,9 @@ export const UserDetail = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9999);
-                    !processedValue === null && (() => {
+                    if (processedValue === null) {
                       return;
-                    })();
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       user_initAvgKcalIntake: processedValue,
@@ -281,9 +281,9 @@ export const UserDetail = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999_999);
-                    !processedValue === null && (() => {
+                    if (processedValue === null) {
                       return;
-                    })();
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       user_initProperty: processedValue,

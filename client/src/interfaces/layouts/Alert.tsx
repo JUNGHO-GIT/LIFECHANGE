@@ -46,7 +46,7 @@ export const Alert = memo(() => {
       <MuiAlert
         severity={ALERT.severity === `error` ? `error` : `info`}
         variant={`standard`}
-        className={`w-95vw h-8vh d-center radius-3 border-light-1 shadow-1 fs-0-8rem fw-700 snackbar z-10000`}
+        className={`w-95vw d-center radius-3 border-light-1 shadow-1 fs-0-95rem fw-700 snackbar z-10000`}
         action={(
           <Icons
             key={`Check`}

@@ -5,25 +5,63 @@
     "rootDirs": [],
     "outDir": "./out",
     "paths": {
-      "@type/*": ["./src/assets/type/domain/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@interfaces/*": ["./src/interfaces/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@stores/*": ["./src/stores/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@schemas/*": ["./src/schemas/*"],
-      "@exportHooks": ["./src/exports/ExportHooks"],
-      "@exportStores": ["./src/exports/ExportStores"],
-      "@exportLibs": ["./src/exports/ExportLibs"],
-      "@exportMuis": ["./src/exports/ExportMuis"],
-      "@exportReacts": ["./src/exports/ExportReacts"],
-      "@exportSchemas": ["./src/exports/ExportSchemas"],
-      "@exportScripts": ["./src/exports/ExportScripts"],
-      "@exportTypes": ["./src/exports/ExportTypes"],
-      "@exportComponents": ["./src/exports/ExportComponents"],
-      "@exportContainers": ["./src/exports/ExportContainers"],
-      "@exportLayouts": ["./src/exports/ExportLayouts"],
-      "@exportPages": ["./src/exports/ExportPages"]
+      "@type/*": [
+        "./src/assets/type/domain/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ],
+      "@interfaces/*": [
+        "./src/interfaces/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@stores/*": [
+        "./src/stores/*"
+      ],
+      "@pages/*": [
+        "./src/pages/*"
+      ],
+      "@schemas/*": [
+        "./src/schemas/*"
+      ],
+      "@exportHooks": [
+        "./src/exports/ExportHooks"
+      ],
+      "@exportStores": [
+        "./src/exports/ExportStores"
+      ],
+      "@exportLibs": [
+        "./src/exports/ExportLibs"
+      ],
+      "@exportMuis": [
+        "./src/exports/ExportMuis"
+      ],
+      "@exportReacts": [
+        "./src/exports/ExportReacts"
+      ],
+      "@exportSchemas": [
+        "./src/exports/ExportSchemas"
+      ],
+      "@exportScripts": [
+        "./src/exports/ExportScripts"
+      ],
+      "@exportTypes": [
+        "./src/exports/ExportTypes"
+      ],
+      "@exportComponents": [
+        "./src/exports/ExportComponents"
+      ],
+      "@exportContainers": [
+        "./src/exports/ExportContainers"
+      ],
+      "@exportLayouts": [
+        "./src/exports/ExportLayouts"
+      ],
+      "@exportPages": [
+        "./src/exports/ExportPages"
+      ]
     },
     "typeRoots": [
       "./src/assets/type/dist",
@@ -147,6 +185,10 @@
   ],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "build",
+    "out",
+    "**/build/**",
+    "**/out/**"
   ]
 }

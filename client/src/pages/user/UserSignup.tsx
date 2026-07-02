@@ -397,7 +397,7 @@ export const UserSignup = memo(() => {
                       key={`exercise5`}
                       name={`exercise5`}
                       isIconButton={false}
-                      className={`w-10px h-10px hover`}
+                      className={`w-18px h-18px hover`}
                     />
                   )}
                   endadornment={
@@ -405,9 +405,9 @@ export const UserSignup = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
-                    !processedValue === null && (() => {
+                    if (processedValue === null) {
                       return;
-                    })();
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       user_initScale: processedValue,
@@ -432,7 +432,7 @@ export const UserSignup = memo(() => {
                       key={`food2`}
                       name={`food2`}
                       isIconButton={false}
-                      className={`w-10px h-10px hover`}
+                      className={`w-18px h-18px hover`}
                     />
                   )}
                   endadornment={
@@ -440,9 +440,9 @@ export const UserSignup = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9999);
-                    !processedValue === null && (() => {
+                    if (processedValue === null) {
                       return;
-                    })();
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       user_initAvgKcalIntake: processedValue,
@@ -467,7 +467,7 @@ export const UserSignup = memo(() => {
                       key={`money2`}
                       name={`money2`}
                       isIconButton={false}
-                      className={`w-10px h-10px hover`}
+                      className={`w-18px h-18px hover`}
                     />
                   )}
                   endadornment={
@@ -475,9 +475,9 @@ export const UserSignup = memo(() => {
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999_999);
-                    !processedValue === null && (() => {
+                    if (processedValue === null) {
                       return;
-                    })();
+                    }
                     setOBJECT((prev: any) => ({
                       ...prev,
                       user_initProperty: processedValue,
@@ -523,7 +523,7 @@ export const UserSignup = memo(() => {
                   key={`user1`}
                   name={`user1`}
                   isIconButton={false}
-                  className={`w-10px h-10px hover`}
+                  className={`w-18px h-18px hover`}
                 />
                 <Div className={`fs-0-8rem black ml-10px`}>
                   {translate(`googleLogin`)}

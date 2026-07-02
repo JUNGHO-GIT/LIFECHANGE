@@ -138,13 +138,19 @@ export default defineConfig(({ command, mode }) => {
       outDir: `build`,
       assetsDir: `assets`,
       sourcemap: false,
-      minify: isProd ? `esbuild` : false,
+      minify: isProd ? `oxc` : false,
       target: `es2015`,
       cssMinify: true,
       chunkSizeWarningLimit: 2048,
       reportCompressedSize: false,
-      rollupOptions: {
+      rolldownOptions: {
         output: {
+          minify: isProd ? {
+            compress: {
+              dropConsole: true,
+              dropDebugger: true,
+            },
+          } : undefined,
           manualChunks: (id: string): string | undefined => {
             if (id.includes(`node_modules/react`) || id.includes(`node_modules/react-dom`) || id.includes(`node_modules/react-router`)) {
             	return `react`;
@@ -169,11 +175,6 @@ export default defineConfig(({ command, mode }) => {
       },
       assetsInlineLimit: 4096,
     },
-    esbuild:
-      isProd ? {
-        drop: [`console`, `debugger`],
-        legalComments: `none`,
-      } : {},
     server: {
       port: 3000,
       open: true,

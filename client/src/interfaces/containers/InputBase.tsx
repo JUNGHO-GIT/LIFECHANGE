@@ -116,13 +116,13 @@ export const InputBase = memo((props: any) => {
 				props?.inputclass?.includes(`fs-`) ? (
 					`text-left ${props?.inputclass ?? ``}`
 				) : (
-					`fs-0-9rem text-left ${props?.inputclass ?? ``}`
+					`fs-0-95rem text-left ${props?.inputclass ?? ``}`
 				)
       ),
       startAdornment: (
 				props?.startadornment ? (
 					typeof props?.startadornment === `string` ? (
-						<div className={`d-center fs-0-6rem ${props?.adornmentclass ?? ``}`}>
+						<div className={`d-center fs-0-8rem ${props?.adornmentclass ?? ``}`}>
 						  {props?.startadornment}
 						</div>
 					) : (
@@ -135,7 +135,7 @@ export const InputBase = memo((props: any) => {
       endAdornment: (
 				props?.endadornment ? (
 					typeof props?.endadornment === `string` ? (
-						<div className={`d-center fs-0-6rem ${props?.adornmentclass ?? ``}`}>
+						<div className={`d-center fs-0-8rem ${props?.adornmentclass ?? ``}`}>
 						  {props?.endadornment}
 						</div>
 					) : (

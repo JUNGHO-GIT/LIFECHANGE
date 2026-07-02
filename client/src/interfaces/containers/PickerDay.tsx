@@ -450,8 +450,8 @@ export const PickerDay = memo((
 
                       if (isSelected) {
                         color = `#ffffff`;
-                        backgroundColor = `#1976d2`;
-                        boxShadow = `0 0 0 0 #1976d2`;
+                        backgroundColor = `#0876b9`;
+                        boxShadow = `0 0 0 0 #0876b9`;
                         borderRadius = `50%`;
                         zIndex = 10;
                       }
@@ -467,7 +467,7 @@ export const PickerDay = memo((
                                 padding: 0,
                                 top: 8,
                                 left: 30,
-                                backgroundColor: isBadged ? `#1976d2` : undefined,
+                                backgroundColor: isBadged ? `#0876b9` : undefined,
                               },
                             },
                           }}
@@ -657,23 +657,23 @@ export const PickerDay = memo((
 
                       if (isSelected) {
                         if (isFirst && isLast) {
-                          boxShadow = `0 0 0 0 #1976d2`;
+                          boxShadow = `0 0 0 0 #0876b9`;
                           borderRadius = `50%`;
                         }
                         else if (isFirst) {
-                          boxShadow = `5px 0 0 0 #1976d2`;
+                          boxShadow = `5px 0 0 0 #0876b9`;
                           borderRadius = `50% 0 0 50%`;
                         }
                         else if (isLast) {
-                          boxShadow = `-5px 0 0 0 #1976d2`;
+                          boxShadow = `-5px 0 0 0 #0876b9`;
                           borderRadius = `0 50% 50% 0`;
                         }
                         else {
-                          boxShadow = `5px 0 0 0 #1976d2`;
+                          boxShadow = `5px 0 0 0 #0876b9`;
                           borderRadius = `0%`;
                         }
                         color = `#ffffff`;
-                        backgroundColor = `#1976d2`;
+                        backgroundColor = `#0876b9`;
                         zIndex = 10;
                       }
                       return (
@@ -688,7 +688,7 @@ export const PickerDay = memo((
                                 padding: 0,
                                 top: 8,
                                 left: 30,
-                                backgroundColor: isBadged ? `#1976d2` : undefined,
+                                backgroundColor: isBadged ? `#0876b9` : undefined,
                               },
                             },
                           }}
@@ -888,8 +888,8 @@ export const PickerDay = memo((
 
                       if (isSelected) {
                         color = `#ffffff`;
-                        backgroundColor = `#1976d2`;
-                        boxShadow = `0 0 0 0 #1976d2`;
+                        backgroundColor = `#0876b9`;
+                        boxShadow = `0 0 0 0 #0876b9`;
                         borderRadius = `50%`;
                         zIndex = 10;
                       }
@@ -906,7 +906,7 @@ export const PickerDay = memo((
                                 padding: 0,
                                 top: 8,
                                 left: 30,
-                                backgroundColor: isBadged ? `#1976d2` : undefined,
+                                backgroundColor: isBadged ? `#0876b9` : undefined,
                               },
                             },
                           }}
@@ -1101,8 +1101,8 @@ export const PickerDay = memo((
 
                       if (isSelected) {
                         color = `#ffffff`;
-                        backgroundColor = `#1976d2`;
-                        boxShadow = `0 0 0 0 #1976d2`;
+                        backgroundColor = `#0876b9`;
+                        boxShadow = `0 0 0 0 #0876b9`;
                         borderRadius = `50%`;
                         zIndex = 10;
                       }
@@ -1119,7 +1119,7 @@ export const PickerDay = memo((
                                 padding: 0,
                                 top: 8,
                                 left: 30,
-                                backgroundColor: isBadged ? `#1976d2` : undefined,
+                                backgroundColor: isBadged ? `#0876b9` : undefined,
                               },
                             },
                           }}

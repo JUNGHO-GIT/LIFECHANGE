@@ -23,7 +23,7 @@ export const FoodFindList = memo(() => {
   const {
     URL_OBJECT, PATH, localIsoCode,
     location_dateType, location_dateStart, location_dateEnd,
-    sessionFoodSection, chartThemeColors,
+    chartThemeColors,
   } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
@@ -85,10 +85,11 @@ export const FoodFindList = memo(() => {
   // 2-3. useEffect -----------------------------------------------------------------------------
   // - 선택된 항목 키를 세션 스토리지에서 동기화
   useEffect(() => {
-    const sectionArray: any[] = sessionFoodSection ?? [];
+    const sessionSection: any = getSession(`section`, `food`, ``) ?? [];
+    const sectionArray: any[] = sessionSection?.length > 0 ? sessionSection : [];
     const keys: Set<string> = new Set<string>(sectionArray.map((s: any) => s.food_record_key));
     setSelectedKeys(keys);
-  }, [sessionFoodSection]);
+  }, [OBJECT]);
 
   // 3. flow ------------------------------------------------------------------------------------
   async function flowFind() {
@@ -102,14 +103,15 @@ export const FoodFindList = memo(() => {
     .then((res: any) => {
       setLOADING(false);
       setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
+      const resultLength: number = res.data.result?.length ?? 0;
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
       setIsExpanded(() => {
-        if (res.data.result?.length !== isExpanded.length) {
-          return new Array(res.data.result?.length).fill({ expanded: true });
+        if (resultLength !== isExpanded.length) {
+          return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
         return isExpanded;
       });

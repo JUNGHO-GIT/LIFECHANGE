@@ -18,7 +18,7 @@ export const Bg = memo((props: any) => (
       ...props?.sx,
       '& .MuiBadge-badge': {
         color: props?.sx?.color ?? `white`,
-        backgroundColor: props?.bgcolor ?? `#1976d2`,
+        backgroundColor: props?.bgcolor ?? `#0876b9`,
       },
     }}
   />

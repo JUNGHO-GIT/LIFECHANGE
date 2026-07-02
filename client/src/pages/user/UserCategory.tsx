@@ -311,7 +311,7 @@ export const UserCategory = memo(() => {
                               },
                               "& .MuiInput-root::after": {
                                 borderBottom: isEditable === `${dataType}_record_part_${index}` ? (
-                                  `2px solid #1976d2`
+                                  `2px solid #0876b9`
                                 ) : (
                                   `2px solid #000000`
                                 ),
@@ -431,7 +431,7 @@ export const UserCategory = memo(() => {
                                 },
                                 "& .MuiInput-root::after": {
                                   borderBottom: isEditable === `${dataType}_record_title_${index}` ? (
-                                    `2px solid #1976d2`
+                                    `2px solid #0876b9`
                                   ) : (
                                     `2px solid #000000`
                                   ),

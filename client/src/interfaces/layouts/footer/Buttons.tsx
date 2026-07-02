@@ -9,7 +9,6 @@ import { memo, useMemo } from "@exportReacts";
 import { Btn, Div, Grid } from "@exportComponents";
 import { PopUp } from "@exportContainers";
 import { useCommonValue } from "@exportHooks";
-import { setSession } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
@@ -40,7 +39,6 @@ export const Buttons = memo((
   // 3. handle ------------------------------------------------------------------------------------
   const handleSave = (type: string) => {
     flow?.flowSave(type);
-    setSession(`section`, `food`, ``, []);
   };
 
   // 7-1. btn - toFind -------------------------------------------------------------------------------

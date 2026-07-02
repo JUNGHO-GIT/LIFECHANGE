@@ -49,6 +49,12 @@ export interface ExerciseGoalType {
   exercise_record_diff_volume_color: string;
   exercise_record_diff_scale: string;
   exercise_record_diff_scale_color: string;
+
+  // summary
+  exercise_goal_summary_count_color: string;
+  exercise_goal_summary_volume_color: string;
+  exercise_goal_summary_cardio_color: string;
+  exercise_goal_summary_scale_color: string;
 }
 
 // Schema -----------------------------------------------------------------------------------------
@@ -95,4 +101,10 @@ export const ExerciseGoal: ExerciseGoalType = {
   exercise_record_diff_volume_color: ``,
   exercise_record_diff_scale: `0`,
   exercise_record_diff_scale_color: ``,
+
+  // summary
+  exercise_goal_summary_count_color: ``,
+  exercise_goal_summary_volume_color: ``,
+  exercise_goal_summary_cardio_color: ``,
+  exercise_goal_summary_scale_color: ``,
 };

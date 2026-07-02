@@ -132,7 +132,13 @@ export const MoneyRecordDetail = memo(() => {
       },
     })
     .then((res: any) => {
-      setEXIST(!res.data.result || res.data.result?.length === 0 ? [``] : res.data.result)
+      setEXIST(!res.data.result || res.data.result?.length === 0 ? {
+          day: [``],
+          week: [``],
+          month: [``],
+          year: [``],
+          select: [``],
+        } : res.data.result);
     })
     .catch((error: any) => {
       setALERT({
@@ -554,9 +560,9 @@ export const MoneyRecordDetail = memo(() => {
                     }
                     onChange={(e: any) => {
                       const processedValue: string | null = handleNumberInput(e.target?.value, 999_999_999);
-                      !processedValue === null && (() => {
-                        return;
-                      })();
+                      if (processedValue === null) {
+                      return;
+                    }
                       const value: string = processedValue ?? `0`;
                       setOBJECT((prev) => ({
                         ...prev,

@@ -21,6 +21,10 @@ export interface ExerciseRecordType {
   exercise_record_total_cardio_color: string;
   exercise_record_total_scale: string;
   exercise_record_total_scale_color: string;
+  exercise_record_summary_count_color: string;
+  exercise_record_summary_volume_color: string;
+  exercise_record_summary_cardio_color: string;
+  exercise_record_summary_scale_color: string;
   exercise_goal_count: string;
   exercise_goal_volume: string;
   exercise_goal_cardio: string;
@@ -54,6 +58,10 @@ export const ExerciseRecord: ExerciseRecordType = {
   exercise_record_total_cardio_color: ``,
   exercise_record_total_scale: `0`,
   exercise_record_total_scale_color: ``,
+  exercise_record_summary_count_color: ``,
+  exercise_record_summary_volume_color: ``,
+  exercise_record_summary_cardio_color: ``,
+  exercise_record_summary_scale_color: ``,
   exercise_goal_count: `0`,
   exercise_goal_volume: `0`,
   exercise_goal_cardio: `00:00`,

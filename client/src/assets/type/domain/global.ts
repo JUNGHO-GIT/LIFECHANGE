@@ -70,8 +70,6 @@ export interface EnvType {
   VITE_APP_TITLE?: string;
   VITE_APP_SERVER_URL?: string;
   VITE_APP_GCLOUD_URL?: string;
-  VITE_APP_ADMIN_ID?: string;
-  VITE_APP_ADMIN_PW?: string;
   VITE_APP_TODAY?: string;
   VITE_APP_CALENDAR?: string;
   VITE_APP_GOOGLE?: string;
@@ -427,8 +425,6 @@ export interface CommonValueType {
   TITLE: string;
   URL: string;
   GCLOUD_URL: string;
-  ADMIN_ID: string;
-  ADMIN_PW: string;
 
   SUBFIX: string;
   SUBFIX_CALENDAR: string;
