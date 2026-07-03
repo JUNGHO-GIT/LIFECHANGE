@@ -139,7 +139,7 @@ export default defineConfig(({ command, mode }) => {
       assetsDir: `assets`,
       sourcemap: false,
       minify: isProd ? `oxc` : false,
-      target: `es2015`,
+      target: `es2020`,
       cssMinify: true,
       chunkSizeWarningLimit: 2048,
       reportCompressedSize: false,
@@ -152,13 +152,13 @@ export default defineConfig(({ command, mode }) => {
             },
           } : undefined,
           manualChunks: (id: string): string | undefined => {
-            if (id.includes(`node_modules/react`) || id.includes(`node_modules/react-dom`) || id.includes(`node_modules/react-router`)) {
+            if (/node_modules[\\/](react|react-dom|react-router)[\\/]/.test(id)) {
             	return `react`;
             }
             if (id.includes(`node_modules/@mui`) || id.includes(`node_modules/@emotion`)) {
             	return `mui`;
             }
-            if (id.includes(`node_modules/axios`) || id.includes(`node_modules/zustand`) || id.includes(`node_modules/moment`) || id.includes(`node_modules/date-fns`)) {
+            if (id.includes(`node_modules/axios`) || id.includes(`node_modules/zustand`) || id.includes(`node_modules/moment`)) {
             	return `vendor`;
             }
             return;

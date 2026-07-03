@@ -9,7 +9,7 @@
 .table-thead-tr th, .table-thead-tr td {
   font-weight: bold !important;
   text-align: center !important;
-  background-color: #006ab3 !important;
+  background-color: var(--color-primary) !important;
   color: #ffffff !important;
   padding: 10px !important;
   border: none !important;
@@ -39,7 +39,7 @@
   -webkit-backdrop-filter: blur(2px) saturate(110%);
   pointer-events: auto;
   animation: loaderBackdropIn 0.16s ease-out both;
-  z-index: 9998 !important;
+  z-index: var(--z-loader) !important;
 }
 .loader-panel {
   width: 56px;
@@ -57,7 +57,7 @@
   height: 26px !important;
   box-sizing: border-box;
   border: 3px solid rgba(8, 118, 185, 0.16) !important;
-  border-top-color: #0876b9 !important;
+  border-top-color: var(--color-primary) !important;
   border-radius: 50%;
   animation: loaderSpin 0.8s linear infinite !important;
 }
@@ -82,4 +82,9 @@
   .app-loader-indicator {
     animation: none;
   }
+}
+
+/** snackbar **************************************************************************************/
+.snackbar-top {
+  z-index: var(--z-alert) !important;
 }

@@ -548,7 +548,7 @@ export const PickerDay = memo((
             )}
             endadornment={(
               <Div className={`d-row-center`}>
-                <Div className={`mr-n10px`}>
+                <Div>
                   <Icons
                     key={`ChevronLeft`}
                     name={`ChevronLeft`}
@@ -564,7 +564,7 @@ export const PickerDay = memo((
                     }}
                   />
                 </Div>
-                <Div className={`mr-n15px`}>
+                <Div>
                   <Icons
                     key={`ChevronRight`}
                     name={`ChevronRight`}
@@ -768,7 +768,7 @@ export const PickerDay = memo((
             )}
             endadornment={(
               <Div className={`d-row-center`}>
-                <Div className={`mr-n10px`}>
+                <Div>
                   <Icons
                     key={`ChevronLeft`}
                     name={`ChevronLeft`}
@@ -783,7 +783,7 @@ export const PickerDay = memo((
                     }}
                   />
                 </Div>
-                <Div className={`mr-n15px`}>
+                <Div>
                   <Icons
                     key={`ChevronRight`}
                     name={`ChevronRight`}
@@ -996,7 +996,7 @@ export const PickerDay = memo((
             )}
             endadornment={(
               <Div className={`d-row-center`}>
-                <Div className={`mr-n10px`}>
+                <Div>
                   <Icons
                     key={`ChevronLeft`}
                     name={`ChevronLeft`}
@@ -1011,7 +1011,7 @@ export const PickerDay = memo((
                     }}
                   />
                 </Div>
-                <Div className={`mr-n15px`}>
+                <Div>
                   <Icons
                     key={`ChevronRight`}
                     name={`ChevronRight`}
@@ -1199,7 +1199,7 @@ export const PickerDay = memo((
             )}
             endadornment={(
               <Div className={`d-row-center`}>
-                <Div className={`mr-n10px`}>
+                <Div>
                   <Icons
                     key={`ChevronLeft`}
                     name={`ChevronLeft`}
@@ -1214,7 +1214,7 @@ export const PickerDay = memo((
                     }}
                   />
                 </Div>
-                <Div className={`mr-n15px`}>
+                <Div>
                   <Icons
                     key={`ChevronRight`}
                     name={`ChevronRight`}

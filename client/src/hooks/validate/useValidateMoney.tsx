@@ -123,7 +123,7 @@ export const useValidateMoney = () => {
           alert(`money_record_title`, `errorMoneyTitle`, i);
           return false;
         }
-        if (!section[i]?.money_record_amount) {
+        if (!section[i]?.money_record_amount || section[i].money_record_amount === `0`) {
           alert(`money_record_amount`, `errorMoneyAmount`, i);
           return false;
         }

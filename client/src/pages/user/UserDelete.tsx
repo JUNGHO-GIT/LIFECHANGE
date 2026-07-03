@@ -222,7 +222,7 @@ export const UserDelete = memo(() => {
     const deleteSection = () => (
       <Grid container={true} spacing={0}>
         {[OBJECT]?.map((item, i) => (
-          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${item._id || item.user_id}`}>
+          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
             {/** 이메일 * */}
             <Grid container={true} spacing={1}>
               <Grid size={10}>

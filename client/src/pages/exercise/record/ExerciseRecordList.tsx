@@ -493,7 +493,7 @@ export const ExerciseRecordList = memo(() => {
     const listSection = () => (
       <Grid container={true} spacing={0}>
         {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`} key={i}>
+          <Grid container={true} spacing={0} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`} key={item._id}>
             <Grid size={12} className={`p-2px`}>
               <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded}>
                 <AccordionSummary

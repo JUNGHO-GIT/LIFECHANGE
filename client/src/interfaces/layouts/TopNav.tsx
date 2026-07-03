@@ -192,7 +192,7 @@ export const TopNav = memo(() => {
     };
 
     const entry = mapping[firstStr ?? ``]?.[secondStr ?? ``];
-    entry && setSelectedTab((prev) => ({ ...prev, [entry.key]: entry.value }));
+    entry && setSelectedTab((prev) => (prev[entry.key as keyof typeof prev] === entry.value ? prev : { ...prev, [entry.key]: entry.value }));
   }, [ firstStr, secondStr ]);
 
   // 4. handle ----------------------------------------------------------------------------------
@@ -527,6 +527,7 @@ export const TopNav = memo(() => {
                   <Checkbox
                     size={`small`}
                     checked={nutritionType === `avg`}
+                    slotProps={{ input: { "aria-label": translate(`avgValue`) } }}
                     onChange={(e: any) => {
                       setNutritionType(e.target.checked ? `avg` : `total`);
                     }}
@@ -537,6 +538,7 @@ export const TopNav = memo(() => {
                   <Checkbox
                     size={`small`}
                     checked={nutritionType === `total`}
+                    slotProps={{ input: { "aria-label": translate(`totalValue`) } }}
                     onChange={(e: any) => {
                       setNutritionType(e.target.checked ? `total` : `avg`);
                     }}

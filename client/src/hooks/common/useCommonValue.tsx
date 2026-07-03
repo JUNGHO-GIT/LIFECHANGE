@@ -84,6 +84,9 @@ const MACRO_COLORS: Record<string, string> = {
   protein: CHART_THEME_COLORS.protein,
   fat: CHART_THEME_COLORS.fat,
 };
+// 빈 폴백 리터럴 안정화: 렌더마다 새 identity 생성 방지 (소비자 useEffect/useMemo 연쇄 무효화 차단)
+const EMPTY_OBJ: any = {};
+const EMPTY_ARR: any[] = [];
 
 // -------------------------------------------------------------------------------------------------
 export const useCommonValue = (): CommonValueType => {
@@ -317,7 +320,7 @@ export const useCommonValue = (): CommonValueType => {
     isAdmin: sessionTitle?.setting?.id?.admin ?? ``,
     sessionId: sessionTitle?.setting?.id?.sessionId ?? ``,
     // Local Storage Settings
-    localSetting: localTitle?.setting ?? {},
+    localSetting: localTitle?.setting ?? EMPTY_OBJ,
     localTimeZone: (localTitle?.setting?.locale?.timeZone ?? `UTC`).trim(),
     localZoneName: (localTitle?.setting?.locale?.zoneName ?? `UTC`).trim(),
     localLang: (localTitle?.setting?.locale?.lang ?? `ko`).trim(),
@@ -325,22 +328,22 @@ export const useCommonValue = (): CommonValueType => {
     localCurrency: (localTitle?.setting?.locale?.currency ?? `USD`).trim(),
     localUnit: (localTitle?.setting?.locale?.unit ?? `lbs`).trim(),
     // Session Storage Settings
-    sessionPercent: sessionTitle?.setting?.sync?.percent ?? {},
-    sessionCategory: sessionTitle?.setting?.sync?.category ?? {},
+    sessionPercent: sessionTitle?.setting?.sync?.percent ?? EMPTY_OBJ,
+    sessionCategory: sessionTitle?.setting?.sync?.category ?? EMPTY_OBJ,
     sessionScale: scaleDefault,
-    sessionFavorite: sessionTitle?.setting?.sync?.favorite ?? {},
+    sessionFavorite: sessionTitle?.setting?.sync?.favorite ?? EMPTY_OBJ,
     sessionProperty: propertyDefault,
     sessionNutrition: nutritionDefault,
     // Category Arrays
-    exerciseArray: sessionTitle?.setting?.sync?.category?.exercise ?? [],
-    foodArray: sessionTitle?.setting?.sync?.category?.food ?? [],
-    moneyArray: sessionTitle?.setting?.sync?.category?.money ?? [],
-    sleepArray: sessionTitle?.setting?.sync?.category?.sleep ?? [],
+    exerciseArray: sessionTitle?.setting?.sync?.category?.exercise ?? EMPTY_ARR,
+    foodArray: sessionTitle?.setting?.sync?.category?.food ?? EMPTY_ARR,
+    moneyArray: sessionTitle?.setting?.sync?.category?.money ?? EMPTY_ARR,
+    sleepArray: sessionTitle?.setting?.sync?.category?.sleep ?? EMPTY_ARR,
     // Storage Objects
-    sessionTitle: sessionTitle || {},
-    localTitle: localTitle || {},
-    sessionSetting: sessionTitle?.setting ?? {},
-    sessionFoodSection: sessionTitle?.section?.food ?? [],
+    sessionTitle: sessionTitle || EMPTY_OBJ,
+    localTitle: localTitle || EMPTY_OBJ,
+    sessionSetting: sessionTitle?.setting ?? EMPTY_OBJ,
+    sessionFoodSection: sessionTitle?.section?.food ?? EMPTY_ARR,
     // Chart Configuration Arrays
     exerciseChartArray: EXERCISE_CHART_ARRAY,
     foodChartArray: FOOD_CHART_ARRAY,

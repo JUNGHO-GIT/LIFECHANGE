@@ -9,7 +9,7 @@
 export { default as axios } from "axios";
 export { create } from "zustand";
 export type { StoreApi, UseBoundStore } from "zustand";
-export { default as moment } from "moment-timezone";
+export { default as moment } from "moment-timezone/builds/moment-timezone-with-data-10-year-range";
 export type { Moment } from "moment";
 export { getCountryForTimezone } from "countries-and-timezones";
 export { getAllInfoByISO } from "iso-country-currency";

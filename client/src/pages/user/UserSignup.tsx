@@ -18,7 +18,7 @@ import { Icons, Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
 export const UserSignup = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
-  const { URL_OBJECT, URL_GOOGLE, navigate, localCurrency } = useCommonValue();
+  const { URL_OBJECT, URL_GOOGLE, navigate, localCurrency, localUnit } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
   const { setLOADING } = useStoreLoading();
@@ -260,7 +260,7 @@ export const UserSignup = memo(() => {
     const signupSection = () => (
       <Grid container={true} spacing={0}>
         {[OBJECT]?.map((item, i) => (
-          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${item._id || item.user_id}`}>
+          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
             {/** 이메일 * */}
             <Grid container={true} spacing={1}>
               <Grid size={10}>
@@ -271,7 +271,7 @@ export const UserSignup = memo(() => {
                   inputRef={REFS?.[i]?.user_id}
                   error={ERRORS?.[i]?.user_id}
                   disabled={item.user_id_verified}
-                  placeholder={`abcd@naver.com`}
+                  placeholder={`email@example.com`}
                   onChange={(e: any) => {
                     const value: string = e.target.value;
                     if (value?.length > 30) {
@@ -401,7 +401,7 @@ export const UserSignup = memo(() => {
                     />
                   )}
                   endadornment={
-                    translate(`cm`)
+                    localUnit
                   }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);

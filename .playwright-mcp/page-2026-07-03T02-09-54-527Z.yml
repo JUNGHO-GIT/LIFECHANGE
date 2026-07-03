@@ -1,0 +1,47 @@
+- generic [ref=f3e3]:
+  - alert [ref=f3e138]:
+    - img [ref=f3e140]
+    - generic [ref=f3e142]: 네트워크 오류가 발생했습니다.
+    - button "check" [ref=f3e144] [cursor=pointer]:
+      - img [ref=f3e145]
+  - generic [ref=f3e74]:
+    - generic [ref=f3e77]: 로그인
+    - generic [ref=f3e80]:
+      - generic [ref=f3e83]:
+        - generic [ref=f3e126]: 아이디
+        - generic [ref=f3e84]:
+          - textbox "아이디" [ref=f3e85]:
+            - /placeholder: abcd@naver.com
+            - text: tester@example.com
+          - group:
+            - generic: 아이디
+      - generic [ref=f3e88]:
+        - generic [ref=f3e127]: 비밀번호
+        - generic [ref=f3e89]:
+          - textbox "비밀번호" [ref=f3e90]: test1234!
+          - group:
+            - generic: 비밀번호
+    - generic [ref=f3e92]:
+      - generic [ref=f3e94]:
+        - text: 자동로그인
+        - generic [ref=f3e95] [cursor=pointer]:
+          - checkbox [ref=f3e96]
+          - img [ref=f3e97]
+      - generic [ref=f3e100]:
+        - text: 아이디 저장
+        - generic [ref=f3e101] [cursor=pointer]:
+          - checkbox [ref=f3e102]
+          - img [ref=f3e103]
+    - generic [ref=f3e106]:
+      - button "로그인" [active] [ref=f3e109] [cursor=pointer]: 로그인
+      - button "user1 구글 아이디로 로그인" [ref=f3e112] [cursor=pointer]:
+        - generic [ref=f3e113]:
+          - img "user1" [ref=f3e114]
+          - generic [ref=f3e115]: 구글 아이디로 로그인
+    - generic [ref=f3e117]:
+      - generic [ref=f3e119]:
+        - generic [ref=f3e120]: 아이디가 없는 경우
+        - generic [ref=f3e121] [cursor=pointer]: 회원가입
+      - generic [ref=f3e123]:
+        - generic [ref=f3e124]: 비밀번호를 잊은 경우
+        - generic [ref=f3e125] [cursor=pointer]: 비밀번호 변경

@@ -24,13 +24,12 @@ export const Confirm = memo(() => {
         vertical: `top`,
         horizontal: `center`,
       }}
-      style={{
-        zIndex: 1_000_000,
-      }}
+      className={`snackbar-top`}
       onClose={() => {
         setCONFIRM({
           open: false,
         });
+        CONFIRM.callback?.(false);
       }}
     >
       <MuiAlert

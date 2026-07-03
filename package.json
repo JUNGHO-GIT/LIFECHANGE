@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "2.2.6",
+  "version": "2.2.7",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
@@ -12,16 +12,10 @@
     "whatwg-url": "12.0.1"
   },
   "scripts": {
-    "test": "bun test src",
-    "dev": "bun run --parallel dev:server dev:client",
-    "dev:server": "bun run index.ts",
-    "dev:client": "bun --cwd client run dev",
-    "start": "bun run index.ts",
-    "typecheck": "tsc --noEmit",
-    "git": "bun run ~/.bootstrap/bootstrap-sync.ts --git",
-    "swc": "bun run ~/.bootstrap/bootstrap-sync.ts --swc",
-    "sync": "bun run ~/.bootstrap/bootstrap-sync.ts --sync",
-    "tools": "bun run ~/.bootstrap/bootstrap-sync.ts --tools"
+    "git": "bun ~/.bootstrap/bootstrap-sync.ts --git",
+    "swc": "bun ~/.bootstrap/bootstrap-sync.ts --swc",
+    "sync": "bun ~/.bootstrap/bootstrap-sync.ts --sync",
+    "tools": "bun ~/.bootstrap/bootstrap-sync.ts --tools"
   },
   "dependencies": {
     "axios": "1.18.1",

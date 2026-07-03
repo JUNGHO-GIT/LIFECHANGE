@@ -180,9 +180,7 @@ export const SleepRecordDetail = memo(() => {
       else {
         setOBJECT((prev) => ({
           ...prev,
-          sleep_section: prev.sleep_section?.sort((a: any, b: any) => (
-            a.sleep_record_part - b.sleep_record_part
-          )),
+          sleep_section: prev.sleep_section,
         }));
       }
       // count 설정

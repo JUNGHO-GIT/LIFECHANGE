@@ -698,13 +698,15 @@ export const FoodRecordDetail = memo(() => {
                     }
                     // 영양소 설정 함수
                     const setNutrient = (nut: string | number, extra: string) => {
-                      const numericValue: number = Number(processedValue) ?? 1;
-                      const foodCount: number = Number(item?.food_record_count) ?? 1;
-                      if (!Number.isNaN(numericValue) && !Number.isNaN(foodCount) && numericValue > 0 && foodCount > 0) {
+                      const numericValue: number = Number(processedValue);
+                      const foodCount: number = Number(item?.food_record_count);
+                      // 새 개수/기존 개수가 유한수이고 양수일 때만 스케일링, 아니면 기존 값 유지
+                      if (Number.isFinite(numericValue) && Number.isFinite(foodCount) && numericValue > 0 && foodCount > 0) {
+                        const scaled: number = Math.max(0, numericValue * Number(nut) / foodCount);
                         return (
                       extra === `kcal`
-                      ? (numericValue * Number(nut) / foodCount).toFixed(0)
-                      : (numericValue * Number(nut) / foodCount).toFixed(1)
+                      ? scaled.toFixed(0)
+                      : scaled.toFixed(1)
                       );
                     }
                     return nut;

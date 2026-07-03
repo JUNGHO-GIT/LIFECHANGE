@@ -169,8 +169,8 @@ export const UserLogin = memo(() => {
           severity: `error`,
         });
         setSession(`setting`, `id`, ``, {
-          sessionId: res.data.result.user_id,
-          admin: res.data.admin === `admin` ? `true` : `false`,
+          sessionId: ``,
+          admin: `false`,
         });
       }
       else {
@@ -244,7 +244,7 @@ export const UserLogin = memo(() => {
     const loginSection = () => (
       <Grid container={true} spacing={0}>
         {[OBJECT]?.map((item, i) => (
-          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${item._id || item.user_id}`}>
+          <Grid container={true} spacing={2} className={`p-10px`} key={`detail-${i}`}>
             {/* row 1 */}
             <Grid container={true} spacing={0}>
               <Grid size={12}>
@@ -253,7 +253,7 @@ export const UserLogin = memo(() => {
                   value={item.user_id}
                   inputRef={REFS?.[i]?.user_id}
                   error={ERRORS?.[i]?.user_id}
-                  placeholder={`abcd@naver.com`}
+                  placeholder={`email@example.com`}
                   onChange={(e: any) => {
                     const value: string = e.target.value;
                     if (value?.length > 30) {
@@ -300,11 +300,14 @@ export const UserLogin = memo(() => {
       <Grid container={true} spacing={0}>
         <Grid size={6} className={`d-row-right`}>
           <Div className={`d-center fs-0-8rem`}>
-            {translate(`autoLogin`)}
+            <span className={`pointer`} onClick={() => setCheckedAutoLogin((prev) => !prev)}>
+              {translate(`autoLogin`)}
+            </span>
             <Checkbox
               color={`primary`}
               size={`small`}
               checked={checkedAutoLogin}
+              slotProps={{ input: { "aria-label": translate(`autoLogin`) } }}
               onChange={(e: any) => {
                 setCheckedAutoLogin(e.target.checked);
               }}
@@ -313,11 +316,14 @@ export const UserLogin = memo(() => {
         </Grid>
         <Grid size={6} className={`d-row-left`}>
           <Div className={`fs-0-8rem`}>
-            {translate(`saveId`)}
+            <span className={`pointer`} onClick={() => setCheckedSaveId((prev) => !prev)}>
+              {translate(`saveId`)}
+            </span>
             <Checkbox
               color={`primary`}
               size={`small`}
               checked={checkedSaveId}
+              slotProps={{ input: { "aria-label": translate(`saveId`) } }}
               onChange={(e: any) => {
                 setCheckedSaveId(e.target.checked);
               }}

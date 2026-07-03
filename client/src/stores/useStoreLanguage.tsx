@@ -934,6 +934,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         ko: `신규`,
         en: `New`,
       },
+      networkError: {
+        ko: `네트워크 오류가 발생했습니다.`,
+        en: `A network error has occurred.`,
+      },
       noData: {
         ko: `삭제할 데이터가 없습니다`,
         en: `No data to delete`,

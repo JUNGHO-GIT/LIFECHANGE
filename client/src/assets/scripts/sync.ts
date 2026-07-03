@@ -26,22 +26,13 @@ export const sync = async (
   const localTimeZone: any = getLocal(`setting`, `locale`, `timeZone`);
 
   // 2-2. useState ---------------------------------------------------------------------------------
+  const now = moment().tz(localTimeZone as string);
   const DATE = {
     dateType: `day`,
-    dateStart: moment()
-      .tz(localTimeZone as string)
-      .format(`YYYY-MM-DD`),
-    dateEnd: moment()
-      .tz(localTimeZone as string)
-      .format(`YYYY-MM-DD`),
-    monthStart: moment()
-      .tz(localTimeZone as string)
-      .startOf(`month`)
-      .format(`YYYY-MM-DD`),
-    monthEnd: moment()
-      .tz(localTimeZone as string)
-      .endOf(`month`)
-      .format(`YYYY-MM-DD`),
+    dateStart: now.clone().format(`YYYY-MM-DD`),
+    dateEnd: now.clone().format(`YYYY-MM-DD`),
+    monthStart: now.clone().startOf(`month`).format(`YYYY-MM-DD`),
+    monthEnd: now.clone().endOf(`month`).format(`YYYY-MM-DD`),
   };
   // 임의 기간 조회: dateOverride 병합 후 isCustom 플래그 주입
   const dateMerged: any = dateOverride ? { ...DATE, ...dateOverride, isCustom: true } : DATE;

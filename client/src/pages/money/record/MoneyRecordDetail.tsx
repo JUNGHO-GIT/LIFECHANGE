@@ -209,6 +209,10 @@ export const MoneyRecordDetail = memo(() => {
       if (isFutureScheduled) {
         return acc;
       }
+      // money_record_include !== "Y"인 항목은 서버 집계와 동일하게 합산에서 제외
+      if (cur.money_record_include !== `Y`) {
+        return acc;
+      }
       return {
         totalIncome: Number(acc.totalIncome) +
 				(cur.money_record_part === `income` ? Number(cur.money_record_amount) : 0),

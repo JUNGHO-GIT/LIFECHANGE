@@ -7,7 +7,7 @@
 
 import { Icons } from "@exportComponents";
 import { MuiAlert, Snackbar } from "@exportMuis";
-import { memo, useEffect } from "@exportReacts";
+import { memo } from "@exportReacts";
 import { useStoreAlert } from "@exportStores";
 
 // -------------------------------------------------------------------------------------------------
@@ -15,15 +15,6 @@ export const Alert = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
   const { ALERT, setALERT } = useStoreAlert();
-
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    ALERT.open && (
-      setALERT({
-        open: true,
-      })
-    );
-  }, [ALERT.open]);
 
   // 7. alert --------------------------------------------------------------------------------------
   const alertNode = () => (
@@ -34,9 +25,7 @@ export const Alert = memo(() => {
         vertical: `top`,
         horizontal: `center`,
       }}
-      style={{
-        zIndex: 1_000_000,
-      }}
+      className={`snackbar-top`}
       onClose={() => {
         setALERT({
           open: false,

@@ -5,15 +5,46 @@
  * @since 2025-12-25
  */
  
+/** tokens **************************************************************************************/
+:root {
+	--color-primary: #0876b9;
+	--color-secondary: #005f9e;
+	--color-error: #f44336;
+	--color-bg: #d8e4ea;
+	--color-border: #dbdbdb;
+	--shadow-tint: 21, 53, 75;
+	--z-content: 100;
+	--z-layout: 500;
+	--z-loader: 9000;
+	--z-splash: 9100;
+	--z-popover: 9200;
+	--z-alert: 9300;
+	color-scheme: light;
+}
+html {
+	scroll-behavior: smooth;
+}
+body {
+	font-variant-numeric: tabular-nums;
+}
+::selection {
+	background: rgba(8, 118, 185, 0.18);
+}
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
 /** root ***********************************************************************************/
 #root {
-	background: #d8e4ea !important;
+	background: var(--color-bg) !important;
 }
 .shadow-1 {
   box-shadow:
-  0 1px 2px 0 rgba(0, 0, 0, .03),
-  0 4px 8px -2px rgba(0, 0, 0, .06),
-  0 1px 3px 0 rgba(0, 0, 0, .04) !important;
+  0 1px 2px 0 rgba(var(--shadow-tint), .03),
+  0 4px 8px -2px rgba(var(--shadow-tint), .06),
+  0 1px 3px 0 rgba(var(--shadow-tint), .04) !important;
 }
 .App {
 	width: 100%;
@@ -39,7 +70,7 @@
 	box-shadow: none;
 	overflow-x: hidden;
 	overflow-y: hidden;
-	z-index: 500;
+	z-index: var(--z-layout);
 }
 .content-wrapper {
 	width: 100%;
@@ -55,7 +86,7 @@
 	box-shadow: none;
 	overflow-x: hidden;
 	overflow-y: hidden;
-	z-index: 100;
+	z-index: var(--z-content);
 	animation: fadeIn 0.4s ease-in-out;
 }
 
@@ -83,14 +114,15 @@
 	inset: 0;
 	width: 100vw;
 	height: 100vh;
+	height: 100dvh;
 	padding: 24px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: #0876b9;
+	background: var(--color-primary);
 	opacity: 1;
 	transition: opacity 0.45s ease-in-out, visibility 0.45s ease-in-out;
-	z-index: 9999;
+	z-index: var(--z-splash);
 }
 .splash-screen.is-closing {
 	opacity: 0;
@@ -99,6 +131,7 @@
 .splash-logo {
 	width: auto;
 	height: 80vh;
+	height: 80dvh;
 	border-radius: 4px;
 	animation: splashLogoIn 0.55s ease-out both;
 }

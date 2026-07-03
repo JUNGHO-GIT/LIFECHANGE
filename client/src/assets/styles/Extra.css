@@ -368,8 +368,8 @@
   box-shadow: 0 10px 24px rgba(8, 118, 185, 0.12) !important;
 }
 .accordion .MuiAccordionSummary-root:focus-visible {
-  outline: 3px solid rgba(8, 118, 185, 0.22);
-  outline-offset: -3px;
+  outline: 3px solid rgba(8, 118, 185, 0.22) !important;
+  outline-offset: -3px !important;
 }
 @media (prefers-reduced-motion: reduce) {
   .accordion {

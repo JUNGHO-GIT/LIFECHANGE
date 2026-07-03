@@ -6,7 +6,7 @@
  */
 
 import { useCallback, useMemo } from "@exportReacts";
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue } from "@hooks/common/useCommonValue";
 import { moment, type Moment } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------

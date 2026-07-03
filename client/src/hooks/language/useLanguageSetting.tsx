@@ -8,7 +8,7 @@
 import { useCommonValue } from "@hooks/common/useCommonValue";
 import { getCountryForTimezone } from "countries-and-timezones";
 import { getAllInfoByISO } from "iso-country-currency";
-import moment from "moment-timezone";
+import moment from "moment-timezone/builds/moment-timezone-with-data-10-year-range";
 import { useEffect } from "@exportReacts";
 import { setLocal } from "@exportScripts";
 
