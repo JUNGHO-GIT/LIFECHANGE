@@ -335,7 +335,7 @@ export const FoodGoalDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${item._id || item.food_goal_dateStart || item.food_goal_number}`}
+            key={`detail-${item._id || i}`}
             className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}
@@ -371,7 +371,7 @@ export const FoodGoalDetail = memo(() => {
 									)
                   }
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.kcal }}>
                       {`●`}
                     </Div>
                   )}
@@ -408,7 +408,7 @@ export const FoodGoalDetail = memo(() => {
 									)
                   }
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.carb }}>
                       {`●`}
                     </Div>
                   )}
@@ -445,7 +445,7 @@ export const FoodGoalDetail = memo(() => {
 									)
                   }
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.protein }}>
                       {`●`}
                     </Div>
                   )}
@@ -482,7 +482,7 @@ export const FoodGoalDetail = memo(() => {
 									)
                   }
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.fat }}>
                       {`●`}
                     </Div>
                   )}

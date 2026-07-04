@@ -62,7 +62,7 @@ export const CalendarDetail = memo(() => {
     newSectionCnt: 0,
   });
   const [ DATE, setDATE ] = useState({
-    dateType: location_dateType ?? `select`,
+    dateType: location_dateType ?? `day`,
     dateStart: location_dateStart ?? getDayFmt(),
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
@@ -473,7 +473,7 @@ export const CalendarDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`exercise-detail-${item.exercise_record_part}-${item.exercise_record_title}-${item.exercise_record_set}-${item.exercise_record_rep}-${item.exercise_record_weight}-${item.exercise_record_cardio}`}
+            key={`exercise-detail-${i}`}
             className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-light-1 border-top-0 shadow-1 p-20px`}
           >
             {/** row 1 * */}
@@ -578,7 +578,7 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_set}
                   error={ERRORS?.[i]?.exercise_record_set}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.volume }}>
                       {`●`}
                     </Div>
                   )}
@@ -609,7 +609,7 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_rep}
                   error={ERRORS?.[i]?.exercise_record_rep}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.volume }}>
                       {`●`}
                     </Div>
                   )}
@@ -644,7 +644,7 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_weight}
                   error={ERRORS?.[i]?.exercise_record_weight}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.volume }}>
                       {`●`}
                     </Div>
                   )}
@@ -710,7 +710,7 @@ export const CalendarDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`food-detail-${item.food_record_part}-${item.food_record_name}-${item.food_record_brand}-${item.food_record_count}-${item.food_record_serv}-${item.food_record_gram}`}
+            key={`food-detail-${i}`}
             className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-light-1 border-top-0 shadow-1 p-20px`}
           >
             {/** row 1 * */}
@@ -894,7 +894,7 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_record_kcal}
                   error={ERRORS?.[i]?.food_record_kcal}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.kcal }}>
                       {`●`}
                     </Div>
                   )}
@@ -925,7 +925,7 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_record_carb}
                   error={ERRORS?.[i]?.food_record_carb}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.carb }}>
                       {`●`}
                     </Div>
                   )}
@@ -960,7 +960,7 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_record_protein}
                   error={ERRORS?.[i]?.food_record_protein}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.protein }}>
                       {`●`}
                     </Div>
                   )}
@@ -991,7 +991,7 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_record_fat}
                   error={ERRORS?.[i]?.food_record_fat}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.fat }}>
                       {`●`}
                     </Div>
                   )}
@@ -1045,7 +1045,7 @@ export const CalendarDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`money-detail-${item.money_record_part}-${item.money_record_title}-${item.money_record_amount}-${item.money_record_content}-${item.money_record_include}`}
+            key={`money-detail-${i}`}
             className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-light-1 border-top-0 shadow-1 p-20px`}
           >
             {/** row 1 * */}
@@ -1150,7 +1150,7 @@ export const CalendarDetail = memo(() => {
                   inputRef={REFS?.[i]?.money_record_amount}
                   error={ERRORS?.[i]?.money_record_amount}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: bgColors?.[moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part)] ?? chartThemeColors.expense }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: bgColors?.[moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part)] ?? chartThemeColors.expense }}>
                       {`●`}
                     </Div>
                   )}
@@ -1240,7 +1240,7 @@ export const CalendarDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`sleep-detail-${_item.sleep_record_bedTime}-${_item.sleep_record_wakeTime}-${_item.sleep_record_sleepTime}`}
+            key={`sleep-detail-${i}`}
             className={`${i === 0 ? `radius-top-0 radius-2` : `radius-2`} border-light-1 border-top-0 shadow-1 p-20px`}
           >
             {/** row 1 * */}

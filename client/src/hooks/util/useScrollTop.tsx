@@ -5,14 +5,10 @@
  * @since 2025-12-25
  */
 
-import { useCommonValue } from "@hooks/common/useCommonValue";
 import { useEffect } from "@exportReacts";
 
 // -------------------------------------------------------------------------------------------------
-export const useScrollTop = () => {
-
-  // 1. common ----------------------------------------------------------------------------------
-  const { PATH } = useCommonValue();
+export const useScrollTop = (PATH: string) => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {

@@ -337,7 +337,7 @@ export const SleepGoalDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${OBJECT._id || OBJECT.sleep_goal_dateStart || OBJECT.sleep_goal_number}`}
+            key={`detail-${OBJECT._id || i}`}
             className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}

@@ -275,7 +275,7 @@ export const FoodRecordList = memo(() => {
         {/** row 2 **/}
         <Grid container={true} spacing={2}>
           <Grid size={6} className={`d-row-center p-relative food-record-chart w-124px h-124px`}>
-            <ResponsiveContainer width={`100%`} height={`100%`}>
+            <ResponsiveContainer width={124} height={124}>
               <PieChart>
                 <Pie
                   data={recordSummary.chartData}
@@ -457,9 +457,9 @@ export const FoodRecordList = memo(() => {
     const listSection = () => (
       <Grid container={true} spacing={0}>
         {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`} key={item._id}>
+          <Grid container={true} spacing={0} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`} key={item._id || `food-record-${i}`}>
             <Grid size={12} className={`p-2px`}>
-              <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded}>
+              <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
                 <AccordionSummary
                   expandIcon={(
                     <Icons

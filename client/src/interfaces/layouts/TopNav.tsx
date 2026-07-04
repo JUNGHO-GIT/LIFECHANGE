@@ -963,7 +963,7 @@ export const TopNav = memo(() => {
 
     // 7-9. return -----------------------------------------------------------------------------------
     return (
-      <Paper className={`layout-wrapper p-sticky radius-2 border-light-1 shadow-1 p-0px`}>
+      <Paper className={`layout-wrapper p-sticky top-8vh h-8vh radius-2 border-light-1 shadow-1 p-0px`}>
         <Grid container={true} spacing={0}>
           <Grid size={8} className={`d-row-center`}>
             {smileSection()}

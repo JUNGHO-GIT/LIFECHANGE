@@ -8,7 +8,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import react from "@vitejs/plugin-react-swc";
-import { defineConfig, loadEnv, type UserConfig } from "vite";
+import { defineConfig, loadEnv, type Plugin, type UserConfig } from "vite";
 import vtCmpr from "vite-plugin-compression";
 
 // 1. config ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
@@ -70,7 +70,21 @@ export default defineConfig(({ command, mode }) => {
   const publicUrl: string = env.VITE_APP_PUBLIC_URL || `/lifechange`;
 
   // 3. plugins ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  const refreshHookFix: Plugin = {
+    name: `lifechange-react-refresh-hook-fix`,
+    enforce: `pre`,
+    apply: `serve`,
+    transformIndexHtml: {
+      order: `post`,
+      handler: (html: string): string => html.replace(
+        /(<head[^>]*>)/,
+        `$1\n    <script>if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === "object") { window.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled = false; }</script>`,
+      ),
+    },
+  };
+
   const plugins: NonNullable<UserConfig[`plugins`]> = [
+    refreshHookFix,
     react({
       devTarget: `esnext`,
       jsxImportSource: `@emotion/react`,
@@ -177,7 +191,8 @@ export default defineConfig(({ command, mode }) => {
     },
     server: {
       port: 3000,
-      open: true,
+      strictPort: true,
+      open: false,
       host: true,
       cors: true,
     },

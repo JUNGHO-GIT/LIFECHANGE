@@ -5,14 +5,15 @@
  * @since 2025-12-25
  */
 
-import { useCommonValue } from "@hooks/common/useCommonValue";
 import { useEffect } from "@exportReacts";
+import type { CommonValueType } from "@exportTypes";
 
 // -------------------------------------------------------------------------------------------------
-export const useRoot = () => {
-
-  // 1. common ----------------------------------------------------------------------------------
-  const { PATH, navigate, sessionId } = useCommonValue();
+export const useRoot = (
+  PATH: string,
+  navigate: CommonValueType["navigate"],
+  sessionId: string,
+) => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {

@@ -544,7 +544,7 @@ export const FoodRecordDetail = memo(() => {
               label={translate(`totalKcal`)}
               value={insertComma(OBJECT?.food_record_total_kcal ?? `0`)}
               startadornment={(
-                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.kcal }}>
                   {`●`}
                 </Div>
               )}
@@ -560,7 +560,7 @@ export const FoodRecordDetail = memo(() => {
               label={translate(`totalCarb`)}
               value={insertComma(OBJECT?.food_record_total_carb ?? `0`)}
               startadornment={(
-                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.carb }}>
                   {`●`}
                 </Div>
               )}
@@ -580,7 +580,7 @@ export const FoodRecordDetail = memo(() => {
               label={translate(`totalProtein`)}
               value={insertComma(OBJECT?.food_record_total_protein ?? `0`)}
               startadornment={(
-                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.protein }}>
                   {`●`}
                 </Div>
               )}
@@ -596,7 +596,7 @@ export const FoodRecordDetail = memo(() => {
               label={translate(`totalFat`)}
               value={insertComma(OBJECT?.food_record_total_fat ?? `0`)}
               startadornment={(
-                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.fat }}>
                   {`●`}
                 </Div>
               )}
@@ -614,7 +614,7 @@ export const FoodRecordDetail = memo(() => {
         <Grid
           container={true}
           spacing={2}
-          key={`detail-${item.food_record_part}-${item.food_record_name}-${item.food_record_brand}-${item.food_record_count}-${item.food_record_serv}-${item.food_record_gram}`}
+          key={`detail-${i}`}
           className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
         >
           {/** row 1 * */}
@@ -825,7 +825,7 @@ export const FoodRecordDetail = memo(() => {
                 inputRef={REFS?.[i]?.food_record_kcal}
                 error={ERRORS?.[i]?.food_record_kcal}
                 startadornment={(
-                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                  <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.kcal }}>
                     {`●`}
                   </Div>
                 )}
@@ -858,7 +858,7 @@ export const FoodRecordDetail = memo(() => {
                 inputRef={REFS?.[i]?.food_record_carb}
                 error={ERRORS?.[i]?.food_record_carb}
                 startadornment={(
-                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                  <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.carb }}>
                     {`●`}
                   </Div>
                 )}
@@ -895,7 +895,7 @@ export const FoodRecordDetail = memo(() => {
                 inputRef={REFS?.[i]?.food_record_protein}
                 error={ERRORS?.[i]?.food_record_protein}
                 startadornment={(
-                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                  <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.protein }}>
                     {`●`}
                   </Div>
                 )}
@@ -928,7 +928,7 @@ export const FoodRecordDetail = memo(() => {
                 inputRef={REFS?.[i]?.food_record_fat}
                 error={ERRORS?.[i]?.food_record_fat}
                 startadornment={(
-                  <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                  <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.fat }}>
                     {`●`}
                   </Div>
                 )}

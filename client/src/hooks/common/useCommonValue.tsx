@@ -7,7 +7,6 @@
 
 import {
   NavigateFunction,
-  startTransition,
   useCallback,
   useLocation,
   useMemo,
@@ -91,12 +90,9 @@ const EMPTY_ARR: any[] = [];
 // -------------------------------------------------------------------------------------------------
 export const useCommonValue = (): CommonValueType => {
   const rawNavigate: NavigateFunction = useNavigate();
-  // 화면 전환을 비긴급(transition)으로 처리: 무거운 레이아웃 리렌더가 클릭 응답을 막지 않도록
   const navigate = useCallback(
     ((to: any, options?: any): void => {
-      startTransition(() => {
-        rawNavigate(to, options);
-      });
+      rawNavigate(to, options);
     }) as NavigateFunction,
     [ rawNavigate ],
   );

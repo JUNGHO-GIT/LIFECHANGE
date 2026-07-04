@@ -371,7 +371,7 @@ export const SleepRecordDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${item.sleep_record_bedTime}-${item.sleep_record_wakeTime}-${item.sleep_record_sleepTime}`}
+            key={`detail-${i}`}
             className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}

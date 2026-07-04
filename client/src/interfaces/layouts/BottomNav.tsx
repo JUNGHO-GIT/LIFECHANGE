@@ -153,7 +153,7 @@ export const BottomNav = memo(() => {
 
     // 7-2. return
     return (
-      <Paper className={`layout-wrapper p-sticky bottom-0vh radius-2 border-light-1 shadow-1`}>
+      <Paper className={`layout-wrapper p-sticky bottom-0vh h-8vh radius-2 border-1 shadow-1`}>
         {tabsSection()}
       </Paper>
     );

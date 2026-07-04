@@ -149,6 +149,11 @@
   min-width: 0px !important;
   min-height: 0px !important;
 }
+.MuiInputBase-root .MuiIconButton-root {
+  min-width: 0px !important;
+  min-height: 0px !important;
+  padding: 3px !important;
+}
 
 /** skeleton **/
 .MuiSkeleton-root {
@@ -161,6 +166,25 @@
 /** input **/
 .MuiInputBase-input.MuiOutlinedInput-input {
   text-overflow: clip !important;
+}
+.MuiInputBase-input.MuiOutlinedInput-input:not(.MuiSelect-select) {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+.MuiOutlinedInput-root.MuiInputBase-adornedStart {
+  padding-left: 6px !important;
+}
+.MuiOutlinedInput-root.MuiInputBase-adornedEnd {
+  padding-right: 6px !important;
+}
+.MuiSelect-select.MuiOutlinedInput-input {
+  padding-left: 8px !important;
+  padding-right: 28px !important;
+}
+.MuiInputBase-root .MuiIconButton-root img,
+.MuiInputBase-root .MuiIconButton-root svg {
+  width: 18px !important;
+  height: 18px !important;
 }
 .MuiInputBase-input.MuiOutlinedInput-input.Mui-disabled {
   opacity: 1;

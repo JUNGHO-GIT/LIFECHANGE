@@ -170,7 +170,7 @@ export const UserDetail = memo(() => {
                   inputRef={REFS?.[i]?.user_initScale}
                   error={ERRORS?.[i]?.user_initScale}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.scale }}>
                       {`●`}
                     </Div>
                   )}
@@ -199,7 +199,7 @@ export const UserDetail = memo(() => {
                   label={translate(`curScale`)}
                   value={insertComma(item.user_curScale ?? `0`)}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.scale }}>
                       {`●`}
                     </Div>
                   )}
@@ -221,7 +221,7 @@ export const UserDetail = memo(() => {
                   inputRef={REFS?.[i]?.user_initAvgKcalIntake}
                   error={ERRORS?.[i]?.user_initAvgKcalIntake}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.kcal }}>
                       {`●`}
                     </Div>
                   )}
@@ -250,7 +250,7 @@ export const UserDetail = memo(() => {
                   label={translate(`curAvgKcalIntake`)}
                   value={insertComma(item.user_curAvgKcalIntake ?? `0`)}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.kcal }}>
                       {`●`}
                     </Div>
                   )}
@@ -272,7 +272,7 @@ export const UserDetail = memo(() => {
                   inputRef={REFS?.[i]?.user_initProperty}
                   error={ERRORS?.[i]?.user_initProperty}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.income }}>
                       {`●`}
                     </Div>
                   )}
@@ -307,7 +307,7 @@ export const UserDetail = memo(() => {
 										)
                   }
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.income }}>
                       {`●`}
                     </Div>
                   )}

@@ -9,7 +9,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 // 1. config ---------------------------------------------------------------------------------------
 export default defineConfig({
-  testDir: `./.playwright/e2e`,
+  testDir: `./.playwright`,
   fullyParallel: true,
   retries: 0,
   workers: 4,
@@ -17,7 +17,6 @@ export default defineConfig({
   reporter: [[`list`]],
   use: {
     baseURL: `http://localhost:3000`,
-    channel: `chrome`,
     locale: `ko-KR`,
     trace: `retain-on-failure`,
     screenshot: `only-on-failure`,

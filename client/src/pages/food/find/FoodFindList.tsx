@@ -179,7 +179,7 @@ export const FoodFindList = memo(() => {
         {deferredObject?.map((item, i) => (
           <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`} key={item.food_record_key}>
             <Grid size={12} className={`p-2px`}>
-              <Accordion className={`radius-2 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded}>
+              <Accordion className={`radius-2 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
                 <AccordionSummary
                   expandIcon={(
                     <Icons

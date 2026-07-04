@@ -154,6 +154,79 @@ const UserCategory = lazy(() => import("@pages/user/UserCategory").then((m) => (
   default: m.UserCategory
 })));
 
+type RouteLoader = () => Promise<unknown>;
+
+const routeLoaders: RouteLoader[] = [
+  () => import("@pages/calendar/CalendarList"),
+  () => import("@pages/exercise/record/ExerciseRecordList"),
+  () => import("@pages/food/record/FoodRecordList"),
+  () => import("@pages/money/record/MoneyRecordList"),
+  () => import("@pages/sleep/record/SleepRecordList"),
+  () => import("@pages/calendar/CalendarDetail"),
+  () => import("@pages/exercise/goal/ExerciseGoalList"),
+  () => import("@pages/exercise/goal/ExerciseGoalDetail"),
+  () => import("@pages/exercise/record/ExerciseRecordDetail"),
+  () => import("@pages/food/goal/FoodGoalList"),
+  () => import("@pages/food/goal/FoodGoalDetail"),
+  () => import("@pages/food/find/FoodFindList"),
+  () => import("@pages/food/find/FoodFavoriteList"),
+  () => import("@pages/food/record/FoodRecordDetail"),
+  () => import("@pages/money/goal/MoneyGoalList"),
+  () => import("@pages/money/goal/MoneyGoalDetail"),
+  () => import("@pages/money/record/MoneyRecordDetail"),
+  () => import("@pages/sleep/goal/SleepGoalList"),
+  () => import("@pages/sleep/goal/SleepGoalDetail"),
+  () => import("@pages/sleep/record/SleepRecordDetail"),
+  () => import("@pages/exercise/chart/ExerciseChart"),
+  () => import("@pages/food/chart/FoodChart"),
+  () => import("@pages/money/chart/MoneyChart"),
+  () => import("@pages/sleep/chart/SleepChart"),
+  () => import("@pages/user/UserAppSetting"),
+  () => import("@pages/user/UserAppInfo"),
+  () => import("@pages/user/UserSignup"),
+  () => import("@pages/user/UserLogin"),
+  () => import("@pages/user/UserResetPw"),
+  () => import("@pages/user/UserDetail"),
+  () => import("@pages/user/UserDelete"),
+  () => import("@pages/user/UserCategory"),
+  () => import("@pages/admin/AdminDashboard"),
+  () => import("@pages/auth/AuthError"),
+  () => import("@pages/auth/AuthGoogle"),
+  () => import("@pages/auth/AuthPrivacy"),
+];
+
+const preloadRouteModules = (): (() => void) => {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  let cancelled: boolean = false;
+  const loadNext = (index: number): void => {
+    if (cancelled || index >= routeLoaders.length) {
+      return;
+    }
+    const loadRoute = routeLoaders[index];
+    if (!loadRoute) {
+      return;
+    }
+    void loadRoute()
+    .catch(() => undefined)
+    .finally(() => {
+      timer = setTimeout(() => {
+        loadNext(index + 1);
+      }, 35);
+    });
+  };
+
+  timer = setTimeout(() => {
+    loadNext(0);
+  }, 450);
+
+  return () => {
+    cancelled = true;
+    if (timer) {
+      clearTimeout(timer);
+    }
+  };
+};
+
 // 앱 실행 스플래시 ------------------------------------------------------------------------------
 const SplashScreen = memo(() => {
   const [visible, setVisible] = useState<boolean>(true);
@@ -191,13 +264,17 @@ const SplashScreen = memo(() => {
 
 // 앱 라우트 ----------------------------------------------------------------------------------
 const App = memo(() => {
-  const { PATH } = useCommonValue();
+  const { PATH, navigate, sessionId } = useCommonValue();
 
-  useRoot();
-  useScrollTop();
-  useFoodSection();
+  useRoot(PATH, navigate, sessionId);
+  useScrollTop(PATH);
+  useFoodSection(PATH);
   useLanguageInitialize();
   useLanguageSetting();
+
+  useEffect(() => {
+    return preloadRouteModules();
+  }, []);
 
   const noneHeader: boolean =
     !PATH.includes(`/user/login`) &&

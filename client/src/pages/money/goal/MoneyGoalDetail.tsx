@@ -334,7 +334,7 @@ export const MoneyGoalDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${item._id || item.money_goal_dateStart || item.money_goal_number}`}
+            key={`detail-${item._id || i}`}
             className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}
@@ -368,7 +368,7 @@ export const MoneyGoalDetail = memo(() => {
 										`${translate(`goalIncome`)} (${translate(`total`)})`
 									)}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.income }}>
                       {`●`}
                     </Div>
                   )}
@@ -405,7 +405,7 @@ export const MoneyGoalDetail = memo(() => {
 										)
                   }
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.expense }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.expense }}>
                       {`●`}
                     </Div>
                   )}

@@ -120,6 +120,8 @@
 .sleep-record-legend div,
 .sleep-goal-legend div {
   font-size: max(0.76rem, 12px) !important;
+  white-space: nowrap;
+  word-break: keep-all;
 }
 .time-picker-popup {
   max-width: min(82vw, 380px);

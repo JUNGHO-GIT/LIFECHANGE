@@ -420,7 +420,7 @@ export const ExerciseRecordDetail = memo(() => {
               label={translate(`totalVolume`)}
               value={insertComma(OBJECT?.exercise_record_total_volume ?? `0`)}
               startadornment={(
-                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.volume }}>
                   {`●`}
                 </Div>
               )}
@@ -440,7 +440,7 @@ export const ExerciseRecordDetail = memo(() => {
               label={translate(`totalCardio`)}
               value={OBJECT?.exercise_record_total_cardio}
               startadornment={(
-                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.cardio }}>
+                <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.cardio }}>
                   {`●`}
                 </Div>
               )}
@@ -458,7 +458,7 @@ export const ExerciseRecordDetail = memo(() => {
               label={translate(`scale`)}
               value={insertComma(OBJECT?.exercise_record_total_scale ?? `0`)}
               startadornment={(
-                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.scale }}>
                   {`●`}
                 </Div>
               )}
@@ -487,7 +487,7 @@ export const ExerciseRecordDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${item.exercise_record_part}-${item.exercise_record_title}-${item.exercise_record_set}-${item.exercise_record_rep}-${item.exercise_record_weight}-${item.exercise_record_cardio}`}
+            key={`detail-${i}`}
             className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}
@@ -590,7 +590,7 @@ export const ExerciseRecordDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_set}
                   error={ERRORS?.[i]?.exercise_record_set}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.volume }}>
                       {`●`}
                     </Div>
                   )}
@@ -622,7 +622,7 @@ export const ExerciseRecordDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_rep}
                   error={ERRORS?.[i]?.exercise_record_rep}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.volume }}>
                       {`●`}
                     </Div>
                   )}
@@ -658,7 +658,7 @@ export const ExerciseRecordDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_record_weight}
                   error={ERRORS?.[i]?.exercise_record_weight}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.volume }}>
                       {`●`}
                     </Div>
                   )}

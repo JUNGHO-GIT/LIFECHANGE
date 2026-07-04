@@ -1,7 +1,7 @@
 {
   "name": "lifechange-client",
   "homepage": "/lifechange",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "type": "module",
   "main": "index.tsx",
   "license": "Apache-2.0",

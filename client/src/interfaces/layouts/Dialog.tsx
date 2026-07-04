@@ -38,6 +38,12 @@ export const Dialog = memo((
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ open, setOpen ] = useState(false);
+  const speedDialStyle: React.CSSProperties = {
+    position: `fixed`,
+    right: `6vw`,
+    bottom: `18vh`,
+    zIndex: 600,
+  };
 
   // 4. handle ------------------------------------------------------------------------------------
   const handleSetAllExpanded = (expanded: boolean) => {
@@ -74,7 +80,7 @@ export const Dialog = memo((
           ariaLabel={`speedDial`}
           direction={`up`}
           open={open}
-          style={{ zIndex: 600 }}
+          style={speedDialStyle}
           className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
@@ -155,7 +161,7 @@ export const Dialog = memo((
           ariaLabel={`speedDial`}
           direction={`up`}
           open={open}
-          style={{ zIndex: 600 }}
+          style={speedDialStyle}
           className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
@@ -236,6 +242,7 @@ export const Dialog = memo((
           ariaLabel={`speedDial`}
           direction={`up`}
           open={open}
+          style={speedDialStyle}
           className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
@@ -360,7 +367,7 @@ export const Dialog = memo((
           ariaLabel={`speedDial`}
           direction={`up`}
           open={open}
-          style={{ zIndex: 600 }}
+          style={speedDialStyle}
           className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />
@@ -452,7 +459,7 @@ export const Dialog = memo((
           ariaLabel={`speedDial`}
           direction={`up`}
           open={open}
-          style={{ zIndex: 600 }}
+          style={speedDialStyle}
           className={`p-fixed right-6vw ml-5px z-600`}
           icon={
             <SpeedDialIcon />

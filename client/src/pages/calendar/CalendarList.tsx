@@ -285,7 +285,7 @@ export const CalendarList = memo(() => {
                 <Div
                   key={`exercise-${item._id}`}
                   className={`calendar-filled`}
-                  style={{ backgroundColor: `#0876b9` }}
+                  style={{ backgroundColor: `#1976d2` }}
                 >
                   <span className={`calendar-category`}>
                     {translate(`exercise`)}

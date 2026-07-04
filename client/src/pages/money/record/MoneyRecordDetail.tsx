@@ -413,7 +413,7 @@ export const MoneyRecordDetail = memo(() => {
               label={translate(`totalIncome`)}
               value={insertComma(OBJECT?.money_record_total_income ?? `0`)}
               startadornment={(
-                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
+                <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.income }}>
                   {`●`}
                 </Div>
               )}
@@ -433,7 +433,7 @@ export const MoneyRecordDetail = memo(() => {
               label={translate(`totalExpense`)}
               value={insertComma(OBJECT?.money_record_total_expense ?? `0`)}
               startadornment={(
-                <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.expense }}>
+                <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.expense }}>
                   {`●`}
                 </Div>
               )}
@@ -447,256 +447,254 @@ export const MoneyRecordDetail = memo(() => {
     );
     // 7-3. detail
     const detailSection = () => (
-      <>
-        {deferredObject.money_section?.map((item, i) => {
-          // money_record_title을 위한 현재 part의 데이터를 찾기
-          const currentPartData: any = moneyArray.find((f: any) => f.money_record_part === item?.money_record_part);
-          const partIndex: number = moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part);
+      deferredObject.money_section?.map((item, i) => {
+        // money_record_title을 위한 현재 part의 데이터를 찾기
+        const currentPartData: any = moneyArray.find((f: any) => f.money_record_part === item?.money_record_part);
+        const partIndex: number = moneyArray.findIndex((f: any) => f.money_record_part === item?.money_record_part);
 
-          return (
-            <Grid
-              container={true}
-              spacing={2}
-              key={`detail-${item.money_record_part}-${item.money_record_title}-${item.money_record_amount}-${item.money_record_content}-${item.money_record_include}-${item.money_record_scheduled_date}`}
-              className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
-            >
-              {/** row 1 * */}
-              <Grid container={true} spacing={1}>
-                <Grid size={6} className={`d-row-left`}>
-                  <Bg
-                    badgeContent={i + 1}
-                    bgcolor={bgColors?.[partIndex]}
-                  />
-                </Grid>
-                <Grid size={6} className={`d-row-right`}>
-                  <Delete
-                    index={i}
-                    handleDelete={handleDelete}
-                    LOCKED={LOCKED}
-                  />
-                </Grid>
+        return (
+          <Grid
+            container={true}
+            spacing={2}
+            key={`detail-${i}`}
+            className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
+          >
+            {/** row 1 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={6} className={`d-row-left`}>
+                <Bg
+                  badgeContent={i + 1}
+                  bgcolor={bgColors?.[partIndex]}
+                />
               </Grid>
+              <Grid size={6} className={`d-row-right`}>
+                <Delete
+                  index={i}
+                  handleDelete={handleDelete}
+                  LOCKED={LOCKED}
+                />
+              </Grid>
+            </Grid>
 
-              {/** row 2 * */}
-              <Grid container={true} spacing={1}>
-                <Grid size={6}>
-                  <Select
-                    locked={LOCKED}
-                    label={translate(`part`)}
-                    value={item?.money_record_part ?? ``}
-                    inputRef={REFS?.[i]?.money_record_part}
-                    error={ERRORS?.[i]?.money_record_part}
+            {/** row 2 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={6}>
+                <Select
+                  locked={LOCKED}
+                  label={translate(`part`)}
+                  value={item?.money_record_part ?? ``}
+                  inputRef={REFS?.[i]?.money_record_part}
+                  error={ERRORS?.[i]?.money_record_part}
+                  onChange={(e: any) => {
+                    const value: string = String(e.target.value ?? ``);
+                    const targetPartData = moneyArray.find((f: any) => f.money_record_part === value);
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        money_record_part: value,
+                        money_record_title: targetPartData?.money_record_title?.[0] ?? ``,
+                      } : section
+                      )),
+                    }));
+                  }}
+                >
+                  {moneyArray.map((part: any, idx: number) => (
+                    <MenuItem
+                      key={part.money_record_part}
+                      value={part.money_record_part}
+                      className={`fs-0-8rem`}
+                    >
+                      {translate(part.money_record_part as string)}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid size={6}>
+                <Select
+                  locked={LOCKED}
+                  label={translate(`title`)}
+                  value={item?.money_record_title ?? ``}
+                  inputRef={REFS?.[i]?.money_record_title}
+                  error={ERRORS?.[i]?.money_record_title}
+                  onChange={(e: any) => {
+                    const value: string = String(e.target.value ?? ``);
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((section: any, idx: number) => (
+                        idx === i ? {
+                          ...section,
+                          money_record_title: value,
+                        } : section
+                      )),
+                    }));
+                  }}
+                >
+                  {(currentPartData?.money_record_title ?? []).map((title: any, idx: number) => (
+                    <MenuItem
+                      key={title}
+                      value={title}
+                      className={`fs-0-8rem`}
+                    >
+                      {translate(title as string)}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+            </Grid>
+
+            {/** row 3 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={12}>
+                <Input
+                  locked={LOCKED}
+                  label={translate(`amount`)}
+                  value={insertComma(item?.money_record_amount ?? `0`)}
+                  inputRef={REFS?.[i]?.money_record_amount}
+                  error={ERRORS?.[i]?.money_record_amount}
+                  startadornment={(
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: bgColors?.[partIndex] ?? chartThemeColors.expense }}>
+                      {`●`}
+                    </Div>
+                  )}
+                  endadornment={
+                    localCurrency
+                  }
+                  onChange={(e: any) => {
+                    const processedValue: string | null = handleNumberInput(e.target?.value, 999_999_999);
+                    if (processedValue === null) {
+                    return;
+                  }
+                    const value: string = processedValue ?? `0`;
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((section: any, idx: number) => (
+                        idx === i ? {
+                          ...section,
+                          money_record_amount: value,
+                        } : section
+                      )),
+                    }));
+                  }}
+                />
+              </Grid>
+            </Grid>
+
+            {/** row 4 * */}
+            <Grid container={true} spacing={1}>
+              <Grid size={{ xs: 7, sm: 8 }} className={`d-center`}>
+                <Memo
+                  OBJECT={OBJECT}
+                  setOBJECT={setOBJECT}
+                  LOCKED={LOCKED}
+                  extra={`money_record_content`}
+                  i={i}
+                />
+              </Grid>
+              <Grid size={{ xs: 5, sm: 4 }} className={`d-center`}>
+                <Div className={`fs-0-7rem fw-500 dark ml-10px`}>
+                  {translate(`includeProperty`)}
+                </Div>
+                <Checkbox
+                  size={`small`}
+                  className={`p-0px ml-5px`}
+                  checked={item?.money_record_include === `Y`}
+                  disabled={LOCKED === `locked`}
+                  onChange={(e: any) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((section: any, idx: number) => (
+                        idx === i ? {
+                          ...section,
+                          money_record_include: e.target.checked ? `Y` : `N`,
+                        } : section
+                      )),
+                    }));
+                  }}
+                />
+              </Grid>
+            </Grid>
+
+            {/** row 5 * */}
+            {/* <Grid container={true} spacing={1}>
+              <Grid size={{ xs: 5, sm: 4 }} className={`d-center`}>
+                <Div className={`fs-0-7rem fw-500 dark`}>
+                  {translate(`scheduledExpense`)}
+                </Div>
+                <Checkbox
+                  size={`small`}
+                  className={`p-0px ml-5px`}
+                  checked={item?.money_record_scheduled === `Y`}
+                  disabled={LOCKED === `locked`}
+                  onChange={(e: any) => {
+                    setOBJECT((prev) => ({
+                      ...prev,
+                      money_section: prev.money_section?.map((section: any, idx: number) => (
+                      idx === i ? {
+                        ...section,
+                        money_record_scheduled: e.target.checked ? `Y` : `N`,
+                      } : section
+                      )),
+                    }));
+                  }}
+                />
+              </Grid>
+              {item?.money_record_scheduled === `Y` && (
+                <Grid size={{ xs: 7, sm: 8 }} className={`d-center`}>
+                  <Div className={`fs-0-7rem fw-500 dark`}>
+                    {translate(`scheduledDone`)}
+                  </Div>
+                  <Checkbox
+                    size={`small`}
+                    className={`p-0px ml-5px`}
+                    checked={item?.money_record_scheduled_done === `Y`}
+                    disabled={LOCKED === `locked`}
                     onChange={(e: any) => {
-                      const value: string = String(e.target.value ?? ``);
-                      const targetPartData = moneyArray.find((f: any) => f.money_record_part === value);
                       setOBJECT((prev) => ({
                         ...prev,
                         money_section: prev.money_section?.map((section: any, idx: number) => (
-												idx === i ? {
-												  ...section,
-												  money_record_part: value,
-												  money_record_title: targetPartData?.money_record_title?.[0] ?? ``,
-												} : section
+                        idx === i ? {
+                          ...section,
+                          money_record_scheduled_done: e.target.checked ? `Y` : `N`,
+                        } : section
                         )),
                       }));
                     }}
-                  >
-                    {moneyArray.map((part: any, idx: number) => (
-                      <MenuItem
-                        key={part.money_record_part}
-                        value={part.money_record_part}
-                        className={`fs-0-8rem`}
-                      >
-                        {translate(part.money_record_part as string)}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  />
                 </Grid>
-                <Grid size={6}>
-                  <Select
-                    locked={LOCKED}
-                    label={translate(`title`)}
-                    value={item?.money_record_title ?? ``}
-                    inputRef={REFS?.[i]?.money_record_title}
-                    error={ERRORS?.[i]?.money_record_title}
-                    onChange={(e: any) => {
-                      const value: string = String(e.target.value ?? ``);
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        money_section: prev.money_section?.map((section: any, idx: number) => (
-                          idx === i ? {
-                            ...section,
-                            money_record_title: value,
-                          } : section
-                        )),
-                      }));
-                    }}
-                  >
-                    {(currentPartData?.money_record_title ?? []).map((title: any, idx: number) => (
-                      <MenuItem
-                        key={title}
-                        value={title}
-                        className={`fs-0-8rem`}
-                      >
-                        {translate(title as string)}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </Grid>
-              </Grid>
+              )}
+            </Grid> */}
 
-              {/** row 3 * */}
+            {/** row 6 * */}
+            {/* {item?.money_record_scheduled === `Y` && (
               <Grid container={true} spacing={1}>
                 <Grid size={12}>
                   <Input
                     locked={LOCKED}
-                    label={translate(`amount`)}
-                    value={insertComma(item?.money_record_amount ?? `0`)}
-                    inputRef={REFS?.[i]?.money_record_amount}
-                    error={ERRORS?.[i]?.money_record_amount}
-                    startadornment={(
-                      <Div className={`fs-0-6rem`} style={{ color: bgColors?.[partIndex] ?? chartThemeColors.expense }}>
-                        {`●`}
-                      </Div>
-                    )}
-                    endadornment={
-                      localCurrency
-                    }
+                    type={`date`}
+                    shrink={`shrink`}
+                    label={translate(`scheduledDate`)}
+                    value={item?.money_record_scheduled_date ?? ``}
                     onChange={(e: any) => {
-                      const processedValue: string | null = handleNumberInput(e.target?.value, 999_999_999);
-                      if (processedValue === null) {
-                      return;
-                    }
-                      const value: string = processedValue ?? `0`;
+                      const value: string = String(e.target.value ?? ``);
                       setOBJECT((prev) => ({
                         ...prev,
                         money_section: prev.money_section?.map((section: any, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  money_record_amount: value,
-													} : section
+                        idx === i ? {
+                          ...section,
+                          money_record_scheduled_date: value,
+                        } : section
                         )),
                       }));
                     }}
                   />
                 </Grid>
               </Grid>
-
-              {/** row 4 * */}
-              <Grid container={true} spacing={1}>
-                <Grid size={{ xs: 7, sm: 8 }} className={`d-center`}>
-                  <Memo
-                    OBJECT={OBJECT}
-                    setOBJECT={setOBJECT}
-                    LOCKED={LOCKED}
-                    extra={`money_record_content`}
-                    i={i}
-                  />
-                </Grid>
-                <Grid size={{ xs: 5, sm: 4 }} className={`d-center`}>
-                  <Div className={`fs-0-7rem fw-500 dark ml-10px`}>
-                    {translate(`includeProperty`)}
-                  </Div>
-                  <Checkbox
-                    size={`small`}
-                    className={`p-0px ml-5px`}
-                    checked={item?.money_record_include === `Y`}
-                    disabled={LOCKED === `locked`}
-                    onChange={(e: any) => {
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        money_section: prev.money_section?.map((section: any, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  money_record_include: e.target.checked ? `Y` : `N`,
-													} : section
-                        )),
-                      }));
-                    }}
-                  />
-                </Grid>
-              </Grid>
-
-              {/** row 5 * */}
-              <Grid container={true} spacing={1}>
-                <Grid size={{ xs: 5, sm: 4 }} className={`d-center`}>
-                  <Div className={`fs-0-7rem fw-500 dark`}>
-                    {translate(`scheduledExpense`)}
-                  </Div>
-                  <Checkbox
-                    size={`small`}
-                    className={`p-0px ml-5px`}
-                    checked={item?.money_record_scheduled === `Y`}
-                    disabled={LOCKED === `locked`}
-                    onChange={(e: any) => {
-                      setOBJECT((prev) => ({
-                        ...prev,
-                        money_section: prev.money_section?.map((section: any, idx: number) => (
-												idx === i ? {
-												  ...section,
-												  money_record_scheduled: e.target.checked ? `Y` : `N`,
-												} : section
-                        )),
-                      }));
-                    }}
-                  />
-                </Grid>
-                {item?.money_record_scheduled === `Y` && (
-                  <Grid size={{ xs: 7, sm: 8 }} className={`d-center`}>
-                    <Div className={`fs-0-7rem fw-500 dark`}>
-                      {translate(`scheduledDone`)}
-                    </Div>
-                    <Checkbox
-                      size={`small`}
-                      className={`p-0px ml-5px`}
-                      checked={item?.money_record_scheduled_done === `Y`}
-                      disabled={LOCKED === `locked`}
-                      onChange={(e: any) => {
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          money_section: prev.money_section?.map((section: any, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  money_record_scheduled_done: e.target.checked ? `Y` : `N`,
-													} : section
-                          )),
-                        }));
-                      }}
-                    />
-                  </Grid>
-                )}
-              </Grid>
-
-              {/** row 6 * */}
-              {item?.money_record_scheduled === `Y` && (
-                <Grid container={true} spacing={1}>
-                  <Grid size={12}>
-                    <Input
-                      locked={LOCKED}
-                      type={`date`}
-                      shrink={`shrink`}
-                      label={translate(`scheduledDate`)}
-                      value={item?.money_record_scheduled_date ?? ``}
-                      onChange={(e: any) => {
-                        const value: string = String(e.target.value ?? ``);
-                        setOBJECT((prev) => ({
-                          ...prev,
-                          money_section: prev.money_section?.map((section: any, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  money_record_scheduled_date: value,
-													} : section
-                          )),
-                        }));
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              )}
-            </Grid>
-          );
-        })}
-      </>
+            )} */}
+          </Grid>
+        );
+      })
     );
     // 7-10. return
     return (

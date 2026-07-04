@@ -110,24 +110,20 @@ export const Count = memo((
   const countEndAdornment = useMemo(() => (
 		!disabled || LOCKED === `unlocked` ? (
 			<Div className={`d-row-center`}>
-			  <Div className={`mr-n5px`}>
-			    <Icons
-			      key={`Minus`}
-			      name={`Minus`}
-			      className={`w-20px h-20px`}
-			      locked={LOCKED}
-			      onClick={handleMinus}
-			    />
-			  </Div>
-			  <Div className={`mr-n10px`}>
-			    <Icons
-			      key={`Plus`}
-			      name={`Plus`}
-			      className={`w-20px h-20px`}
-			      locked={LOCKED}
-			      onClick={handlePlus}
-			    />
-			  </Div>
+        <Icons
+          key={`Minus`}
+          name={`Minus`}
+          className={`w-20px h-20px`}
+          locked={LOCKED}
+          onClick={handleMinus}
+        />
+        <Icons
+          key={`Plus`}
+          name={`Plus`}
+          className={`w-20px h-20px`}
+          locked={LOCKED}
+          onClick={handlePlus}
+        />
 			</Div>
 		) : null
   ), [ disabled, LOCKED, handleMinus, handlePlus ]);
@@ -140,7 +136,6 @@ export const Count = memo((
         label={translate(`itemLock`)}
         value={translate(LOCKED) ?? ``}
         inputclass={`fs-0-8rem pointer`}
-        adornmentclass={`ml-n10px`}
         disabled={disabled}
         onClick={handleLockToggle}
         startadornment={lockIcon}

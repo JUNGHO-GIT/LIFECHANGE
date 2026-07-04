@@ -75,7 +75,7 @@ export const TextArea = memo((props: any) => {
 						  {props?.startadornment}
 						</div>
 					) : (
-						<div className={`d-center ${props?.adornmentclass ?? ``} mr-2vw`}>
+						<div className={`d-center ${props?.adornmentclass ?? ``}`}>
 						  {props?.startadornment}
 						</div>
 					)
@@ -88,7 +88,7 @@ export const TextArea = memo((props: any) => {
 						  {props?.endadornment}
 						</div>
 					) : (
-						<div className={`d-center ${props?.adornmentclass ?? ``} ml-2vw`}>
+						<div className={`d-center ${props?.adornmentclass ?? ``}`}>
 						  {props?.endadornment}
 						</div>
 					)

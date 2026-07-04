@@ -338,7 +338,7 @@ export const ExerciseGoalDetail = memo(() => {
           <Grid
             container={true}
             spacing={2}
-            key={`detail-${item._id || item.exercise_goal_dateStart || item.exercise_goal_number}`}
+            key={`detail-${item._id || i}`}
             className={`${LOCKED === `locked` ? `locked` : ``} radius-3 border-light-1 shadow-1 p-20px`}
           >
             {/** row 1 * */}
@@ -374,7 +374,7 @@ export const ExerciseGoalDetail = memo(() => {
 									)
                   }
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartColors[5] }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartColors[5] }}>
                       {`●`}
                     </Div>
                   )}
@@ -411,7 +411,7 @@ export const ExerciseGoalDetail = memo(() => {
 									)
                   }
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.volume }}>
                       {`●`}
                     </Div>
                   )}
@@ -459,7 +459,7 @@ export const ExerciseGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_goal_scale}
                   error={ERRORS?.[i]?.exercise_goal_scale}
                   startadornment={(
-                    <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.scale }}>
                       {`●`}
                     </Div>
                   )}

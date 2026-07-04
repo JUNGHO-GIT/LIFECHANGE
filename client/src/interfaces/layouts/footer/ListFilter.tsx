@@ -237,7 +237,7 @@ export const ListFilter = memo((
         <Div className={`d-center my-1vh mx-5px`} style={{ flexShrink: 0 }}>
           {sortSection}
         </Div>
-        <Div className={`d-center my-1vh mx-5px w-max-60vw`} style={{ flexShrink: 0 }}>
+        <Div className={`d-center my-1vh mx-5px w-max-80vw`} style={{ flexShrink: 0, width: `clamp(224px, calc(100vw - 136px), 272px)` }}>
           {dateSection}
         </Div>
         {(isExerciseGoalList || isExerciseRecordList) ? (

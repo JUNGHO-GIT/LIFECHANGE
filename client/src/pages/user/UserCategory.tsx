@@ -22,7 +22,7 @@ export const UserCategory = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
   const {
-    URL_OBJECT, PATH, sessionId,
+    URL_OBJECT, PATH, sessionId, navigate,
     location_dateStart, location_dateEnd, location_dateType,
   } = useCommonValue();
   const { getDayFmt } = useCommonDate();
@@ -116,6 +116,7 @@ export const UserCategory = memo(() => {
           msg: translate(res.data.msg as string),
           severity: `success`,
         });
+        void navigate(`/user/appSetting`);
         void sync(`category`);
       }
       else {
