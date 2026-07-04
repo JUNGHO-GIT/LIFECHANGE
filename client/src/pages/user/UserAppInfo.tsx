@@ -17,6 +17,8 @@ export const UserAppInfo = memo(() => {
   // 1. common -------------------------------------------------------------------------------------
   const {
     TITLE,
+    VERSION,
+    MODE,
     localTimeZone,
     localLang,
     localIsoCode,
@@ -49,6 +51,22 @@ export const UserAppInfo = memo(() => {
                       </TableCell>
                       <TableCell className={`w-65vw fs-0-7rem p-15px`}>
                         {TITLE}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className={`w-30vw fs-0-9rem p-15px`}>
+                        {`version`}
+                      </TableCell>
+                      <TableCell className={`w-65vw fs-0-7rem p-15px`}>
+                        {VERSION}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className={`w-30vw fs-0-9rem p-15px`}>
+                        {`environment`}
+                      </TableCell>
+                      <TableCell className={`w-65vw fs-0-7rem p-15px`}>
+                        {MODE}
                       </TableCell>
                     </TableRow>
                     <TableRow>

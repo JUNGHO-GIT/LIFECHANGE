@@ -290,6 +290,8 @@ export const useCommonValue = (): CommonValueType => {
     toCalendarDetail: `/calendar/detail`,
     // Environment Variables
     TITLE: TITLE,
+    VERSION: env.VITE_APP_VERSION ?? ``,
+    MODE: env.MODE ?? ``,
     URL: env.VITE_APP_SERVER_URL ?? ``,
     GCLOUD_URL: env.VITE_APP_GCLOUD_URL ?? ``,
     // API Suffixes

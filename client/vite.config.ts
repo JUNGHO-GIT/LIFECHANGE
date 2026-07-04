@@ -16,6 +16,9 @@ export default defineConfig(({ command, mode }) => {
   // 1-1. init
   const dirName: string = import.meta.dirname;
   const rootDir: string = path.resolve(dirName);
+  const pkgPath: string = path.join(rootDir, `package.json`);
+  const pkgVersion: string = fs.existsSync(pkgPath) ? (JSON.parse(fs.readFileSync(pkgPath, { encoding: `utf8` }))?.version ?? ``) : ``;
+  process.env.VITE_APP_VERSION = pkgVersion;
   const envMode: string = mode === `production` ? `production` : `development`;
   const isProd: boolean = envMode === `production`;
   const isDev: boolean = !isProd;

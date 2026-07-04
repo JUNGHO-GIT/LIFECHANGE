@@ -68,6 +68,7 @@ export interface LocationStateType {
 // 환경변수 -----------------------------------------------------------------------------------------
 export interface EnvType {
   VITE_APP_TITLE?: string;
+  VITE_APP_VERSION?: string;
   VITE_APP_SERVER_URL?: string;
   VITE_APP_GCLOUD_URL?: string;
   VITE_APP_TODAY?: string;
@@ -79,6 +80,7 @@ export interface EnvType {
   VITE_APP_FOOD?: string;
   VITE_APP_MONEY?: string;
   VITE_APP_SLEEP?: string;
+  MODE?: string;
   [key: `VITE_APP_${string}`]: string | undefined;
 }
 
@@ -423,6 +425,8 @@ export interface CommonValueType {
   toCalendarDetail: string;
 
   TITLE: string;
+  VERSION: string;
+  MODE: string;
   URL: string;
   GCLOUD_URL: string;
 
