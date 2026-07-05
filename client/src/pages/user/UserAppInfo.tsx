@@ -8,7 +8,7 @@
 import { memo } from "@exportReacts";
 import { useCommonValue } from "@exportHooks";
 import { useStoreLanguage } from "@exportStores";
-import { Img, Paper, Grid } from "@exportComponents";
+import { Img, Paper, Grid, Br } from "@exportComponents";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ export const UserAppInfo = memo(() => {
 
   // 7. userAppInfo --------------------------------------------------------------------------------
   const userAppInfoNode = () => (
-    <Paper className={`content-wrapper pt-5vh px-10px pb-10vh`}>
+    <Paper className={`content-wrapper radius-2 pt-5vh px-10px pb-10vh h-min-90vh`}>
       <Grid container={true} spacing={2}>
         <Grid size={12} className={`d-center`}>
           <Img
@@ -39,8 +39,9 @@ export const UserAppInfo = memo(() => {
             className={`w-240px h-200px`}
           />
         </Grid>
-        <Grid size={12}>
-          <Grid container={true} spacing={2} className={`radius-2 border-light-1 shadow-0`}>
+        <Br m={50} />
+        <Grid size={12} className={`d-center`}>
+          <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-0`}>
             <Grid size={12} className={`d-center`}>
               <TableContainer className={`over-hidden`}>
                 <Table>
