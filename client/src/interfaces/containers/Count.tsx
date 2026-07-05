@@ -95,12 +95,14 @@ export const Count = memo((
 			<Icons
 			  key={`Lock`}
 			  name={`Lock`}
+			  isIconButton={false}
 			  className={`w-20px h-20px`}
 			/>
 		) : (
 			<Icons
 			  key={`UnLock`}
 			  name={`UnLock`}
+			  isIconButton={false}
 			  className={`w-20px h-20px`}
 			/>
 		)
@@ -113,6 +115,7 @@ export const Count = memo((
         <Icons
           key={`Minus`}
           name={`Minus`}
+          isIconButton={true}
           className={`w-20px h-20px`}
           locked={LOCKED}
           onClick={handleMinus}
@@ -120,6 +123,7 @@ export const Count = memo((
         <Icons
           key={`Plus`}
           name={`Plus`}
+          isIconButton={true}
           className={`w-20px h-20px`}
           locked={LOCKED}
           onClick={handlePlus}

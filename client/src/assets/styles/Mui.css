@@ -33,6 +33,7 @@
 .MuiTableCell-root {
   padding: 5px 5px 5px 5px;
   z-index: 10;
+  border-bottom: 1px solid #f1f5f8 !important;
 }
 
 
@@ -242,5 +243,5 @@
   padding: 0px 5px !important;
 }
 .MuiAccordionDetails-root {
-  padding: 8px 5px 16px 5px !important;
+  padding: 5px 10px 15px 10px !important;
 }

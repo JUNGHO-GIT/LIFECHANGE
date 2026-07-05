@@ -4,49 +4,23 @@
  * @author Jungho
  * @since 2026-06-28
  */
- 
-.food-record-summary,
-.food-goal-summary,
-.exercise-record-summary,
-.exercise-goal-summary,
-.money-record-summary,
-.money-goal-summary,
-.sleep-record-summary,
-.sleep-goal-summary {
+
+.summary {
   background: #ffffff !important;
   border-color: #e7eef3 !important;
   box-shadow: 0 6px 22px rgba(8, 118, 185, 0.07) !important;
   row-gap: 14px;
 }
-.food-record-chart,
-.food-goal-chart,
-.exercise-record-chart,
-.exercise-goal-chart,
-.money-record-chart,
-.money-goal-chart,
-.sleep-record-chart,
-.sleep-goal-chart {
+.chart {
   border-radius: 50%;
 }
-.food-record-period,
-.food-goal-period,
-.exercise-record-period,
-.exercise-goal-period,
-.money-goal-period,
-.sleep-goal-period {
+.period {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.food-record-chart-center,
-.food-goal-chart-center,
-.exercise-record-chart-center,
-.exercise-goal-chart-center,
-.money-record-chart-center,
-.money-goal-chart-center,
-.sleep-record-chart-center,
-.sleep-goal-chart-center {
+.chart-center {
   pointer-events: none;
   position: absolute;
   inset: 0;
@@ -56,69 +30,24 @@
   justify-content: center;
   white-space: nowrap;
 }
-.food-record-chart-center > div,
-.food-goal-chart-center > div,
-.exercise-record-chart-center > div,
-.exercise-goal-chart-center > div,
-.money-record-chart-center > div,
-.money-goal-chart-center > div,
-.sleep-record-chart-center > div,
-.sleep-goal-chart-center > div {
+.chart-center > div {
   font-size: 0.68rem !important;
 }
-.food-goal-track,
-.exercise-goal-track,
-.exercise-record-track,
-.money-record-track,
-.money-goal-track,
-.sleep-record-track,
-.sleep-goal-track {
+.track {
   background: #eef3f7 !important;
 }
-.food-record-legend,
-.food-goal-legend,
-.exercise-record-legend,
-.exercise-goal-legend,
-.money-record-legend,
-.money-goal-legend,
-.sleep-record-legend,
-.sleep-goal-legend,
-.food-goal-row,
-.exercise-goal-row,
-.money-goal-row,
-.sleep-goal-row,
-.food-record-stat-card,
-.exercise-record-stat-card,
-.money-record-stat-card,
-.sleep-record-stat-card,
-.exercise-record-metric-card,
-.exercise-record-goal-row,
-.money-record-metric-card,
-.money-record-goal-row,
-.sleep-record-metric-card,
-.sleep-record-goal-row {
+.legend,
+.goal-row,
+.stat-card,
+.metric-card {
   background: #f9fbfc;
   border: 1px solid #edf3f7;
   border-radius: 8px;
 }
-.food-record-legend,
-.food-goal-legend,
-.exercise-record-legend,
-.exercise-goal-legend,
-.money-record-legend,
-.money-goal-legend,
-.sleep-record-legend,
-.sleep-goal-legend {
+.legend {
   padding: 10px;
 }
-.food-record-legend div,
-.food-goal-legend div,
-.exercise-record-legend div,
-.exercise-goal-legend div,
-.money-record-legend div,
-.money-goal-legend div,
-.sleep-record-legend div,
-.sleep-goal-legend div {
+.legend div {
   font-size: max(0.76rem, 12px) !important;
   white-space: nowrap;
   word-break: keep-all;
@@ -129,45 +58,22 @@
   min-width: 240px;
   min-height: 280px;
 }
-.food-goal-bars,
-.exercise-goal-bars,
-.exercise-record-goal-bars,
-.money-record-goal-bars,
-.money-goal-bars,
-.sleep-record-goal-bars,
-.sleep-goal-bars {
+.goal-bars {
   display: grid;
   gap: 10px;
 }
-.food-goal-row,
-.exercise-goal-row,
-.exercise-record-goal-row,
-.money-record-goal-row,
-.money-goal-row,
-.sleep-record-goal-row,
-.sleep-goal-row {
+.goal-row {
   padding: 9px 10px;
 }
-.food-goal-row div,
-.exercise-goal-row div,
-.exercise-record-goal-row div,
-.money-goal-row div,
-.sleep-record-goal-row div,
-.sleep-goal-row div {
+.goal-row div {
   font-size: max(0.72rem, 11.5px) !important;
 }
-.food-record-stat-grid,
-.exercise-record-stat-grid,
-.money-record-stat-grid,
-.sleep-record-stat-grid {
+.stat-grid {
   display: grid !important;
   gap: 10px;
   grid-template-columns: minmax(0, 1fr);
 }
-.food-record-stat-card,
-.exercise-record-stat-card,
-.money-record-stat-card,
-.sleep-record-stat-card {
+.stat-card {
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -177,23 +83,14 @@
   padding: 9px 10px;
   text-align: left;
 }
-.food-record-stat-label,
-.exercise-record-stat-label,
-.money-record-stat-label,
-.sleep-record-stat-label {
+.stat-label {
   min-width: 0;
 }
-.food-record-stat-value,
-.exercise-record-stat-value,
-.money-record-stat-value,
-.sleep-record-stat-value {
+.stat-value {
   flex: 0 0 auto;
   min-width: 0;
 }
-.food-record-stat-meta,
-.exercise-record-stat-meta,
-.money-record-stat-meta,
-.sleep-record-stat-meta {
+.stat-meta {
   font-size: 0.72rem !important;
   max-width: 100%;
   min-width: 0;
@@ -201,16 +98,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.exercise-record-metric-grid,
-.money-record-metric-grid,
-.sleep-record-metric-grid {
+.metric-grid {
   display: grid !important;
   gap: 8px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-.exercise-record-metric-card,
-.money-record-metric-card,
-.sleep-record-metric-card {
+.metric-card {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -220,22 +113,12 @@
   text-align: center;
 }
 @media (max-width: 420px) {
-  .food-record-chart,
-  .food-goal-chart,
-  .exercise-record-chart,
-  .exercise-goal-chart,
-  .money-record-chart,
-  .money-goal-chart,
-  .sleep-record-chart,
-  .sleep-goal-chart {
+  .chart {
     justify-self: center;
   }
 }
 @media (max-width: 340px) {
-  .food-record-stat-card,
-  .exercise-record-stat-card,
-  .money-record-stat-card,
-  .sleep-record-stat-card {
+  .stat-card {
     align-items: flex-start;
     flex-direction: column;
   }

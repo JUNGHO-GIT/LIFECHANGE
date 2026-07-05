@@ -230,6 +230,7 @@ export const FoodFavoriteList = memo(() => {
                     <Icons
                       key={`ChevronDown`}
                       name={`ChevronDown`}
+                      isIconButton={true}
                       className={`w-16px h-16px`}
                       onClick={(e: any) => {
                         e.preventDefault();
@@ -265,11 +266,10 @@ export const FoodFavoriteList = memo(() => {
                       </Div>
                       <Div className={`mt-n3px ml-5px`}>
                         <Icons
-                          key={`Star`}
-                          name={`Star`}
+                          key={`star_on`}
+                          name={`star_on`}
+                          isIconButton={true}
                           className={`w-20px h-20px`}
-                          color={`darkslategrey`}
-                          fill={`gold`}
                           onClick={(e: any) => {
                             e.stopPropagation();
                             flowUpdateFavorite(item);
@@ -287,16 +287,17 @@ export const FoodFavoriteList = memo(() => {
                   </Grid>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Grid container={true} spacing={1}>
+                  <Grid container={true} spacing={1} className={`legend`}>
+
                     {/** row 1 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-row-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`kcal`)}
                         </Div>
                       </Grid>
@@ -320,13 +321,13 @@ export const FoodFavoriteList = memo(() => {
 
                     {/** row 2 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`carb`)}
                         </Div>
                       </Grid>
@@ -350,13 +351,13 @@ export const FoodFavoriteList = memo(() => {
 
                     {/** row 3 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`protein`)}
                         </Div>
                       </Grid>
@@ -378,15 +379,15 @@ export const FoodFavoriteList = memo(() => {
 
                     <Hr m={1} className={`bg-light`} />
 
-                    {/** row 3 * */}
+                    {/** row 4 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`fat`)}
                         </Div>
                       </Grid>
@@ -405,6 +406,7 @@ export const FoodFavoriteList = memo(() => {
                         </Grid>
                       </Grid>
                     </Grid>
+
                   </Grid>
                 </AccordionDetails>
               </Accordion>

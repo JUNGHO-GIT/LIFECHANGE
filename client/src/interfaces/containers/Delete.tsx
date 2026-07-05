@@ -38,6 +38,7 @@ export const Delete = memo((
       <Icons
         key={`X`}
         name={`X`}
+        isIconButton={true}
         locked={LOCKED}
         className={`w-20px h-20px`}
         sx={{

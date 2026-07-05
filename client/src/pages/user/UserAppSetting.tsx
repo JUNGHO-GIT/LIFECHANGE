@@ -79,6 +79,7 @@ export const UserAppSetting = memo(() => {
                   <TableCell className={`w-10vw p-15px`}>
                     <Icons
                       name={`ChevronRight`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
                     />
                   </TableCell>
@@ -96,6 +97,7 @@ export const UserAppSetting = memo(() => {
                   <TableCell className={`w-10vw p-15px`}>
                     <Icons
                       name={`ChevronRight`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
                     />
                   </TableCell>
@@ -113,6 +115,7 @@ export const UserAppSetting = memo(() => {
                   <TableCell className={`w-10vw p-15px`}>
                     <Icons
                       name={`ChevronRight`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
                     />
                   </TableCell>
@@ -142,6 +145,7 @@ export const UserAppSetting = memo(() => {
                         <Icons
                           key={`Check`}
                           name={`Check`}
+                          isIconButton={false}
                           className={`w-16px h-16px black ${lang === `en` ? `` : `d-none`}`}
                         />
                       </Div>
@@ -164,6 +168,7 @@ export const UserAppSetting = memo(() => {
                         <Icons
                           key={`Check`}
                           name={`Check`}
+                          isIconButton={false}
                           className={`w-16px h-16px black ${lang === `ko` ? `` : `d-none`}`}
                         />
                       </Div>
@@ -183,6 +188,7 @@ export const UserAppSetting = memo(() => {
                         <Icons
                           key={`ChevronRight`}
                           name={`ChevronRight`}
+                          isIconButton={false}
                           className={`w-16px h-16px`}
                         />
                       </TableCell>
@@ -202,6 +208,7 @@ export const UserAppSetting = memo(() => {
                   <TableCell className={`w-10vw p-15px`}>
                     <Icons
                       name={`ChevronRight`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
                     />
                   </TableCell>
@@ -219,6 +226,7 @@ export const UserAppSetting = memo(() => {
                   <TableCell className={`w-10vw p-15px`}>
                     <Icons
                       name={`ChevronRight`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
                     />
                   </TableCell>
@@ -236,6 +244,7 @@ export const UserAppSetting = memo(() => {
                   <TableCell className={`w-10vw p-15px`}>
                     <Icons
                       name={`ChevronRight`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
                     />
                   </TableCell>
@@ -253,6 +262,7 @@ export const UserAppSetting = memo(() => {
                   <TableCell className={`w-10vw p-15px`}>
                     <Icons
                       name={`ChevronRight`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
                     />
                   </TableCell>
@@ -270,6 +280,7 @@ export const UserAppSetting = memo(() => {
                   <TableCell className={`w-10vw p-15px`}>
                     <Icons
                       name={`ChevronRight`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
                     />
                   </TableCell>

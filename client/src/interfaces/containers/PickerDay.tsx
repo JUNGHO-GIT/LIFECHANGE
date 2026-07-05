@@ -552,6 +552,7 @@ export const PickerDay = memo((
                   <Icons
                     key={`ChevronLeft`}
                     name={`ChevronLeft`}
+                    isIconButton={true}
                     className={`w-20px h-20px`}
                     onClick={(e: any) => {
                       e.stopPropagation();
@@ -568,6 +569,7 @@ export const PickerDay = memo((
                   <Icons
                     key={`ChevronRight`}
                     name={`ChevronRight`}
+                    isIconButton={true}
                     className={`w-20px h-20px`}
                     onClick={(e: any) => {
                       e.stopPropagation();
@@ -772,6 +774,7 @@ export const PickerDay = memo((
                   <Icons
                     key={`ChevronLeft`}
                     name={`ChevronLeft`}
+                    isIconButton={true}
                     className={`w-20px h-20px`}
                     onClick={(e: any) => {
                       e.stopPropagation();
@@ -787,6 +790,7 @@ export const PickerDay = memo((
                   <Icons
                     key={`ChevronRight`}
                     name={`ChevronRight`}
+                    isIconButton={true}
                     className={`w-20px h-20px`}
                     onClick={(e: any) => {
                       e.stopPropagation();
@@ -1000,6 +1004,7 @@ export const PickerDay = memo((
                   <Icons
                     key={`ChevronLeft`}
                     name={`ChevronLeft`}
+                    isIconButton={true}
                     className={`w-20px h-20px`}
                     onClick={(e: any) => {
                       e.stopPropagation();
@@ -1015,6 +1020,7 @@ export const PickerDay = memo((
                   <Icons
                     key={`ChevronRight`}
                     name={`ChevronRight`}
+                    isIconButton={true}
                     className={`w-20px h-20px`}
                     onClick={(e: any) => {
                       e.stopPropagation();
@@ -1203,6 +1209,7 @@ export const PickerDay = memo((
                   <Icons
                     key={`ChevronLeft`}
                     name={`ChevronLeft`}
+                    isIconButton={true}
                     className={`w-20px h-20px`}
                     onClick={(e: any) => {
                       e.stopPropagation();
@@ -1218,6 +1225,7 @@ export const PickerDay = memo((
                   <Icons
                     key={`ChevronRight`}
                     name={`ChevronRight`}
+                    isIconButton={true}
                     className={`w-20px h-20px`}
                     onClick={(e: any) => {
                       e.stopPropagation();

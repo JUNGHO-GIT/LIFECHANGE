@@ -89,9 +89,6 @@ body {
 	z-index: var(--z-content);
 	animation: none;
 }
-.App:has(.MuiSpeedDial-root) .content-wrapper {
-	padding-bottom: 96px;
-}
 
 /** animations **********************************************************************************/
 @keyframes fadeIn {

@@ -110,7 +110,7 @@ export const SleepRecordList = memo(() => {
 
     const formatRecordDate = (item: SleepTimeStat): string => (
       item.dateStart && item.dateStart !== `0000-00-00`
-        ? `${formatDateYyyyMmDd(item.dateStart)} - ${formatDateYyyyMmDd(item.dateEnd)}`
+        ? `${formatDateYyyyMmDd(item.dateStart)}`
         : `-`
     );
 
@@ -284,7 +284,7 @@ export const SleepRecordList = memo(() => {
   const listNode = () => {
     // 7-0. summary
     const summarySection = () => (
-      <Grid container={true} spacing={0} className={`sleep-record-summary radius-3 border-light-1 shadow-1 p-15px`}>
+      <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
           <Grid size={12} className={`d-row-left`}>
@@ -300,7 +300,7 @@ export const SleepRecordList = memo(() => {
 
         {/** row 2 **/}
         <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative sleep-record-chart w-124px h-124px`}>
+          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
             <ResponsiveContainer width={124} height={124}>
               <PieChart>
                 <Pie
@@ -327,7 +327,7 @@ export const SleepRecordList = memo(() => {
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
-            <Div className={`sleep-record-chart-center`}>
+            <Div className={`chart-center`}>
               <Div className={`fs-0-5rem fw-700 mb-5px`} style={{
                 color: chartThemeColors.bedTime,
                 lineHeight: `1.15`
@@ -349,7 +349,7 @@ export const SleepRecordList = memo(() => {
             </Div>
           </Grid>
 
-          <Grid size={6} className={`sleep-record-legend p-relative d-col-center`}>
+          <Grid size={6} className={`legend p-relative d-col-center`}>
             <Div className={`d-row-between mb-5px w-100p`}>
               <Div className={`d-row-center mb-5px`}>
                 <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.bedTime }}>
@@ -411,17 +411,17 @@ export const SleepRecordList = memo(() => {
 
         {/** row 3 **/}
         <Grid container={true} spacing={2}>
-          <Grid size={12} className={`sleep-record-stat-grid`}>
-            <Div className={`sleep-record-stat-card`}>
-              <Div className={`sleep-record-stat-label`}>
+          <Grid size={12} className={`stat-grid`}>
+            <Div className={`stat-card`}>
+              <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
                   {translate(`maxSleepTime`)}
                 </Div>
-                <Div className={`sleep-record-stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.highestDateText}>
+                <Div className={`stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.highestDateText}>
                   {recordSummary.highestDateText}
                 </Div>
               </Div>
-              <Div className={`d-row-right sleep-record-stat-value`}>
+              <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestSleepText}
                 </Div>
@@ -430,16 +430,16 @@ export const SleepRecordList = memo(() => {
                 </Div>
               </Div>
             </Div>
-            <Div className={`sleep-record-stat-card`}>
-              <Div className={`sleep-record-stat-label`}>
+            <Div className={`stat-card`}>
+              <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
                   {translate(`minSleepTime`)}
                 </Div>
-                <Div className={`sleep-record-stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.lowestDateText}>
+                <Div className={`stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.lowestDateText}>
                   {recordSummary.lowestDateText}
                 </Div>
               </Div>
-              <Div className={`d-row-right sleep-record-stat-value`}>
+              <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestSleepText}
                 </Div>
@@ -465,6 +465,7 @@ export const SleepRecordList = memo(() => {
                     <Icons
                       key={`ChevronDown`}
                       name={`ChevronDown`}
+                      isIconButton={true}
                       className={`w-16px h-16px`}
                       onClick={(e: any) => {
                         e.preventDefault();
@@ -491,6 +492,7 @@ export const SleepRecordList = memo(() => {
                       <Icons
                         key={`Search`}
                         name={`Search`}
+                        isIconButton={false}
                         className={`w-16px h-16px`}
                       />
                     </Grid>
@@ -504,6 +506,7 @@ export const SleepRecordList = memo(() => {
                       <Div className={`d-center`}>
                         <Icons
                           name={(item.sleep_record_score_smile ?? `smile3`)}
+                          isIconButton={false}
                           className={`w-14px h-14px`}
                           sx={{ padding: 0 }}
                         />
@@ -522,16 +525,17 @@ export const SleepRecordList = memo(() => {
                   </Grid>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Grid container={true} spacing={1}>
+                  <Grid container={true} spacing={1} className={`legend`}>
+
                     {/** row 1 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-row-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.bedTime }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`bedTime`)}
                         </Div>
                       </Grid>
@@ -555,13 +559,13 @@ export const SleepRecordList = memo(() => {
 
                     {/** row 2 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.wakeTime }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`wakeTime`)}
                         </Div>
                       </Grid>
@@ -585,13 +589,13 @@ export const SleepRecordList = memo(() => {
 
                     {/** row 3 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.sleepTime }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`sleepTime`)}
                         </Div>
                       </Grid>
@@ -610,6 +614,7 @@ export const SleepRecordList = memo(() => {
                         </Grid>
                       </Grid>
                     </Grid>
+
                   </Grid>
                 </AccordionDetails>
               </Accordion>

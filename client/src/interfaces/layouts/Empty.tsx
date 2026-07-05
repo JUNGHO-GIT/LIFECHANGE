@@ -74,6 +74,7 @@ export const Empty = memo((
                   <Icons
                     key={`Search`}
                     name={`Search`}
+                    isIconButton={false}
                     className={`w-16px h-16px`}
                   />
                 </Grid>
@@ -115,6 +116,7 @@ export const Empty = memo((
                   <Icons
                     key={`Search`}
                     name={`Search`}
+                    isIconButton={false}
                     className={`w-16px h-16px`}
                   />
                 </Grid>

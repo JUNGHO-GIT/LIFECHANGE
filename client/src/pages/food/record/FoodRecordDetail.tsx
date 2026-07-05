@@ -627,14 +627,13 @@ export const FoodRecordDetail = memo(() => {
               <Div className={`mt-n10px ml-15px`}>
                 <Icons
                   key={`Star`}
-                  name={`Star`}
-                  className={`w-20px h-20px`}
-                  color={`darkslategrey`}
-                  fill={
+                  name={
                   FAVORITE?.length > 0 && FAVORITE.some((item: any) => (
                     item.food_record_key === handleFoodFavorite(i).food_record_key
-                  )) ? `gold` : `white`
+                  )) ? `star_on` : `star_off`
                   }
+                  isIconButton={true}
+                  className={`w-20px h-20px`}
                   onClick={(e: any) => {
                     e.stopPropagation();
                     flowUpdateFavorite(handleFoodFavorite(i));

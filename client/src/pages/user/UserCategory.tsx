@@ -510,6 +510,7 @@ export const UserCategory = memo(() => {
                         <Icons
                           key={`Plus`}
                           name={`Plus`}
+                          isIconButton={true}
                           className={`w-12px h-12px`}
                           onClick={() => {
                             handleAdd(`title`);

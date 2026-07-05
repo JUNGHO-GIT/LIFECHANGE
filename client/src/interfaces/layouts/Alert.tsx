@@ -40,6 +40,7 @@ export const Alert = memo(() => {
           <Icons
             key={`Check`}
             name={`Check`}
+            isIconButton={true}
             className={`w-24px h-24px black`}
             onClick={() => {
               setALERT({

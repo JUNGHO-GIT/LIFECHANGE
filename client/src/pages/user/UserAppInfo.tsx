@@ -7,7 +7,6 @@
 
 import { memo } from "@exportReacts";
 import { useCommonValue } from "@exportHooks";
-import { useStoreLanguage } from "@exportStores";
 import { Img, Paper, Grid, Br } from "@exportComponents";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@exportMuis";
 
@@ -24,7 +23,6 @@ export const UserAppInfo = memo(() => {
     localIsoCode,
     localCurrency,
   } = useCommonValue();
-  const { translate } = useStoreLanguage();
 
   // 7. userAppInfo --------------------------------------------------------------------------------
   const userAppInfoNode = () => (
@@ -40,41 +38,41 @@ export const UserAppInfo = memo(() => {
           />
         </Grid>
         <Br m={50} />
-        <Grid size={12} className={`d-center`}>
+        <Grid size={10} className={`d-center`}>
           <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-0`}>
             <Grid size={12} className={`d-center`}>
               <TableContainer className={`over-hidden`}>
                 <Table>
                   <TableBody className={`table-tbody`}>
                     <TableRow>
-                      <TableCell className={`w-30vw fs-0-9rem p-15px`}>
-                        {translate(`appInfo`)}
+                      <TableCell className={`w-30vw fs-0-75rem fw-600 black p-15px`}>
+                        {`appInfo`}
                       </TableCell>
-                      <TableCell className={`w-65vw fs-0-7rem p-15px`}>
+                      <TableCell className={`w-65vw fs-0-7rem fw-500 dark p-15px`}>
                         {TITLE}
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell className={`w-30vw fs-0-9rem p-15px`}>
+                      <TableCell className={`w-30vw fs-0-75rem fw-600 black p-15px`}>
                         {`version`}
                       </TableCell>
-                      <TableCell className={`w-65vw fs-0-7rem p-15px`}>
+                      <TableCell className={`w-65vw fs-0-7rem fw-500 dark p-15px`}>
                         {VERSION}
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell className={`w-30vw fs-0-9rem p-15px`}>
+                      <TableCell className={`w-30vw fs-0-75rem fw-600 black p-15px`}>
                         {`environment`}
                       </TableCell>
-                      <TableCell className={`w-65vw fs-0-7rem p-15px`}>
+                      <TableCell className={`w-65vw fs-0-7rem fw-500 dark p-15px`}>
                         {MODE}
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell className={`w-30vw fs-0-9rem p-15px`}>
+                      <TableCell className={`w-30vw fs-0-75rem fw-600 black p-15px`}>
                         {`timezone`}
                       </TableCell>
-                      <TableCell className={`w-65vw fs-0-7rem p-15px`}>
+                      <TableCell className={`w-65vw fs-0-7rem fw-500 dark p-15px`}>
                         {localTimeZone}
                         {` | `}
                         {localLang}

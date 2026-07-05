@@ -13,6 +13,7 @@ import {
   useNavigate,
 } from "@exportReacts";
 import { getLocalRoot, getSessionRoot } from "@assets/scripts/storage";
+import { useStoreLoading } from "@exportStores";
 import type {
   CommonValueType,
   EnvType,
@@ -90,13 +91,26 @@ const EMPTY_ARR: any[] = [];
 // -------------------------------------------------------------------------------------------------
 export const useCommonValue = (): CommonValueType => {
   const rawNavigate: NavigateFunction = useNavigate();
+  const location: ReturnType<typeof useLocation> = useLocation();
+  const setNAVIGATING = useStoreLoading((state) => state.setNAVIGATING);
   const navigate = useCallback(
     ((to: any, options?: any): void => {
+      // 전환 시작 즉시 로딩 dim을 켜서 화면 전환과 동기화
+      // 목적지 데이터 로딩(LOADING)으로 끊김 없이 이어지고, 경로 변경 완료 시 App에서 해제
+      const samePath: boolean = (
+        typeof to === `string`
+          ? to === location.pathname
+          : (to && typeof to === `object` && `pathname` in to)
+            ? to.pathname === location.pathname
+            : false
+      );
+      if (!samePath) {
+        setNAVIGATING(true);
+      }
       rawNavigate(to, options);
     }) as NavigateFunction,
-    [ rawNavigate ],
+    [ rawNavigate, setNAVIGATING, location.pathname ],
   );
-  const location: ReturnType<typeof useLocation> = useLocation();
   const PATH: string = location?.pathname ?? ``;
   const pathParts: string[] = PATH ? PATH.split(`/`) : [];
   const env: EnvType = import.meta.env as unknown as EnvType;

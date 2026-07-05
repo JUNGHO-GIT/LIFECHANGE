@@ -101,6 +101,7 @@ export const Dialog = memo((
               <Icons
                 key={`Pencil`}
                 name={`Pencil`}
+                isIconButton={false}
                 className={`w-25px h-25px`}
               />
             )}
@@ -122,6 +123,7 @@ export const Dialog = memo((
               <Icons
                 key={`ChevronDown`}
                 name={`ChevronDown`}
+                isIconButton={false}
                 className={`w-25px h-25px`}
               />
             )}
@@ -137,6 +139,7 @@ export const Dialog = memo((
               <Icons
                 key={`ChevronUp`}
                 name={`ChevronUp`}
+                isIconButton={false}
                 className={`w-25px h-25px`}
               />
             )}
@@ -182,6 +185,7 @@ export const Dialog = memo((
               <Icons
                 key={`Pencil`}
                 name={`Pencil`}
+                isIconButton={false}
                 className={`w-25px h-25px`}
               />
             )}
@@ -203,6 +207,7 @@ export const Dialog = memo((
               <Icons
                 key={`ChevronDown`}
                 name={`ChevronDown`}
+                isIconButton={false}
                 className={`w-25px h-25px`}
               />
             )}
@@ -218,6 +223,7 @@ export const Dialog = memo((
               <Icons
                 key={`ChevronUp`}
                 name={`ChevronUp`}
+                isIconButton={false}
                 className={`w-25px h-25px`}
               />
             )}
@@ -264,6 +270,7 @@ export const Dialog = memo((
 						    <Icons
 						      key={`Search`}
 						      name={`Search`}
+						      isIconButton={false}
 						      className={`w-23px h-23px`}
 						    />
 						  )}
@@ -278,9 +285,9 @@ export const Dialog = memo((
 						  className={open ? `` : `d-none`}
 						  icon={(
 						    <Icons
-						      key={`Star`}
-						      name={`Star`}
-						      fill={`gold`}
+						      key={`star_on`}
+						      name={`star_on`}
+						      isIconButton={false}
 						      className={`w-23px h-23px`}
 						    />
 						  )}
@@ -297,6 +304,7 @@ export const Dialog = memo((
               <Icons
                 key={`Pencil`}
                 name={`Pencil`}
+                isIconButton={false}
                 className={`w-25px h-25px`}
               />
             )}
@@ -318,6 +326,7 @@ export const Dialog = memo((
               <Icons
                 key={`ChevronDown`}
                 name={`ChevronDown`}
+                isIconButton={false}
                 className={`w-25px h-25px`}
               />
             )}
@@ -333,6 +342,7 @@ export const Dialog = memo((
               <Icons
                 key={`ChevronUp`}
                 name={`ChevronUp`}
+                isIconButton={false}
                 className={`w-25px h-25px`}
               />
             )}
@@ -389,12 +399,14 @@ export const Dialog = memo((
 								<Icons
 								  key={`UnLock`}
 								  name={`UnLock`}
+								  isIconButton={false}
 								  className={`w-25px h-25px`}
 								/>
 							) : (
 								<Icons
 								  key={`Lock`}
 								  name={`Lock`}
+								  isIconButton={false}
 								  className={`w-25px h-25px`}
 								/>
 							)
@@ -418,6 +430,7 @@ export const Dialog = memo((
               <Icons
                 key={`X`}
                 name={`X`}
+                isIconButton={true}
                 locked={LOCKED}
                 className={`w-25px h-25px`}
               />
@@ -481,12 +494,14 @@ export const Dialog = memo((
 								<Icons
 								  key={`UnLock`}
 								  name={`UnLock`}
+								  isIconButton={false}
 								  className={`w-25px h-25px`}
 								/>
 							) : (
 								<Icons
 								  key={`Lock`}
 								  name={`Lock`}
+								  isIconButton={false}
 								  className={`w-25px h-25px`}
 								/>
 							)
@@ -510,6 +525,7 @@ export const Dialog = memo((
               <Icons
                 key={`X`}
                 name={`X`}
+                isIconButton={true}
                 locked={LOCKED}
                 className={`w-25px h-25px`}
               />

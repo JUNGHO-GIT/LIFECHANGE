@@ -69,6 +69,7 @@ export const Header = memo(() => {
 				<Icons
 				  key={`Settings`}
 				  name={`Settings`}
+				  isIconButton={true}
 				  className={`w-25px h-25px`}
 				  onClick={handleClickSetting}
 				/>
@@ -76,6 +77,7 @@ export const Header = memo(() => {
 				<Icons
 				  key={`ArrowRight`}
 				  name={`ArrowRight`}
+				  isIconButton={true}
 				  className={`w-25px h-25px`}
 				  onClick={() => {
 				    void navigate(-1);

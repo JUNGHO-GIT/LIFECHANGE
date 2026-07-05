@@ -259,11 +259,11 @@ export const FoodRecordList = memo(() => {
   const listNode = () => {
     // 7-0. summary
     const recordSummarySection = () => (
-      <Grid container={true} spacing={0} className={`food-record-summary radius-3 border-light-1 shadow-1 p-15px`}>
+      <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
           <Grid size={12} className={`d-row-left`}>
-            <Div className={`food-record-period fs-0-95rem fw-600`}>
+            <Div className={`period fs-0-95rem fw-600`}>
               {formatDateYyyyMmDd(DATE?.dateStart)}
               {` -`}
               {formatDateYyyyMmDd(DATE?.dateEnd)}
@@ -274,7 +274,7 @@ export const FoodRecordList = memo(() => {
         <Hr m={20} className={`bg-light`} />
         {/** row 2 **/}
         <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative food-record-chart w-124px h-124px`}>
+          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
             <ResponsiveContainer width={124} height={124}>
               <PieChart>
                 <Pie
@@ -320,7 +320,7 @@ export const FoodRecordList = memo(() => {
                 />
               </PieChart>
             </ResponsiveContainer>
-            <Div className={`food-record-chart-center`}>
+            <Div className={`chart-center`}>
               <Div className={`fs-0-55rem fw-600 dark mb-3px`}>
                 {translate(`avg`)}
               </Div>
@@ -332,7 +332,7 @@ export const FoodRecordList = memo(() => {
               </Div>
             </Div>
           </Grid>
-          <Grid size={6} className={`food-record-legend p-relative d-col-center`}>
+          <Grid size={6} className={`legend p-relative d-col-center`}>
             <Div className={`d-row-between w-100p mb-5px`}>
               <Div className={`d-row-center`}>
                 <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.carb }}>
@@ -394,17 +394,17 @@ export const FoodRecordList = memo(() => {
 
         {/** row 3 **/}
         <Grid container={true} spacing={2}>
-          <Grid size={12} className={`food-record-stat-grid`}>
-            <Div className={`food-record-stat-card`}>
-              <Div className={`food-record-stat-label`}>
+          <Grid size={12} className={`stat-grid`}>
+            <Div className={`stat-card`}>
+              <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
                   {translate(`totalKcal`)}
                 </Div>
-                <Div className={`food-record-stat-meta fs-0-55rem dark mt-3px`}>
+                <Div className={`stat-meta fs-0-55rem dark mt-3px`}>
                   {`${insertComma(recordSummary.recordCount)} ${translate(`record`)}`}
                 </Div>
               </Div>
-              <Div className={`d-row-right food-record-stat-value`}>
+              <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.totalKcalText}
                 </Div>
@@ -413,16 +413,16 @@ export const FoodRecordList = memo(() => {
                 </Div>
               </Div>
             </Div>
-            <Div className={`food-record-stat-card`}>
-              <Div className={`food-record-stat-label`}>
+            <Div className={`stat-card`}>
+              <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
                   {translate(`highestKcal`)}
                 </Div>
-                <Div className={`food-record-stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.highestDateText}>
+                <Div className={`stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.highestDateText}>
                   {recordSummary.highestDateText}
                 </Div>
               </Div>
-              <Div className={`d-row-right food-record-stat-value`}>
+              <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestKcalText}
                 </Div>
@@ -431,16 +431,16 @@ export const FoodRecordList = memo(() => {
                 </Div>
               </Div>
             </Div>
-            <Div className={`food-record-stat-card`}>
-              <Div className={`food-record-stat-label`}>
+            <Div className={`stat-card`}>
+              <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
                   {translate(`lowestKcal`)}
                 </Div>
-                <Div className={`food-record-stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.lowestDateText}>
+                <Div className={`stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.lowestDateText}>
                   {recordSummary.lowestDateText}
                 </Div>
               </Div>
-              <Div className={`d-row-right food-record-stat-value`}>
+              <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestKcalText}
                 </Div>
@@ -465,6 +465,7 @@ export const FoodRecordList = memo(() => {
                     <Icons
                       key={`ChevronDown`}
                       name={`ChevronDown`}
+                      isIconButton={true}
                       className={`w-16px h-16px`}
                       onClick={(e: any) => {
                         e.preventDefault();
@@ -491,6 +492,7 @@ export const FoodRecordList = memo(() => {
                       <Icons
                         key={`Search`}
                         name={`Search`}
+                        isIconButton={false}
                         className={`w-16px h-16px`}
                       />
                     </Grid>
@@ -523,16 +525,17 @@ export const FoodRecordList = memo(() => {
                   </Grid>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Grid container={true} spacing={1}>
+                  <Grid container={true} spacing={1} className={`legend`}>
+
                     {/** row 1 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-row-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`kcal`)}
                         </Div>
                       </Grid>
@@ -556,13 +559,13 @@ export const FoodRecordList = memo(() => {
 
                     {/** row 2 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`carb`)}
                         </Div>
                       </Grid>
@@ -573,7 +576,7 @@ export const FoodRecordList = memo(() => {
                               {insertComma(item.food_record_total_carb ?? `0`)}
                             </Div>
                           </Grid>
-                          <Grid size={2} className={`d-row-center`}>
+                          <Grid size={2} className={`d-row-right`}>
                             <Div className={`fs-0-6rem`}>
                               {translate(`g`)}
                             </Div>
@@ -586,13 +589,13 @@ export const FoodRecordList = memo(() => {
 
                     {/** row 3 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`protein`)}
                         </Div>
                       </Grid>
@@ -603,7 +606,7 @@ export const FoodRecordList = memo(() => {
                               {insertComma(item.food_record_total_protein ?? `0`)}
                             </Div>
                           </Grid>
-                          <Grid size={2} className={`d-row-center`}>
+                          <Grid size={2} className={`d-row-right`}>
                             <Div className={`fs-0-6rem`}>
                               {translate(`g`)}
                             </Div>
@@ -616,13 +619,13 @@ export const FoodRecordList = memo(() => {
 
                     {/** row 4 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`fat`)}
                         </Div>
                       </Grid>
@@ -633,7 +636,7 @@ export const FoodRecordList = memo(() => {
                               {insertComma(item.food_record_total_fat ?? `0`)}
                             </Div>
                           </Grid>
-                          <Grid size={2} className={`d-row-center`}>
+                          <Grid size={2} className={`d-row-right`}>
                             <Div className={`fs-0-6rem`}>
                               {translate(`g`)}
                             </Div>
@@ -641,6 +644,7 @@ export const FoodRecordList = memo(() => {
                         </Grid>
                       </Grid>
                     </Grid>
+
                   </Grid>
                 </AccordionDetails>
               </Accordion>

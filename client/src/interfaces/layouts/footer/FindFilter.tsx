@@ -74,6 +74,7 @@ export const FindFilter = memo((
         <Icons
           key={`Search`}
           name={`Search`}
+          isIconButton={true}
           className={`w-22px h-22px primary pointer-primary`}
           disabled={false}
           onClick={handleSearch}
@@ -83,6 +84,7 @@ export const FindFilter = memo((
         <Icons
           key={`CheckCircle`}
           name={`CheckCircle`}
+          isIconButton={true}
           className={`w-22px h-22px burgundy pointer-burgundy`}
           disabled={false}
           onClick={handleNavigateToDetail}
@@ -114,6 +116,7 @@ export const FindFilter = memo((
         <Icons
           key={`Search`}
           name={`Search`}
+          isIconButton={true}
           className={`w-22px h-22px grey`}
           disabled={true}
           onClick={handleSearch}
@@ -123,6 +126,7 @@ export const FindFilter = memo((
         <Icons
           key={`CheckCircle`}
           name={`CheckCircle`}
+          isIconButton={true}
           className={`w-22px h-22px burgundy pointer-burgundy`}
           onClick={handleNavigateToDetail}
         />

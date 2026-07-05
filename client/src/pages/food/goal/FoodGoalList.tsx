@@ -335,11 +335,11 @@ export const FoodGoalList = memo(() => {
   const listNode = () => {
     // 7-0. summary
     const goalSummarySection = () => (
-      <Grid container={true} spacing={0} className={`food-goal-summary radius-3 border-light-1 shadow-1 p-15px`}>
+      <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
           <Grid size={12} className={`d-row-left`}>
-            <Div className={`food-goal-period fs-0-95rem fw-600`}>
+            <Div className={`period fs-0-95rem fw-600`}>
               {formatDateYyyyMmDd(DATE?.dateStart)}
               {` -`}
               {formatDateYyyyMmDd(DATE?.dateEnd)}
@@ -350,7 +350,7 @@ export const FoodGoalList = memo(() => {
         <Hr m={20} className={`bg-light`} />
         {/** row 2 **/}
         <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative food-goal-chart w-124px h-124px`}>
+          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
             <ResponsiveContainer width={124} height={124}>
               <PieChart>
                 <Pie
@@ -396,7 +396,7 @@ export const FoodGoalList = memo(() => {
                 />
               </PieChart>
             </ResponsiveContainer>
-            <Div className={`food-goal-chart-center`}>
+            <Div className={`chart-center`}>
               <Div className={`fs-0-5rem fw-700 mb-5px`} style={{ color: chartThemeColors.carb }}>
                 {`탄 ${goalSummary.carbPercent}%`}
               </Div>
@@ -408,7 +408,7 @@ export const FoodGoalList = memo(() => {
               </Div>
             </Div>
           </Grid>
-          <Grid size={6} className={`food-goal-legend p-relative d-col-center`}>
+          <Grid size={6} className={`legend p-relative d-col-center`}>
             <Div className={`d-row-between w-100p mb-5px`}>
               <Div className={`d-row-center`}>
                 <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.carb }}>
@@ -470,9 +470,9 @@ export const FoodGoalList = memo(() => {
 
         {/** row 3 **/}
         <Grid container={true} spacing={2}>
-          <Grid size={12} className={`food-goal-bars`}>
+          <Grid size={12} className={`goal-bars`}>
             {goalSummary.goalRows.map((row) => (
-              <Div className={`food-goal-row`} key={row.key}>
+              <Div className={`goal-row`} key={row.key}>
                 <Div className={`d-row-between w-100p mb-5px`}>
                   <Div className={`fs-0-65rem fw-600 dark`}>
                     {translate(row.key)}
@@ -481,7 +481,7 @@ export const FoodGoalList = memo(() => {
                     {row.percentText}
                   </Div>
                 </Div>
-                <Div className={`w-100p h-8px radius-2 food-goal-track over-hidden`}>
+                <Div className={`w-100p h-8px radius-2 track over-hidden`}>
                   <Div className={`h-8px radius-2`} style={{
                     width: `${row.barPercent}%`,
                     background: row.color,
@@ -516,6 +516,7 @@ export const FoodGoalList = memo(() => {
                     <Icons
                       key={`ChevronDown`}
                       name={`ChevronDown`}
+                      isIconButton={true}
                       className={`w-16px h-16px`}
                       onClick={(e: any) => {
                         e.preventDefault();
@@ -540,6 +541,7 @@ export const FoodGoalList = memo(() => {
                       <Icons
                         key={`Search`}
                         name={`Search`}
+                        isIconButton={false}
                         className={`w-16px h-16px`}
                       />
                     </Grid>
@@ -563,16 +565,17 @@ export const FoodGoalList = memo(() => {
                   </Grid>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Grid container={true} spacing={1}>
+                  <Grid container={true} spacing={1} className={`legend`}>
+
                     {/** row 1 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-row-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`kcal`)}
                         </Div>
                       </Grid>
@@ -634,13 +637,13 @@ export const FoodGoalList = memo(() => {
 
                     {/** row 2 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-row-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`carb`)}
                         </Div>
                       </Grid>
@@ -702,13 +705,13 @@ export const FoodGoalList = memo(() => {
 
                     {/** row 3 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`protein`)}
                         </Div>
                       </Grid>
@@ -770,13 +773,13 @@ export const FoodGoalList = memo(() => {
 
                     {/** row 4 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`fat`)}
                         </Div>
                       </Grid>
@@ -833,6 +836,7 @@ export const FoodGoalList = memo(() => {
                         </Grid>
                       </Grid>
                     </Grid>
+
                   </Grid>
                 </AccordionDetails>
               </Accordion>

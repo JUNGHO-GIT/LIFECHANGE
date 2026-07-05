@@ -161,6 +161,7 @@ export const CalendarList = memo(() => {
           <Icons
             key={`ArrowLeft`}
             name={`ArrowLeft`}
+            isIconButton={true}
             color={`dark`}
             fill={`dark`}
             className={`w-24px h-24px`}
@@ -184,6 +185,7 @@ export const CalendarList = memo(() => {
           <Icons
             key={`ArrowRight`}
             name={`ArrowRight`}
+            isIconButton={true}
             color={`dark`}
             fill={`dark`}
             className={`w-24px h-24px`}

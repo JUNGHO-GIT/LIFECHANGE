@@ -6,7 +6,7 @@
  */
 
 import { JSX, React, memo, useCallback, useEffect, useMemo, useState } from "@exportReacts";
-import { Icons, Grid, Img } from "@exportComponents";
+import { Div, Grid, Img } from "@exportComponents";
 import { Input, PopUp } from "@exportContainers";
 import { useCommonValue } from "@exportHooks";
 import { moment } from "@exportLibs";
@@ -33,11 +33,10 @@ export const PickerTime = memo((
 ) => {
 
   // 1. common ----------------------------------------------------------------------------------
-  const { firstStr, secondStr, localLang, localTimeZone } = useCommonValue();
+  const { firstStr, secondStr, localLang, localTimeZone, chartThemeColors } = useCommonValue();
   const { translate } = useStoreLanguage();
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [ image, setImage ] = useState<string>(``);
   const [ targetStr, setTargetStr ] = useState<string>(``);
   const [ translateStr, setTranslateStr ] = useState<string>(``);
 
@@ -46,22 +45,18 @@ export const PickerTime = memo((
     // 1. today & calendar
     (firstStr === `today` || firstStr === `calendar`) && (() => {
       extra === `exercise_record_cardio` && (() => {
-        setImage(`exercise4`);
         setTargetStr(`exercise`);
         setTranslateStr(translate(`cardio`));
       })();
       extra === `sleep_record_bedTime` && (() => {
-        setImage(`sleep2`);
         setTargetStr(`sleep`);
         setTranslateStr(translate(`bedTime`));
       })();
       extra === `sleep_record_wakeTime` && (() => {
-        setImage(`sleep3`);
         setTargetStr(`sleep`);
         setTranslateStr(translate(`wakeTime`));
       })();
       extra === `sleep_record_sleepTime` && (() => {
-        setImage(`sleep4`);
         setTargetStr(`sleep`);
         setTranslateStr(translate(`sleepTime`));
       })();
@@ -71,7 +66,6 @@ export const PickerTime = memo((
     firstStr === `exercise` && (() => {
       // 1. exercise - goal 인 경우
       secondStr === `goal` && extra === `exercise_goal_cardio` && (() => {
-        setImage(`exercise4`);
         setTargetStr(`exercise`);
         setTranslateStr(
 					DATE?.dateType === `day`
@@ -82,7 +76,6 @@ export const PickerTime = memo((
 
       // 2. exercise - goal 아닌 경우
       secondStr !== `goal` && extra === `exercise_record_cardio` && (() => {
-        setImage(`exercise4`);
         setTargetStr(`exercise`);
         setTranslateStr(translate(`cardio`));
       })();
@@ -94,7 +87,6 @@ export const PickerTime = memo((
       secondStr === `goal` && (() => {
 
         extra === `sleep_goal_bedTime` && (() => {
-          setImage(`sleep2`);
           setTargetStr(`sleep`);
           setTranslateStr(
 						DATE?.dateType === `day`
@@ -104,7 +96,6 @@ export const PickerTime = memo((
         })();
 
         extra === `sleep_goal_wakeTime` && (() => {
-          setImage(`sleep3`);
           setTargetStr(`sleep`);
           setTranslateStr(
 						DATE?.dateType === `day`
@@ -114,7 +105,6 @@ export const PickerTime = memo((
         })();
 
         extra === `sleep_goal_sleepTime` && (() => {
-          setImage(`sleep4`);
           setTargetStr(`sleep`);
           setTranslateStr(
 						DATE?.dateType === `day`
@@ -127,17 +117,14 @@ export const PickerTime = memo((
       // 2. sleep - goal 아닌 경우
       secondStr !== `goal` && (() => {
         extra === `sleep_record_bedTime` && (() => {
-          setImage(`sleep2`);
           setTargetStr(`sleep`);
           setTranslateStr(translate(`bedTime`));
         })();
         extra === `sleep_record_wakeTime` && (() => {
-          setImage(`sleep3`);
           setTargetStr(`sleep`);
           setTranslateStr(translate(`wakeTime`));
         })();
         extra === `sleep_record_sleepTime` && (() => {
-          setImage(`sleep4`);
           setTargetStr(`sleep`);
           setTranslateStr(translate(`sleepTime`));
         })();
@@ -180,14 +167,12 @@ export const PickerTime = memo((
   }, [ setOBJECT, firstStr, i, extra ]);
 
   // 4. memoized values ---------------------------------------------------------------------------
-  const imgAdornment: JSX.Element = useMemo(() => (
-    <Icons
-      key={image}
-      name={image}
-      isIconButton={false}
-      className={`w-18px h-18px hover`}
-    />
-  ), [image]);
+  const colorKey: string = useMemo(() => (extra.split(`_`).pop() ?? ``), [extra]);
+  const dotAdornment: JSX.Element = useMemo(() => (
+    <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors[colorKey] }}>
+      {`●`}
+    </Div>
+  ), [chartThemeColors, colorKey]);
 
   // 4. memoized values ---------------------------------------------------------------------------
   const digitalClockProps: any = useMemo(() => ({
@@ -232,7 +217,7 @@ export const PickerTime = memo((
             error={ERRORS?.[i]?.[extra]}
             readOnly={true}
             locked={LOCKED}
-            startadornment={imgAdornment}
+            startadornment={dotAdornment}
             endadornment={translate(`hm`)}
             onClick={(e: any) => {
               extra !== `sleep_record_sleepTime` &&
@@ -273,7 +258,7 @@ export const PickerTime = memo((
             error={ERRORS?.[i]?.[extra]}
             readOnly={true}
             locked={LOCKED}
-            startadornment={imgAdornment}
+            startadornment={dotAdornment}
             endadornment={translate(`hm`)}
             onClick={(e: any) => {
               LOCKED === `unlocked` &&
@@ -313,7 +298,7 @@ export const PickerTime = memo((
             error={ERRORS?.[i]?.[extra]}
             readOnly={true}
             locked={LOCKED}
-            startadornment={imgAdornment}
+            startadornment={dotAdornment}
             endadornment={translate(`hm`)}
             onClick={(e: any) => {
               extra !== `sleep_record_sleepTime` &&
@@ -332,7 +317,7 @@ export const PickerTime = memo((
       </>
     );
   }, [
-    firstStr, secondStr, extra, i, OBJECT, REFS, ERRORS, LOCKED, targetStr, translateStr, imgAdornment, digitalClockProps, localLang, translate, handleTodayChange, handleGoalChange, handleRecordChange,
+    firstStr, secondStr, extra, i, OBJECT, REFS, ERRORS, LOCKED, targetStr, translateStr, dotAdornment, digitalClockProps, localLang, translate, handleTodayChange, handleGoalChange, handleRecordChange,
   ]);
 
   // 10. return ------------------------------------------------------------------------------------

@@ -228,8 +228,8 @@ export const TopNav = memo(() => {
         position={`center`}
         direction={`center`}
         contents={(
-          <Div className={`w-70vw h-max-70vh radius-2 border-light-1 shadow-0 px-10px py-20px`}>
-            <Grid container={true} spacing={0}>
+          <Div className={`w-70vw h-max-70vh radius-2 border-light-1 shadow-0 p-10px`}>
+            <Grid container={true} spacing={0} className={`d-center mb-20px`}>
               <Grid size={12} className={`d-col-center`}>
                 <Div className={`fs-1-0rem fw-600`}>
                   {translate(`monthScore`)}
@@ -240,117 +240,118 @@ export const TopNav = memo(() => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr m={30} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-right`}>
-                <Icons
-                  key={smileImage.total}
-                  name={smileImage.total}
-                  isIconButton={false}
-                  className={`w-32px h-32px hover`}
-                />
+            <Grid container={true} spacing={0} className={`legend`}>
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={6} className={`d-row-right`}>
+                  <Icons
+                    key={smileImage.total}
+                    name={smileImage.total}
+                    isIconButton={false}
+                    className={`w-32px h-32px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-3rem fw-500 dark`}>
+                    {`${translate(`total`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={6} className={`d-row-left`}>
+                  <Div className={`fs-1-2rem fw-600 black`}>
+                    {smileScore.total}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-3rem fw-500 dark`}>
-                  {`${translate(`total`)} : `}
-                </Div>
+              <Hr m={30} />
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={6} className={`d-row-right`}>
+                  <Icons
+                    key={smileImage.exercise}
+                    name={smileImage.exercise}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-1rem fw-500 dark`}>
+                    {`${translate(`exercise`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={6} className={`d-row-left`}>
+                  <Div className={`fs-0-8rem fw-600 black`}>
+                    {smileScore.exercise}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={6} className={`d-row-left`}>
-                <Div className={`fs-1-2rem fw-600 black`}>
-                  {smileScore.total}
-                </Div>
+              <Br m={10} />
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={6} className={`d-row-right`}>
+                  <Icons
+                    key={smileImage.food}
+                    name={smileImage.food}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-1rem fw-500 dark`}>
+                    {`${translate(`food`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={6} className={`d-row-left`}>
+                  <Div className={`fs-0-8rem fw-600 black`}>
+                    {smileScore.food}
+                  </Div>
+                </Grid>
               </Grid>
-            </Grid>
-            <Hr m={30} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-right`}>
-                <Icons
-                  key={smileImage.exercise}
-                  name={smileImage.exercise}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
+              <Br m={10} />
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={6} className={`d-row-right`}>
+                  <Icons
+                    key={smileImage.money}
+                    name={smileImage.money}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-1rem fw-500 dark`}>
+                    {`${translate(`money`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={6} className={`d-row-left`}>
+                  <Div className={`fs-0-8rem fw-600 black`}>
+                    {smileScore.money}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-1rem fw-500 dark`}>
-                  {`${translate(`exercise`)} : `}
-                </Div>
+              <Br m={10} />
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={6} className={`d-row-right`}>
+                  <Icons
+                    key={smileImage.sleep}
+                    name={smileImage.sleep}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-1rem fw-500 dark`}>
+                    {`${translate(`sleep`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={6} className={`d-row-left`}>
+                  <Div className={`fs-0-8rem fw-600 black`}>
+                    {smileScore.sleep}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={6} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-600 black`}>
-                  {smileScore.exercise}
-                </Div>
-              </Grid>
-            </Grid>
-            <Br m={10} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-right`}>
-                <Icons
-                  key={smileImage.food}
-                  name={smileImage.food}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
-              </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-1rem fw-500 dark`}>
-                  {`${translate(`food`)} : `}
-                </Div>
-              </Grid>
-              <Grid size={6} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-600 black`}>
-                  {smileScore.food}
-                </Div>
-              </Grid>
-            </Grid>
-            <Br m={10} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-right`}>
-                <Icons
-                  key={smileImage.money}
-                  name={smileImage.money}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
-              </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-1rem fw-500 dark`}>
-                  {`${translate(`money`)} : `}
-                </Div>
-              </Grid>
-              <Grid size={6} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-600 black`}>
-                  {smileScore.money}
-                </Div>
-              </Grid>
-            </Grid>
-            <Br m={10} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={6} className={`d-row-right`}>
-                <Icons
-                  key={smileImage.sleep}
-                  name={smileImage.sleep}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
-              </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-1rem fw-500 dark`}>
-                  {`${translate(`sleep`)} : `}
-                </Div>
-              </Grid>
-              <Grid size={6} className={`d-row-left`}>
-                <Div className={`fs-0-8rem fw-600 black`}>
-                  {smileScore.sleep}
-                </Div>
-              </Grid>
-            </Grid>
-            <Hr m={30} />
-            <Grid container={true} spacing={0}>
-              <Grid size={12} className={`d-center`}>
-                <Div className={`fs-0-8rem`}>
-                  {translate(`score`)}
-                </Div>
+              <Hr m={30} />
+              <Grid container={true} spacing={0}>
+                <Grid size={12} className={`d-center`}>
+                  <Div className={`fs-0-8rem fw-600 black`}>
+                    {translate(`score`)}
+                  </Div>
+                </Grid>
               </Grid>
             </Grid>
           </Div>
@@ -378,8 +379,8 @@ export const TopNav = memo(() => {
         position={`center`}
         direction={`center`}
         contents={(
-          <Div className={`w-max-70vw h-max-70vh radius-2 border-light-1 shadow-0 px-10px py-20px`}>
-            <Grid container={true} spacing={0}>
+          <Div className={`w-max-70vw h-max-70vh radius-2 border-light-1 shadow-0 p-10px`}>
+            <Grid container={true} spacing={0} className={`d-center mb-20px`}>
               <Grid size={12} className={`d-col-center`}>
                 <Div className={`fs-1-3rem fw-600`}>
                   {translate(`scale`)}
@@ -390,98 +391,99 @@ export const TopNav = memo(() => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr m={30} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-right`}>
-                <Icons
-                  key={`exercise5`}
-                  name={`exercise5`}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
+            <Grid container={true} spacing={0} className={`legend`}>
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={3} className={`d-row-right`}>
+                  <Icons
+                    key={`exercise5`}
+                    name={`exercise5`}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-0rem fw-500 dark`}>
+                    {`${translate(`initValue`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={7} className={`d-row-right`}>
+                  <Div className={`fs-1-1rem fw-600 black mr-5px`}>
+                    {insertComma(scale.initScale ?? `0`)}
+                  </Div>
+                </Grid>
+                <Grid size={2} className={`d-row-center`}>
+                  <Div className={`fs-0-6rem fw-500 dark`}>
+                    {localUnit}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-0rem fw-500 dark`}>
-                  {`${translate(`initValue`)} : `}
-                </Div>
+              <Br m={20} />
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={3} className={`d-row-right`}>
+                  <Icons
+                    key={`exercise5`}
+                    name={`exercise5`}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-0rem fw-500 dark`}>
+                    {`${translate(`curValue`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={7} className={`d-row-right`}>
+                  <Div className={`fs-1-1rem fw-600 black mr-5px`}>
+                    {insertComma(scale.curScale ?? `0`)}
+                  </Div>
+                </Grid>
+                <Grid size={2} className={`d-row-center`}>
+                  <Div className={`fs-0-6rem fw-500 dark`}>
+                    {localUnit}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={7} className={`d-row-right`}>
-                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
-                  {insertComma(scale.initScale ?? `0`)}
-                </Div>
+              <Hr m={30} />
+              <Grid container={true} spacing={0}>
+                <Grid size={12} className={`d-center`}>
+                  <Input
+                    readOnly={true}
+                    label={translate(`minScale`)}
+                    value={insertComma(scale.minScale ?? `0`)}
+                    startadornment={(
+                      <Icons
+                        key={`exercise5`}
+                        name={`exercise5`}
+                        isIconButton={false}
+                        className={`w-15px h-15px hover`}
+                      />
+                    )}
+                    endadornment={
+                      localUnit
+                    }
+                  />
+                </Grid>
               </Grid>
-              <Grid size={2} className={`d-row-center`}>
-                <Div className={`fs-0-6rem fw-500 dark`}>
-                  {localUnit}
-                </Div>
-              </Grid>
-            </Grid>
-            <Br m={20} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-right`}>
-                <Icons
-                  key={`exercise5`}
-                  name={`exercise5`}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
-              </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-0rem fw-500 dark`}>
-                  {`${translate(`curValue`)} : `}
-                </Div>
-              </Grid>
-              <Grid size={7} className={`d-row-right`}>
-                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
-                  {insertComma(scale.curScale ?? `0`)}
-                </Div>
-              </Grid>
-              <Grid size={2} className={`d-row-center`}>
-                <Div className={`fs-0-6rem fw-500 dark`}>
-                  {localUnit}
-                </Div>
-              </Grid>
-            </Grid>
-            <Hr m={30} />
-            <Grid container={true} spacing={0}>
-              <Grid size={12} className={`d-center`}>
-                <Input
-                  readOnly={true}
-                  label={translate(`minScale`)}
-                  value={insertComma(scale.minScale ?? `0`)}
-                  startadornment={(
-                    <Icons
-                      key={`exercise5`}
-                      name={`exercise5`}
-                      isIconButton={false}
-                      className={`w-15px h-15px hover`}
-                    />
-                  )}
-                  endadornment={
-                    localUnit
-                  }
-                />
-              </Grid>
-            </Grid>
-            <Br m={20} />
-            <Grid container={true} spacing={0}>
-              <Grid size={12} className={`d-center`}>
-                <Input
-                  readOnly={true}
-                  label={translate(`maxScale`)}
-                  value={insertComma(scale.maxScale ?? `0`)}
-                  startadornment={(
-                    <Icons
-                      key={`exercise5`}
-                      name={`exercise5`}
-                      isIconButton={false}
-                      className={`w-15px h-15px hover`}
-                    />
-                  )}
-                  endadornment={
-                    localUnit
-                  }
-                />
+              <Br m={20} />
+              <Grid container={true} spacing={0}>
+                <Grid size={12} className={`d-center`}>
+                  <Input
+                    readOnly={true}
+                    label={translate(`maxScale`)}
+                    value={insertComma(scale.maxScale ?? `0`)}
+                    startadornment={(
+                      <Icons
+                        key={`exercise5`}
+                        name={`exercise5`}
+                        isIconButton={false}
+                        className={`w-15px h-15px hover`}
+                      />
+                    )}
+                    endadornment={
+                      localUnit
+                    }
+                  />
+                </Grid>
               </Grid>
             </Grid>
           </Div>
@@ -509,8 +511,8 @@ export const TopNav = memo(() => {
         position={`center`}
         direction={`center`}
         contents={(
-          <Div className={`w-max-70vw h-max-70vh radius-2 border-light-1 shadow-0 px-10px py-20px`}>
-            <Grid container={true} spacing={0}>
+          <Div className={`w-max-70vw h-max-70vh radius-2 border-light-1 shadow-0 p-10px`}>
+            <Grid container={true} spacing={0} className={`d-center mb-20px`}>
               <Grid size={12} className={`d-col-center`}>
                 <Div className={`fs-1-3rem fw-600`}>
                   {translate(`intakeNutrition`)}
@@ -546,163 +548,164 @@ export const TopNav = memo(() => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr m={30} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-right`}>
-                <Icons
-                  key={`food2`}
-                  name={`food2`}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
+            <Grid container={true} spacing={0} className={`legend`}>
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={3} className={`d-row-right`}>
+                  <Icons
+                    key={`food2`}
+                    name={`food2`}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-0rem fw-500 dark`}>
+                    {`${translate(`initAvg`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={7} className={`d-row-right`}>
+                  <Div className={`fs-1-1rem fw-600 black mr-5px`}>
+                    {insertComma(nutrition.initAvgKcalIntake ?? `0`)}
+                  </Div>
+                </Grid>
+                <Grid size={2} className={`d-row-center`}>
+                  <Div className={`fs-0-6rem fw-500 dark`}>
+                    {translate(`kc`)}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-0rem fw-500 dark`}>
-                  {`${translate(`initAvg`)} : `}
-                </Div>
+              <Br m={20} />
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={3} className={`d-row-right`}>
+                  <Icons
+                    key={`food2`}
+                    name={`food2`}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-0rem fw-500 dark`}>
+                    {nutritionType === `avg` ? (
+                      (`${translate(`curAvg`)} : `)
+                    ) : (
+                      (`${translate(`curTotal`)} : `)
+                    )}
+                  </Div>
+                </Grid>
+                <Grid size={7} className={`d-row-right`}>
+                  <Div className={`fs-1-1rem fw-600 black mr-5px`}>
+                    {nutritionType === `avg` ? (
+                      insertComma(nutrition.curAvgKcalIntake ?? `0`)
+                    ) : (
+                      insertComma(nutrition.totalKcalIntake ?? `0`)
+                    )}
+                  </Div>
+                </Grid>
+                <Grid size={2} className={`d-row-center`}>
+                  <Div className={`fs-0-6rem fw-500 dark`}>
+                    {translate(`kc`)}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={7} className={`d-row-right`}>
-                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
-                  {insertComma(nutrition.initAvgKcalIntake ?? `0`)}
-                </Div>
+              <Hr m={30} />
+              <Grid container={true} spacing={0}>
+                <Grid size={12} className={`d-row-center`}>
+                  <Input
+                    readOnly={true}
+                    label={
+                      nutritionType === `avg` ? (
+                        translate(`avgCarbIntake`)
+                      ) : (
+                        translate(`totalCarbIntake`)
+                      )
+                    }
+                    value={
+                      nutritionType === `avg` ? (
+                        insertComma(nutrition.curAvgCarbIntake ?? `0`)
+                      ) : (
+                        insertComma(nutrition.totalCarbIntake ?? `0`)
+                      )
+                    }
+                    startadornment={(
+                      <Icons
+                        key={`food3`}
+                        name={`food3`}
+                        isIconButton={false}
+                        className={`w-15px h-15px hover`}
+                      />
+                    )}
+                    endadornment={
+                      translate(`g`)
+                    }
+                  />
+                </Grid>
               </Grid>
-              <Grid size={2} className={`d-row-center`}>
-                <Div className={`fs-0-6rem fw-500 dark`}>
-                  {translate(`kc`)}
-                </Div>
+              <Br m={20} />
+              <Grid container={true} spacing={0}>
+                <Grid size={12} className={`d-row-center`}>
+                  <Input
+                    readOnly={true}
+                    label={
+                      nutritionType === `avg` ? (
+                        translate(`avgProteinIntake`)
+                      ) : (
+                        translate(`totalProteinIntake`)
+                      )
+                    }
+                    value={
+                      nutritionType === `avg` ? (
+                        insertComma(nutrition.curAvgProteinIntake ?? `0`)
+                      ) : (
+                        insertComma(nutrition.totalProteinIntake ?? `0`)
+                      )
+                    }
+                    startadornment={(
+                      <Icons
+                        key={`food4`}
+                        name={`food4`}
+                        isIconButton={false}
+                        className={`w-15px h-15px hover`}
+                      />
+                    )}
+                    endadornment={
+                      translate(`g`)
+                    }
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-            <Br m={20} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-right`}>
-                <Icons
-                  key={`food2`}
-                  name={`food2`}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
-              </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-0rem fw-500 dark`}>
-                  {nutritionType === `avg` ? (
-										(`${translate(`curAvg`)} : `)
-									) : (
-										(`${translate(`curTotal`)} : `)
-									)}
-                </Div>
-              </Grid>
-              <Grid size={7} className={`d-row-right`}>
-                <Div className={`fs-1-1rem fw-600 black mr-5px`}>
-                  {nutritionType === `avg` ? (
-										insertComma(nutrition.curAvgKcalIntake ?? `0`)
-									) : (
-										insertComma(nutrition.totalKcalIntake ?? `0`)
-									)}
-                </Div>
-              </Grid>
-              <Grid size={2} className={`d-row-center`}>
-                <Div className={`fs-0-6rem fw-500 dark`}>
-                  {translate(`kc`)}
-                </Div>
-              </Grid>
-            </Grid>
-            <Hr m={30} />
-            <Grid container={true} spacing={0}>
-              <Grid size={12} className={`d-row-center`}>
-                <Input
-                  readOnly={true}
-                  label={
-										nutritionType === `avg` ? (
-											translate(`avgCarbIntake`)
-										) : (
-											translate(`totalCarbIntake`)
-										)
-                  }
-                  value={
-										nutritionType === `avg` ? (
-											insertComma(nutrition.curAvgCarbIntake ?? `0`)
-										) : (
-											insertComma(nutrition.totalCarbIntake ?? `0`)
-										)
-                  }
-                  startadornment={(
-                    <Icons
-                      key={`food3`}
-                      name={`food3`}
-                      isIconButton={false}
-                      className={`w-15px h-15px hover`}
-                    />
-                  )}
-                  endadornment={
-                    translate(`g`)
-                  }
-                />
-              </Grid>
-            </Grid>
-            <Br m={20} />
-            <Grid container={true} spacing={0}>
-              <Grid size={12} className={`d-row-center`}>
-                <Input
-                  readOnly={true}
-                  label={
-										nutritionType === `avg` ? (
-											translate(`avgProteinIntake`)
-										) : (
-											translate(`totalProteinIntake`)
-										)
-                  }
-                  value={
-										nutritionType === `avg` ? (
-											insertComma(nutrition.curAvgProteinIntake ?? `0`)
-										) : (
-											insertComma(nutrition.totalProteinIntake ?? `0`)
-										)
-                  }
-                  startadornment={(
-                    <Icons
-                      key={`food4`}
-                      name={`food4`}
-                      isIconButton={false}
-                      className={`w-15px h-15px hover`}
-                    />
-                  )}
-                  endadornment={
-                    translate(`g`)
-                  }
-                />
-              </Grid>
-            </Grid>
-            <Br m={20} />
-            <Grid container={true} spacing={0}>
-              <Grid size={12} className={`d-row-center`}>
-                <Input
-                  readOnly={true}
-                  label={
-										nutritionType === `avg` ? (
-											translate(`avgFatIntake`)
-										) : (
-											translate(`totalFatIntake`)
-										)
-                  }
-                  value={
-										nutritionType === `avg` ? (
-											insertComma(nutrition.curAvgFatIntake ?? `0`)
-										) : (
-											insertComma(nutrition.totalFatIntake ?? `0`)
-										)
-                  }
-                  startadornment={(
-                    <Icons
-                      key={`food5`}
-                      name={`food5`}
-                      isIconButton={false}
-                      className={`w-15px h-15px hover`}
-                    />
-                  )}
-                  endadornment={
-                    translate(`g`)
-                  }
-                />
+              <Br m={20} />
+              <Grid container={true} spacing={0}>
+                <Grid size={12} className={`d-row-center`}>
+                  <Input
+                    readOnly={true}
+                    label={
+                      nutritionType === `avg` ? (
+                        translate(`avgFatIntake`)
+                      ) : (
+                        translate(`totalFatIntake`)
+                      )
+                    }
+                    value={
+                      nutritionType === `avg` ? (
+                        insertComma(nutrition.curAvgFatIntake ?? `0`)
+                      ) : (
+                        insertComma(nutrition.totalFatIntake ?? `0`)
+                      )
+                    }
+                    startadornment={(
+                      <Icons
+                        key={`food5`}
+                        name={`food5`}
+                        isIconButton={false}
+                        className={`w-15px h-15px hover`}
+                      />
+                    )}
+                    endadornment={
+                      translate(`g`)
+                    }
+                  />
+                </Grid>
               </Grid>
             </Grid>
           </Div>
@@ -730,8 +733,8 @@ export const TopNav = memo(() => {
         position={`center`}
         direction={`center`}
         contents={(
-          <Div className={`w-max-70vw h-max-70vh radius-2 border-light-1 shadow-0 px-10px py-20px`}>
-            <Grid container={true} spacing={0}>
+          <Grid className={`w-max-70vw h-max-70vh radius-2 border-light-1 shadow-0 p-10px`}>
+            <Grid container={true} spacing={0} className={`d-center mb-20px`}>
               <Grid size={12} className={`d-col-center`}>
                 <Div className={`fs-1-3rem fw-600`}>
                   {translate(`property`)}
@@ -755,117 +758,118 @@ export const TopNav = memo(() => {
                 </Div>
               </Grid>
             </Grid>
-            <Hr m={30} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-right`}>
-                <Icons
-                  key={`money2`}
-                  name={`money2`}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
+            <Grid container={true} spacing={0} className={`legend`}>
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={3} className={`d-row-right`}>
+                  <Icons
+                    key={`money2`}
+                    name={`money2`}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-0rem fw-500 dark`}>
+                    {`${translate(`initValue`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={7} className={`d-row-right`}>
+                  <Div className={`fs-1-1rem fw-600 black mr-5px`} compact={true}>
+                    {insertComma(property.initProperty ?? `0`)}
+                  </Div>
+                </Grid>
+                <Grid size={2} className={`d-row-center`}>
+                  <Div className={`fs-0-6rem fw-500 dark`}>
+                    {localCurrency}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-0rem fw-500 dark`}>
-                  {`${translate(`initValue`)} : `}
-                </Div>
+              <Br m={20} />
+              <Grid container={true} spacing={0} columns={20}>
+                <Grid size={3} className={`d-row-right`}>
+                  <Icons
+                    key={`money2`}
+                    name={`money2`}
+                    isIconButton={false}
+                    className={`w-25px h-25px hover`}
+                  />
+                </Grid>
+                <Grid size={8} className={`d-row-center`}>
+                  <Div className={`fs-1-0rem fw-500 dark`}>
+                    {`${translate(`curValue`)} : `}
+                  </Div>
+                </Grid>
+                <Grid size={7} className={`d-row-right`}>
+                  <Div className={`fs-1-1rem fw-600 black mr-5px`} compact={true}>
+                    {includingExclusions ? (
+                      insertComma(property.curPropertyAll ?? `0`)
+                    ) : (
+                      insertComma(property.curPropertyExclusion ?? `0`)
+                    )}
+                  </Div>
+                </Grid>
+                <Grid size={2} className={`d-row-center`}>
+                  <Div className={`fs-0-6rem fw-500 dark`}>
+                    {localCurrency}
+                  </Div>
+                </Grid>
               </Grid>
-              <Grid size={7} className={`d-row-right`}>
-                <Div className={`fs-1-1rem fw-600 black mr-5px`} compact={true}>
-                  {insertComma(property.initProperty ?? `0`)}
-                </Div>
+              <Hr m={30} />
+              <Grid container={true} spacing={0}>
+                <Grid size={12} className={`d-row-center`}>
+                  <Input
+                    readOnly={true}
+                    label={translate(`sumIncome`)}
+                    value={
+                      includingExclusions ? (
+                        insertComma(property.totalIncomeAll ?? `0`)
+                      ) : (
+                        insertComma(property.totalIncomeExclusion ?? `0`)
+                      )
+                    }
+                    startadornment={(
+                      <Icons
+                        key={`money2`}
+                        name={`money2`}
+                        isIconButton={false}
+                        className={`w-15px h-15px hover`}
+                      />
+                    )}
+                    endadornment={
+                      localCurrency
+                    }
+                  />
+                </Grid>
               </Grid>
-              <Grid size={2} className={`d-row-center`}>
-                <Div className={`fs-0-6rem fw-500 dark`}>
-                  {localCurrency}
-                </Div>
+              <Br m={20} />
+              <Grid container={true} spacing={0}>
+                <Grid size={12} className={`d-row-center`}>
+                  <Input
+                    readOnly={true}
+                    label={translate(`sumExpense`)}
+                    value={
+                      includingExclusions ? (
+                        insertComma(property.totalExpenseAll ?? `0`)
+                      ) : (
+                        insertComma(property.totalExpenseExclusion ?? `0`)
+                      )
+                    }
+                    startadornment={(
+                      <Icons
+                        key={`money2`}
+                        name={`money2`}
+                        isIconButton={false}
+                        className={`w-15px h-15px hover`}
+                      />
+                    )}
+                    endadornment={
+                      localCurrency
+                    }
+                  />
+                </Grid>
               </Grid>
             </Grid>
-            <Br m={20} />
-            <Grid container={true} spacing={0} columns={20}>
-              <Grid size={3} className={`d-row-right`}>
-                <Icons
-                  key={`money2`}
-                  name={`money2`}
-                  isIconButton={false}
-                  className={`w-25px h-25px hover`}
-                />
-              </Grid>
-              <Grid size={8} className={`d-row-center`}>
-                <Div className={`fs-1-0rem fw-500 dark`}>
-                  {`${translate(`curValue`)} : `}
-                </Div>
-              </Grid>
-              <Grid size={7} className={`d-row-right`}>
-                <Div className={`fs-1-1rem fw-600 black mr-5px`} compact={true}>
-                  {includingExclusions ? (
-										insertComma(property.curPropertyAll ?? `0`)
-									) : (
-										insertComma(property.curPropertyExclusion ?? `0`)
-									)}
-                </Div>
-              </Grid>
-              <Grid size={2} className={`d-row-center`}>
-                <Div className={`fs-0-6rem fw-500 dark`}>
-                  {localCurrency}
-                </Div>
-              </Grid>
-            </Grid>
-            <Hr m={30} />
-            <Grid container={true} spacing={0}>
-              <Grid size={12} className={`d-row-center`}>
-                <Input
-                  readOnly={true}
-                  label={translate(`sumIncome`)}
-                  value={
-										includingExclusions ? (
-											insertComma(property.totalIncomeAll ?? `0`)
-										) : (
-											insertComma(property.totalIncomeExclusion ?? `0`)
-										)
-                  }
-                  startadornment={(
-                    <Icons
-                      key={`money2`}
-                      name={`money2`}
-                      isIconButton={false}
-                      className={`w-15px h-15px hover`}
-                    />
-                  )}
-                  endadornment={
-                    localCurrency
-                  }
-                />
-              </Grid>
-            </Grid>
-            <Br m={20} />
-            <Grid container={true} spacing={0}>
-              <Grid size={12} className={`d-row-center`}>
-                <Input
-                  readOnly={true}
-                  label={translate(`sumExpense`)}
-                  value={
-										includingExclusions ? (
-											insertComma(property.totalExpenseAll ?? `0`)
-										) : (
-											insertComma(property.totalExpenseExclusion ?? `0`)
-										)
-                  }
-                  startadornment={(
-                    <Icons
-                      key={`money2`}
-                      name={`money2`}
-                      isIconButton={false}
-                      className={`w-15px h-15px hover`}
-                    />
-                  )}
-                  endadornment={
-                    localCurrency
-                  }
-                />
-              </Grid>
-            </Grid>
-          </Div>
+          </Grid>
         )}
         children={(popTrigger: any) => (
           <Div className={`d-center`}>

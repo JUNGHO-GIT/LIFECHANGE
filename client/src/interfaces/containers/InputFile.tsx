@@ -205,6 +205,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
         <Icons
           key={`CirclePlus`}
           name={`CirclePlus`}
+          isIconButton={true}
           className={`w-22px h-22px pointer-burgundy`}
           onClick={(e: any) => {
             handleFileAdd(e);
@@ -213,6 +214,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
         <Icons
           key={`Trash`}
           name={`Trash`}
+          isIconButton={true}
           className={`w-22px h-22px pointer-burgundy`}
           onClick={(e: any) => {
             e.preventDefault();

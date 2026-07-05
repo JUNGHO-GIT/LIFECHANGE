@@ -329,11 +329,11 @@ export const ExerciseRecordList = memo(() => {
   const listNode = () => {
     // 7-0. summary
     const recordSummarySection = () => (
-      <Grid container={true} spacing={0} className={`exercise-record-summary radius-3 border-light-1 shadow-1 p-15px`}>
+      <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
           <Grid size={12} className={`d-row-left`}>
-            <Div className={`exercise-record-period fs-0-95rem fw-600`}>
+            <Div className={`period fs-0-95rem fw-600`}>
               {formatDateYyyyMmDd(DATE?.dateStart)}
               {` -`}
               {formatDateYyyyMmDd(DATE?.dateEnd)}
@@ -345,7 +345,7 @@ export const ExerciseRecordList = memo(() => {
 
         {/** row 2 **/}
         <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative exercise-record-chart w-124px h-124px`}>
+          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
             <ResponsiveContainer width={124} height={124}>
               <PieChart>
                 <Pie
@@ -372,7 +372,7 @@ export const ExerciseRecordList = memo(() => {
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
-            <Div className={`exercise-record-chart-center`}>
+            <Div className={`chart-center`}>
               <Div className={`fs-0-55rem fw-600 dark mb-3px`}>
                 {translate(`avg`)}
               </Div>
@@ -385,7 +385,7 @@ export const ExerciseRecordList = memo(() => {
             </Div>
           </Grid>
 
-          <Grid size={6} className={`exercise-record-legend p-relative d-col-center`}>
+          <Grid size={6} className={`legend p-relative d-col-center`}>
             <Div className={`d-row-between mb-5px w-100p`}>
               <Div className={`d-row-center mb-5px`}>
                 <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.volume }}>
@@ -447,17 +447,17 @@ export const ExerciseRecordList = memo(() => {
 
         {/** row 3 **/}
         <Grid container={true} spacing={2}>
-          <Grid size={12} className={`exercise-record-stat-grid`}>
-            <Div className={`exercise-record-stat-card`}>
-              <Div className={`exercise-record-stat-label`}>
+          <Grid size={12} className={`stat-grid`}>
+            <Div className={`stat-card`}>
+              <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
                   {translate(`maxScale`)}
                 </Div>
-                <Div className={`exercise-record-stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.highestDateText}>
+                <Div className={`stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.highestDateText}>
                   {recordSummary.highestDateText}
                 </Div>
               </Div>
-              <Div className={`d-row-right exercise-record-stat-value`}>
+              <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestScaleText}
                 </Div>
@@ -466,16 +466,16 @@ export const ExerciseRecordList = memo(() => {
                 </Div>
               </Div>
             </Div>
-            <Div className={`exercise-record-stat-card`}>
-              <Div className={`exercise-record-stat-label`}>
+            <Div className={`stat-card`}>
+              <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
                   {translate(`minScale`)}
                 </Div>
-                <Div className={`exercise-record-stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.lowestDateText}>
+                <Div className={`stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.lowestDateText}>
                   {recordSummary.lowestDateText}
                 </Div>
               </Div>
-              <Div className={`d-row-right exercise-record-stat-value`}>
+              <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestScaleText}
                 </Div>
@@ -501,6 +501,7 @@ export const ExerciseRecordList = memo(() => {
                     <Icons
                       key={`ChevronDown`}
                       name={`ChevronDown`}
+                      isIconButton={true}
                       className={`w-16px h-16px`}
                       onClick={(e: any) => {
                         e.preventDefault();
@@ -527,6 +528,7 @@ export const ExerciseRecordList = memo(() => {
                       <Icons
                         key={`Search`}
                         name={`Search`}
+                        isIconButton={false}
                         className={`w-16px h-16px`}
                       />
                     </Grid>
@@ -539,6 +541,7 @@ export const ExerciseRecordList = memo(() => {
                       </Div>
                       <Icons
                         name={(item.exercise_record_score_smile ?? `smile3`)}
+                        isIconButton={false}
                         className={`w-14px h-14px ml-10px`}
                         sx={{ padding: 0 }}
                       />
@@ -556,16 +559,17 @@ export const ExerciseRecordList = memo(() => {
                   </Grid>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Grid container={true} spacing={1}>
+                  <Grid container={true} spacing={1} className={`legend`}>
+
                     {/** row 1 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-row-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`volume`)}
                         </Div>
                       </Grid>
@@ -589,13 +593,13 @@ export const ExerciseRecordList = memo(() => {
 
                     {/** row 2 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.cardio }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`cardio`)}
                         </Div>
                       </Grid>
@@ -619,13 +623,13 @@ export const ExerciseRecordList = memo(() => {
 
                     {/** row 3 * */}
                     <Grid container={true} spacing={1}>
-                      <Grid size={2} className={`d-center`}>
+                      <Grid size={1} className={`d-row-left`}>
                         <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
                           {`●`}
                         </Div>
                       </Grid>
-                      <Grid size={3} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark ml-n15px`}>
+                      <Grid size={4} className={`d-row-left`}>
+                        <Div className={`fs-0-8rem fw-600 dark`}>
                           {translate(`scale`)}
                         </Div>
                       </Grid>
@@ -644,6 +648,7 @@ export const ExerciseRecordList = memo(() => {
                         </Grid>
                       </Grid>
                     </Grid>
+
                   </Grid>
                 </AccordionDetails>
               </Accordion>

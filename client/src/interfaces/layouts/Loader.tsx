@@ -20,16 +20,19 @@ export const Loader = memo(({ active }: LoaderProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
   const LOADING = useStoreLoading((state) => state.LOADING);
-  const sourceLoading: boolean = active ?? LOADING;
+  const NAVIGATING = useStoreLoading((state) => state.NAVIGATING);
+  const sourceLoading: boolean = active ?? (LOADING || NAVIGATING);
+  // 전환(NAVIGATING)과 명시 active는 지연 없이 즉시 표시, 인페이지 데이터 로딩만 지연 적용
+  const immediate: boolean = active === true || NAVIGATING;
   const [ isVisible, setIsVisible ] = useState<boolean>(active === true);
 
-  // 2. 짧은 전역 로딩 표시 억제 -----------------------------------------------------------------
+  // 2. 전환은 즉시, 인페이지 데이터 로딩은 짧은 지연 후 표시 -------------------------------------
   useEffect(() => {
     if (!sourceLoading) {
       setIsVisible(false);
       return;
     }
-    if (active === true) {
+    if (immediate) {
       setIsVisible(true);
       return;
     }
@@ -41,7 +44,7 @@ export const Loader = memo(({ active }: LoaderProps) => {
     return () => {
       window.clearTimeout(timerId);
     };
-  }, [ active, sourceLoading ]);
+  }, [ immediate, sourceLoading ]);
 
   // 7.loader --------------------------------------------------------------------------------------
   const loaderNode = () => (

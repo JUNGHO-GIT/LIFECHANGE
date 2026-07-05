@@ -5,8 +5,6 @@
  * @since 2025-12-26
  */
 
-import "@assets/styles/Reset.local.css";
-import "@assets/styles/Jstyle.local.css";
 import "react-calendar/dist/Calendar.css";
 import "@assets/styles/Core.css";
 import "@assets/styles/Calendar.css";
@@ -28,6 +26,7 @@ import { ErrorBoundary } from "@interfaces/layouts/ErrorBoundary";
 import { Header } from "@interfaces/layouts/Header";
 import { Loader } from "@interfaces/layouts/Loader";
 import { TopNav } from "@interfaces/layouts/TopNav";
+import { useStoreLoading } from "@exportStores";
 import { CssBaseline, createTheme, ThemeProvider } from "@exportMuis";
 import { BrowserRouter, createRoot, lazy, memo, Route, Routes, Suspense, useEffect } from "@exportReacts";
 import { registerInterceptor } from "@assets/scripts/interceptor";
@@ -200,16 +199,20 @@ const preloadRouteModules = (): (() => void) => {
 // 앱 라우트 ----------------------------------------------------------------------------------
 const App = memo(() => {
   const { PATH, navigate, sessionId } = useCommonValue();
-
+  const setNAVIGATING = useStoreLoading((state) => state.setNAVIGATING);
   useRoot(PATH, navigate, sessionId);
   useScrollTop(PATH);
   useFoodSection(PATH);
   useLanguageInitialize();
   useLanguageSetting();
-
   useEffect(() => {
     return preloadRouteModules();
   }, []);
+  // 경로 변경(화면 전환 완료)이 반영되면 전환 dim 해제
+  // 목적지가 데이터 로딩을 시작했다면 LOADING이 dim을 이어받는다
+  useEffect(() => {
+    setNAVIGATING(false);
+  }, [ PATH, setNAVIGATING ]);
 
   const noneHeader: boolean =
     !PATH.includes(`/user/login`) &&

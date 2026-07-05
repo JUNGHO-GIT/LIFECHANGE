@@ -41,6 +41,7 @@ export const Confirm = memo(() => {
             <Icons
               key={`Check`}
               name={`Check`}
+              isIconButton={true}
               className={`w-24px h-24px primary`}
               onClick={() => {
                 setCONFIRM({
@@ -52,6 +53,7 @@ export const Confirm = memo(() => {
             <Icons
               key={`X`}
               name={`X`}
+              isIconButton={true}
               className={`w-24px h-24px danger`}
               onClick={() => {
                 setCONFIRM({

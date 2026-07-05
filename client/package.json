@@ -24,7 +24,6 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "css:local": "bun run scripts/extract-local-jstyle.ts",
     "git": "bun run ~/.bootstrap/bootstrap-sync.ts --git",
     "swc": "bun run ~/.bootstrap/bootstrap-sync.ts --swc",
     "sync": "bun run ~/.bootstrap/bootstrap-sync.ts --sync",
