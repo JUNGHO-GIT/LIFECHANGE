@@ -13,7 +13,7 @@ import { sync, insertComma, handleNumberInput } from "@exportScripts";
 import { User, UserType } from "@exportSchemas";
 import { Footer } from "@exportLayouts";
 import { Input } from "@exportContainers";
-import { Icons, Hr, Img, Div, Paper, Grid } from "@exportComponents";
+import { Icons, Hr, Div, Paper, Grid } from "@exportComponents";
 import { Checkbox, Avatar } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------

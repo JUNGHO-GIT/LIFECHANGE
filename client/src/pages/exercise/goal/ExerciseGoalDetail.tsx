@@ -13,7 +13,7 @@ import { axios } from "@exportLibs";
 import { insertComma, sync, handleNumberInput } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input } from "@exportContainers";
-import { Icons, Img, Bg, Div, Paper, Grid, Br } from "@exportComponents";
+import { Icons, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseGoalDetail = memo(() => {

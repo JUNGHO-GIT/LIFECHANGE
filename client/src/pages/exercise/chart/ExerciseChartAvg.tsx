@@ -10,7 +10,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { ExerciseAvgVolume, ExerciseAvgCardio, ExerciseAvgType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDateMmDd } from "@exportScripts";
+import { formatY, formatDateMmDd, formatDateYyyyMmDd } from "@exportScripts";
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -134,26 +134,29 @@ export const ExerciseChartAvg = memo((props: ExerciseChartAvgProps) => {
     let object: any = null;
     let endStr: string = ``;
     let dateRange: string = ``;
+    const formatDateRange = (start?: string, end?: string): string => {
+      return `${formatDateYyyyMmDd(start)} - ${formatDateYyyyMmDd(end)}`;
+    };
 
 		(TYPE_STATE.section === `week` && TYPE_STATE.line === `volume`) ? (() => {
 		  object = OBJECT_VOLUME_WEEK;
 		  endStr = `vol`;
-		  dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		  dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
 		})()
 		: (TYPE_STATE.section === `week` && TYPE_STATE.line === `cardio`) ? (() => {
 		  object = OBJECT_CARDIO_WEEK;
 		  endStr = `hr`;
-		  dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		  dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
 		})()
 		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `volume`) ? (() => {
 		  object = OBJECT_VOLUME_MONTH;
 		  endStr = `vol`;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		})()
 		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `cardio`) && (() => {
 		  object = OBJECT_CARDIO_MONTH;
 		  endStr = `hr`;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		});
 
 		const { domain, ticks, formatterY } = formatY(object, exerciseChartArray, `exercise`);
@@ -265,6 +268,7 @@ export const ExerciseChartAvg = memo((props: ExerciseChartAvgProps) => {
 		      />
 		      <Legend
 		        iconType={`circle`}
+		        iconSize={8}
 		        verticalAlign={`bottom`}
 		        align={`center`}
 		        formatter={(value) => {

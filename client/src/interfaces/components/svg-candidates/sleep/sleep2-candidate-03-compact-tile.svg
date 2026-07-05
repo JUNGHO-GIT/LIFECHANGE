@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">sleep2 compact-tile</title>
-  <desc id="desc">취침 시간 - 작은 크기용 사각 타일</desc>
-  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#61C9EC}.s{fill:#FFE08A}.t{fill:#E8E4FF}.paper{fill:#fff}</style>
-  <rect x="12" y="12" width="232" height="232" rx="34" fill="#F8FAFC" stroke="#D8DEE5" stroke-width="5"/>
-  
-  <g transform="translate(17 17) scale(.87)"><path class="t o" d="M151 41c-34 15-53 51-43 87 10 36 47 58 83 48-15 34-52 53-88 43-45-13-71-60-58-105 13-44 60-70 106-73z"/><path class="s o" d="M40 196c0-27 22-48 49-48 13 0 25 5 34 14 9-18 27-30 49-30 30 0 54 24 54 54 0 5-1 9-2 13H41z"/></g>
-</svg>

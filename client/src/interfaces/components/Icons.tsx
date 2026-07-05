@@ -113,6 +113,7 @@ export const Icons = memo((props: any) => {
   if (!props.name) {
     return null;
   }
+  const iconClassName: string = [ `app-icon`, props?.className ?? `` ].filter(Boolean).join(` `);
   const commonValues: Record<string, string> = {
     xmlns: `http://www.w3.org/2000/svg`,
     viewBox: `0 0 24 24`,
@@ -122,7 +123,7 @@ export const Icons = memo((props: any) => {
     strokeLinejoin: `round`,
     color: props?.color ?? `black`,
     fill: props?.fill ?? `#ffffff`,
-    className: props?.className ?? ``,
+    className: iconClassName,
   };
   const svgIcons: Record<string, () => JSX.Element> = {
     X: () => (
@@ -580,7 +581,7 @@ export const Icons = memo((props: any) => {
       <img
         src={assetIconSrcs[props.name]}
         alt={String(props.name)}
-        className={props?.className ?? ``}
+        className={iconClassName}
         draggable={false}
       />
     );

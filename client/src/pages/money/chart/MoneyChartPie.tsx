@@ -10,6 +10,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { MoneyPie, MoneyPieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
+import { formatDateYyyyMmDd } from "@exportScripts";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -238,30 +239,33 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
     let object: any[] = [MoneyPie];
     let endStr: string = ``;
     let dateRange: string = ``;
+    const formatDateRange = (start?: string, end?: string): string => {
+      return `${formatDateYyyyMmDd(start)} - ${formatDateYyyyMmDd(end)}`;
+    };
 
 		(TYPE_STATE.section === `week` && TYPE_STATE.line === `income`) ? (() => {
 		  object = OBJECT_INCOME_WEEK;
-		  dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		  dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
 		})()
 		: (TYPE_STATE.section === `week` && TYPE_STATE.line === `expense`) ? (() => {
 		  object = OBJECT_EXPENSE_WEEK;
-		  dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		  dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
 		})()
 		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `income`) ? (() => {
 		  object = OBJECT_INCOME_MONTH;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		})()
 		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `expense`) ? (() => {
 		  object = OBJECT_EXPENSE_MONTH;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		})()
 		: (TYPE_STATE.section === `year` && TYPE_STATE.line === `income`) ? (() => {
 		  object = OBJECT_INCOME_YEAR;
-		  dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		  dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
 		})()
 		: (TYPE_STATE.section === `year` && TYPE_STATE.line === `expense`) && (() => {
 		  object = OBJECT_EXPENSE_YEAR;
-		  dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		  dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
 		})();
 
 		// 안전장치: object가 비어있거나 null인 경우 기본값 설정
@@ -340,6 +344,7 @@ export const MoneyChartPie = memo((props: MoneyChartPieProps) => {
 		      />
 		      <Legend
 		        iconType={`circle`}
+		        iconSize={8}
 		        verticalAlign={`bottom`}
 		        align={`center`}
 		        formatter={(value) => {

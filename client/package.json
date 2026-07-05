@@ -1,7 +1,7 @@
 {
   "name": "lifechange-client",
   "homepage": "/lifechange",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "type": "module",
   "main": "index.tsx",
   "license": "Apache-2.0",
@@ -24,6 +24,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
+    "css:local": "bun run scripts/extract-local-jstyle.ts",
     "git": "bun run ~/.bootstrap/bootstrap-sync.ts --git",
     "swc": "bun run ~/.bootstrap/bootstrap-sync.ts --swc",
     "sync": "bun run ~/.bootstrap/bootstrap-sync.ts --sync",

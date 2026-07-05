@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">calendar3 clean-mono</title>
-  <desc id="desc">메모 작성 - 선 중심의 절제형</desc>
-  <style>.o{stroke:#48505A;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FFFFFF}.s{fill:#E8EEF2}.t{fill:#D7E0E6}.paper{fill:#fff}.detail{display:none}</style>
-  
-  
-  <g><rect class="paper o" x="55" y="29" width="146" height="190" rx="18"/><path class="o detail" d="M86 74h82M86 108h82M86 142h59M86 176h45"/><path class="s o" d="m42 184 11-41 93-93 30 30-93 93z"/><path class="t o" d="m146 50 17-17 30 30-17 17z"/><path class="paper o" d="m42 184 41-11-30-30z"/></g>
-</svg>

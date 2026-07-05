@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">flag2 soft-badge</title>
-  <desc id="desc">영어 - 파스텔 원형 배지</desc>
-  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#61C9EC}.s{fill:#FF6B7A}.t{fill:#F8FAFC}.paper{fill:#fff}</style>
-  <circle cx="128" cy="128" r="119" fill="#FF6B7A"/>
-  
-  <g transform="translate(20 20) scale(.84)"><rect fill="#F8FAFC" class="o" x="31" y="55" width="194" height="146" rx="22"/><path stroke="#E64B61" stroke-width="12" d="M38 82h180M38 112h180M38 142h180M38 172h180"/><path fill="#3159A5" d="M36 60h88v78H36z"/><g fill="#fff" class="detail"><circle cx="54" cy="77" r="4"/><circle cx="80" cy="77" r="4"/><circle cx="106" cy="77" r="4"/><circle cx="54" cy="100" r="4"/><circle cx="80" cy="100" r="4"/><circle cx="106" cy="100" r="4"/><circle cx="54" cy="123" r="4"/><circle cx="80" cy="123" r="4"/><circle cx="106" cy="123" r="4"/></g></g>
-</svg>

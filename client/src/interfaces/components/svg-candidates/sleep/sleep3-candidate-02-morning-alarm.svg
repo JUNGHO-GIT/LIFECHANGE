@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">Morning alarm</title>
-  <desc id="desc">해가 떠오르는 알람시계</desc>
-  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="128" cy="137" r="73" fill="#A7DCF3"/><circle cx="128" cy="137" r="45" fill="#FFFFFF"/><path d="M128 104v36l25 16M77 57 51 35m128 22 26-22M82 201l-18 22m110-22 18 22"/><path d="M95 58a43 43 0 0 1 66 0" stroke="#FFB95E" stroke-width="14"/><path d="M128 24v18m-50-2 12 16m88-16-12 16"/>
-  </g>
-</svg>

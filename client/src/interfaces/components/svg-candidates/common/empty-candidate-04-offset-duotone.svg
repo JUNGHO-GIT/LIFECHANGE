@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">empty offset-duotone</title>
-  <desc id="desc">이미지 없음 - 입체감 있는 듀오톤</desc>
-  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#8B98A1}.s{fill:#DCE3E8}.t{fill:#F8FAFC}.paper{fill:#fff}</style>
-  <rect x="18" y="18" width="220" height="220" rx="48" fill="#F8FAFC"/><path d="M39 190c34 38 126 54 181-1" fill="none" stroke="#DCE3E8" stroke-width="12" opacity=".65"/>
-  <g transform="translate(8 9)" opacity=".14"><rect class="paper o" x="40" y="51" width="176" height="154" rx="18"/><circle class="s" cx="174" cy="88" r="12"/><path class="p o" d="m52 185 48-56 36 37 27-29 41 48"/><path class="o detail" d="m66 63 124 130"/></g>
-  <g transform="translate(13 9) scale(.9)"><rect class="paper o" x="40" y="51" width="176" height="154" rx="18"/><circle class="s" cx="174" cy="88" r="12"/><path class="p o" d="m52 185 48-56 36 37 27-29 41 48"/><path class="o detail" d="m66 63 124 130"/></g>
-</svg>

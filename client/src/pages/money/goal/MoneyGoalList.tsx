@@ -13,14 +13,12 @@ import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "@exportLibs";
 import { formatDateMmDd, formatDateYyyyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
-import { Div, Img, Hr, Icons, Paper, Grid } from "@exportComponents";
+import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
-type MoneyGoalKey = `income` | `expense`;
-
 declare interface MoneyGoalSource {
-  key: MoneyGoalKey;
+  key: `income` | `expense`;
   actual: number;
   goal: number;
   color: string;

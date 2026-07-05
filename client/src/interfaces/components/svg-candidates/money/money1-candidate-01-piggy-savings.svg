@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">Piggy savings</title>
-  <desc id="desc">동전이 들어가는 저금통</desc>
-  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M46 118c15-34 49-54 91-49 31 3 54 19 64 42l25 9-9 36-23 2c-9 20-27 32-52 38l-8 28h-29l-6-22H78l-8 22H40l7-36c-18-11-27-29-27-51 0-12 10-20 26-19z" fill="#FF9ACB"/><circle cx="158" cy="64" r="34" fill="#FFED9B"/><text x="158" y="75" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="900" fill="#343942" stroke="none">₩</text><circle cx="169" cy="120" r="5" fill="#343942"/><path d="M84 82c16-9 34-10 52-6"/>
-  </g>
-</svg>

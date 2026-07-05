@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">Window sunrise</title>
-  <desc id="desc">창문으로 들어오는 아침 햇빛</desc>
-  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="37" y="29" width="182" height="190" rx="15" fill="#F8FAFC"/><path d="M128 31v186M39 124h178"/><path d="M60 124a68 68 0 0 1 136 0z" fill="#FFE08A"/><path d="M87 124a41 41 0 0 1 82 0z" fill="#FFB95E"/><path d="M70 78 55 62m131 16 15-16M128 53V35"/><path d="m64 184 31-32 28 23 34-41 35 50"/>
-  </g>
-</svg>

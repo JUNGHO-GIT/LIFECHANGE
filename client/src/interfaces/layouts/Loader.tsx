@@ -19,7 +19,7 @@ const LOADER_DELAY_MS: number = 250;
 export const Loader = memo(({ active }: LoaderProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
-  const { LOADING } = useStoreLoading();
+  const LOADING = useStoreLoading((state) => state.LOADING);
   const sourceLoading: boolean = active ?? LOADING;
   const [ isVisible, setIsVisible ] = useState<boolean>(active === true);
 

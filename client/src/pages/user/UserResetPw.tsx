@@ -11,7 +11,7 @@ import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores"
 import { axios } from "@exportLibs";
 import { User, UserType } from "@exportSchemas";
 import { Input } from "@exportContainers";
-import { Icons, Div, Btn, Img, Hr, Paper, Grid } from "@exportComponents";
+import { Icons, Div, Btn, Hr, Paper, Grid } from "@exportComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const UserResetPw = memo(() => {

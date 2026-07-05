@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">Heart pulse</title>
-  <desc id="desc">심박 기반 유산소 운동</desc>
-  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M128 215S42 166 42 96c0-35 26-61 59-61 19 0 36 10 47 25 11-15 28-25 47-25 33 0 59 26 59 61 0 70-86 119-86 119z" fill="#FF9AA6"/><path d="M29 132h48l18-40 28 80 25-57 17 32h62" stroke="#FFFFFF" stroke-width="12"/>
-  </g>
-</svg>

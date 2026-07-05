@@ -10,7 +10,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { FoodLineKcal, FoodLineNut, FoodLineType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDateMmDd } from "@exportScripts";
+import { formatY, formatDateMmDd, formatDateYyyyMmDd } from "@exportScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -134,26 +134,29 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
     let object: any = null;
     let endStr: string = ``;
     let dateRange: string = ``;
+    const formatDateRange = (start?: string, end?: string): string => {
+      return `${formatDateYyyyMmDd(start)} - ${formatDateYyyyMmDd(end)}`;
+    };
 
 		(TYPE_STATE.section === `week` && TYPE_STATE.line === `kcal`) ? (() => {
 		  object = OBJECT_KCAL_WEEK;
 		  endStr = `kcal`;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		})()
 		: (TYPE_STATE.section === `week` && TYPE_STATE.line === `nut`) ? (() => {
 		  object = OBJECT_NUT_WEEK;
 		  endStr = `g`;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		})()
 		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `kcal`) ? (() => {
 		  object = OBJECT_KCAL_MONTH;
 		  endStr = `kcal`;
-		  dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		  dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
 		})()
 		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `nut`) && (() => {
 		  object = OBJECT_NUT_MONTH;
 		  endStr = `g`;
-		  dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+		  dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
 		})();
 
 		const { domain, ticks, formatterY } = formatY(object, foodChartArray, `food`);
@@ -220,7 +223,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		          type={`monotone`}
 		          stroke={chartThemeColors.kcal}
 		          strokeWidth={2}
-		          activeDot={{ r: 4 }}
+		          activeDot={{ r: 3 }}
 		          dot={false}
 		          isAnimationActive={true}
 		          animationBegin={0}
@@ -235,7 +238,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		            type={`monotone`}
 		            stroke={chartThemeColors.carb}
 		            strokeWidth={2}
-		            activeDot={{ r: 4 }}
+		            activeDot={{ r: 3 }}
 		            dot={false}
 		            isAnimationActive={true}
 		            animationBegin={0}
@@ -247,7 +250,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		            type={`monotone`}
 		            stroke={chartThemeColors.protein}
 		            strokeWidth={2}
-		            activeDot={{ r: 4 }}
+		            activeDot={{ r: 3 }}
 		            dot={false}
 		            isAnimationActive={true}
 		            animationBegin={0}
@@ -259,7 +262,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		            type={`monotone`}
 		            stroke={chartThemeColors.fat}
 		            strokeWidth={2}
-		            activeDot={{ r: 4 }}
+		            activeDot={{ r: 3 }}
 		            dot={false}
 		            isAnimationActive={true}
 		            animationBegin={0}
@@ -292,6 +295,7 @@ export const FoodChartLine = memo((props: FoodChartLineProps) => {
 		      />
 		      <Legend
 		        iconType={`circle`}
+		        iconSize={8}
 		        verticalAlign={`bottom`}
 		        align={`center`}
 		        formatter={(value) => {

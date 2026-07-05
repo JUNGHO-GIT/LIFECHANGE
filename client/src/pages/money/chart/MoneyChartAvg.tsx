@@ -10,7 +10,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { MoneyAvg, MoneyAvgType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDateMmDd } from "@exportScripts";
+import { formatY, formatDateMmDd, formatDateYyyyMmDd } from "@exportScripts";
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -126,16 +126,19 @@ export const MoneyChartAvg = memo((props: MoneyChartAvgProps) => {
     let object: any = null;
     let endStr: string = ``;
     let dateRange: string = ``;
+    const formatDateRange = (start?: string, end?: string): string => {
+      return `${formatDateYyyyMmDd(start)} - ${formatDateYyyyMmDd(end)}`;
+    };
 
 		(TYPE_STATE.section === `week`) ? (() => {
 		  object = OBJECT_WEEK;
 		  endStr = ``;
-		  dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		  dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
 		})()
 		: (TYPE_STATE.section === `month`) ? (() => {
 		  object = OBJECT_MONTH;
 		  endStr = ``;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		})()
 		: null;
 
@@ -248,6 +251,7 @@ export const MoneyChartAvg = memo((props: MoneyChartAvgProps) => {
 		      />
 		      <Legend
 		        iconType={`circle`}
+		        iconSize={8}
 		        verticalAlign={`bottom`}
 		        align={`center`}
 		        formatter={(value) => {

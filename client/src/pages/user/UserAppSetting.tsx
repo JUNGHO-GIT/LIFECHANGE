@@ -10,7 +10,7 @@ import { useCommonValue } from "@exportHooks";
 import { useStoreLanguage, useStoreConfirm } from "@exportStores";
 import { setLocal } from "@exportScripts";
 import { PopUp } from "@exportContainers";
-import { Icons, Img, Div, Br, Paper, Grid } from "@exportComponents";
+import { Icons, Div, Br, Paper, Grid } from "@exportComponents";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------

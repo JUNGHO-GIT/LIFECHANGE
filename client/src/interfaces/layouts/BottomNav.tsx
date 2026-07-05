@@ -5,13 +5,12 @@
  * @since 2025-12-26
  */
 
-import { memo, useCallback, useEffect } from "@exportReacts";
+import { memo, useCallback } from "@exportReacts";
 import { useCommonDate } from "@hooks/common/useCommonDate";
 import { useCommonValue } from "@hooks/common/useCommonValue";
-import { useStorageLocal } from "@hooks/storage/useStorageLocal";
 import { getLocal } from "@exportScripts";
 import { useStoreLanguage } from "@exportStores";
-import { Icons, Img, Paper } from "@exportComponents";
+import { Icons, Paper } from "@exportComponents";
 import { BottomNavigation, BottomNavigationAction } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -21,28 +20,6 @@ export const BottomNav = memo(() => {
   const { navigate, firstStr, PATH } = useCommonValue();
   const { getDayFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
-
-  // 2-1. useStorageLocal -----------------------------------------------------------------------
-  const [ selectedTab, setSelectedTab ] = useStorageLocal(
-    `tabs`, `bottom`, ``, {
-      exercise: false,
-      food: false,
-      calendar: false,
-      money: false,
-      sleep: false,
-    },
-  );
-
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  useEffect(() => {
-    setSelectedTab((prev: any) => {
-      const updatedTabs: any = Object.keys(prev).reduce<any>((acc, key) => {
-        acc[key] = key === firstStr;
-        return acc;
-      }, {});
-      return updatedTabs;
-    });
-  }, [firstStr]);
 
   // 4. handle ----------------------------------------------------------------------------------
   const handleClickBottomNav = useCallback((value: string) => {
@@ -70,7 +47,7 @@ export const BottomNav = memo(() => {
     const tabsSection = () => (
       <BottomNavigation
         showLabels={true}
-        value={Object.keys(selectedTab).find((key) => selectedTab[key as keyof typeof selectedTab])}
+        value={firstStr}
         className={`w-100p`}
       >
         <BottomNavigationAction

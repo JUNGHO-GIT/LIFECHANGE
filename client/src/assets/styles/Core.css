@@ -87,7 +87,7 @@ body {
 	overflow-x: hidden;
 	overflow-y: hidden;
 	z-index: var(--z-content);
-	animation: fadeIn 0.4s ease-in-out;
+	animation: none;
 }
 .App:has(.MuiSpeedDial-root) .content-wrapper {
 	padding-bottom: 96px;
@@ -101,42 +101,6 @@ body {
 	100% {
 		opacity: 1;
 	}
-}
-@keyframes splashLogoIn {
-	0% {
-		opacity: 0;
-		transform: translateY(10px) scale(0.96);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0) scale(1);
-	}
-}
-.splash-screen {
-	position: fixed;
-	inset: 0;
-	width: 100vw;
-	height: 100vh;
-	height: 100dvh;
-	padding: 24px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: var(--color-primary);
-	opacity: 1;
-	transition: opacity 0.45s ease-in-out, visibility 0.45s ease-in-out;
-	z-index: var(--z-splash);
-}
-.splash-screen.is-closing {
-	opacity: 0;
-	visibility: hidden;
-}
-.splash-logo {
-	width: auto;
-	height: 80vh;
-	height: 80dvh;
-	border-radius: 4px;
-	animation: splashLogoIn 0.55s ease-out both;
 }
 @keyframes shakeKeyframes {
 	0%, 100% {

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">food1 clean-mono</title>
-  <desc id="desc">식단 메뉴 - 선 중심의 절제형</desc>
-  <style>.o{stroke:#48505A;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FFFFFF}.s{fill:#E8EEF2}.t{fill:#D7E0E6}.paper{fill:#fff}.detail{display:none}</style>
-  
-  
-  <g><circle class="paper o" cx="128" cy="128" r="86"/><path class="p o" d="M128 42a86 86 0 0 1 74 43l-39 22a41 41 0 0 0-35-20z"/><path class="s o" d="M202 85a86 86 0 0 1 0 86l-39-22a41 41 0 0 0 0-42z"/><path class="t o" d="M202 171a86 86 0 0 1-148 0l39-22a41 41 0 0 0 70 0z"/><text x="128" y="141" text-anchor="middle" font-family="Arial,sans-serif" font-size="33" font-weight="800" fill="#3B3D46">Kcal</text></g>
-</svg>

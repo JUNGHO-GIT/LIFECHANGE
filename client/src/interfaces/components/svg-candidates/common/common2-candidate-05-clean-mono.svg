@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">common2 clean-mono</title>
-  <desc id="desc">항목 추가 - 선 중심의 절제형</desc>
-  <style>.o{stroke:#48505A;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}.p{fill:#FFFFFF}.s{fill:#E8EEF2}.t{fill:#D7E0E6}.paper{fill:#fff}.detail{display:none}</style>
-  
-  
-  <g><path class="paper o" d="M51 28h116l38 38v158H51z"/><path class="s o" d="M167 28v40h38"/><g class="o detail"><path d="M82 91h54M82 126h72M82 161h45"/><rect x="68" y="82" width="8" height="8"/><rect x="68" y="117" width="8" height="8"/><rect x="68" y="152" width="8" height="8"/></g><circle class="t o" cx="180" cy="183" r="40"/><path class="o" d="M180 162v42m-21-21h42"/></g>
-</svg>

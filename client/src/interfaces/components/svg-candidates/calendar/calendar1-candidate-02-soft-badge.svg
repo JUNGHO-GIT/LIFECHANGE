@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">calendar1 soft-badge</title>
-  <desc id="desc">월간 달력 - 파스텔 원형 배지</desc>
-  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#61C9EC}.s{fill:#A7DCF3}.t{fill:#F8FAFC}.paper{fill:#fff}</style>
-  <circle cx="128" cy="128" r="119" fill="#A7DCF3"/>
-  
-  <g transform="translate(20 20) scale(.84)"><rect class="paper o" x="40" y="48" width="176" height="168" rx="22"/><path class="p o" d="M40 91h176V70a22 22 0 0 0-22-22H62a22 22 0 0 0-22 22z"/><path class="o" d="M78 34v30m50-30v30m50-30v30"/><g class="s"><circle cx="78" cy="122" r="8"/><circle cx="128" cy="122" r="8"/><circle cx="178" cy="122" r="8"/><circle cx="78" cy="160" r="8"/><circle cx="128" cy="160" r="8"/><circle cx="178" cy="160" r="8"/><circle cx="78" cy="198" r="8"/><circle cx="128" cy="198" r="8"/><circle cx="178" cy="198" r="8"/></g></g>
-</svg>

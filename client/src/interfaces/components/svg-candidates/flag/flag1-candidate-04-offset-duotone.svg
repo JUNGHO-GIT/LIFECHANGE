@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">flag1 offset-duotone</title>
-  <desc id="desc">한국어 - 입체감 있는 듀오톤</desc>
-  <style>.o{stroke:#30343B;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.p{fill:#61C9EC}.s{fill:#FF6B7A}.t{fill:#F8FAFC}.paper{fill:#fff}</style>
-  <rect x="18" y="18" width="220" height="220" rx="48" fill="#F8FAFC"/><path d="M39 190c34 38 126 54 181-1" fill="none" stroke="#FF6B7A" stroke-width="12" opacity=".65"/>
-  <g transform="translate(8 9)" opacity=".14"><rect fill="#F8FAFC" class="o" x="31" y="55" width="194" height="146" rx="22"/><path fill="#EA3C53" d="M128 90a38 38 0 0 1 0 76 19 19 0 0 0 0-38 19 19 0 0 1 0-38z"/><path fill="#2D6BCB" d="M128 166a38 38 0 0 1 0-76 19 19 0 0 0 0 38 19 19 0 0 1 0 38z"/><g class="o detail"><path d="m65 89 17-22m-7 31 17-22m99 91-17 22m7-31-17 22"/><path d="m173 70 18 23m-28-14 18 23M83 165l-18 23m28-14-18 23"/></g></g>
-  <g transform="translate(13 9) scale(.9)"><rect fill="#F8FAFC" class="o" x="31" y="55" width="194" height="146" rx="22"/><path fill="#EA3C53" d="M128 90a38 38 0 0 1 0 76 19 19 0 0 0 0-38 19 19 0 0 1 0-38z"/><path fill="#2D6BCB" d="M128 166a38 38 0 0 1 0-76 19 19 0 0 0 0 38 19 19 0 0 1 0 38z"/><g class="o detail"><path d="m65 89 17-22m-7 31 17-22m99 91-17 22m7-31-17 22"/><path d="m173 70 18 23m-28-14 18 23M83 165l-18 23m28-14-18 23"/></g></g>
-</svg>

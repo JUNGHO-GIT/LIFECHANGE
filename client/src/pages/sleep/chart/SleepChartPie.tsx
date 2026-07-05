@@ -10,6 +10,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { SleepPie, SleepPieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
+import { formatDateYyyyMmDd } from "@exportScripts";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 // -------------------------------------------------------------------------------------------------
@@ -211,18 +212,21 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     let object: any[] = [SleepPie];
     let endStr: string = `%`;
     let dateRange: string = ``;
+    const formatDateRange = (start?: string, end?: string): string => {
+      return `${formatDateYyyyMmDd(start)} - ${formatDateYyyyMmDd(end)}`;
+    };
 
     if (TYPE_STATE.section === `week`) {
       object = OBJECT_WEEK || [SleepPie];
-      dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+      dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
     }
     else if (TYPE_STATE.section === `month`) {
       object = OBJECT_MONTH || [SleepPie];
-      dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+      dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
     }
     else if (TYPE_STATE.section === `year`) {
       object = OBJECT_YEAR || [SleepPie];
-      dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+      dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
     }
 
     // 안전장치: object가 비어있거나 null인 경우 기본값 설정
@@ -298,6 +302,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
           />
           <Legend
             iconType={`circle`}
+            iconSize={8}
             verticalAlign={`bottom`}
             align={`center`}
             formatter={(value) => {

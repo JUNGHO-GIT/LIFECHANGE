@@ -132,6 +132,8 @@
 .MuiButtonBase-root {
   min-width: 40px !important;
   min-height: 40px !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .MuiButtonBase-root:not(.MuiAccordionSummary-root):active {
   transform: scale(0.97);

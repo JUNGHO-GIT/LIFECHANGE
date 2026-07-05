@@ -156,7 +156,7 @@ export default defineConfig(({ command, mode }) => {
       assetsDir: `assets`,
       sourcemap: false,
       minify: isProd ? `oxc` : false,
-      target: `es2020`,
+      target: `es2022`,
       cssMinify: true,
       chunkSizeWarningLimit: 2048,
       reportCompressedSize: false,

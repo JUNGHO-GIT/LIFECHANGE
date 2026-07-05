@@ -10,7 +10,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { FoodAvgKcal, FoodAvgNut, FoodAvgType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDateMmDd } from "@exportScripts";
+import { formatY, formatDateMmDd, formatDateYyyyMmDd } from "@exportScripts";
 import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -132,26 +132,29 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
     let object: any = null;
     let endStr: string = ``;
     let dateRange: string = ``;
+    const formatDateRange = (start?: string, end?: string): string => {
+      return `${formatDateYyyyMmDd(start)} - ${formatDateYyyyMmDd(end)}`;
+    };
 
 		(TYPE_STATE.section === `week` && TYPE_STATE.line === `kcal`) ? (() => {
 		  object = OBJECT_KCAL_WEEK;
 		  endStr = `kcal`;
-		  dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		  dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
 		})()
 		: (TYPE_STATE.section === `week` && TYPE_STATE.line === `nut`) ? (() => {
 		  object = OBJECT_NUT_WEEK;
 		  endStr = `g`;
-		  dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		  dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
 		})()
 		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `kcal`) ? (() => {
 		  object = OBJECT_KCAL_MONTH;
 		  endStr = `kcal`;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		})()
 		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `nut`) ? (() => {
 		  object = OBJECT_NUT_MONTH;
 		  endStr = `g`;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		})()
 		: null;
 
@@ -286,6 +289,7 @@ export const FoodChartAvg = memo((props: FoodChartAvgProps) => {
 		      />
 		      <Legend
 		        iconType={`circle`}
+		        iconSize={8}
 		        verticalAlign={`bottom`}
 		        align={`center`}
 		        formatter={(value) => {

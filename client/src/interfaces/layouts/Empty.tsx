@@ -32,10 +32,10 @@ export const Empty = memo((
     // 2. isFindSection
     const isFindSection = () => (
       <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`}>
-        <Grid size={12} className={`p-2px`}>
+        <Grid size={12} className={`p-10px`}>
           <Accordion className={`radius-3 border-0 shadow-0`} expanded={false}>
             <AccordionSummary>
-              <Grid container={true} spacing={1}>
+              <Grid container={true} spacing={2}>
                 <Grid size={4} className={`d-row-left`}>
                   <Div className={`fs-0-9rem fw-600 dark`}>
                     {translate(`search`)}
@@ -55,7 +55,7 @@ export const Empty = memo((
     // 3. isGoalSection
     const isGoalSection = () => (
       <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`}>
-        <Grid size={12} className={`p-2px`}>
+        <Grid size={12} className={`p-10px`}>
           <Accordion className={`radius-3 border-0 shadow-0`} expanded={false}>
             <AccordionSummary
               onClick={() => {
@@ -96,7 +96,7 @@ export const Empty = memo((
     // 4. isRecordSection
     const isRecordSection = () => (
       <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`}>
-        <Grid size={12} className={`p-2px`}>
+        <Grid size={12} className={`p-10px`}>
           <Accordion className={`radius-3 border-0 shadow-0`} expanded={false}>
             <AccordionSummary
               onClick={() => {

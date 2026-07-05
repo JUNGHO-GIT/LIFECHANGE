@@ -10,6 +10,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { ExercisePie, ExercisePieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
+import { formatDateYyyyMmDd } from "@exportScripts";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -238,40 +239,43 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
     let object: any[] = [ExercisePie];
     let endStr: string = `%`;
     let dateRange: string = ``;
+    const formatDateRange = (start?: string, end?: string): string => {
+      return `${formatDateYyyyMmDd(start)} - ${formatDateYyyyMmDd(end)}`;
+    };
 
     if (TYPE_STATE.section === `week` && TYPE_STATE.line === `part`) {
       object = OBJECT_PART_WEEK || [ExercisePie];
-      dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+      dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
     }
     else if (TYPE_STATE.section === `week` && TYPE_STATE.line === `title`) {
       object = OBJECT_TITLE_WEEK || [ExercisePie];
-      dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+      dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
     }
     else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `part`) {
       object = OBJECT_PART_MONTH || [ExercisePie];
-      dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+      dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
     }
     else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `title`) {
       object = OBJECT_TITLE_MONTH || [ExercisePie];
-      dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+      dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
     }
     else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `part`) {
       object = OBJECT_PART_YEAR || [ExercisePie];
-      dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+      dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
     }
     else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `title`) {
       object = OBJECT_TITLE_YEAR || [ExercisePie];
-      dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+      dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
     }
     else {
       if (TYPE_STATE.section === `week`) {
-        dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+        dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
       }
       else if (TYPE_STATE.section === `month`) {
-        dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+        dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
       }
       else if (TYPE_STATE.section === `year`) {
-        dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+        dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
       }
     }
     if (!object || !Array.isArray(object) || object.length === 0) {
@@ -340,6 +344,7 @@ export const ExerciseChartPie = memo((props: ExerciseChartPieProps) => {
           />
           <Legend
             iconType={`circle`}
+            iconSize={8}
             verticalAlign={`bottom`}
             align={`center`}
             formatter={(value) => {

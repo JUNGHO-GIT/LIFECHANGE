@@ -13,7 +13,7 @@ import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "@exportLibs";
 import { formatDateMmDd, formatDateYyyyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
-import { Div, Hr, Icons, Img, Paper, Grid } from "@exportComponents";
+import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------

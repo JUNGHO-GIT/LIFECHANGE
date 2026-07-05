@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">Growth assets</title>
-  <desc id="desc">증가하는 자산과 동전</desc>
-  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-    <ellipse cx="65" cy="198" rx="35" ry="17" fill="#FFED9B"/><path d="M30 166v32c0 9 16 17 35 17s35-8 35-17v-32" fill="#FFED9B"/><ellipse cx="128" cy="170" rx="35" ry="17" fill="#FFED9B"/><path d="M93 137v33c0 9 16 17 35 17s35-8 35-17v-33" fill="#FFED9B"/><ellipse cx="191" cy="139" rx="35" ry="17" fill="#FFED9B"/><path d="M156 106v33c0 9 16 17 35 17s35-8 35-17v-33" fill="#FFED9B"/><path d="m49 114 49-47 37 28 60-62"/><path d="M169 33h26v26"/>
-  </g>
-</svg>

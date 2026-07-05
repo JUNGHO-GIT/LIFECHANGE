@@ -10,6 +10,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { FoodPie, FoodPieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
+import { formatDateYyyyMmDd } from "@exportScripts";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -244,36 +245,39 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     let object: any[] = [FoodPie];
     let endStr: string = ``;
     let dateRange: string = ``;
+    const formatDateRange = (start?: string, end?: string): string => {
+      return `${formatDateYyyyMmDd(start)} - ${formatDateYyyyMmDd(end)}`;
+    };
 
     if (TYPE_STATE.section === `week` && TYPE_STATE.line === `kcal`) {
       object = OBJECT_KCAL_WEEK || [FoodPie];
       endStr = `kcal`;
-      dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+      dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
     }
     else if (TYPE_STATE.section === `week` && TYPE_STATE.line === `nut`) {
       object = OBJECT_NUT_WEEK || [FoodPie];
       endStr = `g`;
-      dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+      dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
     }
     else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `kcal`) {
       object = OBJECT_KCAL_MONTH || [FoodPie];
       endStr = `kcal`;
-      dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+      dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
     }
     else if (TYPE_STATE.section === `month` && TYPE_STATE.line === `nut`) {
       object = OBJECT_NUT_MONTH || [FoodPie];
       endStr = `g`;
-      dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+      dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
     }
     else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `kcal`) {
       object = OBJECT_KCAL_YEAR || [FoodPie];
       endStr = `kcal`;
-      dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+      dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
     }
     else if (TYPE_STATE.section === `year` && TYPE_STATE.line === `nut`) {
       object = OBJECT_NUT_YEAR || [FoodPie];
       endStr = `g`;
-      dateRange = `${DATE?.yearStartFmt} \u00A0 - \u00A0 ${DATE?.yearEndFmt}`;
+      dateRange = formatDateRange(DATE?.yearStartFmt, DATE?.yearEndFmt);
     }
 
     // 안전장치: object가 비어있거나 null인 경우 기본값 설정
@@ -354,6 +358,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
           />
           <Legend
             iconType={`circle`}
+            iconSize={8}
             verticalAlign={`bottom`}
             align={`center`}
             formatter={(value) => {

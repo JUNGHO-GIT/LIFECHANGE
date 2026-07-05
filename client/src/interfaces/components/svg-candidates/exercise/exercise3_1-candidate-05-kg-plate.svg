@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">KG plate</title>
-  <desc id="desc">작은 크기에서도 선명한 중량 원판</desc>
-  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="128" cy="128" r="91" fill="#61C9EC"/><circle cx="128" cy="128" r="67" fill="#F8FAFC"/><circle cx="128" cy="128" r="17" fill="#FFED9B"/><path d="M84 66 70 48m102 18 14-18M84 190l-14 18m102-18 14 18"/><text x="128" y="119" text-anchor="middle" font-family="Arial, sans-serif" font-size="31" font-weight="900" fill="#343942" stroke="none">KG</text><path d="M97 147h62"/>
-  </g>
-</svg>

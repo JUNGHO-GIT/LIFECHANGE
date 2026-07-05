@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">Cardio speed meter</title>
-  <desc id="desc">유산소 강도와 속도</desc>
-  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M34 182a96 96 0 0 1 188 0z" fill="#F8FAFC"/><path d="M43 151a96 96 0 0 1 44-51l25 40a49 49 0 0 0-21 24z" fill="#8FE8D3"/><path d="M87 100a96 96 0 0 1 69-7l-14 45a49 49 0 0 0-30 2z" fill="#FFED9B"/><path d="M156 93a96 96 0 0 1 57 58l-44 16a49 49 0 0 0-27-29z" fill="#FF9AA6"/><path d="m128 180 48-50"/><circle cx="128" cy="180" r="11" fill="#61C9EC"/>
-  </g>
-</svg>

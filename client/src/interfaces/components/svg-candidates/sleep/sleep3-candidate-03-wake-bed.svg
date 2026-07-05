@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">Wake up bed</title>
-  <desc id="desc">침대와 아침 해</desc>
-  <g fill="none" stroke="#343942" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M32 130h192v72H32z" fill="#E8E4FF"/><path d="M32 95h46v107H32z" fill="#61C9EC"/><path d="M78 119h72c28 0 50 22 50 50H78z" fill="#FFFFFF"/><path d="M158 98a48 48 0 0 1 96 0" fill="#FFE08A"/><path d="M206 29v20m-35-5 14 15m56-15-14 15"/><path d="M32 202v20m192-20v20"/>
-  </g>
-</svg>

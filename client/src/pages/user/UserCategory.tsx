@@ -347,6 +347,7 @@ export const UserCategory = memo(() => {
                         <Div className={`fs-0-9rem ml-auto d-row-right`}>
                           <Icons
                             name={`Search`}
+                            isIconButton={true}
                             className={`w-12px h-12px`}
                             onClick={() => {
                               setSelectedIdx((prev) => ({
@@ -357,6 +358,7 @@ export const UserCategory = memo(() => {
                           />
                           <Icons
                             name={`Pencil`}
+                            isIconButton={true}
                             className={`w-12px h-12px navy`}
                             onClick={() => {
                               setSelectedIdx((prev) => ({
@@ -368,6 +370,7 @@ export const UserCategory = memo(() => {
                           />
                           <Icons
                             name={`Trash`}
+                            isIconButton={true}
                             className={`w-12px h-12px burgundy`}
                             onClick={() => {
                               setSelectedIdx((prev) => ({
@@ -390,6 +393,7 @@ export const UserCategory = memo(() => {
                       <Icons
                         key={`Plus`}
                         name={`Plus`}
+                        isIconButton={true}
                         className={`w-12px h-12px`}
                         onClick={() => {
                           handleAdd(`part`);
@@ -471,6 +475,7 @@ export const UserCategory = memo(() => {
                           <Div className={`fs-0-9rem ml-auto d-row-right`}>
                             <Icons
                               name={`Pencil`}
+                              isIconButton={true}
                               className={`w-12px h-12px navy`}
                               onClick={() => {
                                 setSelectedIdx((prev) => ({
@@ -482,6 +487,7 @@ export const UserCategory = memo(() => {
                             />
                             <Icons
                               name={`Trash`}
+                              isIconButton={true}
                               className={`w-12px h-12px burgundy`}
                               onClick={() => {
                                 setSelectedIdx((prev) => ({
@@ -554,6 +560,7 @@ export const UserCategory = memo(() => {
                                   <Icons
                                     key={`Search`}
                                     name={`Search`}
+                                    isIconButton={true}
                                     className={`w-18px h-18px black ml-auto`}
                                     onClick={(e: any) => {
                                       setDataType(item);

@@ -13,7 +13,7 @@ import { axios } from "@exportLibs";
 import { insertComma, sync, handleNumberInput } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@exportContainers";
-import { Icons, Img, Bg, Div, Paper, Grid, Br } from "@exportComponents";
+import { Icons, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 import { Checkbox, MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------

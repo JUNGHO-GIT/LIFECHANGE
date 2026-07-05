@@ -10,7 +10,7 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { SleepLine, SleepLineType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { formatY, formatDateMmDd } from "@exportScripts";
+import { formatY, formatDateMmDd, formatDateYyyyMmDd } from "@exportScripts";
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
@@ -126,14 +126,17 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
     let object: any = null;
     let endStr: string = ``;
     let dateRange: string = ``;
+    const formatDateRange = (start?: string, end?: string): string => {
+      return `${formatDateYyyyMmDd(start)} - ${formatDateYyyyMmDd(end)}`;
+    };
 
 		(TYPE_STATE.section === `week`) ? (() => {
 		  object = OBJECT_WEEK;
-		  dateRange = `${DATE?.weekStartFmt} \u00A0 - \u00A0 ${DATE?.weekEndFmt}`;
+		  dateRange = formatDateRange(DATE?.weekStartFmt, DATE?.weekEndFmt);
 		})()
 		: (TYPE_STATE.section === `month`) && (() => {
 		  object = OBJECT_MONTH;
-		  dateRange = `${DATE?.monthStartFmt} \u00A0 - \u00A0 ${DATE?.monthEndFmt}`;
+		  dateRange = formatDateRange(DATE?.monthStartFmt, DATE?.monthEndFmt);
 		})();
 
 		const { domain, ticks, formatterY } = formatY(object, sleepChartArray, `sleep`, `line`);
@@ -200,7 +203,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		          type={`monotone`}
 		          stroke={chartThemeColors.bedTime}
 		          strokeWidth={2}
-		          activeDot={{ r: 4 }}
+		          activeDot={{ r: 3 }}
 		          dot={false}
 		          isAnimationActive={true}
 		          animationBegin={0}
@@ -214,7 +217,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		          type={`monotone`}
 		          stroke={chartThemeColors.wakeTime}
 		          strokeWidth={2}
-		          activeDot={{ r: 4 }}
+		          activeDot={{ r: 3 }}
 		          dot={false}
 		          isAnimationActive={true}
 		          animationBegin={0}
@@ -228,7 +231,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		          type={`monotone`}
 		          stroke={chartThemeColors.sleepTime}
 		          strokeWidth={2}
-		          activeDot={{ r: 4 }}
+		          activeDot={{ r: 3 }}
 		          dot={false}
 		          isAnimationActive={true}
 		          animationBegin={0}
@@ -260,6 +263,7 @@ export const SleepChartLine = memo((props: SleepChartLineProps) => {
 		      />
 		      <Legend
 		        iconType={`circle`}
+		        iconSize={8}
 		        verticalAlign={`bottom`}
 		        align={`center`}
 		        formatter={(value) => {

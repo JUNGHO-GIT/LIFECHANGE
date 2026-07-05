@@ -14,7 +14,7 @@ import { handleNumberInput } from "@exportScripts";
 import { ExerciseRecord, ExerciseRecordType } from "@exportSchemas";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@exportContainers";
-import { Icons, Img, Bg, Div, Paper, Grid, Br } from "@exportComponents";
+import { Icons, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------

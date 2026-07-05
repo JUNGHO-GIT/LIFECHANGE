@@ -13,7 +13,7 @@ import { FoodFind, FoodFindType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { setSession, getSession, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
-import { Div, Hr, Img, Icons, Paper, Grid } from "@exportComponents";
+import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Checkbox, Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------

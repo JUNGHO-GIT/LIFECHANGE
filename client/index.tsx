@@ -5,6 +5,8 @@
  * @since 2025-12-26
  */
 
+import "@assets/styles/Reset.local.css";
+import "@assets/styles/Jstyle.local.css";
 import "react-calendar/dist/Calendar.css";
 import "@assets/styles/Core.css";
 import "@assets/styles/Calendar.css";
@@ -13,7 +15,6 @@ import "@assets/styles/Mui.css";
 import "@assets/styles/Components.css";
 import "@assets/styles/Extra.css";
 
-import lifechangeLogo from "@assets/images/splash-v2.webp";
 import { useCommonValue } from "@hooks/common/useCommonValue";
 import { useLanguageInitialize } from "@hooks/language/useLanguageInitialize";
 import { useLanguageSetting } from "@hooks/language/useLanguageSetting";
@@ -28,7 +29,7 @@ import { Header } from "@interfaces/layouts/Header";
 import { Loader } from "@interfaces/layouts/Loader";
 import { TopNav } from "@interfaces/layouts/TopNav";
 import { CssBaseline, createTheme, ThemeProvider } from "@exportMuis";
-import { BrowserRouter, createRoot, lazy, memo, Route, Routes, Suspense, useEffect, useState } from "@exportReacts";
+import { BrowserRouter, createRoot, lazy, memo, Route, Routes, Suspense, useEffect } from "@exportReacts";
 import { registerInterceptor } from "@assets/scripts/interceptor";
 
 // admin ------------------------------------------------------------------------------------------
@@ -162,37 +163,6 @@ const routeLoaders: RouteLoader[] = [
   () => import("@pages/food/record/FoodRecordList"),
   () => import("@pages/money/record/MoneyRecordList"),
   () => import("@pages/sleep/record/SleepRecordList"),
-  () => import("@pages/calendar/CalendarDetail"),
-  () => import("@pages/exercise/goal/ExerciseGoalList"),
-  () => import("@pages/exercise/goal/ExerciseGoalDetail"),
-  () => import("@pages/exercise/record/ExerciseRecordDetail"),
-  () => import("@pages/food/goal/FoodGoalList"),
-  () => import("@pages/food/goal/FoodGoalDetail"),
-  () => import("@pages/food/find/FoodFindList"),
-  () => import("@pages/food/find/FoodFavoriteList"),
-  () => import("@pages/food/record/FoodRecordDetail"),
-  () => import("@pages/money/goal/MoneyGoalList"),
-  () => import("@pages/money/goal/MoneyGoalDetail"),
-  () => import("@pages/money/record/MoneyRecordDetail"),
-  () => import("@pages/sleep/goal/SleepGoalList"),
-  () => import("@pages/sleep/goal/SleepGoalDetail"),
-  () => import("@pages/sleep/record/SleepRecordDetail"),
-  () => import("@pages/exercise/chart/ExerciseChart"),
-  () => import("@pages/food/chart/FoodChart"),
-  () => import("@pages/money/chart/MoneyChart"),
-  () => import("@pages/sleep/chart/SleepChart"),
-  () => import("@pages/user/UserAppSetting"),
-  () => import("@pages/user/UserAppInfo"),
-  () => import("@pages/user/UserSignup"),
-  () => import("@pages/user/UserLogin"),
-  () => import("@pages/user/UserResetPw"),
-  () => import("@pages/user/UserDetail"),
-  () => import("@pages/user/UserDelete"),
-  () => import("@pages/user/UserCategory"),
-  () => import("@pages/admin/AdminDashboard"),
-  () => import("@pages/auth/AuthError"),
-  () => import("@pages/auth/AuthGoogle"),
-  () => import("@pages/auth/AuthPrivacy"),
 ];
 
 const preloadRouteModules = (): (() => void) => {
@@ -217,7 +187,7 @@ const preloadRouteModules = (): (() => void) => {
 
   timer = setTimeout(() => {
     loadNext(0);
-  }, 450);
+  }, 120);
 
   return () => {
     cancelled = true;
@@ -226,41 +196,6 @@ const preloadRouteModules = (): (() => void) => {
     }
   };
 };
-
-// 앱 실행 스플래시 ------------------------------------------------------------------------------
-const SplashScreen = memo(() => {
-  const [visible, setVisible] = useState<boolean>(true);
-  const [closing, setClosing] = useState<boolean>(false);
-
-  useEffect(() => {
-    const closeTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
-      setClosing(true);
-    }, 1350);
-    const hideTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
-      setVisible(false);
-    }, 1800);
-
-    return () => {
-      clearTimeout(closeTimer);
-      clearTimeout(hideTimer);
-    };
-  }, []);
-
-  return visible ? (
-    <div
-      aria-label={`lifechange loading`}
-      className={`splash-screen${closing ? ` is-closing` : ``}`}
-      role={`status`}
-    >
-      <img
-        alt={`LIFECHANGE`}
-        className={`splash-logo`}
-        decoding={`async`}
-        src={lifechangeLogo}
-      />
-    </div>
-  ) : null;
-});
 
 // 앱 라우트 ----------------------------------------------------------------------------------
 const App = memo(() => {
@@ -361,6 +296,14 @@ const appTheme = createTheme({
   typography: {
     fontFamily: fontFamily
   },
+  components: {
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+        disableTouchRipple: true,
+      },
+    },
+  },
   palette: {
     mode: `light`,
     primary: { main: `#0876b9` },
@@ -381,7 +324,6 @@ createRoot(document.querySelector(`#root`) as HTMLElement).render(
       <CssBaseline />
       <ErrorBoundary>
         <App />
-        <SplashScreen />
       </ErrorBoundary>
     </ThemeProvider>
   </BrowserRouter>,

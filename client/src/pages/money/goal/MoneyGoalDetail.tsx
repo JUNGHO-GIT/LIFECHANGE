@@ -14,7 +14,7 @@ import { insertComma, sync } from "@exportScripts";
 import { handleNumberInput } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, Count, Delete, Input } from "@exportContainers";
-import { Icons, Img, Bg, Div, Paper, Grid, Br } from "@exportComponents";
+import { Icons, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyGoalDetail = memo(() => {

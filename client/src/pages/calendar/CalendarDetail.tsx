@@ -15,7 +15,7 @@ import { axios } from "@exportLibs";
 import { insertComma, handleNumberInput, sync } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete, Input, Select, Memo } from "@exportContainers";
-import { Icons, Img, Bg, Paper, Grid, Div, Br } from "@exportComponents";
+import { Icons, Bg, Paper, Grid, Div, Br } from "@exportComponents";
 import { Checkbox, MenuItem } from "@exportMuis";
 import { MoneyCategoryItem, ExerciseCategoryItem, FoodCategoryItem } from "@exportTypes";
 
