@@ -6,7 +6,7 @@
  */
 
 import { memo } from "@exportReacts";
-import { useCommonValue } from "@exportHooks";
+import { useCommonValue, useCommonDate } from "@exportHooks";
 import { Img, Paper, Grid, Br } from "@exportComponents";
 import { TableContainer, Table, TableBody, TableRow, TableCell } from "@exportMuis";
 
@@ -17,12 +17,17 @@ export const UserAppInfo = memo(() => {
   const {
     TITLE,
     VERSION,
+    BUILD_TIME,
     MODE,
     localTimeZone,
     localLang,
     localIsoCode,
     localCurrency,
   } = useCommonValue();
+  const { getDayNotFmt } = useCommonDate();
+
+  // 2. format -------------------------------------------------------------------------------------
+  const buildTimeText = BUILD_TIME ? getDayNotFmt(BUILD_TIME).format(`YYYY-MM-DD HH:mm`) : `-`;
 
   // 7. userAppInfo --------------------------------------------------------------------------------
   const userAppInfoNode = () => (
@@ -38,7 +43,7 @@ export const UserAppInfo = memo(() => {
           />
         </Grid>
         <Br m={50} />
-        <Grid size={10} className={`d-center`}>
+        <Grid size={11} className={`d-center`}>
           <Grid container={true} spacing={2} className={`radius-3 border-light-1 shadow-0`}>
             <Grid size={12} className={`d-center`}>
               <TableContainer className={`over-hidden`}>
@@ -58,6 +63,14 @@ export const UserAppInfo = memo(() => {
                       </TableCell>
                       <TableCell className={`w-65vw fs-0-7rem fw-500 dark p-15px`}>
                         {VERSION}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell className={`w-30vw fs-0-75rem fw-600 black p-15px`}>
+                        {`update`}
+                      </TableCell>
+                      <TableCell className={`w-65vw fs-0-7rem fw-500 dark p-15px`}>
+                        {buildTimeText}
                       </TableCell>
                     </TableRow>
                     <TableRow>

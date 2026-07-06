@@ -36,7 +36,13 @@ export class ErrorBoundary extends Component<
 
   // 3. catch ----------------------------------------------------------------------------------------
   override componentDidCatch(error: Error, info: ErrorInfo): void {
-    console.error(`[ErrorBoundary]`, error, info?.componentStack);
+    const componentStack: string = info?.componentStack ?? ``;
+    const normalizedError: Error = error instanceof Error ? error : new Error(String(error));
+    // console.* 는 프로덕션 빌드(vite dropConsole)에서 제거되므로 표준 reportError 로 실제 에러를 남긴다.
+    // reportError 는 console.* 가 아니라 minify 제거 대상이 아니어서 배포 환경 콘솔/에러 리스너에 그대로 노출된다.
+    const reportFn: ((reported: unknown) => void) | undefined = (globalThis as { reportError?: (reported: unknown) => void }).reportError;
+    reportFn?.(normalizedError);
+    console.error(`[ErrorBoundary]`, normalizedError, componentStack);
   }
 
   // 7. fallback -------------------------------------------------------------------------------------

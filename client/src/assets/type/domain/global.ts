@@ -69,6 +69,7 @@ export interface LocationStateType {
 export interface EnvType {
   VITE_APP_TITLE?: string;
   VITE_APP_VERSION?: string;
+  VITE_APP_BUILD_TIME?: string;
   VITE_APP_SERVER_URL?: string;
   VITE_APP_GCLOUD_URL?: string;
   VITE_APP_TODAY?: string;
@@ -426,6 +427,7 @@ export interface CommonValueType {
 
   TITLE: string;
   VERSION: string;
+  BUILD_TIME: string;
   MODE: string;
   URL: string;
   GCLOUD_URL: string;

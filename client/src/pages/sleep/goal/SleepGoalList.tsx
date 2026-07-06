@@ -515,10 +515,10 @@ export const SleepGoalList = memo(() => {
 
     // 7-1. list
     const listSection = () => (
-      <Grid container={true} spacing={0}>
-        {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px p-2px`} key={item._id || `${item.sleep_goal_dateStart}-${item.sleep_goal_dateEnd}-${i}`}>
-            <Accordion className={`radius-2 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
+      deferredObject?.map((item, i) => (
+        <Grid container={true} spacing={0} key={item._id || `sleep-goal-${i}`}>
+          <Grid size={12} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`}>
+            <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
               <AccordionSummary
                 expandIcon={(
                   <Icons
@@ -783,8 +783,8 @@ export const SleepGoalList = memo(() => {
               </AccordionDetails>
             </Accordion>
           </Grid>
-        ))}
-      </Grid>
+        </Grid>
+      ))
     );
     // 7-10. return
     return (

@@ -37,10 +37,23 @@ const svgRawModules: Record<string, string> = import.meta.glob(`../../assets/svg
   import: `default`,
   eager: true,
 });
+// rolldown 프로덕션 빌드에서 import.meta.glob 의 ?raw/import:default 가 eager 로 언랩되지 않아
+// 값이 네임스페이스 객체({ default }) 또는 인라인 asset data URI 로 들어오는 경우를 모두 원본 svg 텍스트로 정규화
+const toRawSvg = (mod: unknown): string => {
+  const value: unknown = mod && typeof mod === `object` && `default` in mod ? (mod as { default: unknown }).default : mod;
+  const text: string = typeof value === `string` ? value : ``;
+  if (text.startsWith(`data:image/svg+xml;base64,`)) {
+    return atob(text.slice(`data:image/svg+xml;base64,`.length));
+  }
+  if (text.startsWith(`data:image/svg+xml,`)) {
+    return decodeURIComponent(text.slice(`data:image/svg+xml,`.length));
+  }
+  return text;
+};
 const svgRawByName: Record<string, string> = {};
 for (const rawPath in svgRawModules) {
   const fileName: string = (rawPath.split(`/`).pop()?.replace(`.svg`, ``) ?? ``).toLowerCase();
-  svgRawByName[fileName] = svgRawModules[rawPath] ?? ``;
+  svgRawByName[fileName] = toRawSvg(svgRawModules[rawPath]);
 }
 
 // 정적 aria-label 맵: 렌더마다 재생성 방지 위해 모듈 스코프로 이동 --------------------------------------------
@@ -140,7 +153,7 @@ export const Icons = memo((props: any) => {
       />
     );
   }
-  else if (svgRawByName[String(props.name).toLowerCase()]) {
+  else if (svgRawByName[String(props.name).toLowerCase()]?.startsWith(`<svg`)) {
     // className 을 <svg> 에 직접 부여 → 크기 클래스와 색 클래스(currentColor)가 그대로 적용됨; 파일명은 소문자라 이름 정규화
     const svgHtml: string = svgRawByName[String(props.name).toLowerCase()].replace(`<svg `, `<svg class="${iconClassName}" `);
     IconComponent = (

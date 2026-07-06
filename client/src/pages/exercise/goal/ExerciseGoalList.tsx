@@ -530,344 +530,342 @@ export const ExerciseGoalList = memo(() => {
 
     // 7-1. list
     const listSection = () => (
-      <Grid container={true} spacing={0}>
-        {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`} key={item._id || `exercise-goal-${i}`}>
-            <Grid size={12} className={`p-2px`}>
-              <Accordion className={`radius-2 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
-                <AccordionSummary
-                  expandIcon={(
+      deferredObject?.map((item, i) => (
+        <Grid container={true} spacing={0} key={item._id || `exercise-goal-${i}`}>
+          <Grid size={12} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`}>
+            <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
+              <AccordionSummary
+                expandIcon={(
+                  <Icons
+                    key={`ChevronDown`}
+                    name={`ChevronDown`}
+                    isIconButton={true}
+                    className={`w-16px h-16px`}
+                    onClick={(e: any) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleToggle(i);
+                    }}
+                  />
+                )}
+                onClick={() => {
+                  void navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.exercise_goal_dateType,
+                      dateStart: item.exercise_goal_dateStart,
+                      dateEnd: item.exercise_goal_dateEnd,
+                    },
+                  });
+                }}
+              >
+                <Grid container={true} spacing={1}>
+                  <Grid size={2} className={`d-row-center`}>
                     <Icons
-                      key={`ChevronDown`}
-                      name={`ChevronDown`}
-                      isIconButton={true}
+                      key={`Search`}
+                      name={`Search`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
-                      onClick={(e: any) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleToggle(i);
-                      }}
                     />
-                  )}
-                  onClick={() => {
-                    void navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.exercise_goal_dateType,
-                        dateStart: item.exercise_goal_dateStart,
-                        dateEnd: item.exercise_goal_dateEnd,
-                      },
-                    });
-                  }}
-                >
+                  </Grid>
+                  <Grid size={10} className={`d-row-left`}>
+                    <Div className={`fs-0-8rem fw-600 black`}>
+                      {formatDateMmDd(item.exercise_goal_dateStart)}
+                    </Div>
+                    <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      {translate(getDayNotFmt(item.exercise_goal_dateStart).format(`ddd`))}
+                    </Div>
+                    <Div className={`fs-0-8rem fw-500 dark ml-5px mr-5px`}>
+                      {`-`}
+                    </Div>
+                    <Div className={`fs-0-8rem fw-600 black`}>
+                      {formatDateMmDd(item.exercise_goal_dateEnd)}
+                    </Div>
+                    <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      {translate(getDayNotFmt(item.exercise_goal_dateEnd).format(`ddd`))}
+                    </Div>
+                  </Grid>
+                </Grid>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container={true} spacing={1} className={`legend`}>
+
+                  {/** row 1 * */}
                   <Grid container={true} spacing={1}>
-                    <Grid size={2} className={`d-row-center`}>
-                      <Icons
-                        key={`Search`}
-                        name={`Search`}
-                        isIconButton={false}
-                        className={`w-16px h-16px`}
-                      />
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartColors[5] }}>
+                        {`●`}
+                      </Div>
                     </Grid>
-                    <Grid size={10} className={`d-row-left`}>
-                      <Div className={`fs-0-8rem fw-600 black`}>
-                        {formatDateMmDd(item.exercise_goal_dateStart)}
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`exerciseCount`)}
                       </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.exercise_goal_dateStart).format(`ddd`))}
-                      </Div>
-                      <Div className={`fs-0-8rem fw-500 dark ml-5px mr-5px`}>
-                        {`-`}
-                      </Div>
-                      <Div className={`fs-0-8rem fw-600 black`}>
-                        {formatDateMmDd(item.exercise_goal_dateEnd)}
-                      </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.exercise_goal_dateEnd).format(`ddd`))}
-                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_goal_count_color}`}>
+                            {insertComma(item.exercise_goal_count ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`c`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_count_color}`}>
+                            {insertComma(item.exercise_record_total_count ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`c`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_count_color}`}>
+                            {insertComma(item.exercise_record_diff_count ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`c`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </Grid>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Grid container={true} spacing={1} className={`legend`}>
 
-                    {/** row 1 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartColors[5] }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`exerciseCount`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_goal_count_color}`}>
-                              {insertComma(item.exercise_goal_count ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`c`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_count_color}`}>
-                              {insertComma(item.exercise_record_total_count ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`c`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_count_color}`}>
-                              {insertComma(item.exercise_record_diff_count ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`c`)}
-                            </Div>
-                          </Grid>
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 2 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`volume`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_goal_volume_color}`}>
+                            {insertComma(item.exercise_goal_volume ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`vol`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
+                            {insertComma(item.exercise_record_total_volume ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`vol`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_volume_color}`}>
+                            {insertComma(item.exercise_record_diff_volume ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`vol`)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 2 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`volume`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_goal_volume_color}`}>
-                              {insertComma(item.exercise_goal_volume ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`vol`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
-                              {insertComma(item.exercise_record_total_volume ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`vol`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_volume_color}`}>
-                              {insertComma(item.exercise_record_diff_volume ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`vol`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 3 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.cardio }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`cardio`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_goal_cardio_color}`}>
-                              {item.exercise_goal_cardio}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`min`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_cardio_color}`}>
-                              {item.exercise_record_total_cardio}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`min`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_cardio_color}`}>
-                              {item.exercise_record_diff_cardio}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`min`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 4 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`scale`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_goal_scale_color}`}>
-                              {insertComma(item.exercise_goal_scale ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {localUnit}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_scale_color}`}>
-                              {insertComma(item.exercise_record_total_scale ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {localUnit}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_scale_color}`}>
-                              {insertComma(item.exercise_record_diff_scale ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {localUnit}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
                   </Grid>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
+
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 3 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.cardio }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`cardio`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_goal_cardio_color}`}>
+                            {item.exercise_goal_cardio}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`min`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_cardio_color}`}>
+                            {item.exercise_record_total_cardio}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`min`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_cardio_color}`}>
+                            {item.exercise_record_diff_cardio}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`min`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 4 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`scale`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_goal_scale_color}`}>
+                            {insertComma(item.exercise_goal_scale ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {localUnit}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_scale_color}`}>
+                            {insertComma(item.exercise_record_total_scale ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {localUnit}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_scale_color}`}>
+                            {insertComma(item.exercise_record_diff_scale ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {localUnit}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
           </Grid>
-        ))}
-      </Grid>
+        </Grid>
+      ))
     );
     // 7-10. return
     return (

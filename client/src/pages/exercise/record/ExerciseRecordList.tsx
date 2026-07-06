@@ -491,171 +491,169 @@ export const ExerciseRecordList = memo(() => {
 
     // 7-1. list
     const listSection = () => (
-      <Grid container={true} spacing={0}>
-        {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`} key={item._id || `exercise-record-${i}`}>
-            <Grid size={12} className={`p-2px`}>
-              <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
-                <AccordionSummary
-                  expandIcon={(
+      deferredObject?.map((item, i) => (
+        <Grid container={true} spacing={0} key={item._id || `exercise-record-${i}`}>
+          <Grid size={12} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`}>
+            <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
+              <AccordionSummary
+                expandIcon={(
+                  <Icons
+                    key={`ChevronDown`}
+                    name={`ChevronDown`}
+                    isIconButton={true}
+                    className={`w-16px h-16px`}
+                    onClick={(e: any) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsExpanded(isExpanded.map((item: any, index: number) => (
+                        index === i ? { expanded: !item.expanded } : item
+                      )));
+                    }}
+                  />
+                )}
+                onClick={() => {
+                  void navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.exercise_record_dateType,
+                      dateStart: item.exercise_record_dateStart,
+                      dateEnd: item.exercise_record_dateEnd,
+                    },
+                  });
+                }}
+              >
+                <Grid container={true} spacing={0}>
+                  <Grid size={2} className={`d-row-center`}>
                     <Icons
-                      key={`ChevronDown`}
-                      name={`ChevronDown`}
-                      isIconButton={true}
+                      key={`Search`}
+                      name={`Search`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
-                      onClick={(e: any) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsExpanded(isExpanded.map((item: any, index: number) => (
-                          index === i ? { expanded: !item.expanded } : item
-                        )));
-                      }}
                     />
-                  )}
-                  onClick={() => {
-                    void navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.exercise_record_dateType,
-                        dateStart: item.exercise_record_dateStart,
-                        dateEnd: item.exercise_record_dateEnd,
-                      },
-                    });
-                  }}
-                >
-                  <Grid container={true} spacing={0}>
-                    <Grid size={2} className={`d-row-center`}>
-                      <Icons
-                        key={`Search`}
-                        name={`Search`}
-                        isIconButton={false}
-                        className={`w-16px h-16px`}
-                      />
+                  </Grid>
+                  <Grid size={5} className={`d-row-left`}>
+                    <Div className={`fs-0-9rem fw-600 black mr-5px`}>
+                      {formatDateMmDd(item.exercise_record_dateStart)}
+                    </Div>
+                    <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      {translate(getDayNotFmt(item.exercise_record_dateStart).format(`ddd`))}
+                    </Div>
+                    <Icons
+                      name={(item.exercise_record_score_smile ?? `smile3`)}
+                      isIconButton={false}
+                      className={`w-14px h-14px ml-10px`}
+                      sx={{ padding: 0 }}
+                    />
+                  </Grid>
+                  <Grid size={5} className={`d-row-right`}>
+                    <Div className={`d-row-center`}>
+                      <Div className={`fs-0-75rem fw-700 ${item.exercise_record_summary_scale_color ?? item.exercise_record_total_scale_color}`}>
+                        {insertComma(item.exercise_record_total_scale ?? `0`)}
+                      </Div>
+                      <Div className={`fs-0-6rem fw-600 dark ml-5px`}>
+                        {localUnit}
+                      </Div>
+                    </Div>
+                  </Grid>
+                </Grid>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container={true} spacing={1} className={`legend`}>
+
+                  {/** row 1 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
+                        {`●`}
+                      </Div>
                     </Grid>
-                    <Grid size={5} className={`d-row-left`}>
-                      <Div className={`fs-0-9rem fw-600 black mr-5px`}>
-                        {formatDateMmDd(item.exercise_record_dateStart)}
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`volume`)}
                       </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.exercise_record_dateStart).format(`ddd`))}
-                      </Div>
-                      <Icons
-                        name={(item.exercise_record_score_smile ?? `smile3`)}
-                        isIconButton={false}
-                        className={`w-14px h-14px ml-10px`}
-                        sx={{ padding: 0 }}
-                      />
                     </Grid>
-                    <Grid size={5} className={`d-row-right`}>
-                      <Div className={`d-row-center`}>
-                        <Div className={`fs-0-75rem fw-700 ${item.exercise_record_summary_scale_color ?? item.exercise_record_total_scale_color}`}>
-                          {insertComma(item.exercise_record_total_scale ?? `0`)}
-                        </Div>
-                        <Div className={`fs-0-6rem fw-600 dark ml-5px`}>
-                          {localUnit}
-                        </Div>
-                      </Div>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
+                            {insertComma(item.exercise_record_total_volume)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`vol`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </Grid>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Grid container={true} spacing={1} className={`legend`}>
 
-                    {/** row 1 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.volume }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`volume`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
-                              {insertComma(item.exercise_record_total_volume)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`vol`)}
-                            </Div>
-                          </Grid>
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 2 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.cardio }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`cardio`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_cardio_color}`}>
+                            {item.exercise_record_total_cardio}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`hm`)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 2 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.cardio }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`cardio`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_cardio_color}`}>
-                              {item.exercise_record_total_cardio}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`hm`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 3 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`scale`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_scale_color}`}>
-                              {insertComma(item.exercise_record_total_scale)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {localUnit}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
                   </Grid>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
+
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 3 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.scale }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`scale`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_scale_color}`}>
+                            {insertComma(item.exercise_record_total_scale)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {localUnit}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
           </Grid>
-        ))}
-      </Grid>
+        </Grid>
+      ))
     );
     // 7-10. return
     return (

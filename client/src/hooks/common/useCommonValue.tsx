@@ -305,6 +305,7 @@ export const useCommonValue = (): CommonValueType => {
     // Environment Variables
     TITLE: TITLE,
     VERSION: env.VITE_APP_VERSION ?? ``,
+    BUILD_TIME: env.VITE_APP_BUILD_TIME ?? ``,
     MODE: env.MODE ?? ``,
     URL: env.VITE_APP_SERVER_URL ?? ``,
     GCLOUD_URL: env.VITE_APP_GCLOUD_URL ?? ``,

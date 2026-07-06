@@ -84,6 +84,13 @@ export const FoodRecordDetail = memo(() => {
     dateStart: string;
     dateEnd: string;
   }> = useRef(DATE);
+  // 회(count) 편집 시 기준이 되는 1회당 영양값 보존 (편집 중 회가 0/공백을 거쳐도 기준 유지)
+  const foodBaseRef = useRef<Record<number, {
+    kcal: number;
+    carb: number;
+    protein: number;
+    fat: number;
+  }>>({});
 
   // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
@@ -690,37 +697,45 @@ export const FoodRecordDetail = memo(() => {
                 value={insertComma(item?.food_record_count ?? `0`)}
                 inputRef={REFS?.[i]?.food_record_count}
                 error={ERRORS?.[i]?.food_record_count}
-                onChange={(e: any) => {
-                    const processedValue: string | null = handleNumberInput(e.target.value, 99, 1);
-                    if (processedValue === null) {
-                      return;
-                    }
-                    // 영양소 설정 함수
-                    const setNutrient = (nut: string | number, extra: string) => {
-                      const numericValue: number = Number(processedValue);
-                      const foodCount: number = Number(item?.food_record_count);
-                      // 새 개수/기존 개수가 유한수이고 양수일 때만 스케일링, 아니면 기존 값 유지
-                      if (Number.isFinite(numericValue) && Number.isFinite(foodCount) && numericValue > 0 && foodCount > 0) {
-                        const scaled: number = Math.max(0, numericValue * Number(nut) / foodCount);
-                        return (
-                      extra === `kcal`
-                      ? scaled.toFixed(0)
-                      : scaled.toFixed(1)
-                      );
-                    }
-                    return nut;
+                onFocus={() => {
+                  // 편집 시작 시점의 1회당 기준 영양값을 보존 (현재 회로 나눠 per-unit 산출)
+                  const baseCount: number = Number(item?.food_record_count);
+                  const perUnit = (nut?: string): number => {
+                    const value: number = Number(nut ?? 0);
+                    return Number.isFinite(baseCount) && baseCount > 0 ? value / baseCount : value;
                   };
-                  // object 설정
+                  foodBaseRef.current[i] = {
+                    kcal: perUnit(item?.food_record_kcal),
+                    carb: perUnit(item?.food_record_carb),
+                    protein: perUnit(item?.food_record_protein),
+                    fat: perUnit(item?.food_record_fat),
+                  };
+                }}
+                onChange={(e: any) => {
+                  const processedValue: string | null = handleNumberInput(e.target.value, 99, 1);
+                  if (processedValue === null) {
+                    return;
+                  }
+                  // object 설정 (보존된 1회당 기준값 × 회 로 절대 재계산 → 편집 중 회 0/공백 통과에도 기준 소실 없음)
+                  const base = foodBaseRef.current[i];
+                  const newCount: number = Number(processedValue);
+                  const canScale: boolean = !!base && Number.isFinite(newCount) && newCount > 0;
+                  const scale = (unit: number, extra: string): string => {
+                    const scaled: number = Math.max(0, unit * newCount);
+                    return extra === `kcal` ? scaled.toFixed(0) : scaled.toFixed(1);
+                  };
                   setOBJECT((prev: any) => ({
                     ...prev,
                     food_section: prev.food_section?.map((section: any, idx: number) => (
                     idx === i ? {
                       ...section,
                       food_record_count: processedValue,
-                      food_record_kcal: setNutrient(item?.food_record_kcal, `kcal`),
-                      food_record_fat: setNutrient(item?.food_record_fat, `fat`),
-                      food_record_carb: setNutrient(item?.food_record_carb, `carb`),
-                      food_record_protein: setNutrient(item?.food_record_protein, `protein`),
+                      ...(canScale ? {
+                        food_record_kcal: scale(base.kcal, `kcal`),
+                        food_record_fat: scale(base.fat, `fat`),
+                        food_record_carb: scale(base.carb, `carb`),
+                        food_record_protein: scale(base.protein, `protein`),
+                      } : {}),
                     } : section
                     )),
                   }));

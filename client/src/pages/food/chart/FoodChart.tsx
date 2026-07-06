@@ -41,6 +41,11 @@ export const FoodChart = memo(() => {
       line: `kcal`,
     }
   );
+  const [ VIEW, setVIEW ] = useStorageLocal(
+    `type`, `view`, PATH, {
+      metric: `pie`,
+    }
+  );
 
   // 7. chart --------------------------------------------------------------------------------------
   const chartNode = () => {
@@ -65,8 +70,20 @@ export const FoodChart = memo(() => {
                 <MenuItem value={`year`}>{translate(`year`)}</MenuItem>
               </Select>
             </Grid>
-            <Grid size={4} className={`d-row-center fs-1-1rem fw-bolder`}>
-              {translate(`chartPie`)}
+            <Grid size={4} className={`d-row-center`}>
+              <Select
+                value={VIEW.metric ?? `pie`}
+                onChange={(e: any) => {
+                  setVIEW((prev: any) => ({
+                    ...prev,
+                    metric: e.target.value,
+                  }));
+                }}
+              >
+                <MenuItem value={`pie`}>{translate(`chartPie`)}</MenuItem>
+                <MenuItem value={`line`}>{translate(`chartLine`)}</MenuItem>
+                <MenuItem value={`avg`}>{translate(`chartAvg`)}</MenuItem>
+              </Select>
             </Grid>
             <Grid size={4} className={`d-row-center`}>
               <Select
@@ -109,8 +126,20 @@ export const FoodChart = memo(() => {
                 <MenuItem value={`month`}>{translate(`month`)}</MenuItem>
               </Select>
             </Grid>
-            <Grid size={4} className={`d-row-center fs-1-1rem fw-bolder`}>
-              {translate(`chartLine`)}
+            <Grid size={4} className={`d-row-center`}>
+              <Select
+                value={VIEW.metric ?? `pie`}
+                onChange={(e: any) => {
+                  setVIEW((prev: any) => ({
+                    ...prev,
+                    metric: e.target.value,
+                  }));
+                }}
+              >
+                <MenuItem value={`pie`}>{translate(`chartPie`)}</MenuItem>
+                <MenuItem value={`line`}>{translate(`chartLine`)}</MenuItem>
+                <MenuItem value={`avg`}>{translate(`chartAvg`)}</MenuItem>
+              </Select>
             </Grid>
             <Grid size={4} className={`d-row-center`}>
               <Select
@@ -153,8 +182,20 @@ export const FoodChart = memo(() => {
                 <MenuItem value={`month`}>{translate(`month`)}</MenuItem>
               </Select>
             </Grid>
-            <Grid size={4} className={`d-row-center fs-1-1rem fw-bolder`}>
-              {translate(`chartAvg`)}
+            <Grid size={4} className={`d-row-center`}>
+              <Select
+                value={VIEW.metric ?? `pie`}
+                onChange={(e: any) => {
+                  setVIEW((prev: any) => ({
+                    ...prev,
+                    metric: e.target.value,
+                  }));
+                }}
+              >
+                <MenuItem value={`pie`}>{translate(`chartPie`)}</MenuItem>
+                <MenuItem value={`line`}>{translate(`chartLine`)}</MenuItem>
+                <MenuItem value={`avg`}>{translate(`chartAvg`)}</MenuItem>
+              </Select>
             </Grid>
             <Grid size={4} className={`d-row-center`}>
               <Select
@@ -181,11 +222,9 @@ export const FoodChart = memo(() => {
     // 9. return
     return (
       <Paper className={`w-100p radius-3 border-light-1 shadow-1 p-20px`}>
-        {pieSection()}
-        <Br m={30} />
-        {lineSection()}
-        <Br m={30} />
-        {avgSection()}
+        {VIEW.metric === `pie` && pieSection()}
+        {VIEW.metric === `line` && lineSection()}
+        {VIEW.metric === `avg` && avgSection()}
       </Paper>
     );
   };

@@ -18,6 +18,7 @@ type ExerciseObject = {
   exercise_goal_volume?: string;
   exercise_goal_cardio?: string;
   exercise_goal_scale?: string;
+  exercise_record_total_scale?: string;
   exercise_section?: ExerciseSection[];
 };
 type ExerciseCount = {
@@ -124,10 +125,7 @@ export const useValidateExercise = () => {
       );
 
       const section = OBJECT.exercise_section ?? [];
-      if (COUNT.newSectionCnt <= 0) {
-        alert(``, `errorCount`, 0);
-        return false;
-      }
+      // 운동 항목은 선택사항 (개수 0이면 몸무게만 기록). 항목이 있을 때만 항목 검증.
       for (let i = 0; i < section.length; i++) {
         const isCardio: boolean = section[i].exercise_record_part === `cardio`;
         const isRest: boolean = section[i].exercise_record_part === `rest`;
@@ -151,6 +149,11 @@ export const useValidateExercise = () => {
           alert(`exercise_record_weight`, `errorExerciseKg`, i);
           return false;
         }
+      }
+      // 몸무게(체중)는 필수
+      if (!OBJECT.exercise_record_total_scale || OBJECT.exercise_record_total_scale === `0`) {
+        alert(``, `errorExerciseScale`, 0);
+        return false;
       }
       return true;
     }

@@ -506,344 +506,342 @@ export const FoodGoalList = memo(() => {
 
     // 7-1. list
     const listSection = () => (
-      <Grid container={true} spacing={0}>
-        {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`} key={item._id || `food-goal-${i}`}>
-            <Grid size={12} className={`p-2px`}>
-              <Accordion className={`radius-2 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
-                <AccordionSummary
-                  expandIcon={(
+      deferredObject?.map((item, i) => (
+        <Grid container={true} spacing={0} key={item._id || `food-goal-${i}`}>
+          <Grid size={12} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`}>
+            <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
+              <AccordionSummary
+                expandIcon={(
+                  <Icons
+                    key={`ChevronDown`}
+                    name={`ChevronDown`}
+                    isIconButton={true}
+                    className={`w-16px h-16px`}
+                    onClick={(e: any) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      handleToggle(i);
+                    }}
+                  />
+                )}
+                onClick={() => {
+                  void navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.food_goal_dateType,
+                      dateStart: item.food_goal_dateStart,
+                      dateEnd: item.food_goal_dateEnd,
+                    },
+                  });
+                }}
+              >
+                <Grid container={true} spacing={1}>
+                  <Grid size={2} className={`d-row-center`}>
                     <Icons
-                      key={`ChevronDown`}
-                      name={`ChevronDown`}
-                      isIconButton={true}
+                      key={`Search`}
+                      name={`Search`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
-                      onClick={(e: any) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        handleToggle(i);
-                      }}
                     />
-                  )}
-                  onClick={() => {
-                    void navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.food_goal_dateType,
-                        dateStart: item.food_goal_dateStart,
-                        dateEnd: item.food_goal_dateEnd,
-                      },
-                    });
-                  }}
-                >
+                  </Grid>
+                  <Grid size={10} className={`d-row-left`}>
+                    <Div className={`fs-0-8rem fw-600 black`}>
+                      {item.food_goal_dateStart?.slice(5, 10)}
+                    </Div>
+                    <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      {translate(getDayNotFmt(item.food_goal_dateStart).format(`ddd`))}
+                    </Div>
+                    <Div className={`fs-0-8rem fw-500 dark ml-5px mr-5px`}>
+                      {`-`}
+                    </Div>
+                    <Div className={`fs-0-8rem fw-600 black`}>
+                      {item.food_goal_dateEnd?.slice(5, 10)}
+                    </Div>
+                    <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      {translate(getDayNotFmt(item.food_goal_dateEnd).format(`ddd`))}
+                    </Div>
+                  </Grid>
+                </Grid>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container={true} spacing={1} className={`legend`}>
+
+                  {/** row 1 * */}
                   <Grid container={true} spacing={1}>
-                    <Grid size={2} className={`d-row-center`}>
-                      <Icons
-                        key={`Search`}
-                        name={`Search`}
-                        isIconButton={false}
-                        className={`w-16px h-16px`}
-                      />
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                        {`●`}
+                      </Div>
                     </Grid>
-                    <Grid size={10} className={`d-row-left`}>
-                      <Div className={`fs-0-8rem fw-600 black`}>
-                        {item.food_goal_dateStart?.slice(5, 10)}
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`kcal`)}
                       </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.food_goal_dateStart).format(`ddd`))}
-                      </Div>
-                      <Div className={`fs-0-8rem fw-500 dark ml-5px mr-5px`}>
-                        {`-`}
-                      </Div>
-                      <Div className={`fs-0-8rem fw-600 black`}>
-                        {item.food_goal_dateEnd?.slice(5, 10)}
-                      </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.food_goal_dateEnd).format(`ddd`))}
-                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_goal_kcal_color}`}>
+                            {insertComma(item.food_goal_kcal ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`kc`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_total_kcal_color}`}>
+                            {insertComma(item.food_record_total_kcal ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`kc`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_kcal_color}`}>
+                            {insertComma(item.food_record_diff_kcal ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`kc`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </Grid>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Grid container={true} spacing={1} className={`legend`}>
 
-                    {/** row 1 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`kcal`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_goal_kcal_color}`}>
-                              {insertComma(item.food_goal_kcal ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`kc`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_total_kcal_color}`}>
-                              {insertComma(item.food_record_total_kcal ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`kc`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_kcal_color}`}>
-                              {insertComma(item.food_record_diff_kcal ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`kc`)}
-                            </Div>
-                          </Grid>
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 2 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`carb`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_goal_carb_color}`}>
+                            {insertComma(item.food_goal_carb ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_total_carb_color}`}>
+                            {insertComma(item.food_record_total_carb ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_carb_color}`}>
+                            {insertComma(item.food_record_diff_carb ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 2 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`carb`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_goal_carb_color}`}>
-                              {insertComma(item.food_goal_carb ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_total_carb_color}`}>
-                              {insertComma(item.food_record_total_carb ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_carb_color}`}>
-                              {insertComma(item.food_record_diff_carb ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 3 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`protein`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_goal_protein_color}`}>
-                              {insertComma(item.food_goal_protein ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_total_protein_color}`}>
-                              {insertComma(item.food_record_total_protein ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_protein_color}`}>
-                              {insertComma(item.food_record_diff_protein ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 4 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`fat`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_goal_fat_color}`}>
-                              {insertComma(item.food_goal_fat ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_total_fat_color}`}>
-                              {insertComma(item.food_record_total_fat ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_fat_color}`}>
-                              {insertComma(item.food_record_diff_fat ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
                   </Grid>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
+
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 3 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`protein`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_goal_protein_color}`}>
+                            {insertComma(item.food_goal_protein ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_total_protein_color}`}>
+                            {insertComma(item.food_record_total_protein ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_protein_color}`}>
+                            {insertComma(item.food_record_diff_protein ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 4 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`fat`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_goal_fat_color}`}>
+                            {insertComma(item.food_goal_fat ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_total_fat_color}`}>
+                            {insertComma(item.food_record_total_fat ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_fat_color}`}>
+                            {insertComma(item.food_record_diff_fat ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
           </Grid>
-        ))}
-      </Grid>
+        </Grid>
+      ))
     );
     // 7-10. return
     return (

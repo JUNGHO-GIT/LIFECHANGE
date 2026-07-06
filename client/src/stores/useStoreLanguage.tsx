@@ -1983,6 +1983,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         ko: `무게를 입력해주세요`,
         en: `Please enter Kg`,
       },
+      errorExerciseScale: {
+        ko: `체중을 입력해주세요`,
+        en: `Please enter BodyWeight`,
+      },
       errorFoodGoalKcal: {
         ko: `칼로리 목표를 입력해주세요`,
         en: `Please enter Goal Kcal`,

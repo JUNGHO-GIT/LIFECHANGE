@@ -175,183 +175,181 @@ export const FoodFindList = memo(() => {
   // 7. find ---------------------------------------------------------------------------------------
   const findNode = () => {
     const listSection = () => (
-      <Grid container={true} spacing={0}>
-        {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`} key={item.food_record_key}>
-            <Grid size={12} className={`p-2px`}>
-              <Accordion className={`radius-2 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
-                <AccordionSummary
-                  expandIcon={(
-                    <Icons
-                      key={`ChevronDown`}
-                      name={`ChevronDown`}
-                      isIconButton={true}
-                      className={`w-16px h-16px`}
-                      onClick={(e: any) => {
-                        e.preventDefault();
+      deferredObject?.map((item, i) => (
+        <Grid container={true} spacing={0} key={item.food_record_key}>
+          <Grid size={12} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`}>
+            <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
+              <AccordionSummary
+                expandIcon={(
+                  <Icons
+                    key={`ChevronDown`}
+                    name={`ChevronDown`}
+                    isIconButton={true}
+                    className={`w-16px h-16px`}
+                    onClick={(e: any) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsExpanded(isExpanded.map((item: any, index: number) => (
+                        index === i ? { expanded: !item.expanded } : item
+                      )));
+                    }}
+                  />
+                )}
+              >
+                <Grid container={true} spacing={1}>
+                  <Grid size={2} className={`d-row-center`}>
+                    <Checkbox
+                      key={`check-${item.food_record_key}`}
+                      color={`primary`}
+                      size={`small`}
+                      checked={selectedKeys.has(item.food_record_key)}
+                      onChange={(e: any) => {
                         e.stopPropagation();
-                        setIsExpanded(isExpanded.map((item: any, index: number) => (
-                          index === i ? { expanded: !item.expanded } : item
-                        )));
+                        handleCheckboxChange(i);
                       }}
                     />
-                  )}
-                >
+                  </Grid>
+                  <Grid size={6} className={`d-row-left`}>
+                    <Div className={`fs-0-8rem fw-600 ${item.food_record_name_color}`}>
+                      {item.food_record_name}
+                    </Div>
+                  </Grid>
+                  <Grid size={4} className={`d-row-right`}>
+                    <Div className={`fs-0-8rem fw-600 ${item.food_record_count_color}`}>
+                      <Div className={`fs-0-8rem fw-500 dark mr-10px`}>
+                        {item.food_record_brand}
+                      </Div>
+                    </Div>
+                  </Grid>
+                </Grid>
+              </AccordionSummary>
+              <AccordionDetails>
+
+                <Grid container={true} spacing={1} className={`legend`}>
+                  {/** row 1 * */}
                   <Grid container={true} spacing={1}>
-                    <Grid size={2} className={`d-row-center`}>
-                      <Checkbox
-                        key={`check-${item.food_record_key}`}
-                        color={`primary`}
-                        size={`small`}
-                        checked={selectedKeys.has(item.food_record_key)}
-                        onChange={(e: any) => {
-                          e.stopPropagation();
-                          handleCheckboxChange(i);
-                        }}
-                      />
-                    </Grid>
-                    <Grid size={6} className={`d-row-left`}>
-                      <Div className={`fs-0-8rem fw-600 ${item.food_record_name_color}`}>
-                        {item.food_record_name}
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
+                        {`●`}
                       </Div>
                     </Grid>
-                    <Grid size={4} className={`d-row-right`}>
-                      <Div className={`fs-0-8rem fw-600 ${item.food_record_count_color}`}>
-                        <Div className={`fs-0-8rem fw-500 dark mr-10px`}>
-                          {item.food_record_brand}
-                        </Div>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`kcal`)}
                       </Div>
                     </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_kcal_color}`}>
+                            {insertComma(item.food_record_kcal ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`kc`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                </AccordionSummary>
-                <AccordionDetails>
 
-                  <Grid container={true} spacing={1} className={`legend`}>
-                    {/** row 1 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.kcal }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`kcal`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_kcal_color}`}>
-                              {insertComma(item.food_record_kcal ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`kc`)}
-                            </Div>
-                          </Grid>
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 2 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`carb`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_carb_color}`}>
+                            {insertComma(item.food_record_carb ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 2 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.carb }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`carb`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_carb_color}`}>
-                              {insertComma(item.food_record_carb ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 3 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`protein`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}>
-                              {insertComma(item.food_record_protein ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
-                    <Hr m={1} className={`bg-light`} />
-
-                    {/** row 4 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`fat`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          <Grid size={10} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.food_record_fat_color}`}>
-                              {insertComma(item.food_record_fat ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(`g`)}
-                            </Div>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-
                   </Grid>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
+
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 3 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.protein }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`protein`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_protein_color}`}>
+                            {insertComma(item.food_record_protein ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                  <Hr m={1} className={`bg-light`} />
+
+                  {/** row 4 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.fat }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`fat`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        <Grid size={10} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.food_record_fat_color}`}>
+                            {insertComma(item.food_record_fat ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
           </Grid>
-        ))}
-      </Grid>
+        </Grid>
+      ))
     );
     // 7-10. return
     return (

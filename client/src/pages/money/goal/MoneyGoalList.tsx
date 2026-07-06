@@ -428,210 +428,208 @@ export const MoneyGoalList = memo(() => {
 
     // 7-1. list
     const listSection = () => (
-      <Grid container={true} spacing={0}>
-        {deferredObject?.map((item, i) => (
-          <Grid container={true} spacing={0} className={`radius-3 border-light-1 shadow-1 mb-10px`} key={item._id || `money-goal-${i}`}>
-            <Grid size={12} className={`p-2px`}>
-              <Accordion className={`radius-2 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
-                <AccordionSummary
-                  expandIcon={(
+      deferredObject?.map((item, i) => (
+        <Grid container={true} spacing={0} key={item._id || `money-goal-${i}`}>
+          <Grid size={12} className={`accordion radius-3 border-light-1 shadow-1 mb-10px`}>
+            <Accordion className={`radius-3 border-0 shadow-0`} expanded={isExpanded?.[i]?.expanded ?? true}>
+              <AccordionSummary
+                expandIcon={(
+                  <Icons
+                    key={`ChevronDown`}
+                    name={`ChevronDown`}
+                    isIconButton={true}
+                    className={`w-16px h-16px`}
+                    onClick={(e: any) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsExpanded(isExpanded.map((item: any, index: number) => (
+                        index === i ? { expanded: !item.expanded } : item
+                      )));
+                    }}
+                  />
+                )}
+                onClick={() => {
+                  void navigate(toDetail, {
+                    state: {
+                      id: item._id,
+                      dateType: item.money_goal_dateType,
+                      dateStart: item.money_goal_dateStart,
+                      dateEnd: item.money_goal_dateEnd,
+                    },
+                  });
+                }}
+              >
+                <Grid container={true} spacing={1}>
+                  <Grid size={2} className={`d-row-center`}>
                     <Icons
-                      key={`ChevronDown`}
-                      name={`ChevronDown`}
-                      isIconButton={true}
+                      key={`Search`}
+                      name={`Search`}
+                      isIconButton={false}
                       className={`w-16px h-16px`}
-                      onClick={(e: any) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsExpanded(isExpanded.map((item: any, index: number) => (
-                          index === i ? { expanded: !item.expanded } : item
-                        )));
-                      }}
                     />
-                  )}
-                  onClick={() => {
-                    void navigate(toDetail, {
-                      state: {
-                        id: item._id,
-                        dateType: item.money_goal_dateType,
-                        dateStart: item.money_goal_dateStart,
-                        dateEnd: item.money_goal_dateEnd,
-                      },
-                    });
-                  }}
-                >
+                  </Grid>
+                  <Grid size={10} className={`d-row-left`}>
+                    <Div className={`fs-0-8rem fw-600 black`}>
+                      {formatDateMmDd(item.money_goal_dateStart)}
+                    </Div>
+                    <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      {translate(getDayNotFmt(item.money_goal_dateStart).format(`ddd`))}
+                    </Div>
+                    <Div className={`fs-0-8rem fw-500 dark ml-5px mr-5px`}>
+                      {`-`}
+                    </Div>
+                    <Div className={`fs-0-8rem fw-600 black`}>
+                      {formatDateMmDd(item.money_goal_dateEnd)}
+                    </Div>
+                    <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
+                      {translate(getDayNotFmt(item.money_goal_dateEnd).format(`ddd`))}
+                    </Div>
+                  </Grid>
+                </Grid>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container={true} spacing={1} className={`legend`}>
+
+                  {/** row 1 * */}
                   <Grid container={true} spacing={1}>
-                    <Grid size={2} className={`d-row-center`}>
-                      <Icons
-                        key={`Search`}
-                        name={`Search`}
-                        isIconButton={false}
-                        className={`w-16px h-16px`}
-                      />
-                    </Grid>
-                    <Grid size={10} className={`d-row-left`}>
-                      <Div className={`fs-0-8rem fw-600 black`}>
-                        {formatDateMmDd(item.money_goal_dateStart)}
-                      </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.money_goal_dateStart).format(`ddd`))}
-                      </Div>
-                      <Div className={`fs-0-8rem fw-500 dark ml-5px mr-5px`}>
-                        {`-`}
-                      </Div>
-                      <Div className={`fs-0-8rem fw-600 black`}>
-                        {formatDateMmDd(item.money_goal_dateEnd)}
-                      </Div>
-                      <Div className={`fs-0-9rem fw-500 dark ml-5px`}>
-                        {translate(getDayNotFmt(item.money_goal_dateEnd).format(`ddd`))}
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
+                        {`●`}
                       </Div>
                     </Grid>
-                  </Grid>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Grid container={true} spacing={1} className={`legend`}>
-
-                    {/** row 1 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.income }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`income`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.money_goal_income_color}`}>
-                              {insertComma(item.money_goal_income ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(localCurrency)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.money_record_total_income_color}`}>
-                              {insertComma(item.money_record_total_income ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(localCurrency)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.money_record_diff_income_color}`}>
-                              {insertComma(item.money_record_diff_income ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(localCurrency)}
-                            </Div>
-                          </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`income`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.money_goal_income_color}`}>
+                            {insertComma(item.money_goal_income ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(localCurrency)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.money_record_total_income_color}`}>
+                            {insertComma(item.money_record_total_income ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(localCurrency)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.money_record_diff_income_color}`}>
+                            {insertComma(item.money_record_diff_income ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(localCurrency)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
+                  </Grid>
 
-                    <Hr m={1} className={`bg-light`} />
+                  <Hr m={1} className={`bg-light`} />
 
-                    {/** row 2 * */}
-                    <Grid container={true} spacing={1}>
-                      <Grid size={1} className={`d-row-left`}>
-                        <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.expense }}>
-                          {`●`}
-                        </Div>
-                      </Grid>
-                      <Grid size={4} className={`d-row-left`}>
-                        <Div className={`fs-0-8rem fw-600 dark`}>
-                          {translate(`expense`)}
-                        </Div>
-                      </Grid>
-                      <Grid size={7}>
-                        <Grid container={true} spacing={1}>
-                          {/** goal * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`goal`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.money_goal_expense_color}`}>
-                              {insertComma(item.money_goal_expense ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(localCurrency)}
-                            </Div>
-                          </Grid>
-                          {/** record * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`record`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.money_record_total_expense_color}`}>
-                              {insertComma(item.money_record_total_expense ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(localCurrency)}
-                            </Div>
-                          </Grid>
-                          {/** diff * */}
-                          <Grid size={4} className={`d-row-center`}>
-                            <Div className={`fs-0-7rem fw-500 dark`}>
-                              {translate(`diff`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={6} className={`d-row-right`}>
-                            <Div className={`fs-0-8rem fw-600 ${item.money_record_diff_expense_color}`}>
-                              {insertComma(item.money_record_diff_expense ?? `0`)}
-                            </Div>
-                          </Grid>
-                          <Grid size={2} className={`d-row-center`}>
-                            <Div className={`fs-0-6rem`}>
-                              {translate(localCurrency)}
-                            </Div>
-                          </Grid>
+                  {/** row 2 * */}
+                  <Grid container={true} spacing={1}>
+                    <Grid size={1} className={`d-row-left`}>
+                      <Div className={`fs-0-6rem`} style={{ color: chartThemeColors.expense }}>
+                        {`●`}
+                      </Div>
+                    </Grid>
+                    <Grid size={4} className={`d-row-left`}>
+                      <Div className={`fs-0-8rem fw-600 dark`}>
+                        {translate(`expense`)}
+                      </Div>
+                    </Grid>
+                    <Grid size={7}>
+                      <Grid container={true} spacing={1}>
+                        {/** goal * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`goal`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.money_goal_expense_color}`}>
+                            {insertComma(item.money_goal_expense ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(localCurrency)}
+                          </Div>
+                        </Grid>
+                        {/** record * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`record`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.money_record_total_expense_color}`}>
+                            {insertComma(item.money_record_total_expense ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(localCurrency)}
+                          </Div>
+                        </Grid>
+                        {/** diff * */}
+                        <Grid size={4} className={`d-row-center`}>
+                          <Div className={`fs-0-7rem fw-500 dark`}>
+                            {translate(`diff`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={6} className={`d-row-right`}>
+                          <Div className={`fs-0-8rem fw-600 ${item.money_record_diff_expense_color}`}>
+                            {insertComma(item.money_record_diff_expense ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {translate(localCurrency)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
-
                   </Grid>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
+
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
           </Grid>
-        ))}
-      </Grid>
+        </Grid>
+      ))
     );
     // 7-10. return
     return (

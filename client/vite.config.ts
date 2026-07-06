@@ -11,7 +11,7 @@ import react from "@vitejs/plugin-react-swc";
 import { defineConfig, loadEnv, type Plugin, type UserConfig } from "vite";
 import vtCmpr from "vite-plugin-compression";
 
-// 1. config ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+// 1. config ---------------------------------------------------------------------------------------
 export default defineConfig(({ command, mode }) => {
   // 1-1. init
   const dirName: string = import.meta.dirname;
@@ -19,6 +19,7 @@ export default defineConfig(({ command, mode }) => {
   const pkgPath: string = path.join(rootDir, `package.json`);
   const pkgVersion: string = fs.existsSync(pkgPath) ? (JSON.parse(fs.readFileSync(pkgPath, { encoding: `utf8` }))?.version ?? ``) : ``;
   process.env.VITE_APP_VERSION = pkgVersion;
+  process.env.VITE_APP_BUILD_TIME = new Date().toISOString();
   const envMode: string = mode === `production` ? `production` : `development`;
   const isProd: boolean = envMode === `production`;
   const isDev: boolean = !isProd;
@@ -68,26 +69,12 @@ export default defineConfig(({ command, mode }) => {
   };
   (isDev ? debugEnv : noop)();
 
-  // 2. derived values ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――-
+  // 2. derived values -------------------------------------------------------------------------------
   const baseUrl: string = env.VITE_APP_PUBLIC_URL || `/lifechange`;
   const publicUrl: string = env.VITE_APP_PUBLIC_URL || `/lifechange`;
 
-  // 3. plugins ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-  const refreshHookFix: Plugin = {
-    name: `lifechange-react-refresh-hook-fix`,
-    enforce: `pre`,
-    apply: `serve`,
-    transformIndexHtml: {
-      order: `post`,
-      handler: (html: string): string => html.replace(
-        /(<head[^>]*>)/,
-        `$1\n    <script>if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === "object") { window.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled = false; }</script>`,
-      ),
-    },
-  };
-
+  // 3. plugins --------------------------------------------------------------------------------------
   const plugins: NonNullable<UserConfig[`plugins`]> = [
-    refreshHookFix,
     react({
       devTarget: `esnext`,
       jsxImportSource: `@emotion/react`,
@@ -104,10 +91,10 @@ export default defineConfig(({ command, mode }) => {
       ] : []),
   ];
 
-  // 4. define ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 4. define ---------------------------------------------------------------------------------------
   const defineEnv: Record<string, string> = Object.fromEntries(Object.entries(env).map(([k, v]) => [`import.meta.env.${k}`, JSON.stringify(v)] as const)) as Record<string, string>;
 
-  // 5. final config ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+  // 5. final config ---------------------------------------------------------------------------------
   const config: UserConfig = {
     base: baseUrl,
     plugins: plugins,
@@ -170,13 +157,13 @@ export default defineConfig(({ command, mode }) => {
           } : undefined,
           manualChunks: (id: string): string | undefined => {
             if (/node_modules[\\/](react|react-dom|react-router)[\\/]/.test(id)) {
-            	return `react`;
+              return `react`;
             }
             if (id.includes(`node_modules/@mui`) || id.includes(`node_modules/@emotion`)) {
-            	return `mui`;
+              return `mui`;
             }
             if (id.includes(`node_modules/axios`) || id.includes(`node_modules/zustand`) || id.includes(`node_modules/moment`)) {
-            	return `vendor`;
+              return `vendor`;
             }
             return;
           },

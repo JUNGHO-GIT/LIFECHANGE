@@ -45,6 +45,7 @@
   border-radius: 8px;
 }
 .legend {
+  margin-top: 10px;
   padding: 10px;
 }
 .legend div {
@@ -245,6 +246,7 @@
   border: 1px solid #f4f9fc !important;
 }
 .accordion {
+  padding: 10px 10px 10px 10px !important;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .accordion:hover {

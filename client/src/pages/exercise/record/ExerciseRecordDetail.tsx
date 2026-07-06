@@ -404,6 +404,7 @@ export const ExerciseRecordDetail = memo(() => {
             LOCKED={LOCKED}
             setLOCKED={setLOCKED}
             limit={10}
+            allowZero={true}
           />
         </Grid>
       </Grid>

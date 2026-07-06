@@ -27,13 +27,14 @@ declare interface CountProps {
   setLOCKED: React.Dispatch<React.SetStateAction<string>>;
   limit: number;
   disabled?: boolean;
+  allowZero?: boolean;
   onCountChange?: (_newSectionCnt: number) => void;
 }
 
 // -------------------------------------------------------------------------------------------------
 export const Count = memo((
   {
-    COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled, onCountChange,
+    COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled, allowZero, onCountChange,
   }: CountProps,
 ) => {
 
@@ -150,13 +151,13 @@ export const Count = memo((
       <Input
         label={translate(`item`)}
         value={COUNT.newSectionCnt}
-        error={COUNT.newSectionCnt <= 0}
+        error={allowZero ? COUNT.newSectionCnt < 0 : COUNT.newSectionCnt <= 0}
         locked={LOCKED}
         inputclass={`pointer`}
         disabled={disabled}
         sx={{
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: COUNT.newSectionCnt <= 0
+            borderColor: (allowZero ? COUNT.newSectionCnt < 0 : COUNT.newSectionCnt <= 0)
 							? `#f44336`
 							: `rgba(0, 0, 0, 0.23)`,
           },
@@ -184,7 +185,7 @@ export const Count = memo((
       </Grid>
     );
   }, [
-    translate, LOCKED, disabled, handleLockToggle, lockIcon, COUNT.newSectionCnt, countEndAdornment,
+    translate, LOCKED, disabled, allowZero, handleLockToggle, lockIcon, COUNT.newSectionCnt, countEndAdornment,
   ]);
 
   // 10. return ------------------------------------------------------------------------------------
