@@ -5,49 +5,23 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, useDeferredValue, memo, useCallback, useMemo } from "@exportReacts";
+import { useState, useEffect, useDeferredValue, memo, useMemo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { ExerciseRecord, ExerciseRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "@exportLibs";
-import { formatDateMmDd, formatDateYyyyMmDd, insertComma } from "@exportScripts";
+import { formatDateMmDd, formatDateYyyyMmDd, formatDateYyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
-type ExerciseGoalKey = `count` | `volume` | `cardio` | `scale`;
-
 declare interface ExerciseTotals {
   count: number;
   volume: number;
   cardio: number;
   scale: number;
-}
-
-declare interface ExerciseGoalSource {
-  key: ExerciseGoalKey;
-  label: string;
-  unit: string;
-  actual: number;
-  goal: number;
-  color: string;
-}
-
-declare interface ExerciseGoalRow {
-  key: ExerciseGoalKey;
-  label: string;
-  unit: string;
-  actual: number;
-  goal: number;
-  actualText: string;
-  goalText: string;
-  diffText: string;
-  percent: number;
-  percentText: string;
-  barPercent: number;
-  color: string;
 }
 
 declare interface ExerciseScaleStat {
@@ -118,11 +92,6 @@ export const ExerciseRecordList = memo(() => {
   // - 항목 렌더를 비긴급으로 분리
   // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
-  const handleToggle = useCallback((i: number) => {
-    setIsExpanded((prev: any) => prev.map((x: any, idx: number) => (
-      idx === i ? { expanded: !x.expanded } : x
-    )));
-  }, [setIsExpanded]);
 
   // 3. summary ----------------------------------------------------------------------------------
   // - 기록 1건당 평균 운동량 요약
@@ -190,9 +159,9 @@ export const ExerciseRecordList = memo(() => {
         return `-`;
       }
       if (item.dateStart === item.dateEnd) {
-        return formatDateMmDd(item.dateStart);
+        return formatDateYyMmDd(item.dateStart);
       }
-      return `${formatDateMmDd(item.dateStart)} - ${formatDateMmDd(item.dateEnd)}`;
+      return `${formatDateYyMmDd(item.dateStart)} - ${formatDateYyMmDd(item.dateEnd)}`;
     };
     const validRecords = OBJECT.filter((item) => (
       item.exercise_record_dateStart && item.exercise_record_dateStart !== `0000-00-00`
@@ -333,10 +302,11 @@ export const ExerciseRecordList = memo(() => {
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
           <Grid size={12} className={`d-row-left`}>
-            <Div className={`period fs-0-95rem fw-600`}>
-              {formatDateYyyyMmDd(DATE?.dateStart)}
-              {` -`}
-              {formatDateYyyyMmDd(DATE?.dateEnd)}
+            <Div className={`fs-0-95rem fw-600 mr-auto`}>
+              {`${formatDateYyyyMmDd(DATE?.dateStart)} - ${formatDateYyyyMmDd(DATE?.dateEnd)}`}
+            </Div>
+            <Div className={`fs-0-9rem fw-600 dark-grey`}>
+              {`(${translate(`avg`)})`}
             </Div>
           </Grid>
         </Grid>
@@ -657,7 +627,7 @@ export const ExerciseRecordList = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
         {recordSummarySection()}
         <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`exercise`} /> : listSection()}

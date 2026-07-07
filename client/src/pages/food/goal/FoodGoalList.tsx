@@ -845,7 +845,7 @@ export const FoodGoalList = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
         {goalSummarySection()}
         <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`food`} /> : listSection()}

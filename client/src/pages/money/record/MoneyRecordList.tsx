@@ -194,12 +194,13 @@ export const MoneyRecordList = memo(() => {
     };
 
     const formatRecordDate = (item: MoneyAmountStat): string => (
-      item.dateStart && item.dateStart !== `0000-00-00`
-        ? `${formatDateYyyyMmDd(item.dateStart)} - ${formatDateYyyyMmDd(item.dateEnd)}`
-        : `-`
+      item.dateStart && item.dateStart !== `0000-00-00` ? `${formatDateYyyyMmDd(item.dateStart)}` : `-`
     );
 
-    const validRecords = OBJECT.filter((item) => Boolean(item._id));
+    const validRecords = OBJECT.filter((item) => (
+      Boolean(item._id) ||
+      Boolean(item.money_record_dateStart && item.money_record_dateStart !== `0000-00-00`)
+    ));
     const totalIncome = validRecords.reduce((sum, item) => (
       sum + toNumber(item.money_record_total_income)
     ), 0);
@@ -263,10 +264,11 @@ export const MoneyRecordList = memo(() => {
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
           <Grid size={12} className={`d-row-left`}>
-            <Div className={`fs-0-95rem fw-600`}>
-              {formatDateYyyyMmDd(DATE?.dateStart)}
-              {` - `}
-              {formatDateYyyyMmDd(DATE?.dateEnd)}
+            <Div className={`fs-0-95rem fw-600 mr-auto`}>
+              {`${formatDateYyyyMmDd(DATE?.dateStart)} - ${formatDateYyyyMmDd(DATE?.dateEnd)}`}
+            </Div>
+            <Div className={`fs-0-9rem fw-600 dark-grey`}>
+              {`(${translate(`total`)})`}
             </Div>
           </Grid>
         </Grid>
@@ -543,7 +545,7 @@ export const MoneyRecordList = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
         {summarySection()}
         <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`money`} /> : listSection()}

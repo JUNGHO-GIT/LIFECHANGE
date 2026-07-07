@@ -340,7 +340,7 @@ export const UserDetail = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
         {imageSection()}
         <Hr m={40} />
         {detailSection()}

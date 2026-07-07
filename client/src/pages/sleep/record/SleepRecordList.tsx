@@ -288,10 +288,11 @@ export const SleepRecordList = memo(() => {
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
           <Grid size={12} className={`d-row-left`}>
-            <Div className={`fs-0-95rem fw-600`}>
-              {formatDateYyyyMmDd(DATE?.dateStart)}
-              {` - `}
-              {formatDateYyyyMmDd(DATE?.dateEnd)}
+            <Div className={`fs-0-95rem fw-600 mr-auto`}>
+              {`${formatDateYyyyMmDd(DATE?.dateStart)} - ${formatDateYyyyMmDd(DATE?.dateEnd)}`}
+            </Div>
+            <Div className={`fs-0-9rem fw-600 dark-grey`}>
+              {`(${translate(`avg`)})`}
             </Div>
           </Grid>
         </Grid>
@@ -623,7 +624,7 @@ export const SleepRecordList = memo(() => {
     );
     // 7-10. return
     return (
-      <Paper className={`content-wrapper radius-3 border-light-1 shadow-1 h-min-75vh`}>
+      <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
         {summarySection()}
         <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`sleep`} /> : listSection()}

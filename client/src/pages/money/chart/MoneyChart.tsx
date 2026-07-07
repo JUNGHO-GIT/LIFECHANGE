@@ -221,7 +221,7 @@ export const MoneyChart = memo(() => {
 
     // 9. return
     return (
-      <Paper className={`w-100p radius-3 border-light-1 shadow-1 p-20px`}>
+      <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
         {VIEW.metric === `pie` && pieSection()}
         {VIEW.metric === `line` && lineSection()}
         {VIEW.metric === `avg` && avgSection()}
