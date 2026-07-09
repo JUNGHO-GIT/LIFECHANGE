@@ -11,7 +11,7 @@ import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores"
 import { SleepPie, SleepPieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { formatDateYyyyMmDd } from "@exportScripts";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@exportLibs";
 
 // -------------------------------------------------------------------------------------------------
 declare interface SleepChartPieProps {
@@ -235,7 +235,7 @@ export const SleepChartPie = memo((props: SleepChartPieProps) => {
     }
 
     return (
-      <ResponsiveContainer width={`100%`} height={380}>
+      <ResponsiveContainer width={`100%`} height={`100%`}>
         <PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
           <defs>
             <filter id={`textBackground`} x={0} y={0} width={1} height={1}>

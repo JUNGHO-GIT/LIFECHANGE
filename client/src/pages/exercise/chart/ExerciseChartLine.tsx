@@ -182,7 +182,7 @@ export const ExerciseChartLine = memo((props: ExerciseChartLineProps) => {
 
 		const { domain, ticks, formatterY } = formatY(object, exerciseChartArray, `exercise`);
 		return (
-		  <ResponsiveContainer width={`100%`} height={380}>
+		  <ResponsiveContainer width={`100%`} height={`100%`}>
 		    <LineChart
 		      data={object as any[]}
 		      margin={{ top: 60, right: 20, bottom: 10, left: 20 }}

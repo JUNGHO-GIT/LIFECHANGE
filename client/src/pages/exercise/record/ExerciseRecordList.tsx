@@ -126,8 +126,12 @@ export const ExerciseRecordList = memo(() => {
 
       return Number.isFinite(result) ? result : 0;
     };
+    const roundToTenth = (value: number): number => {
+      const sign = value < 0 ? -1 : 1;
+      return sign * (Math.round((Math.abs(value) + Number.EPSILON) * 10) / 10);
+    };
     const formatNumber = (value: number): string => {
-      const roundedValue = Math.round(value * 10) / 10;
+      const roundedValue = roundToTenth(value);
       return insertComma(roundedValue);
     };
     const formatTime = (value: number): string => {

@@ -286,7 +286,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
     }
 
     return (
-      <ResponsiveContainer width={`100%`} height={380}>
+      <ResponsiveContainer width={`100%`} height={`100%`}>
         <PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
           <defs>
             <filter id={`textBackground`} x={0} y={0} width={1} height={1}>

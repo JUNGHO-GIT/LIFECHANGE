@@ -143,7 +143,7 @@ export const SleepChartAvg = memo((props: SleepChartAvgProps) => {
 
 		const { domain, ticks, formatterY } = formatY(object, sleepChartArray, `sleep`);
 		return (
-		  <ResponsiveContainer width={`100%`} height={380}>
+		  <ResponsiveContainer width={`100%`} height={`100%`}>
 		    <ComposedChart
 		      data={object as any[]}
 		      margin={{ top: 60, right: 20, bottom: 10, left: 20 }}

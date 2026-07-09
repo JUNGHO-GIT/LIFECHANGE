@@ -12,7 +12,7 @@ import { FoodChartPie } from "./FoodChartPie";
 import { FoodChartLine } from "./FoodChartLine";
 import { FoodChartAvg } from "./FoodChartAvg";
 import { Select } from "@exportContainers";
-import { Paper, Grid, Br } from "@exportComponents";
+import { Paper, Grid, Div, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -101,8 +101,10 @@ export const FoodChart = memo(() => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid size={12} className={`d-col-center p-5px h-max-60vh`}>
-          <FoodChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />
+        <Grid size={12} className={`d-col-center p-5px`}>
+          <Div className={`w-100p`} style={{ height: `calc(75vh - 110px)` }}>
+            <FoodChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />
+          </Div>
         </Grid>
       </Grid>
     );
@@ -157,8 +159,10 @@ export const FoodChart = memo(() => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid size={12} className={`d-col-center p-5px h-max-60vh`}>
-          <FoodChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+        <Grid size={12} className={`d-col-center p-5px`}>
+          <Div className={`w-100p`} style={{ height: `calc(75vh - 110px)` }}>
+            <FoodChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+          </Div>
         </Grid>
       </Grid>
     );
@@ -213,8 +217,10 @@ export const FoodChart = memo(() => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid size={12} className={`d-col-center p-5px h-max-60vh`}>
-          <FoodChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+        <Grid size={12} className={`d-col-center p-5px`}>
+          <Div className={`w-100p`} style={{ height: `calc(75vh - 110px)` }}>
+            <FoodChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+          </Div>
         </Grid>
       </Grid>
     );

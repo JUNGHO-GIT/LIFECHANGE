@@ -234,9 +234,10 @@ export const MoneyRecordDetail = memo(() => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
+    const defaultPart = moneyArray.find((item: any) => item.money_record_part === `expense`) ?? moneyArray[1];
     const defaultSection: any = {
-      money_record_part: moneyArray[1]?.money_record_part ?? ``,
-      money_record_title: moneyArray[0]?.money_record_title?.[0] ?? ``,
+      money_record_part: defaultPart?.money_record_part ?? `expense`,
+      money_record_title: defaultPart?.money_record_title?.[0] ?? ``,
       money_record_amount: `0`,
       money_record_content: ``,
       money_record_include: `Y`,

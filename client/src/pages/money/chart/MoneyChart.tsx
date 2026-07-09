@@ -12,7 +12,7 @@ import { MoneyChartPie } from "./MoneyChartPie";
 import { MoneyChartLine } from "./MoneyChartLine";
 import { MoneyChartAvg } from "./MoneyChartAvg";
 import { Select } from "@exportContainers";
-import { Paper, Grid, Br } from "@exportComponents";
+import { Paper, Grid, Div, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -101,8 +101,10 @@ export const MoneyChart = memo(() => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid size={12} className={`d-col-center p-5px h-max-60vh`}>
-          <MoneyChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />
+        <Grid size={12} className={`d-col-center p-5px`}>
+          <Div className={`w-100p`} style={{ height: `calc(75vh - 110px)` }}>
+            <MoneyChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />
+          </Div>
         </Grid>
       </Grid>
     );
@@ -157,8 +159,10 @@ export const MoneyChart = memo(() => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid size={12} className={`d-col-center p-5px h-max-60vh`}>
-          <MoneyChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+        <Grid size={12} className={`d-col-center p-5px`}>
+          <Div className={`w-100p`} style={{ height: `calc(75vh - 110px)` }}>
+            <MoneyChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+          </Div>
         </Grid>
       </Grid>
     );
@@ -213,8 +217,10 @@ export const MoneyChart = memo(() => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid size={12} className={`d-col-center p-5px h-max-60vh`}>
-          <MoneyChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+        <Grid size={12} className={`d-col-center p-5px`}>
+          <Div className={`w-100p`} style={{ height: `calc(75vh - 110px)` }}>
+            <MoneyChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+          </Div>
         </Grid>
       </Grid>
     );

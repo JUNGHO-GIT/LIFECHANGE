@@ -1,4 +1,0 @@
-- generic [ref=e3]:
-  - generic [ref=e4]: An error has occurred
-  - generic [ref=e5]: Please try again in a moment
-  - button "Refresh" [ref=e6] [cursor=pointer]

@@ -47,7 +47,7 @@ export const FoodFavoriteList = memo(() => {
   );
 
   // 2-2. useState -------------------------------------------------------------------------------
-  const [ OBJECT, setOBJECT ] = useState<[FoodFindType]>([FoodFind]);
+  const [ OBJECT, setOBJECT ] = useState<FoodFindType[]>([FoodFind]);
   const [ checkedQueries, setCheckedQueries ] = useState<Record<string, boolean[]>>({});
   const [ SEND, setSEND ] = useState({
     id: ``,
@@ -70,6 +70,20 @@ export const FoodFavoriteList = memo(() => {
   // - 항목 렌더를 비긴급으로 분리
   // - 전환·데이터 반영 시 화면 틀이 먼저 그려지고 항목은 다음 프레임에 채워짐
   const deferredObject = useDeferredValue(OBJECT);
+
+  // 2-3. expanded 상태 -------------------------------------------------------------------------
+  const normalizeExpanded = (items: FoodFindType[], current: any[]): any[] => {
+    const expandedMap = new Map<string, boolean>(
+      (current ?? [])
+      .filter((item: any) => typeof item?.food_record_key === `string`)
+      .map((item: any) => [ item.food_record_key, item.expanded ?? true ])
+    );
+
+    return items.map((item: FoodFindType, index: number) => ({
+      food_record_key: item.food_record_key,
+      expanded: expandedMap.get(item.food_record_key) ?? current?.[index]?.expanded ?? true,
+    }));
+  };
 
   // 2-3. useEffect ------------------------------------------------------------------------------
   // - 페이지 번호 변경 시 flowFind 호출
@@ -108,19 +122,13 @@ export const FoodFavoriteList = memo(() => {
     })
     .then((res: any) => {
       setLOADING(false);
-      setOBJECT(res.data.result?.length > 0 ? res.data.result : []);
-      const resultLength: number = res.data.result?.length ?? 0;
+      const result: FoodFindType[] = res.data.result?.length > 0 ? res.data.result : [];
+      setOBJECT(result);
       setCOUNT((prev) => ({
         ...prev,
         totalCnt: res.data.totalCnt ?? 0,
       }));
-      // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-      setIsExpanded(() => {
-        if (resultLength !== isExpanded.length) {
-          return Array.from({ length: resultLength }, () => ({ expanded: true }));
-        }
-        return isExpanded;
-      });
+      setIsExpanded((prev: any[]) => normalizeExpanded(result, prev ?? []));
     })
     .catch((error: any) => {
       setLOADING(false);
@@ -234,9 +242,11 @@ export const FoodFavoriteList = memo(() => {
                     onClick={(e: any) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      setIsExpanded(isExpanded.map((item: any, index: number) => (
-                        index === i ? { expanded: !item.expanded } : item
-                      )));
+                      setIsExpanded((prev: any[]) => (
+                        normalizeExpanded(OBJECT, prev ?? []).map((item: any, index: number) => (
+                          index === i ? { ...item, expanded: !item.expanded } : item
+                        ))
+                      ));
                     }}
                   />
                 )}

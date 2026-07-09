@@ -141,8 +141,12 @@ export const ExerciseGoalList = memo(() => {
 
       return Number.isFinite(result) ? result : 0;
     };
+    const roundToTenth = (value: number): number => {
+      const sign = value < 0 ? -1 : 1;
+      return sign * (Math.round((Math.abs(value) + Number.EPSILON) * 10) / 10);
+    };
     const formatNumber = (value: number): string => {
-      const roundedValue = Math.round(value * 10) / 10;
+      const roundedValue = roundToTenth(value);
       return Math.abs(roundedValue) >= 100_000
       ? `${Math.round(roundedValue / 1_000)}k`
       : insertComma(roundedValue);
