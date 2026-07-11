@@ -336,12 +336,7 @@ export const FoodChartPie = memo((props: FoodChartPieProps) => {
                 fill={_entry.name === `Empty`
                   ? `#edf0f4`
                   : chartThemeColors[_entry.name]
-                    ?? chartThemeColors[TYPE_STATE.line]
                     ?? chartColors[index % chartColors.length]}
-                fillOpacity={chartThemeColors[_entry.name] === undefined
-                  && chartThemeColors[TYPE_STATE.line] !== undefined
-                  ? Math.max(0.6, 1 - (index * 0.1))
-                  : 1}
               />
             ))}
           </Pie>

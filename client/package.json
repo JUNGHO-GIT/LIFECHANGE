@@ -34,7 +34,7 @@
     "@emotion/styled": "11.14.1",
     "@mui/material": "9.2.0",
     "@mui/system": "9.2.0",
-    "@mui/x-date-pickers": "9.8.0",
+    "@mui/x-date-pickers": "9.9.0",
     "@react-hooks-library/core": "1.0.0",
     "axios": "1.18.1",
     "countries-and-timezones": "3.9.0",

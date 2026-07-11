@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
@@ -9,7 +9,7 @@
   },
   "overrides": {
     "webidl-conversions": "8.0.1",
-    "whatwg-url": "17.0.0"
+    "whatwg-url": "17.1.0"
   },
   "scripts": {
     "git": "bun ~/.bootstrap/bootstrap-sync.ts --git",
