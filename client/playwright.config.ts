@@ -9,7 +9,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 // 1. config ---------------------------------------------------------------------------------------
 export default defineConfig({
-  testDir: `./client/.playwright`,
+  testDir: `./.playwright`,
   fullyParallel: true,
   retries: 0,
   workers: 4,

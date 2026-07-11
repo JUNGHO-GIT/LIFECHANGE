@@ -37,6 +37,7 @@ export interface ExerciseGoalType {
   exercise_record_total_scale_color: string;
   exercise_record_total_cardio: string;
   exercise_record_total_cardio_color: string;
+  exercise_record_part_counts: Record<string, number>;
   exercise_record_regDt: string;
   exercise_record_updateDt: string;
 
@@ -89,6 +90,7 @@ export const ExerciseGoal: ExerciseGoalType = {
   exercise_record_total_scale_color: ``,
   exercise_record_total_cardio: `00:00`,
   exercise_record_total_cardio_color: ``,
+  exercise_record_part_counts: {},
   exercise_record_regDt: ``,
   exercise_record_updateDt: ``,
 

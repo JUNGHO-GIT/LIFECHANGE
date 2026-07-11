@@ -5,15 +5,23 @@
  * @since 2025-12-26
  */
 
-import { memo } from "@exportReacts";
+import { lazy, memo, Suspense } from "@exportReacts";
 import { useCommonValue, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage } from "@exportStores";
-import { ExerciseChartPie } from "./ExerciseChartPie";
-import { ExerciseChartLine } from "./ExerciseChartLine";
-import { ExerciseChartAvg } from "./ExerciseChartAvg";
 import { Select } from "@exportContainers";
 import { Paper, Grid, Div, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
+
+// -------------------------------------------------------------------------------------------------
+const ExerciseChartPie = lazy(() => import(`./ExerciseChartPie`).then((m) => ({
+  default: m.ExerciseChartPie,
+})));
+const ExerciseChartLine = lazy(() => import(`./ExerciseChartLine`).then((m) => ({
+  default: m.ExerciseChartLine,
+})));
+const ExerciseChartAvg = lazy(() => import(`./ExerciseChartAvg`).then((m) => ({
+  default: m.ExerciseChartAvg,
+})));
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseChart = memo(() => {
@@ -107,7 +115,9 @@ export const ExerciseChart = memo(() => {
         </Grid>
         <Grid size={12} className={`d-col-center p-5px`}>
           <Div className={`w-100p`} style={{ height: `calc(75vh - 110px)` }}>
-            <ExerciseChartPie TYPE={TYPE_PIE_SAFE} setTYPE={setTYPE_PIE} />
+            <Suspense fallback={null}>
+              <ExerciseChartPie TYPE={TYPE_PIE_SAFE} setTYPE={setTYPE_PIE} />
+            </Suspense>
           </Div>
         </Grid>
       </Grid>
@@ -166,7 +176,9 @@ export const ExerciseChart = memo(() => {
         </Grid>
         <Grid size={12} className={`d-col-center p-5px`}>
           <Div className={`w-100p`} style={{ height: `calc(75vh - 110px)` }}>
-            <ExerciseChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+            <Suspense fallback={null}>
+              <ExerciseChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+            </Suspense>
           </Div>
         </Grid>
       </Grid>
@@ -224,7 +236,9 @@ export const ExerciseChart = memo(() => {
         </Grid>
         <Grid size={12} className={`d-col-center p-5px`}>
           <Div className={`w-100p`} style={{ height: `calc(75vh - 110px)` }}>
-            <ExerciseChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+            <Suspense fallback={null}>
+              <ExerciseChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+            </Suspense>
           </Div>
         </Grid>
       </Grid>

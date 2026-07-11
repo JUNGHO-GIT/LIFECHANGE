@@ -8,7 +8,6 @@
 import { useCommonValue } from "@hooks/common/useCommonValue";
 import { getCountryForTimezone } from "countries-and-timezones";
 import { getAllInfoByISO } from "iso-country-currency";
-import moment from "moment-timezone/builds/moment-timezone-with-data-10-year-range";
 import { useEffect } from "@exportReacts";
 import { setLocal } from "@exportScripts";
 
@@ -20,9 +19,15 @@ export const useLanguageSetting = () => {
 
   // 2. useEffect ----------------------------------------------------------------------------------
   useEffect(() => {
-    const syncLocale = (): void => {
+    let cancelled: boolean = false;
+    const syncLocale = async (): Promise<void> => {
     // ex. UTC
-      const timeZone: string = moment.tz.guess();
+      const timeZone: string = Intl.DateTimeFormat().resolvedOptions().timeZone || `UTC`;
+
+      const { default: moment } = await import(`moment-timezone/builds/moment-timezone-with-data-10-year-range`);
+      if (cancelled) {
+        return;
+      }
 
     // ex. UTC
       const zoneName: string = moment.tz(timeZone).zoneName();
@@ -58,13 +63,18 @@ export const useLanguageSetting = () => {
     };
 
     const idleId: number | null = typeof window.requestIdleCallback === `function`
-      ? window.requestIdleCallback(syncLocale)
+      ? window.requestIdleCallback(() => {
+        void syncLocale();
+      })
       : null;
     const timeoutId: ReturnType<typeof setTimeout> | null = idleId === null
-      ? setTimeout(syncLocale, 0)
+      ? setTimeout(() => {
+        void syncLocale();
+      }, 0)
       : null;
 
     return () => {
+      cancelled = true;
       if (idleId !== null && typeof window.cancelIdleCallback === `function`) {
         window.cancelIdleCallback(idleId);
       }

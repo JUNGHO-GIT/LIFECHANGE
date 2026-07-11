@@ -36,7 +36,7 @@ export const ExerciseRecordList = memo(() => {
   // 1. common ----------------------------------------------------------------------------------
   const {
     URL_OBJECT, PATH, sessionId, toDetail, localUnit,
-    navigate, location_dateType, location_dateStart, location_dateEnd, chartThemeColors,
+    navigate, location_dateType, location_dateStart, location_dateEnd, chartColors, chartThemeColors,
   } = useCommonValue();
   const { getDayFmt, getDayNotFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
@@ -198,13 +198,39 @@ export const ExerciseRecordList = memo(() => {
     const lowestRecord = scaleStats.reduce((lowest, item) => (
       item.scale < lowest.scale ? item : lowest
     ), scaleStats[0] ?? emptyScaleRecord);
-    const chartItems = [
-      { name: `volume`, value: avgVolume, color: chartThemeColors.volume },
-      { name: `cardio`, value: avgCardio, color: chartThemeColors.cardio },
-      { name: `scale`, value: avgScale, color: chartThemeColors.scale },
-    ].filter((item) => item.value > 0);
-    const chartData = chartItems.length > 0 ? chartItems : [
-      { name: `Empty`, value: 1, color: `#edf0f4` },
+    const partCounts = validRecords.reduce<Record<string, number>>((counts, item) => {
+      (item.exercise_section ?? []).forEach((section) => {
+        const part: string = section.exercise_record_part.trim();
+        if (part && part !== `all` && part !== `rest`) {
+          counts[part] = (counts[part] ?? 0) + 1;
+        }
+      });
+
+      return counts;
+    }, {});
+    const chartItems = Object.entries(partCounts)
+    .filter(([, count]) => count > 0)
+    .sort(([, firstCount], [, secondCount]) => secondCount - firstCount)
+    .map(([name, value], index) => ({
+      name,
+      value,
+      color: chartColors[index % chartColors.length] ?? `#0876b9`,
+    }));
+    const partTotalCount = chartItems.reduce((sum, item) => sum + item.value, 0);
+    let partPercentSum = 0;
+    const chartData = chartItems.length > 0 ? chartItems.map((item, index) => {
+      const percent = index === chartItems.length - 1
+        ? Math.max(0, 100 - partPercentSum)
+        : Math.round((item.value / partTotalCount) * 100);
+
+      partPercentSum += percent;
+
+      return {
+        ...item,
+        percent,
+      };
+    }) : [
+      { name: `Empty`, value: 1, percent: 0, color: `#edf0f4` },
     ];
 
     return {
@@ -217,9 +243,10 @@ export const ExerciseRecordList = memo(() => {
       highestDateText: formatRecordDate(highestRecord),
       lowestScaleText: formatNumber(lowestRecord.scale),
       lowestDateText: formatRecordDate(lowestRecord),
+      partTotalCount,
       chartData,
     };
-  }, [OBJECT, chartThemeColors]);
+  }, [OBJECT, chartColors]);
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -347,15 +374,14 @@ export const ExerciseRecordList = memo(() => {
               </PieChart>
             </ResponsiveContainer>
             <Div className={`chart-center`}>
-              <Div className={`fs-0-55rem fw-600 dark mb-3px`}>
-                {translate(`avg`)}
-              </Div>
-              <Div className={`fs-0-85rem fw-700 black`}>
-                {recordSummary.avgVolumeText}
-              </Div>
-              <Div className={`fs-0-55rem fw-600 dark mt-3px`}>
-                {translate(`vol`)}
-              </Div>
+              {recordSummary.chartData.slice(0, 3).map((item) => (
+                <Div key={item.name} className={`fs-0-5rem fw-700 mb-5px`} style={{
+                  color: item.color,
+                  lineHeight: `1.15`,
+                }}>
+                  {item.name === `Empty` ? `-` : `${translate(item.name)} ${item.percent}%`}
+                </Div>
+              ))}
             </Div>
           </Grid>
 

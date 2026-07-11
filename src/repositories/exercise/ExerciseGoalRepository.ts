@@ -122,6 +122,7 @@ export const listRecord = async (
         exercise_record_total_volume: 1,
         exercise_record_total_cardio: 1,
         exercise_record_total_scale: 1,
+        exercise_section: 1,
         exercise_record_total_count: {
           $cond: {
             if: {

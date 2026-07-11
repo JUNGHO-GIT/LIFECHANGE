@@ -31,7 +31,7 @@ declare interface CountProps {
   onCountChange?: (_newSectionCnt: number) => void;
 }
 
-// -------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
 export const Count = memo((
   {
     COUNT, setCOUNT, LOCKED, setLOCKED, limit, disabled, allowZero, onCountChange,
@@ -51,22 +51,25 @@ export const Count = memo((
   // 4. handle ----------------------------------------------------------------------------------
   const handleMinus = useCallback(() => {
     !disabled && LOCKED !== `locked` && !PATH.includes(`/food/find/list`) &&
-		setCOUNT((prev) => (prev.newSectionCnt > prev.sectionCnt ? (
-			onCountChange?.(prev.newSectionCnt - 1),
-			{ ...prev, newSectionCnt: prev.newSectionCnt - 1 }
-		) : (
-			setALERT({
-			  open: true,
-			  severity: `error`,
-			  msg: localLang === `ko`
-					? `${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-					: `Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
-			}),
-			prev
-		)),
-		);
+      setCOUNT((prev) => {
+        const minSectionCnt: number = allowZero ? 0 : prev.sectionCnt;
+
+        return prev.newSectionCnt > minSectionCnt ? (
+          onCountChange?.(prev.newSectionCnt - 1),
+          { ...prev, newSectionCnt: prev.newSectionCnt - 1 }
+        ) : (
+          setALERT({
+            open: true,
+            severity: `error`,
+            msg: localLang === `ko`
+              ? `${minSectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+              : `Please enter ${minSectionCnt} or more and ${limit} or less.`,
+          }),
+          prev
+        );
+      });
   }, [
-    disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit,
+    disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit, allowZero,
   ]);
 
   // 4. handle ----------------------------------------------------------------------------------

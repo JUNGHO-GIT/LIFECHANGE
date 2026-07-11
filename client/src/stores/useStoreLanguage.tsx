@@ -403,6 +403,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         ko: `부위`,
         en: `Part`,
       },
+      exercisePartRatio: {
+        ko: `운동부위·유산소 비율`,
+        en: `Exercise Part & Cardio Ratio`,
+      },
       exerciseTitle: {
         ko: `운동명`,
         en: `Exercise`,

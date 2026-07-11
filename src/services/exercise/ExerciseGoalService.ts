@@ -171,12 +171,27 @@ export const list = async (
         `0`,
       );
 
+      const exercisePartCounts: Record<string, number> = listRecord.reduce(
+        (counts: Record<string, number>, record: any) => {
+          (record.exercise_section ?? []).forEach((section: any) => {
+            const part: string = section?.exercise_record_part ?? ``;
+
+            if (part && part !== `all` && part !== `rest`) {
+              counts[part] = (counts[part] ?? 0) + 1;
+            }
+          });
+          return counts;
+        },
+        {},
+      );
+
       return {
         ...goal,
         exercise_record_total_count: String(exerciseTotalCount),
         exercise_record_total_volume: String(exerciseTotalVolume.toFixed(0)),
         exercise_record_total_cardio: decimalToStr(exerciseTotalCardio),
         exercise_record_total_scale: String(exerciseCurScale),
+        exercise_record_part_counts: exercisePartCounts,
       };
     });
     statusResult = `success`;

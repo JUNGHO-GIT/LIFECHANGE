@@ -167,26 +167,26 @@ const routeLoaders: RouteLoader[] = [
 const preloadRouteModules = (): (() => void) => {
   let timer: ReturnType<typeof setTimeout> | undefined;
   let cancelled: boolean = false;
-  const loadNext = (index: number): void => {
-    if (cancelled || index >= routeLoaders.length) {
+  const connection = navigator as Navigator & {
+    connection?: { effectiveType?: string; saveData?: boolean };
+  };
+  const isSlowConnection: boolean = connection.connection?.saveData === true
+    || connection.connection?.effectiveType === `slow-2g`
+    || connection.connection?.effectiveType === `2g`;
+  const preloadAll = (): void => {
+    if (cancelled) {
       return;
     }
-    const loadRoute = routeLoaders[index];
-    if (!loadRoute) {
-      return;
-    }
-    void loadRoute()
-    .catch(() => undefined)
-    .finally(() => {
-      timer = setTimeout(() => {
-        loadNext(index + 1);
-      }, 35);
+    routeLoaders.forEach((loadRoute) => {
+      void loadRoute().catch(() => undefined);
     });
   };
 
-  timer = setTimeout(() => {
-    loadNext(0);
-  }, 120);
+  if (!isSlowConnection) {
+    timer = setTimeout(() => {
+      preloadAll();
+    }, 120);
+  }
 
   return () => {
     cancelled = true;

@@ -58,7 +58,6 @@ export const Dialog = memo((
         }))
       ));
     });
-
     requestAnimationFrame(() => {
       window.scrollTo(0, 0);
     });

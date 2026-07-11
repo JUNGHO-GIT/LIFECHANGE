@@ -80,13 +80,40 @@ export const Img = memo((
   // 2-1. useRef -----------------------------------------------------------------------------------
   const currentImgSrcRef = useRef<string>(``);
   const isEmptyHandledRef = useRef<boolean>(false);
+  const skeletonRef = useRef<HTMLDivElement | null>(null);
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ fileName, setFileName ] = useState<string>(``);
   const [ imgSrc, setImgSrc ] = useState<string>(``);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
   const [ isEmptyHandled, setIsEmptyHandled ] = useState<boolean>(false);
+  const [ shouldLoad, setShouldLoad ] = useState<boolean>(loading === `eager`);
   const { onLoad: userOnLoad, onError: userOnError, ...restProps } = props as any;
+
+  // 2-3. viewport 진입 후 이미지 요청 -------------------------------------------------------------
+  useEffect(() => {
+    if (shouldLoad || loading === `eager`) {
+      setShouldLoad(true);
+      return;
+    }
+    const target: HTMLDivElement | null = skeletonRef.current;
+    if (!target || typeof IntersectionObserver === `undefined`) {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer: IntersectionObserver = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setShouldLoad(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: `320px 0px` });
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [loading, shouldLoad]);
 
   // 3. memoized imageClass ------------------------------------------------------------------------
   const imageClass = useMemo(() => [
@@ -171,6 +198,9 @@ export const Img = memo((
       setIsLoading(false);
       return;
     }
+    if (!shouldLoad) {
+      return;
+    }
 
     const cached: ImageCacheEntry | undefined = imageCache.get(finalSrc);
     if (cached?.status === `loaded`) {
@@ -190,7 +220,7 @@ export const Img = memo((
     return () => {
       cancelled = true;
     };
-  }, [ GCLOUD_URL, group, src, handleImageError ]);
+  }, [ GCLOUD_URL, group, src, handleImageError, shouldLoad ]);
 
   // 7. skeletonNode -------------------------------------------------------------------------------
   const skeletonNode = useMemo(() => {
@@ -202,6 +232,7 @@ export const Img = memo((
     ].filter(Boolean).join(` `) || `w-max-10px h-max-10px`;
     return (
       <Skeleton
+        ref={skeletonRef}
         variant={`rounded`}
         animation={`wave`}
         component={`div`}
