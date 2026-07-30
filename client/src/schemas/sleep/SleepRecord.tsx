@@ -23,6 +23,7 @@ export interface SleepRecordType {
   sleep_goal_wakeTime?: string;
   sleep_goal_sleepTime?: string;
   sleep_section: {
+    sleep_record_key?: string;
     sleep_record_bedTime: string;
     sleep_record_bedTime_color: string;
     sleep_record_wakeTime: string;
@@ -54,6 +55,7 @@ export const SleepRecord: SleepRecordType = {
   sleep_section: [
     {
       sleep_record_bedTime: `00:00`,
+      sleep_record_key: ``,
       sleep_record_bedTime_color: ``,
       sleep_record_wakeTime: `00:00`,
       sleep_record_wakeTime_color: ``,

@@ -144,12 +144,12 @@ export const TopNav = memo(() => {
   }, [ firstStr, smileImage ]);
 
   const [ dataArray, _setDataArray ] = useState({
-    exercise: [ `chart`, `goal`, `record` ],
+    exercise: [ `chart`, `goal`, `record`, `favorite` ],
     food: [ `chart`, `goal`, `record`, `favorite`, `find` ],
     today: [ `chart`, `goal`, `record` ],
     calendar: [`calendar`],
-    money: [ `chart`, `goal`, `record` ],
-    sleep: [ `chart`, `goal`, `record` ],
+    money: [ `chart`, `goal`, `record`, `favorite` ],
+    sleep: [ `chart`, `goal`, `record`, `favorite` ],
     admin: [`dashboard`],
   });
 
@@ -176,16 +176,19 @@ export const TopNav = memo(() => {
       },
       exercise: {
         chart: { key: `exercise`, value: `chart` },
+        favorite: { key: `exercise`, value: `favorite` },
         goal: { key: `exercise`, value: `goal` },
         record: { key: `exercise`, value: `record` },
       },
       money: {
         chart: { key: `money`, value: `chart` },
+        favorite: { key: `money`, value: `favorite` },
         goal: { key: `money`, value: `goal` },
         record: { key: `money`, value: `record` },
       },
       sleep: {
         chart: { key: `sleep`, value: `chart` },
+        favorite: { key: `sleep`, value: `favorite` },
         goal: { key: `sleep`, value: `goal` },
         record: { key: `sleep`, value: `record` },
       },

@@ -30,6 +30,7 @@ export interface ExerciseRecordType {
   exercise_goal_cardio: string;
   exercise_goal_scale: string;
   exercise_section: {
+    exercise_record_key?: string;
     exercise_record_part: string;
     exercise_record_title: string;
     exercise_record_set: string;
@@ -69,6 +70,7 @@ export const ExerciseRecord: ExerciseRecordType = {
   exercise_section: [
     {
       exercise_record_part: ``,
+      exercise_record_key: ``,
       exercise_record_title: ``,
       exercise_record_set: `0`,
       exercise_record_rep: `0`,

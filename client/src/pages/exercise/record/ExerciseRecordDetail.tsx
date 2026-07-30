@@ -9,7 +9,7 @@ import { React, useState, useEffect, useRef, useCallback, useDeferredValue, memo
 import { useCommonValue, useCommonDate, useTime, useValidateExercise } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { axios } from "@exportLibs";
-import { insertComma, sync } from "@exportScripts";
+import { insertComma, sync, getSession, setSession } from "@exportScripts";
 import { handleNumberInput } from "@exportScripts";
 import { ExerciseRecord, ExerciseRecordType } from "@exportSchemas";
 import { Footer, Dialog } from "@exportLayouts";
@@ -35,6 +35,7 @@ export const ExerciseRecordDetail = memo(() => {
   // 2-2. useState -------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<ExerciseRecordType>(ExerciseRecord);
+  const [ FAVORITE, setFAVORITE ] = useState<any[]>([]);
   const [ EXIST, setEXIST ] = useState({
     day: [``],
     week: [``],
@@ -157,6 +158,27 @@ export const ExerciseRecordDetail = memo(() => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
+    axios.get(`${URL_OBJECT}/favorite/list`, {
+      params: {
+        user_id: sessionId,
+      },
+    })
+    .then((res: any) => {
+      setFAVORITE(
+        (!res.data.result || res.data.result?.length === 0 ? [] : res.data.result)
+      );
+    })
+    .catch((error: any) => {
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+    });
+  }, [ URL_OBJECT, sessionId ]);
+
+  // 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
       setLOADING(false);
@@ -190,6 +212,22 @@ export const ExerciseRecordDetail = memo(() => {
         totalCnt: res.data.totalCnt ?? 0,
         sectionCnt: res.data.sectionCnt ?? 0,
         newSectionCnt: res.data.sectionCnt ?? 0,
+      }));
+
+      const sessionSection: any = getSession(`section`, `exercise`, ``) ?? [];
+      const sectionArray: any[] = Array.isArray(sessionSection) ? sessionSection : [];
+
+      setOBJECT((prev) => ({
+        ...prev,
+        exercise_section: [
+          ...(prev.exercise_section ?? []),
+          ...sectionArray,
+        ],
+      }));
+
+      setCOUNT((prev) => ({
+        ...prev,
+        newSectionCnt: prev.newSectionCnt + sectionArray.length,
       }));
     })
     .catch((error: any) => {
@@ -237,6 +275,7 @@ export const ExerciseRecordDetail = memo(() => {
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection = {
+      exercise_record_key: ``,
       exercise_record_part: exerciseArray[1]?.exercise_record_part ?? ``,
       exercise_record_title: exerciseArray[1]?.exercise_record_title?.[0] ?? ``,
       exercise_record_set: `0`,
@@ -373,8 +412,52 @@ export const ExerciseRecordDetail = memo(() => {
     });
   };
 
+  // 3. flow ------------------------------------------------------------------------------------
+  const flowUpdateFavorite = useCallback((favorite: any) => {
+    axios.put(`${URL_OBJECT}/favorite/update`, {
+      user_id: sessionId,
+      favorite: favorite,
+    })
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setFAVORITE(res.data.result?.length > 0 ? res.data.result : []);
+        void sync(`favorite`);
+      }
+      else {
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+      }
+    })
+    .catch((error: any) => {
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  }, [ URL_OBJECT, sessionId, setLOADING, setALERT, translate ]);
+
   // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
+    const currentItem: any = OBJECT?.exercise_section?.[index];
+    const currentKey: string = currentItem?.exercise_record_key ?? (
+      `${currentItem?.exercise_record_part ?? ``}_${currentItem?.exercise_record_title ?? ``}_${currentItem?.exercise_record_set ?? `0`}_${currentItem?.exercise_record_rep ?? `0`}_${currentItem?.exercise_record_weight ?? `0`}_${currentItem?.exercise_record_cardio ?? `00:00`}`
+    );
+    const sessionSection: any = getSession(`section`, `exercise`, ``) ?? [];
+
+    if (currentKey !== `` && Array.isArray(sessionSection)) {
+      setSession(`section`, `exercise`, ``, sessionSection.filter((item: any) => (
+        item.exercise_record_key !== currentKey
+      )));
+    }
+
     setOBJECT((prev) => ({
       ...prev,
       exercise_section: prev.exercise_section?.filter((_item: any, idx: number) => (idx !== index)),
@@ -383,6 +466,29 @@ export const ExerciseRecordDetail = memo(() => {
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));
+  }, [ OBJECT?.exercise_section ]);
+
+  // 4-4. handle --------------------------------------------------------------------------------
+  const handleExerciseFavorite = useCallback((item: any) => {
+    const exercise_record_part: string = item?.exercise_record_part ?? ``;
+    const exercise_record_title: string = item?.exercise_record_title ?? ``;
+    const exercise_record_set: string = item?.exercise_record_set ?? `0`;
+    const exercise_record_rep: string = item?.exercise_record_rep ?? `0`;
+    const exercise_record_weight: string = item?.exercise_record_weight ?? `0`;
+    const exercise_record_cardio: string = item?.exercise_record_cardio ?? `00:00`;
+    const exercise_record_key: string = (
+      `${exercise_record_part}_${exercise_record_title}_${exercise_record_set}_${exercise_record_rep}_${exercise_record_weight}_${exercise_record_cardio}`
+    );
+
+    return {
+      exercise_record_key: exercise_record_key,
+      exercise_record_part: exercise_record_part,
+      exercise_record_title: exercise_record_title,
+      exercise_record_set: exercise_record_set,
+      exercise_record_rep: exercise_record_rep,
+      exercise_record_weight: exercise_record_weight,
+      exercise_record_cardio: exercise_record_cardio,
+    };
   }, []);
 
   // 7. detail ----------------------------------------------------------------------------------
@@ -497,6 +603,22 @@ export const ExerciseRecordDetail = memo(() => {
                 badgeContent={i + 1}
                 bgcolor={bgColors?.[exerciseArray.findIndex((f: any) => f.exercise_record_part === item?.exercise_record_part)]}
               />
+              <Div className={`mt-n10px ml-15px`}>
+                <Icons
+                  key={`Star`}
+                  name={
+                    FAVORITE?.length > 0 && FAVORITE.some((favorite: any) => (
+                      favorite.exercise_record_key === handleExerciseFavorite(item).exercise_record_key
+                    )) ? `star_on` : `star_off`
+                  }
+                  isIconButton={true}
+                  className={`w-20px h-20px`}
+                  onClick={(e: any) => {
+                    e.stopPropagation();
+                    flowUpdateFavorite(handleExerciseFavorite(item));
+                  }}
+                />
+              </Div>
             </Grid>
             <Grid size={6} className={`d-row-right`}>
               <Delete

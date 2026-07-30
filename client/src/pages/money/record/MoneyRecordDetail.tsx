@@ -10,7 +10,7 @@ import { useCommonValue, useCommonDate, useValidateMoney } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { MoneyRecord, MoneyRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { insertComma, sync, handleNumberInput } from "@exportScripts";
+import { insertComma, sync, handleNumberInput, getSession, setSession } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, Memo, Count, Delete, Select, Input } from "@exportContainers";
 import { Icons, Bg, Div, Paper, Grid, Br } from "@exportComponents";
@@ -33,6 +33,7 @@ export const MoneyRecordDetail = memo(() => {
   // 2-2. useState -------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<MoneyRecordType>(MoneyRecord);
+  const [ FAVORITE, setFAVORITE ] = useState<any[]>([]);
   const [ EXIST, setEXIST ] = useState({
     day: [``],
     week: [``],
@@ -151,6 +152,27 @@ export const MoneyRecordDetail = memo(() => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
+    axios.get(`${URL_OBJECT}/favorite/list`, {
+      params: {
+        user_id: sessionId,
+      },
+    })
+    .then((res: any) => {
+      setFAVORITE(
+        (!res.data.result || res.data.result?.length === 0 ? [] : res.data.result)
+      );
+    })
+    .catch((error: any) => {
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+    });
+  }, [ URL_OBJECT, sessionId ]);
+
+  // 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
       setLOADING(false);
@@ -184,6 +206,22 @@ export const MoneyRecordDetail = memo(() => {
         totalCnt: res.data.totalCnt ?? 0,
         sectionCnt: res.data.sectionCnt ?? 0,
         newSectionCnt: res.data.sectionCnt ?? 0,
+      }));
+
+      const sessionSection: any = getSession(`section`, `money`, ``) ?? [];
+      const sectionArray: any[] = Array.isArray(sessionSection) ? sessionSection : [];
+
+      setOBJECT((prev) => ({
+        ...prev,
+        money_section: [
+          ...(prev.money_section ?? []),
+          ...sectionArray,
+        ],
+      }));
+
+      setCOUNT((prev) => ({
+        ...prev,
+        newSectionCnt: prev.newSectionCnt + sectionArray.length,
       }));
     })
     .catch((error: any) => {
@@ -236,6 +274,7 @@ export const MoneyRecordDetail = memo(() => {
   useEffect(() => {
     const defaultPart = moneyArray.find((item: any) => item.money_record_part === `expense`) ?? moneyArray[1];
     const defaultSection: any = {
+      money_record_key: ``,
       money_record_part: defaultPart?.money_record_part ?? `expense`,
       money_record_title: defaultPart?.money_record_title?.[0] ?? ``,
       money_record_amount: `0`,
@@ -367,8 +406,52 @@ export const MoneyRecordDetail = memo(() => {
     });
   };
 
+  // 3. flow ------------------------------------------------------------------------------------
+  const flowUpdateFavorite = useCallback((favorite: any) => {
+    axios.put(`${URL_OBJECT}/favorite/update`, {
+      user_id: sessionId,
+      favorite: favorite,
+    })
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setFAVORITE(res.data.result?.length > 0 ? res.data.result : []);
+        void sync(`favorite`);
+      }
+      else {
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+      }
+    })
+    .catch((error: any) => {
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  }, [ URL_OBJECT, sessionId, setLOADING, setALERT, translate ]);
+
   // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
+    const currentItem: any = OBJECT?.money_section?.[index];
+    const currentKey: string = currentItem?.money_record_key ?? (
+      `${currentItem?.money_record_part ?? ``}_${currentItem?.money_record_title ?? ``}_${currentItem?.money_record_amount ?? `0`}_${currentItem?.money_record_content ?? ``}_${currentItem?.money_record_include ?? `Y`}_${currentItem?.money_record_scheduled ?? `N`}_${currentItem?.money_record_scheduled_date ?? ``}_${currentItem?.money_record_scheduled_done ?? `N`}`
+    );
+    const sessionSection: any = getSession(`section`, `money`, ``) ?? [];
+
+    if (currentKey !== `` && Array.isArray(sessionSection)) {
+      setSession(`section`, `money`, ``, sessionSection.filter((item: any) => (
+        item.money_record_key !== currentKey
+      )));
+    }
+
     setOBJECT((prev) => ({
       ...prev,
       money_section: (prev.money_section ?? []).filter((_item: any, idx: number) => (idx !== index)),
@@ -377,6 +460,33 @@ export const MoneyRecordDetail = memo(() => {
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));
+  }, [ OBJECT?.money_section ]);
+
+  // 4-4. handle --------------------------------------------------------------------------------
+  const handleMoneyFavorite = useCallback((item: any) => {
+    const money_record_part: string = item?.money_record_part ?? ``;
+    const money_record_title: string = item?.money_record_title ?? ``;
+    const money_record_amount: string = item?.money_record_amount ?? `0`;
+    const money_record_content: string = item?.money_record_content ?? ``;
+    const money_record_include: string = item?.money_record_include ?? `Y`;
+    const money_record_scheduled: string = item?.money_record_scheduled ?? `N`;
+    const money_record_scheduled_date: string = item?.money_record_scheduled_date ?? ``;
+    const money_record_scheduled_done: string = item?.money_record_scheduled_done ?? `N`;
+    const money_record_key: string = (
+      `${money_record_part}_${money_record_title}_${money_record_amount}_${money_record_content}_${money_record_include}_${money_record_scheduled}_${money_record_scheduled_date}_${money_record_scheduled_done}`
+    );
+
+    return {
+      money_record_key: money_record_key,
+      money_record_part: money_record_part,
+      money_record_title: money_record_title,
+      money_record_amount: money_record_amount,
+      money_record_content: money_record_content,
+      money_record_include: money_record_include,
+      money_record_scheduled: money_record_scheduled,
+      money_record_scheduled_date: money_record_scheduled_date,
+      money_record_scheduled_done: money_record_scheduled_done,
+    };
   }, []);
 
   // 7. detail ----------------------------------------------------------------------------------
@@ -467,6 +577,22 @@ export const MoneyRecordDetail = memo(() => {
                   badgeContent={i + 1}
                   bgcolor={bgColors?.[partIndex]}
                 />
+                <Div className={`mt-n10px ml-15px`}>
+                  <Icons
+                    key={`Star`}
+                    name={
+                      FAVORITE?.length > 0 && FAVORITE.some((favorite: any) => (
+                        favorite.money_record_key === handleMoneyFavorite(item).money_record_key
+                      )) ? `star_on` : `star_off`
+                    }
+                    isIconButton={true}
+                    className={`w-20px h-20px`}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      flowUpdateFavorite(handleMoneyFavorite(item));
+                    }}
+                  />
+                </Div>
               </Grid>
               <Grid size={6} className={`d-row-right`}>
                 <Delete

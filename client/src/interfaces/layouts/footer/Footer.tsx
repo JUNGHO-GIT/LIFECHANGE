@@ -35,7 +35,7 @@ export const Footer = memo((
   useEffect(() => {
     const commonStr: string = `layout-wrapper p-sticky h-8vh radius-2 border-light-1 shadow-1 p-5px`;
     const isUser: boolean = PATH.includes(`/user/category`) || PATH.includes(`/user/detail`);
-    const isFood: boolean = PATH.includes(`/food/find/list`) || PATH.includes(`/food/favorite/list`);
+    const isFindFavorite: boolean = PATH.includes(`/find/list`) || PATH.includes(`/favorite/list`);
     const isList: boolean = PATH.includes(`/goal/list`) || PATH.includes(`/record/list`);
     const isDetail: boolean = PATH.includes(`/goal/detail`) || PATH.includes(`/record/detail`);
     const isCalendarDetail: boolean = PATH.includes(`/calendar/detail`);
@@ -45,7 +45,7 @@ export const Footer = memo((
       setStyleClass(`${commonStr} bottom-0vh`);
     })();
 
-    isFood && (() => {
+    isFindFavorite && (() => {
       setTypeName(`findFilter`);
       setStyleClass(`${commonStr} bottom-8vh`);
     })();

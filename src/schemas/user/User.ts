@@ -25,6 +25,32 @@ declare interface UserFavoriteItem {
   food_record_protein: string;
   food_record_fat: string;
 }
+declare interface UserExerciseFavoriteItem {
+  exercise_record_key: string;
+  exercise_record_part: string;
+  exercise_record_title: string;
+  exercise_record_set: string;
+  exercise_record_rep: string;
+  exercise_record_weight: string;
+  exercise_record_cardio: string;
+}
+declare interface UserMoneyFavoriteItem {
+  money_record_key: string;
+  money_record_part: string;
+  money_record_title: string;
+  money_record_amount: string;
+  money_record_content: string;
+  money_record_include: string;
+  money_record_scheduled: string;
+  money_record_scheduled_date: string;
+  money_record_scheduled_done: string;
+}
+declare interface UserSleepFavoriteItem {
+  sleep_record_key: string;
+  sleep_record_bedTime: string;
+  sleep_record_wakeTime: string;
+  sleep_record_sleepTime: string;
+}
 declare interface UserType extends mongoose.Document {
   user_id: string;
   user_number: number;
@@ -53,6 +79,9 @@ declare interface UserType extends mongoose.Document {
   user_curPropertyAll: string;
   user_curPropertyExclusion: string;
   user_favorite: UserFavoriteItem[];
+  user_exercise_favorite: UserExerciseFavoriteItem[];
+  user_money_favorite: UserMoneyFavoriteItem[];
+  user_sleep_favorite: UserSleepFavoriteItem[];
   user_dataCategory: any;
   user_regDt: Date;
   user_updateDt: Date;
@@ -244,6 +273,118 @@ const schema = new mongoose.Schema({
       food_record_fat: {
         type: String,
         default: ``,
+        required: false,
+      },
+    },
+  ],
+  user_exercise_favorite: [
+    {
+      exercise_record_key: {
+        type: String,
+        default: ``,
+        required: false,
+      },
+      exercise_record_part: {
+        type: String,
+        default: ``,
+        required: false,
+      },
+      exercise_record_title: {
+        type: String,
+        default: ``,
+        required: false,
+      },
+      exercise_record_set: {
+        type: String,
+        default: `0`,
+        required: false,
+      },
+      exercise_record_rep: {
+        type: String,
+        default: `0`,
+        required: false,
+      },
+      exercise_record_weight: {
+        type: String,
+        default: `0`,
+        required: false,
+      },
+      exercise_record_cardio: {
+        type: String,
+        default: `00:00`,
+        required: false,
+      },
+    },
+  ],
+  user_money_favorite: [
+    {
+      money_record_key: {
+        type: String,
+        default: ``,
+        required: false,
+      },
+      money_record_part: {
+        type: String,
+        default: ``,
+        required: false,
+      },
+      money_record_title: {
+        type: String,
+        default: ``,
+        required: false,
+      },
+      money_record_amount: {
+        type: String,
+        default: `0`,
+        required: false,
+      },
+      money_record_content: {
+        type: String,
+        default: ``,
+        required: false,
+      },
+      money_record_include: {
+        type: String,
+        default: `Y`,
+        required: false,
+      },
+      money_record_scheduled: {
+        type: String,
+        default: `N`,
+        required: false,
+      },
+      money_record_scheduled_date: {
+        type: String,
+        default: ``,
+        required: false,
+      },
+      money_record_scheduled_done: {
+        type: String,
+        default: `N`,
+        required: false,
+      },
+    },
+  ],
+  user_sleep_favorite: [
+    {
+      sleep_record_key: {
+        type: String,
+        default: ``,
+        required: false,
+      },
+      sleep_record_bedTime: {
+        type: String,
+        default: `00:00`,
+        required: false,
+      },
+      sleep_record_wakeTime: {
+        type: String,
+        default: `00:00`,
+        required: false,
+      },
+      sleep_record_sleepTime: {
+        type: String,
+        default: `00:00`,
         required: false,
       },
     },

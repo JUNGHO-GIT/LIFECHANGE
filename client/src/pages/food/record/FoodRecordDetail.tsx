@@ -745,6 +745,7 @@ export const FoodRecordDetail = memo(() => {
             <Grid size={3}>
               <Input
                 locked={LOCKED}
+                readOnly={true}
                 label={translate(`gram`)}
                 value={insertComma(item?.food_record_gram ?? `0`)}
                 inputRef={REFS?.[i]?.food_record_gram}
@@ -774,6 +775,7 @@ export const FoodRecordDetail = memo(() => {
             <Grid size={6}>
               <Input
                 locked={LOCKED}
+                readOnly={true}
                 shrink={`shrink`}
                 label={translate(`foodName`)}
                 value={item?.food_record_name ?? ``}
@@ -802,6 +804,7 @@ export const FoodRecordDetail = memo(() => {
             <Grid size={6}>
               <Input
                 locked={LOCKED}
+                readOnly={true}
                 shrink={`shrink`}
                 label={translate(`brand`)}
                 value={item?.food_record_brand ?? ``}

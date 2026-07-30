@@ -116,6 +116,9 @@ export const userSignup = async (user_id_param: string, OBJECT_param: any) => {
         food_record_fat: ``,
       },
     ],
+    user_exercise_favorite: [],
+    user_money_favorite: [],
+    user_sleep_favorite: [],
     user_dataCategory: {
       exercise: exerciseArray,
       food: foodArray,

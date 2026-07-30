@@ -29,7 +29,7 @@ export const Dialog = memo((
 
   // 1. common ----------------------------------------------------------------------------------
   const {
-    PATH, navigate, toDetail, localIsoCode,
+    PATH, firstStr, navigate, toDetail, localIsoCode,
     isGoalList, isFindList, isFavoriteList,
     isList, isDetail, isCalendar,
   } = useCommonValue();
@@ -273,9 +273,9 @@ export const Dialog = memo((
 						      className={`w-23px h-23px`}
 						    />
 						  )}
-						  onClick={() => {
-						    void navigate(`/food/find/list`);
-						  }}
+		  onClick={() => {
+		    void navigate(firstStr === `food` ? `/food/find/list` : toDetail);
+		  }}
 						/>
 					) : (
 						<SpeedDialAction

@@ -54,6 +54,32 @@ export interface UserType {
     food_record_protein: string;
     food_record_fat: string;
   }[];
+  user_exercise_favorite: {
+    exercise_record_key: string;
+    exercise_record_part: string;
+    exercise_record_title: string;
+    exercise_record_set: string;
+    exercise_record_rep: string;
+    exercise_record_weight: string;
+    exercise_record_cardio: string;
+  }[];
+  user_money_favorite: {
+    money_record_key: string;
+    money_record_part: string;
+    money_record_title: string;
+    money_record_amount: string;
+    money_record_content: string;
+    money_record_include: string;
+    money_record_scheduled: string;
+    money_record_scheduled_date: string;
+    money_record_scheduled_done: string;
+  }[];
+  user_sleep_favorite: {
+    sleep_record_key: string;
+    sleep_record_bedTime: string;
+    sleep_record_wakeTime: string;
+    sleep_record_sleepTime: string;
+  }[];
 
   user_dataCategory: {
     exercise: { exercise_record_part: string; exercise_record_title: string[] }[];
@@ -115,6 +141,9 @@ export const User: UserType = {
       food_record_fat: ``,
     },
   ],
+  user_exercise_favorite: [],
+  user_money_favorite: [],
+  user_sleep_favorite: [],
 
   user_dataCategory: {
     exercise: [],

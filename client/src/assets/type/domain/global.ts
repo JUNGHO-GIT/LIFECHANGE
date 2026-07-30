@@ -267,8 +267,37 @@ export interface SessionSyncFavoriteItem {
   food_record_protein?: string;
   food_record_fat?: string;
 }
+export interface SessionSyncExerciseFavoriteItem {
+  exercise_record_key?: string;
+  exercise_record_part?: string;
+  exercise_record_title?: string;
+  exercise_record_set?: string;
+  exercise_record_rep?: string;
+  exercise_record_weight?: string;
+  exercise_record_cardio?: string;
+}
+export interface SessionSyncMoneyFavoriteItem {
+  money_record_key?: string;
+  money_record_part?: string;
+  money_record_title?: string;
+  money_record_amount?: string;
+  money_record_content?: string;
+  money_record_include?: string;
+  money_record_scheduled?: string;
+  money_record_scheduled_date?: string;
+  money_record_scheduled_done?: string;
+}
+export interface SessionSyncSleepFavoriteItem {
+  sleep_record_key?: string;
+  sleep_record_bedTime?: string;
+  sleep_record_wakeTime?: string;
+  sleep_record_sleepTime?: string;
+}
 export interface SessionSyncFavorite {
   foodFavorite?: SessionSyncFavoriteItem[];
+  exerciseFavorite?: SessionSyncExerciseFavoriteItem[];
+  moneyFavorite?: SessionSyncMoneyFavoriteItem[];
+  sleepFavorite?: SessionSyncSleepFavoriteItem[];
   dateStart?: string;
   dateEnd?: string;
 }

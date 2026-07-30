@@ -20,6 +20,7 @@ export interface MoneyRecordType {
   money_goal_income: string;
   money_goal_expense: string;
   money_section: {
+    money_record_key?: string;
     money_record_part: string;
     money_record_title: string;
     money_record_amount: string;
@@ -50,6 +51,7 @@ export const MoneyRecord: MoneyRecordType = {
   money_section: [
     {
       money_record_part: ``,
+      money_record_key: ``,
       money_record_title: ``,
       money_record_amount: `0`,
       money_record_content: ``,

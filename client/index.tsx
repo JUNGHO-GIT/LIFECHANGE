@@ -70,6 +70,9 @@ const ExerciseRecordList = lazy(() => import("@pages/exercise/record/ExerciseRec
 const ExerciseRecordDetail = lazy(() => import("@pages/exercise/record/ExerciseRecordDetail").then((m) => ({
   default: m.ExerciseRecordDetail
 })));
+const FavoriteList = lazy(() => import("@pages/common/FavoriteList").then((m) => ({
+  default: m.FavoriteList
+})));
 
 // food --------------------------------------------------------------------------------------------
 const FoodChart = lazy(() => import("@pages/food/chart/FoodChart").then((m) => ({
@@ -255,6 +258,7 @@ const App = memo(() => {
           <Route path={`/exercise/goal/detail/*`} element={<ExerciseGoalDetail />} />
           <Route path={`/exercise/record/list/*`} element={<ExerciseRecordList />} />
           <Route path={`/exercise/record/detail/*`} element={<ExerciseRecordDetail />} />
+          <Route path={`/exercise/favorite/list/*`} element={<FavoriteList />} />
           {/** food * */}
           <Route path={`/food/chart/list/*`} element={<FoodChart />} />
           <Route path={`/food/goal/list/*`} element={<FoodGoalList />} />
@@ -269,12 +273,14 @@ const App = memo(() => {
           <Route path={`/money/goal/detail/*`} element={<MoneyGoalDetail />} />
           <Route path={`/money/record/list/*`} element={<MoneyRecordList />} />
           <Route path={`/money/record/detail/*`} element={<MoneyRecordDetail />} />
+          <Route path={`/money/favorite/list/*`} element={<FavoriteList />} />
           {/** sleep * */}
           <Route path={`/sleep/chart/list/*`} element={<SleepChart />} />
           <Route path={`/sleep/goal/list/*`} element={<SleepGoalList />} />
           <Route path={`/sleep/goal/detail/*`} element={<SleepGoalDetail />} />
           <Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
           <Route path={`/sleep/record/detail/*`} element={<SleepRecordDetail />} />
+          <Route path={`/sleep/favorite/list/*`} element={<FavoriteList />} />
           {/** user * */}
           <Route path={`/user/appInfo/*`} element={<UserAppInfo />} />
           <Route path={`/user/appSetting/*`} element={<UserAppSetting />} />

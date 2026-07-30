@@ -10,10 +10,10 @@ import { useCommonValue, useCommonDate, useTime, useValidateSleep } from "@expor
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { SleepRecord, SleepRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { sync } from "@exportScripts";
+import { sync, getSession, setSession } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, PickerTime, Count, Delete } from "@exportContainers";
-import { Bg, Paper, Grid, Br } from "@exportComponents";
+import { Icons, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const SleepRecordDetail = memo(() => {
@@ -32,6 +32,7 @@ export const SleepRecordDetail = memo(() => {
   // 2-2. useState -------------------------------------------------------------------------------
   const [ LOCKED, setLOCKED ] = useState<string>(`unlocked`);
   const [ OBJECT, setOBJECT ] = useState<SleepRecordType>(SleepRecord);
+  const [ FAVORITE, setFAVORITE ] = useState<any[]>([]);
   const [ EXIST, setEXIST ] = useState({
     day: [``],
     week: [``],
@@ -154,6 +155,27 @@ export const SleepRecordDetail = memo(() => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
+    axios.get(`${URL_OBJECT}/favorite/list`, {
+      params: {
+        user_id: sessionId,
+      },
+    })
+    .then((res: any) => {
+      setFAVORITE(
+        (!res.data.result || res.data.result?.length === 0 ? [] : res.data.result)
+      );
+    })
+    .catch((error: any) => {
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+    });
+  }, [ URL_OBJECT, sessionId ]);
+
+  // 2-3. useEffect -----------------------------------------------------------------------------
+  useEffect(() => {
     setLOADING(true);
     if (LOCKED === `locked`) {
       setLOADING(false);
@@ -190,6 +212,22 @@ export const SleepRecordDetail = memo(() => {
         sectionCnt: res.data.sectionCnt ?? 0,
         newSectionCnt: res.data.sectionCnt ?? 0,
       }));
+
+      const sessionSection: any = getSession(`section`, `sleep`, ``) ?? [];
+      const sectionArray: any[] = Array.isArray(sessionSection) ? sessionSection : [];
+
+      setOBJECT((prev) => ({
+        ...prev,
+        sleep_section: [
+          ...(prev.sleep_section ?? []),
+          ...sectionArray,
+        ],
+      }));
+
+      setCOUNT((prev) => ({
+        ...prev,
+        newSectionCnt: prev.newSectionCnt + sectionArray.length,
+      }));
     })
     .catch((error: any) => {
       setLOADING(false);
@@ -207,6 +245,7 @@ export const SleepRecordDetail = memo(() => {
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
     const defaultSection: any = {
+      sleep_record_key: ``,
       sleep_record_bedTime: `00:00`,
       sleep_record_wakeTime: `00:00`,
       sleep_record_sleepTime: `00:00`,
@@ -329,8 +368,52 @@ export const SleepRecordDetail = memo(() => {
     });
   };
 
+  // 3. flow ------------------------------------------------------------------------------------
+  const flowUpdateFavorite = useCallback((favorite: any) => {
+    axios.put(`${URL_OBJECT}/favorite/update`, {
+      user_id: sessionId,
+      favorite: favorite,
+    })
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setFAVORITE(res.data.result?.length > 0 ? res.data.result : []);
+        void sync(`favorite`);
+      }
+      else {
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+      }
+    })
+    .catch((error: any) => {
+      setALERT({
+        open: true,
+        msg: translate(error.response.data.msg as string),
+        severity: `error`,
+      });
+      console.error(error);
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
+  }, [ URL_OBJECT, sessionId, setLOADING, setALERT, translate ]);
+
   // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
+    const currentItem: any = OBJECT?.sleep_section?.[index];
+    const currentKey: string = currentItem?.sleep_record_key ?? (
+      `${currentItem?.sleep_record_bedTime ?? `00:00`}_${currentItem?.sleep_record_wakeTime ?? `00:00`}_${currentItem?.sleep_record_sleepTime ?? `00:00`}`
+    );
+    const sessionSection: any = getSession(`section`, `sleep`, ``) ?? [];
+
+    if (currentKey !== `` && Array.isArray(sessionSection)) {
+      setSession(`section`, `sleep`, ``, sessionSection.filter((item: any) => (
+        item.sleep_record_key !== currentKey
+      )));
+    }
+
     setOBJECT((prev) => ({
       ...prev,
       sleep_section: prev.sleep_section?.filter((_item: any, idx: number) => (idx !== index)),
@@ -339,6 +422,23 @@ export const SleepRecordDetail = memo(() => {
       ...prev,
       newSectionCnt: prev.newSectionCnt - 1,
     }));
+  }, [ OBJECT?.sleep_section ]);
+
+  // 4-4. handle --------------------------------------------------------------------------------
+  const handleSleepFavorite = useCallback((item: any) => {
+    const sleep_record_bedTime: string = item?.sleep_record_bedTime ?? `00:00`;
+    const sleep_record_wakeTime: string = item?.sleep_record_wakeTime ?? `00:00`;
+    const sleep_record_sleepTime: string = item?.sleep_record_sleepTime ?? `00:00`;
+    const sleep_record_key: string = (
+      `${sleep_record_bedTime}_${sleep_record_wakeTime}_${sleep_record_sleepTime}`
+    );
+
+    return {
+      sleep_record_key: sleep_record_key,
+      sleep_record_bedTime: sleep_record_bedTime,
+      sleep_record_wakeTime: sleep_record_wakeTime,
+      sleep_record_sleepTime: sleep_record_sleepTime,
+    };
   }, []);
 
   // 7. save --------------------------------------------------------------------------------------
@@ -381,6 +481,22 @@ export const SleepRecordDetail = memo(() => {
                   badgeContent={i + 1}
                   bgcolor={`#0876b9`}
                 />
+                <Div className={`mt-n10px ml-15px`}>
+                  <Icons
+                    key={`Star`}
+                    name={
+                      FAVORITE?.length > 0 && FAVORITE.some((favorite: any) => (
+                        favorite.sleep_record_key === handleSleepFavorite(item).sleep_record_key
+                      )) ? `star_on` : `star_off`
+                    }
+                    isIconButton={true}
+                    className={`w-20px h-20px`}
+                    onClick={(e: any) => {
+                      e.stopPropagation();
+                      flowUpdateFavorite(handleSleepFavorite(item));
+                    }}
+                  />
+                </Div>
               </Grid>
               <Grid size={6} className={`d-row-right`}>
                 <Delete

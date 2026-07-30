@@ -25,7 +25,7 @@ export const Buttons = memo((
   // 1. common ----------------------------------------------------------------------------------
   const {
     toFind, toFavorite, navigate,
-    isFoodRecordDetail, isUserCategory, isUserDetail, isDetail, isSleep, isCalendarDetail,
+    isFoodRecordDetail, isRecordDetail, isUserCategory, isUserDetail, isDetail, isSleep, isCalendarDetail,
   } = useCommonValue();
   const { translate } = useStoreLanguage();
 
@@ -168,7 +168,7 @@ export const Buttons = memo((
 			    {saveBtn}
 			    {deleteBtn}
 			    {isFoodRecordDetail ? toFindBtn : null}
-			    {isFoodRecordDetail ? favoriteBtn : null}
+		    {isRecordDetail ? favoriteBtn : null}
 			  </Grid>
 			</Grid>
 		) : null

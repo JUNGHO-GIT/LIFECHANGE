@@ -225,6 +225,9 @@ export const MoneyRecordList = memo(() => {
     const lowestExpense = expenseStats.reduce((lowest, item) => (
       item.amount < lowest.amount ? item : lowest
     ), expenseStats[0] ?? emptyExpense);
+    const avgExpense = expenseStats.length > 0
+      ? expenseStats.reduce((sum, item) => sum + item.amount, 0) / expenseStats.length
+      : 0;
     // 수입·지출 구성 비율 계산
     const incomeExpenseTotal = totalIncome + totalExpense;
     const incomePercent = incomeExpenseTotal > 0
@@ -250,6 +253,7 @@ export const MoneyRecordList = memo(() => {
       highestDateText: formatRecordDate(highestExpense),
       lowestExpenseText: formatNumber(lowestExpense.amount),
       lowestDateText: formatRecordDate(lowestExpense),
+      avgExpenseText: formatNumber(avgExpense),
       incomePercent,
       expensePercent,
       chartData,
@@ -395,6 +399,24 @@ export const MoneyRecordList = memo(() => {
               <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestExpenseText}
+                </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(localCurrency)}
+                </Div>
+              </Div>
+            </Div>
+            <Div className={`stat-card`}>
+              <Div className={`stat-label`}>
+                <Div className={`fs-0-65rem fw-600 dark`}>
+                  {`${translate(`expense`)} ${translate(`avg`)}`}
+                </Div>
+                <Div className={`stat-meta fs-0-55rem dark mt-3px`}>
+                  {`${recordSummary.recordCnt}${translate(`count`)}`}
+                </Div>
+              </Div>
+              <Div className={`d-row-right stat-value`}>
+                <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
+                  {recordSummary.avgExpenseText}
                 </Div>
                 <Div className={`fs-0-55rem fw-600 dark`}>
                   {translate(localCurrency)}

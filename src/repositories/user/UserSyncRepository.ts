@@ -111,6 +111,7 @@ export const percent = {
                   },
                 ],
               },
+              // biome-ignore lint/suspicious/noThenProperty: MongoDB $cond 문법
               then: ``,
               else: `1`,
             },
@@ -682,12 +683,26 @@ export const favorite = {
       {
         _id: 0,
         user_favorite: 1,
+        user_exercise_favorite: 1,
+        user_money_favorite: 1,
+        user_sleep_favorite: 1,
       },
     ).lean();
 
-    return finalResult?.user_favorite?.map(
-      ({ _id: _drop, ...rest }: any) => rest,
-    );
+    return {
+      foodFavorite: finalResult?.user_favorite?.map(
+        ({ _id: _drop, ...rest }: any) => rest,
+      ) ?? [],
+      exerciseFavorite: finalResult?.user_exercise_favorite?.map(
+        ({ _id: _drop, ...rest }: any) => rest,
+      ) ?? [],
+      moneyFavorite: finalResult?.user_money_favorite?.map(
+        ({ _id: _drop, ...rest }: any) => rest,
+      ) ?? [],
+      sleepFavorite: finalResult?.user_sleep_favorite?.map(
+        ({ _id: _drop, ...rest }: any) => rest,
+      ) ?? [],
+    };
   },
 };
 

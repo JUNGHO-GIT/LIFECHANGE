@@ -12,6 +12,7 @@ import { router as AdminRouter } from "@routers/admin/AdminRouter";
 import { router as GoogleRouter } from "@routers/auth/GoogleRouter";
 // calendar
 import { router as CalendarRouter } from "@routers/calendar/CalendarRouter";
+import { createFavoriteRouter } from "@routers/common/FavoriteRouter";
 // exercise
 import { router as ExerciseChartRouter } from "@routers/exercise/ExerciseChartRouter";
 import { router as ExerciseGoalRouter } from "@routers/exercise/ExerciseGoalRouter";
@@ -33,7 +34,7 @@ import { router as SleepRecordRouter } from "@routers/sleep/SleepRecordRouter";
 import { router as UserRouter } from "@routers/user/UserRouter";
 // user
 import { router as UserSyncRouter } from "@routers/user/UserSyncRouter";
-import express, { type Express, type Request, type Response } from "express";
+import express, { type Express, type NextFunction, type Request, type Response } from "express";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 import mongoose from "mongoose";
@@ -265,7 +266,7 @@ const sanitizeMongoKeys = (value: unknown, depth: number): void => {
   }
 };
 // req.query 는 express 5 에서 getter-only 라 in-place 로만 정리
-app.use((req: Request, _res: Response, next: Function) => {
+app.use((req: Request, _res: Response, next: NextFunction) => {
   sanitizeMongoKeys(req.query, 0);
   sanitizeMongoKeys(req.body, 0);
   sanitizeMongoKeys(req.params, 0);
@@ -305,6 +306,7 @@ app.use(`${preFix}/calendar`, CalendarRouter);
 app.use(`${preFix}/exercise/chart`, ExerciseChartRouter);
 app.use(`${preFix}/exercise/goal`, ExerciseGoalRouter);
 app.use(`${preFix}/exercise/record`, ExerciseRecordRouter);
+app.use(`${preFix}/exercise/favorite`, createFavoriteRouter(`exercise`));
 
 // food
 app.use(`${preFix}/food/chart`, FoodChartRouter);
@@ -317,11 +319,13 @@ app.use(`${preFix}/food/find`, FoodFindRouter);
 app.use(`${preFix}/money/chart`, MoneyChartRouter);
 app.use(`${preFix}/money/goal`, MoneyGoalRouter);
 app.use(`${preFix}/money/record`, MoneyRecordRouter);
+app.use(`${preFix}/money/favorite`, createFavoriteRouter(`money`));
 
 // sleep
 app.use(`${preFix}/sleep/chart`, SleepChartRouter);
 app.use(`${preFix}/sleep/goal`, SleepGoalRouter);
 app.use(`${preFix}/sleep/record`, SleepRecordRouter);
+app.use(`${preFix}/sleep/favorite`, createFavoriteRouter(`sleep`));
 
 // user (민감 엔드포인트 — rate-limit 적용)
 app.use(`${preFix}/user/sync`, sensitiveLimiter, UserSyncRouter);
@@ -332,7 +336,7 @@ app.use(`${preFix}/admin`, AdminRouter);
 app.use(`${preFix}/auth/google`, sensitiveLimiter, GoogleRouter);
 
 // 0. 에러처리 미들웨어 -----------------------------------------------------------------------
-app.use((err: Error, req: Request, res: Response, _next: Function) => {
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
   res.status(500).send({
     status: 500,

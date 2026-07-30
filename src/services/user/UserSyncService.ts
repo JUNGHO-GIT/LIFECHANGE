@@ -6,7 +6,14 @@
  */
 
 import { decimalToTime, timeToDecimal } from "@assets/scripts/utils";
-import * as repository from "@repositories/user/UserSyncRepository";
+import {
+  favorite as favoriteRepository,
+  listCategory,
+  nutrition as nutritionRepository,
+  percent as percentRepository,
+  property as propertyRepository,
+  scale as scaleRepository,
+} from "@repositories/user/UserSyncRepository";
 
 // 0. category (카테고리 조회) ---------------------------------------------------------------------
 export const category = async (user_id_param: string) => {
@@ -15,7 +22,7 @@ export const category = async (user_id_param: string) => {
   let finalResult: any = null;
   let statusResult: string = ``;
 
-  findCategory = await repository.listCategory(user_id_param);
+  findCategory = await listCategory(user_id_param);
 
   if (!findCategory) {
     finalResult = null;
@@ -52,14 +59,14 @@ export const percent = async (user_id_param: string, DATE_param: any) => {
   const dateEnd: string = DATE_param.monthEnd;
 
   // 1-1. exerciseGoal
-  findExerciseGoal = await repository.percent.listExerciseGoal(
+  findExerciseGoal = await percentRepository.listExerciseGoal(
     user_id_param,
     dateStart,
     dateEnd,
   );
 
   // 1-2. exercise
-  findExercise = await repository.percent.listExercise(
+  findExercise = await percentRepository.listExercise(
     user_id_param,
     dateStart,
     dateEnd,
@@ -92,14 +99,14 @@ export const percent = async (user_id_param: string, DATE_param: any) => {
     });
 
   // 2-1. foodGoal
-  findFoodGoal = await repository.percent.listFoodGoal(
+  findFoodGoal = await percentRepository.listFoodGoal(
     user_id_param,
     dateStart,
     dateEnd,
   );
 
   // 2-2. food
-  findFood = await repository.percent.listFood(
+  findFood = await percentRepository.listFood(
     user_id_param,
     dateStart,
     dateEnd,
@@ -128,14 +135,14 @@ export const percent = async (user_id_param: string, DATE_param: any) => {
     });
 
   // 3-1. moneyGoal
-  findMoneyGoal = await repository.percent.listMoneyGoal(
+  findMoneyGoal = await percentRepository.listMoneyGoal(
     user_id_param,
     dateStart,
     dateEnd,
   );
 
   // 3-2. money
-  findMoney = await repository.percent.listMoney(
+  findMoney = await percentRepository.listMoney(
     user_id_param,
     dateStart,
     dateEnd,
@@ -156,14 +163,14 @@ export const percent = async (user_id_param: string, DATE_param: any) => {
     });
 
   // 4-1. sleepGoal
-  findSleepGoal = await repository.percent.listSleepGoal(
+  findSleepGoal = await percentRepository.listSleepGoal(
     user_id_param,
     dateStart,
     dateEnd,
   );
 
   // 4-2. sleep
-  findSleep = await repository.percent.listSleep(
+  findSleep = await percentRepository.listSleep(
     user_id_param,
     dateStart,
     dateEnd,
@@ -258,7 +265,7 @@ export const scale = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // 가입날짜 - 현재날짜
-  findRegDt = await repository.scale.findRegDt(user_id_param);
+  findRegDt = await scaleRepository.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
   // dateStart: isCustom 임의기간 조회 시 DATE.dateStart, 기본 동기는 가입일(regDt)
@@ -269,9 +276,9 @@ export const scale = async (user_id_param: string, DATE_param: any) => {
   const todayDt: string = DATE_param?.dateEnd;
 
   // 최초 체중 조회
-  findInitScale = await repository.scale.findInitScale(user_id_param);
+  findInitScale = await scaleRepository.findInitScale(user_id_param);
   // 최소/최대 체중 조회 (L-30: 단일 aggregate로 통합)
-  const findMinMax: any = await repository.scale.findMinMaxScale(
+  const findMinMax: any = await scaleRepository.findMinMaxScale(
     user_id_param,
     regDt,
     todayDt,
@@ -279,7 +286,7 @@ export const scale = async (user_id_param: string, DATE_param: any) => {
   minScale = findMinMax;
   maxScale = findMinMax;
   // 현재 체중 조회
-  curScale = await repository.scale.findCurScale(user_id_param, regDt, todayDt);
+  curScale = await scaleRepository.findCurScale(user_id_param, regDt, todayDt);
 
   // 형식 포맷
   initScale = String(Number.parseFloat(findInitScale?.user_initScale ?? `0`));
@@ -306,7 +313,7 @@ export const scale = async (user_id_param: string, DATE_param: any) => {
 
   // 체중 업데이트 (임의기간 조회 시 영속 저장 스킵 - 현재값 오염 방지)
   if (DATE_param?.isCustom !== true) {
-    await repository.scale.updateScale(
+    await scaleRepository.updateScale(
       user_id_param,
       initScale,
       minScale,
@@ -344,7 +351,7 @@ export const nutrition = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // 가입날짜 - 현재날짜
-  findRegDt = await repository.nutrition.findRegDt(user_id_param);
+  findRegDt = await nutritionRepository.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
   // dateStart: isCustom 임의기간 조회 시 DATE.dateStart, 기본 동기는 가입일(regDt)
@@ -355,16 +362,16 @@ export const nutrition = async (user_id_param: string, DATE_param: any) => {
   const todayDt: string = DATE_param?.dateEnd;
 
   // 데이터 총 개수 조회
-  findTotalCnt = await repository.nutrition.findTotalCnt(
+  findTotalCnt = await nutritionRepository.findTotalCnt(
     user_id_param,
     regDt,
     todayDt,
   );
   // 최초 칼로리 목표 조회
   findInitNutrition =
-    await repository.nutrition.findInitNutrition(user_id_param);
+    await nutritionRepository.findInitNutrition(user_id_param);
   // 전체 영양 정보 조회
-  findAllInformation = await repository.nutrition.findAllInformation(
+  findAllInformation = await nutritionRepository.findAllInformation(
     user_id_param,
     regDt,
     todayDt,
@@ -437,7 +444,7 @@ export const nutrition = async (user_id_param: string, DATE_param: any) => {
 
   // 영양소 업데이트 (임의기간 조회 시 영속 저장 스킵 - 현재값 오염 방지)
   if (DATE_param?.isCustom !== true) {
-    await repository.nutrition.updateNutrition(
+    await nutritionRepository.updateNutrition(
       user_id_param,
       initAvgKcalIntake,
       totalKcalIntake,
@@ -467,21 +474,21 @@ export const favorite = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // 가입날짜 - 현재날짜
-  findRegDt = await repository.favorite.findRegDt(user_id_param);
+  findRegDt = await favoriteRepository.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
   const regDt: string = findRegDt?.user_regDt?.toISOString().slice(0, 10);
   const todayDt: string = DATE_param?.dateEnd;
 
   // 저장 음식 조회
-  findFavorite = await repository.favorite.findFavorite(user_id_param);
+  findFavorite = await favoriteRepository.findFavorite(user_id_param);
 
   if (!findFavorite) {
     finalResult = null;
     statusResult = `fail`;
   } else {
     finalResult = {
-      foodFavorite: findFavorite,
+      ...findFavorite,
       dateStart: regDt,
       dateEnd: todayDt,
     };
@@ -516,7 +523,7 @@ export const property = async (user_id_param: string, DATE_param: any) => {
   let statusResult: string = ``;
 
   // 가입날짜 - 현재날짜
-  findRegDt = await repository.property.findRegDt(user_id_param);
+  findRegDt = await propertyRepository.findRegDt(user_id_param);
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
   // dateStart: isCustom 임의기간 조회 시 DATE.dateStart, 기본 동기는 가입일(regDt)
@@ -527,10 +534,10 @@ export const property = async (user_id_param: string, DATE_param: any) => {
   const todayDt: string = DATE_param?.dateEnd;
 
   // 최초 자산 조회
-  findInitProperty = await repository.property.findInitProperty(user_id_param);
+  findInitProperty = await propertyRepository.findInitProperty(user_id_param);
 
   // 전체 자산 정보 조회
-  findAllInformation = await repository.property.findAllInformation(
+  findAllInformation = await propertyRepository.findAllInformation(
     user_id_param,
     regDt,
     todayDt,
@@ -609,7 +616,7 @@ export const property = async (user_id_param: string, DATE_param: any) => {
 
   // 자산 업데이트 (임의기간 조회 시 영속 저장 스킵 - 현재값 오염 방지)
   if (DATE_param?.isCustom !== true) {
-    await repository.property.updateProperty(
+    await propertyRepository.updateProperty(
       user_id_param,
       initProperty,
       totalIncomeAll,

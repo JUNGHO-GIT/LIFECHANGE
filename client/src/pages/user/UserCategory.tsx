@@ -296,7 +296,7 @@ export const UserCategory = memo(() => {
               </TableHead>
               <TableBody className={`table-tbody`}>
                 {OBJECT[dataType]?.map((item: any, index: number) => (index > 0) && (
-                  <TableRow className={`table-tbody-tr border-bottom-1`} key={item[`${dataType}_record_part`]}>
+                  <TableRow className={`table-tbody-tr border-bottom-1`} key={`${dataType}_record_part_${index}`}>
                     <TableCell className={selectedIdx.category2Idx === index ? `bg-light` : ``}>
                       <Div className={`d-center`}>
                         <Div className={`fs-0-9rem mr-auto`}>
@@ -420,7 +420,7 @@ export const UserCategory = memo(() => {
                     ? OBJECT?.exercise?.[selectedIdx?.category2Idx]?.exercise_record_title
                     : OBJECT?.money?.[selectedIdx?.category2Idx]?.money_record_title
                   )?.map((item: any, index: number) => (index > 0) && (
-                    <TableRow key={item} className={`table-tbody-tr border-bottom-1`}>
+                    <TableRow key={`${dataType}_record_title_${selectedIdx.category2Idx}_${index}`} className={`table-tbody-tr border-bottom-1`}>
                       <TableCell>
                         <Div className={`d-center`}>
                           <Div className={`fs-0-9rem mr-auto`}>
