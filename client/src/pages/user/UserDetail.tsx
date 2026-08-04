@@ -174,9 +174,6 @@ export const UserDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    localUnit
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
                     if (processedValue === null) {
@@ -203,9 +200,6 @@ export const UserDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    localUnit
-                  }
                 />
               </Grid>
             </Grid>
@@ -225,9 +219,6 @@ export const UserDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    translate(`kc`)
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9999);
                     if (processedValue === null) {
@@ -254,9 +245,6 @@ export const UserDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    translate(`kc`)
-                  }
                 />
               </Grid>
             </Grid>
@@ -276,9 +264,6 @@ export const UserDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    localCurrency
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999_999);
                     if (processedValue === null) {
@@ -311,9 +296,6 @@ export const UserDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    localCurrency
-                  }
                 />
               </Grid>
             </Grid>

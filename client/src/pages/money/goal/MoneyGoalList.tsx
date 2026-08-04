@@ -117,9 +117,7 @@ export const MoneyGoalList = memo(() => {
     };
     const formatNumber = (value: number): string => {
       const roundedValue = Math.round(value);
-      return Math.abs(roundedValue) >= 100_000
-        ? `${Math.round(roundedValue / 1_000)}k`
-        : insertComma(roundedValue);
+      return insertComma(roundedValue);
     };
     const formatSignedNumber = (value: number): string => (
       value > 0 ? `+${formatNumber(value)}` : formatNumber(value)
@@ -361,9 +359,6 @@ export const MoneyGoalList = memo(() => {
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {goalSummary.totalIncomeText}
                 </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(localCurrency)}
-                </Div>
               </Div>
             </Div>
             <Div className={`d-row-between w-100p`}>
@@ -378,9 +373,6 @@ export const MoneyGoalList = memo(() => {
               <Div className={`d-row-right mb-5px`}>
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {goalSummary.totalExpenseText}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(localCurrency)}
                 </Div>
               </Div>
             </Div>
@@ -413,7 +405,6 @@ export const MoneyGoalList = memo(() => {
                     {row.actualText}
                     {` / `}
                     {row.goalText}
-                    {` ${translate(localCurrency)}`}
                   </Div>
                   <Div className={`fs-0-55rem fw-700`} style={{ color: row.color, flex: `0 0 auto` }}>
                     {row.diffText}
@@ -515,11 +506,6 @@ export const MoneyGoalList = memo(() => {
                             {insertComma(item.money_goal_income ?? `0`)}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(localCurrency)}
-                          </Div>
-                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -531,11 +517,6 @@ export const MoneyGoalList = memo(() => {
                             {insertComma(item.money_record_total_income ?? `0`)}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(localCurrency)}
-                          </Div>
-                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -545,11 +526,6 @@ export const MoneyGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.money_record_diff_income_color}`}>
                             {insertComma(item.money_record_diff_income ?? `0`)}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(localCurrency)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -583,11 +559,6 @@ export const MoneyGoalList = memo(() => {
                             {insertComma(item.money_goal_expense ?? `0`)}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(localCurrency)}
-                          </Div>
-                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -599,11 +570,6 @@ export const MoneyGoalList = memo(() => {
                             {insertComma(item.money_record_total_expense ?? `0`)}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(localCurrency)}
-                          </Div>
-                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -613,11 +579,6 @@ export const MoneyGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.money_record_diff_expense_color}`}>
                             {insertComma(item.money_record_diff_expense ?? `0`)}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(localCurrency)}
                           </Div>
                         </Grid>
                       </Grid>

@@ -399,9 +399,6 @@ export const ExerciseRecordList = memo(() => {
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {recordSummary.avgVolumeText}
                 </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`vol`)}
-                </Div>
               </Div>
             </Div>
             <Div className={`d-row-between mb-5px w-100p`}>
@@ -417,9 +414,6 @@ export const ExerciseRecordList = memo(() => {
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {recordSummary.avgCardioText}
                 </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`hm`)}
-                </Div>
               </Div>
             </Div>
             <Div className={`d-row-between w-100p`}>
@@ -434,9 +428,6 @@ export const ExerciseRecordList = memo(() => {
               <Div className={`d-row-right mb-5px`}>
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {recordSummary.avgScaleText}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {localUnit}
                 </Div>
               </Div>
             </Div>
@@ -461,9 +452,6 @@ export const ExerciseRecordList = memo(() => {
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestScaleText}
                 </Div>
-                <Div className={`fs-0-55rem fw-600 dark`}>
-                  {localUnit}
-                </Div>
               </Div>
             </Div>
             <Div className={`stat-card`}>
@@ -478,9 +466,6 @@ export const ExerciseRecordList = memo(() => {
               <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestScaleText}
-                </Div>
-                <Div className={`fs-0-55rem fw-600 dark`}>
-                  {localUnit}
                 </Div>
               </Div>
             </Div>
@@ -550,9 +535,6 @@ export const ExerciseRecordList = memo(() => {
                       <Div className={`fs-0-75rem fw-700 ${item.exercise_record_summary_scale_color ?? item.exercise_record_total_scale_color}`}>
                         {insertComma(item.exercise_record_total_scale ?? `0`)}
                       </Div>
-                      <Div className={`fs-0-6rem fw-600 dark ml-5px`}>
-                        {localUnit}
-                      </Div>
                     </Div>
                   </Grid>
                 </Grid>
@@ -577,11 +559,6 @@ export const ExerciseRecordList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
                             {insertComma(item.exercise_record_total_volume)}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`vol`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -609,11 +586,6 @@ export const ExerciseRecordList = memo(() => {
                             {item.exercise_record_total_cardio}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
-                          </Div>
-                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -637,11 +609,6 @@ export const ExerciseRecordList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_scale_color}`}>
                             {insertComma(item.exercise_record_total_scale)}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {localUnit}
                           </Div>
                         </Grid>
                       </Grid>

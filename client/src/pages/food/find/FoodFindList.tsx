@@ -245,11 +245,6 @@ export const FoodFindList = memo(() => {
                             {insertComma(item.food_record_kcal ?? `0`)}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`kc`)}
-                          </Div>
-                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -273,11 +268,6 @@ export const FoodFindList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.food_record_carb_color}`}>
                             {insertComma(item.food_record_carb ?? `0`)}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`g`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -305,11 +295,6 @@ export const FoodFindList = memo(() => {
                             {insertComma(item.food_record_protein ?? `0`)}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`g`)}
-                          </Div>
-                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -333,11 +318,6 @@ export const FoodFindList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.food_record_fat_color}`}>
                             {insertComma(item.food_record_fat ?? `0`)}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`g`)}
                           </Div>
                         </Grid>
                       </Grid>

@@ -256,8 +256,8 @@ export const lineWeek = async (user_id_param: string, DATE_param: any) => {
   const dateStart: string = monthStartFmt;
   const dateEnd: string = monthEndFmt;
 
-  // ex. 1주, 2주, 3주, 4주, 5주
-  const name: string[] = [`1주`, `2주`, `3주`, `4주`, `5주`];
+  // ex. 1주 ~ 6주 (weekRanges가 최대 6개까지 생성되므로 6개 필요)
+  const name: string[] = [`1주`, `2주`, `3주`, `4주`, `5주`, `6주`];
 
   // 해당 월의 1일이 포함된 주의 시작일 (월요일 기준)
   const firstWeekStart: moment.Moment =

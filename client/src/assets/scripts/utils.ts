@@ -229,7 +229,7 @@ export const formatY = (OBJECT: unknown, array: unknown, type: string, _extra?: 
       const result: FormatYResult = {
         domain: [ 0, config.topValue ],
         ticks: ticks,
-        formatterY: (value: number) => (value >= 1_000_000_000 ? `${(value / 1_000_000_000).toFixed(1)}b` : value >= 1_000_000 ? `${(value / 1_000_000).toFixed(1)}m` : value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value.toLocaleString()),
+        formatterY: (value: number) => value.toLocaleString(),
       };
 
       outerCache.set(key, result);

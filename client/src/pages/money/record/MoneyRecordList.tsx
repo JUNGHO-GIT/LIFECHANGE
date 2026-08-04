@@ -185,12 +185,10 @@ export const MoneyRecordList = memo(() => {
       return Number.isFinite(result) ? result : 0;
     };
 
-    // 금액을 화면 표시용 천 단위 또는 k 단위로 변환
+    // 금액을 축약 없이 세자리 콤마 표기로 변환
     const formatNumber = (value: number): string => {
       const roundedValue = Math.round(value);
-      return Math.abs(roundedValue) >= 100_000
-      ? `${Math.round(roundedValue / 1_000)}k`
-      : insertComma(roundedValue);
+      return insertComma(roundedValue);
     };
 
     const formatRecordDate = (item: MoneyAmountStat): string => (
@@ -338,9 +336,6 @@ export const MoneyRecordList = memo(() => {
                 <Div className={`fs-0-7rem fw-600 black mr-5px`}>
                   {recordSummary.totalIncomeText}
                 </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(localCurrency)}
-                </Div>
               </Div>
             </Div>
             <Div className={`d-row-between w-100p`}>
@@ -355,9 +350,6 @@ export const MoneyRecordList = memo(() => {
               <Div className={`d-row-right mb-5px`}>
                 <Div className={`fs-0-7rem fw-600 black mr-5px`}>
                   {recordSummary.totalExpenseText}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(localCurrency)}
                 </Div>
               </Div>
             </Div>
@@ -382,9 +374,6 @@ export const MoneyRecordList = memo(() => {
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestExpenseText}
                 </Div>
-                <Div className={`fs-0-55rem fw-600 dark`}>
-                  {translate(localCurrency)}
-                </Div>
               </Div>
             </Div>
             <Div className={`stat-card`}>
@@ -400,9 +389,6 @@ export const MoneyRecordList = memo(() => {
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestExpenseText}
                 </Div>
-                <Div className={`fs-0-55rem fw-600 dark`}>
-                  {translate(localCurrency)}
-                </Div>
               </Div>
             </Div>
             <Div className={`stat-card`}>
@@ -417,9 +403,6 @@ export const MoneyRecordList = memo(() => {
               <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.avgExpenseText}
-                </Div>
-                <Div className={`fs-0-55rem fw-600 dark`}>
-                  {translate(localCurrency)}
                 </Div>
               </Div>
             </Div>
@@ -490,9 +473,6 @@ export const MoneyRecordList = memo(() => {
                       <Div className={`fs-0-75rem fw-700`}>
                         {insertComma(item.money_record_total_expense ?? `0`)}
                       </Div>
-                      <Div className={`fs-0-6rem fw-600 dark ml-5px`}>
-                        {translate(localCurrency)}
-                      </Div>
                     </Div>
                   </Grid>
                 </Grid>
@@ -519,11 +499,6 @@ export const MoneyRecordList = memo(() => {
                             {insertComma(item.money_record_total_income ?? `0`)}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(localCurrency)}
-                          </Div>
-                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -547,11 +522,6 @@ export const MoneyRecordList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.money_record_total_expense_color}`}>
                             {insertComma(item.money_record_total_expense ?? `0`)}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(localCurrency)}
                           </Div>
                         </Grid>
                       </Grid>

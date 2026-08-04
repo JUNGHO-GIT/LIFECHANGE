@@ -220,10 +220,10 @@ export const FavoriteList = memo(() => {
 
   const renderSecondaryText = (item: any): string => {
     if (favoriteKind === `exercise`) {
-      return `${insertComma(item.exercise_record_set ?? `0`)}${translate(`s`)} ${insertComma(item.exercise_record_rep ?? `0`)}${translate(`r`)} ${insertComma(item.exercise_record_weight ?? `0`)}${localUnit}`;
+      return `${insertComma(item.exercise_record_set ?? `0`)} ${insertComma(item.exercise_record_rep ?? `0`)} ${insertComma(item.exercise_record_weight ?? `0`)}`;
     }
     if (favoriteKind === `money`) {
-      return `${insertComma(item.money_record_amount ?? `0`)}${translate(localCurrency)}`;
+      return insertComma(item.money_record_amount ?? `0`);
     }
     return item.sleep_record_sleepTime ?? `00:00`;
   };

@@ -430,9 +430,6 @@ export const SleepGoalList = memo(() => {
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {goalSummary.avgBedText}
                 </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`hm`)}
-                </Div>
               </Div>
             </Div>
             <Div className={`d-row-between mb-5px w-100p`}>
@@ -448,9 +445,6 @@ export const SleepGoalList = memo(() => {
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {goalSummary.avgWakeText}
                 </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`hm`)}
-                </Div>
               </Div>
             </Div>
             <Div className={`d-row-between w-100p`}>
@@ -465,9 +459,6 @@ export const SleepGoalList = memo(() => {
               <Div className={`d-row-right mb-5px`}>
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {goalSummary.avgSleepText}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`hm`)}
                 </Div>
               </Div>
             </Div>
@@ -500,7 +491,6 @@ export const SleepGoalList = memo(() => {
                     {row.actualText}
                     {` / `}
                     {row.goalText}
-                    {` ${translate(`hm`)}`}
                   </Div>
                   <Div className={`fs-0-55rem fw-700`} style={{ color: row.color, flex: `0 0 auto` }}>
                     {row.diffText}
@@ -602,11 +592,6 @@ export const SleepGoalList = memo(() => {
                             {item.sleep_goal_bedTime}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
-                          </Div>
-                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -618,11 +603,6 @@ export const SleepGoalList = memo(() => {
                             {item.sleep_record_bedTime}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
-                          </Div>
-                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -632,11 +612,6 @@ export const SleepGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.sleep_record_diff_bedTime_color}`}>
                             {item.sleep_record_diff_bedTime}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -670,11 +645,6 @@ export const SleepGoalList = memo(() => {
                             {item.sleep_goal_wakeTime}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
-                          </Div>
-                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -686,11 +656,6 @@ export const SleepGoalList = memo(() => {
                             {item.sleep_record_wakeTime}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
-                          </Div>
-                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -700,11 +665,6 @@ export const SleepGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.sleep_record_diff_wakeTime_color}`}>
                             {item.sleep_record_diff_wakeTime}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -738,11 +698,6 @@ export const SleepGoalList = memo(() => {
                             {item.sleep_goal_sleepTime}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
-                          </Div>
-                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -754,11 +709,6 @@ export const SleepGoalList = memo(() => {
                             {item.sleep_record_sleepTime}
                           </Div>
                         </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
-                          </Div>
-                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -768,11 +718,6 @@ export const SleepGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.sleep_record_diff_sleepTime_color}`}>
                             {item.sleep_record_diff_sleepTime}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`hm`)}
                           </Div>
                         </Grid>
                       </Grid>

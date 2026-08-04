@@ -461,9 +461,6 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
-                    endadornment={
-                      localUnit
-                    }
                   />
                 </Grid>
               </Grid>
@@ -482,9 +479,6 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
-                    endadornment={
-                      localUnit
-                    }
                   />
                 </Grid>
               </Grid>
@@ -638,9 +632,6 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
-                    endadornment={
-                      translate(`g`)
-                    }
                   />
                 </Grid>
               </Grid>
@@ -671,9 +662,6 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
-                    endadornment={
-                      translate(`g`)
-                    }
                   />
                 </Grid>
               </Grid>
@@ -704,9 +692,6 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
-                    endadornment={
-                      translate(`g`)
-                    }
                   />
                 </Grid>
               </Grid>
@@ -838,9 +823,6 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
-                    endadornment={
-                      localCurrency
-                    }
                   />
                 </Grid>
               </Grid>
@@ -865,9 +847,6 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
-                    endadornment={
-                      localCurrency
-                    }
                   />
                 </Grid>
               </Grid>

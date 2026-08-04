@@ -306,7 +306,7 @@ export const FoodRecordList = memo(() => {
                     const isEmpty = payload?.name === `Empty`;
                     const label = isEmpty ? translate(`record`) : translate(name as string);
                     const displayValue = isEmpty ? 0 : Number(value);
-                    const unit = isEmpty ? `` : ` ${translate(`g`)}`;
+                    const unit = ``;
                     const percent = payload?.percent ? ` (${payload.percent}%)` : ``;
                     return [ `${insertComma(displayValue)}${unit}${percent}`, label ];
                   }}
@@ -356,9 +356,6 @@ export const FoodRecordList = memo(() => {
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {recordSummary.averageCarbText}
                 </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`g`)}
-                </Div>
               </Div>
             </Div>
             <Div className={`d-row-between w-100p mb-5px`}>
@@ -373,9 +370,6 @@ export const FoodRecordList = memo(() => {
               <Div className={`d-row-right`}>
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {recordSummary.averageProteinText}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`g`)}
                 </Div>
               </Div>
             </Div>
@@ -392,9 +386,6 @@ export const FoodRecordList = memo(() => {
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {recordSummary.averageFatText}
                 </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`g`)}
-                </Div>
               </Div>
             </Div>
             <Div className={`d-row-between w-100p`}>
@@ -409,9 +400,6 @@ export const FoodRecordList = memo(() => {
               <Div className={`d-row-right`}>
                 <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
                   {recordSummary.averageKcalText}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`kc`)}
                 </Div>
               </Div>
             </Div>
@@ -436,9 +424,6 @@ export const FoodRecordList = memo(() => {
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestKcalText}
                 </Div>
-                <Div className={`fs-0-55rem fw-600 dark`}>
-                  {translate(`kc`)}
-                </Div>
               </Div>
             </Div>
             <Div className={`stat-card`}>
@@ -453,9 +438,6 @@ export const FoodRecordList = memo(() => {
               <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestKcalText}
-                </Div>
-                <Div className={`fs-0-55rem fw-600 dark`}>
-                  {translate(`kc`)}
                 </Div>
               </Div>
             </Div>
@@ -526,9 +508,6 @@ export const FoodRecordList = memo(() => {
                       <Div className={`fs-0-75rem fw-700`}>
                         {insertComma(item.food_record_total_kcal ?? `0`)}
                       </Div>
-                      <Div className={`fs-0-6rem fw-600 dark ml-5px`}>
-                        {translate(`kc`)}
-                      </Div>
                     </Div>
                   </Grid>
                 </Grid>
@@ -553,11 +532,6 @@ export const FoodRecordList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.food_record_total_kcal_color}`}>
                             {insertComma(item.food_record_total_kcal ?? `0`)}
-                          </Div>
-                        </Grid>
-                        <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`kc`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -586,9 +560,6 @@ export const FoodRecordList = memo(() => {
                           </Div>
                         </Grid>
                         <Grid size={2} className={`d-row-right`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`g`)}
-                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -616,9 +587,6 @@ export const FoodRecordList = memo(() => {
                           </Div>
                         </Grid>
                         <Grid size={2} className={`d-row-right`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`g`)}
-                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -646,9 +614,6 @@ export const FoodRecordList = memo(() => {
                           </Div>
                         </Grid>
                         <Grid size={2} className={`d-row-right`}>
-                          <Div className={`fs-0-6rem`}>
-                            {translate(`g`)}
-                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>

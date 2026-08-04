@@ -8,24 +8,15 @@
 import { memo } from "@exportReacts";
 
 // -------------------------------------------------------------------------------------------------
-// - 숫자 문자열을 k, m, b 단위로 축약
+// - 숫자 문자열을 축약 없이 세자리 콤마 표기로 변환
 const formatCompactNumber = (value: string | number) => {
   const numberValue = Number(String(value ?? `0`).replaceAll(`,`, ``).trim());
-  const absoluteValue = Math.abs(numberValue);
 
-  if (!Number.isFinite(numberValue) || absoluteValue < 1_000) {
+  if (!Number.isFinite(numberValue)) {
     return value;
   }
 
-  if (absoluteValue >= 1_000_000_000) {
-    return `${(numberValue / 1_000_000_000).toFixed(1).replace(/\.0$/, ``)}b`;
-  }
-
-  if (absoluteValue >= 1_000_000) {
-    return `${(numberValue / 1_000_000).toFixed(1).replace(/\.0$/, ``)}m`;
-  }
-
-  return `${(numberValue / 1_000).toFixed(1).replace(/\.0$/, ``)}k`;
+  return numberValue.toLocaleString(`en-US`, { maximumFractionDigits: 10 });
 };
 
 // -------------------------------------------------------------------------------------------------

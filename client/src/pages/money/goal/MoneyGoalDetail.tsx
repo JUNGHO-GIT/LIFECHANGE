@@ -372,9 +372,6 @@ export const MoneyGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    localCurrency
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999_999);
                     if (processedValue === null) {
@@ -409,9 +406,6 @@ export const MoneyGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    localCurrency
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999_999);
                     if (processedValue === null) {

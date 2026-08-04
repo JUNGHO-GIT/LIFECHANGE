@@ -218,7 +218,6 @@ export const PickerTime = memo((
             readOnly={true}
             locked={LOCKED}
             startadornment={dotAdornment}
-            endadornment={translate(`hm`)}
             onClick={(e: any) => {
               extra !== `sleep_record_sleepTime` &&
 							LOCKED === `unlocked` &&
@@ -259,7 +258,6 @@ export const PickerTime = memo((
             readOnly={true}
             locked={LOCKED}
             startadornment={dotAdornment}
-            endadornment={translate(`hm`)}
             onClick={(e: any) => {
               LOCKED === `unlocked` &&
 							popTrigger.openPopup(e.currentTarget);
@@ -299,7 +297,6 @@ export const PickerTime = memo((
             readOnly={true}
             locked={LOCKED}
             startadornment={dotAdornment}
-            endadornment={translate(`hm`)}
             onClick={(e: any) => {
               extra !== `sleep_record_sleepTime` &&
 							LOCKED === `unlocked` &&

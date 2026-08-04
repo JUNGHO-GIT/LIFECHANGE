@@ -375,9 +375,6 @@ export const FoodGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    translate(`kc`)
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999_999);
                     if (processedValue === null) {
@@ -412,9 +409,6 @@ export const FoodGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    translate(`g`)
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999_999);
                     if (processedValue === null) {
@@ -449,9 +443,6 @@ export const FoodGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    translate(`g`)
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999_999);
                     if (processedValue === null) {
@@ -486,9 +477,6 @@ export const FoodGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    translate(`g`)
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999_999);
                     if (processedValue === null) {

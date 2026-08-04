@@ -378,9 +378,6 @@ export const ExerciseGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    translate(`c`)
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9999);
                     if (processedValue === null) {
@@ -415,9 +412,6 @@ export const ExerciseGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    translate(`vol`)
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9_999_999);
                     if (processedValue === null) {
@@ -463,9 +457,6 @@ export const ExerciseGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
-                  endadornment={
-                    localUnit
-                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
                     if (processedValue === null) {
