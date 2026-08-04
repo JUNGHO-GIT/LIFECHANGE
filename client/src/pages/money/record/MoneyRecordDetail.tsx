@@ -173,6 +173,7 @@ export const MoneyRecordDetail = memo(() => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
+    setFAVORITE([]);
     setLOADING(true);
     if (LOCKED === `locked`) {
       setLOADING(false);

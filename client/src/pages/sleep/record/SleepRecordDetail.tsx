@@ -176,6 +176,7 @@ export const SleepRecordDetail = memo(() => {
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
+    setFAVORITE([]);
     setLOADING(true);
     if (LOCKED === `locked`) {
       setLOADING(false);
