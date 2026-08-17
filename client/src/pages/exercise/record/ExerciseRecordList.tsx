@@ -10,11 +10,11 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { ExerciseRecord, ExerciseRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "@exportLibs";
 import { formatDateMmDd, formatDateYyyyMmDd, formatDateYyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
+import { ExerciseRecordChart } from "./ExerciseRecordChart";
 
 // -------------------------------------------------------------------------------------------------
 declare interface ExerciseTotals {
@@ -328,7 +328,7 @@ export const ExerciseRecordList = memo(() => {
   // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
     // 7-0. summary
-    const recordSummarySection = () => (
+    const summarySection = () => (
       <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
@@ -345,93 +345,8 @@ export const ExerciseRecordList = memo(() => {
         <Hr m={20} className={`bg-light`} />
 
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
-            <ResponsiveContainer width={124} height={124}>
-              <PieChart>
-                <Pie
-                  data={recordSummary.chartData}
-                  cx={`50%`}
-                  cy={`50%`}
-                  innerRadius={40}
-                  outerRadius={58}
-                  dataKey={`value`}
-                  nameKey={`name`}
-                  startAngle={90}
-                  endAngle={-270}
-                  paddingAngle={recordSummary.chartData.length > 1 ? 2 : 0}
-                  stroke={`#fff`}
-                  strokeWidth={2}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={520}
-                  animationEasing={`ease-out`}
-                >
-                  {recordSummary.chartData.map((item) => (
-                    <Cell key={item.name} fill={item.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-            <Div className={`chart-center`}>
-              {recordSummary.chartData.slice(0, 3).map((item) => (
-                <Div key={item.name} className={`fs-0-5rem fw-700 mb-5px`} style={{
-                  color: item.color,
-                  lineHeight: `1.15`,
-                }}>
-                  {item.name === `Empty` ? `-` : `${translate(item.name)} ${item.percent}%`}
-                </Div>
-              ))}
-            </Div>
-          </Grid>
-
-          <Grid size={6} className={`legend p-relative d-col-center`}>
-            <Div className={`d-row-between mb-5px w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.volume }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`volume`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {recordSummary.avgVolumeText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between mb-5px w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.cardio }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`cardio`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {recordSummary.avgCardioText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.scale }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`scale`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {recordSummary.avgScaleText}
-                </Div>
-              </Div>
-            </Div>
-          </Grid>
+        <Grid size={12}>
+          <ExerciseRecordChart />
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
@@ -452,6 +367,9 @@ export const ExerciseRecordList = memo(() => {
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestScaleText}
                 </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {localUnit}
+                </Div>
               </Div>
             </Div>
             <Div className={`stat-card`}>
@@ -466,6 +384,9 @@ export const ExerciseRecordList = memo(() => {
               <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestScaleText}
+                </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {localUnit}
                 </Div>
               </Div>
             </Div>
@@ -535,6 +456,9 @@ export const ExerciseRecordList = memo(() => {
                       <Div className={`fs-0-75rem fw-700 ${item.exercise_record_summary_scale_color ?? item.exercise_record_total_scale_color}`}>
                         {insertComma(item.exercise_record_total_scale ?? `0`)}
                       </Div>
+                      <Div className={`fs-0-55rem fw-600 dark ml-5px`}>
+                        {localUnit}
+                      </Div>
                     </Div>
                   </Grid>
                 </Grid>
@@ -559,6 +483,11 @@ export const ExerciseRecordList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.exercise_record_total_volume_color}`}>
                             {insertComma(item.exercise_record_total_volume)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`vol`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -586,6 +515,11 @@ export const ExerciseRecordList = memo(() => {
                             {item.exercise_record_total_cardio}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -611,6 +545,11 @@ export const ExerciseRecordList = memo(() => {
                             {insertComma(item.exercise_record_total_scale)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {localUnit}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -625,7 +564,7 @@ export const ExerciseRecordList = memo(() => {
     // 7-10. return
     return (
       <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
-        {recordSummarySection()}
+        {summarySection()}
         <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`exercise`} /> : listSection()}
       </Paper>

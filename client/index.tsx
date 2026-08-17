@@ -55,8 +55,8 @@ const CalendarDetail = lazy(() => import("@pages/calendar/CalendarDetail").then(
 })));
 
 // exercise ----------------------------------------------------------------------------------------
-const ExerciseChart = lazy(() => import("@pages/exercise/chart/ExerciseChart").then((m) => ({
-  default: m.ExerciseChart
+const ExerciseRecordChart = lazy(() => import("@pages/exercise/record/ExerciseRecordChart").then((m) => ({
+  default: m.ExerciseRecordChart
 })));
 const ExerciseGoalList = lazy(() => import("@pages/exercise/goal/ExerciseGoalList").then((m) => ({
   default: m.ExerciseGoalList
@@ -70,13 +70,13 @@ const ExerciseRecordList = lazy(() => import("@pages/exercise/record/ExerciseRec
 const ExerciseRecordDetail = lazy(() => import("@pages/exercise/record/ExerciseRecordDetail").then((m) => ({
   default: m.ExerciseRecordDetail
 })));
-const FavoriteList = lazy(() => import("@pages/common/FavoriteList").then((m) => ({
-  default: m.FavoriteList
+const ExerciseFavoriteList = lazy(() => import("@pages/exercise/favorite/ExerciseFavoriteList").then((m) => ({
+  default: m.ExerciseFavoriteList
 })));
 
 // food --------------------------------------------------------------------------------------------
-const FoodChart = lazy(() => import("@pages/food/chart/FoodChart").then((m) => ({
-  default: m.FoodChart
+const FoodRecordChart = lazy(() => import("@pages/food/record/FoodRecordChart").then((m) => ({
+  default: m.FoodRecordChart
 })));
 const FoodGoalList = lazy(() => import("@pages/food/goal/FoodGoalList").then((m) => ({
   default: m.FoodGoalList
@@ -98,8 +98,8 @@ const FoodRecordDetail = lazy(() => import("@pages/food/record/FoodRecordDetail"
 })));
 
 // money ------------------------------------------------------------------------------------------
-const MoneyChart = lazy(() => import("@pages/money/chart/MoneyChart").then((m) => ({
-  default: m.MoneyChart
+const MoneyRecordChart = lazy(() => import("@pages/money/record/MoneyRecordChart").then((m) => ({
+  default: m.MoneyRecordChart
 })));
 const MoneyGoalList = lazy(() => import("@pages/money/goal/MoneyGoalList").then((m) => ({
   default: m.MoneyGoalList
@@ -113,10 +113,13 @@ const MoneyRecordList = lazy(() => import("@pages/money/record/MoneyRecordList")
 const MoneyRecordDetail = lazy(() => import("@pages/money/record/MoneyRecordDetail").then((m) => ({
   default: m.MoneyRecordDetail
 })));
+const MoneyFavoriteList = lazy(() => import("@pages/money/favorite/MoneyFavoriteList").then((m) => ({
+  default: m.MoneyFavoriteList
+})));
 
 // sleep ------------------------------------------------------------------------------------------
-const SleepChart = lazy(() => import("@pages/sleep/chart/SleepChart").then((m) => ({
-  default: m.SleepChart
+const SleepRecordChart = lazy(() => import("@pages/sleep/record/SleepRecordChart").then((m) => ({
+  default: m.SleepRecordChart
 })));
 const SleepGoalList = lazy(() => import("@pages/sleep/goal/SleepGoalList").then((m) => ({
   default: m.SleepGoalList
@@ -129,6 +132,9 @@ const SleepRecordList = lazy(() => import("@pages/sleep/record/SleepRecordList")
 })));
 const SleepRecordDetail = lazy(() => import("@pages/sleep/record/SleepRecordDetail").then((m) => ({
   default: m.SleepRecordDetail
+})));
+const SleepFavoriteList = lazy(() => import("@pages/sleep/favorite/SleepFavoriteList").then((m) => ({
+  default: m.SleepFavoriteList
 })));
 
 // user --------------------------------------------------------------------------------------------
@@ -253,14 +259,14 @@ const App = memo(() => {
           <Route path={`/calendar/list/*`} element={<CalendarList />} />
           <Route path={`/calendar/detail/*`} element={<CalendarDetail />} />
           {/** exercise * */}
-          <Route path={`/exercise/chart/list/*`} element={<ExerciseChart />} />
+          <Route path={`/exercise/chart/list/*`} element={<ExerciseRecordChart />} />
           <Route path={`/exercise/goal/list/*`} element={<ExerciseGoalList />} />
           <Route path={`/exercise/goal/detail/*`} element={<ExerciseGoalDetail />} />
           <Route path={`/exercise/record/list/*`} element={<ExerciseRecordList />} />
           <Route path={`/exercise/record/detail/*`} element={<ExerciseRecordDetail />} />
-          <Route path={`/exercise/favorite/list/*`} element={<FavoriteList />} />
+          <Route path={`/exercise/favorite/list/*`} element={<ExerciseFavoriteList />} />
           {/** food * */}
-          <Route path={`/food/chart/list/*`} element={<FoodChart />} />
+          <Route path={`/food/chart/list/*`} element={<FoodRecordChart />} />
           <Route path={`/food/goal/list/*`} element={<FoodGoalList />} />
           <Route path={`/food/goal/detail/*`} element={<FoodGoalDetail />} />
           <Route path={`/food/record/list/*`} element={<FoodRecordList />} />
@@ -268,19 +274,19 @@ const App = memo(() => {
           <Route path={`/food/favorite/list/*`} element={<FoodFavoriteList />} />
           <Route path={`/food/find/list/*`} element={<FoodFindList />} />
           {/** money * */}
-          <Route path={`/money/chart/list/*`} element={<MoneyChart />} />
+          <Route path={`/money/chart/list/*`} element={<MoneyRecordChart />} />
           <Route path={`/money/goal/list/*`} element={<MoneyGoalList />} />
           <Route path={`/money/goal/detail/*`} element={<MoneyGoalDetail />} />
           <Route path={`/money/record/list/*`} element={<MoneyRecordList />} />
           <Route path={`/money/record/detail/*`} element={<MoneyRecordDetail />} />
-          <Route path={`/money/favorite/list/*`} element={<FavoriteList />} />
+          <Route path={`/money/favorite/list/*`} element={<MoneyFavoriteList />} />
           {/** sleep * */}
-          <Route path={`/sleep/chart/list/*`} element={<SleepChart />} />
+          <Route path={`/sleep/chart/list/*`} element={<SleepRecordChart />} />
           <Route path={`/sleep/goal/list/*`} element={<SleepGoalList />} />
           <Route path={`/sleep/goal/detail/*`} element={<SleepGoalDetail />} />
           <Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
           <Route path={`/sleep/record/detail/*`} element={<SleepRecordDetail />} />
-          <Route path={`/sleep/favorite/list/*`} element={<FavoriteList />} />
+          <Route path={`/sleep/favorite/list/*`} element={<SleepFavoriteList />} />
           {/** user * */}
           <Route path={`/user/appInfo/*`} element={<UserAppInfo />} />
           <Route path={`/user/appSetting/*`} element={<UserAppSetting />} />
@@ -318,10 +324,7 @@ const appTheme = createTheme({
     primary: { main: `#0876b9` },
     secondary: { main: `#005f9e` },
     error: { main: `#f44336` },
-    background: {
-      default: `#f7f7f7`,
-      paper: `#ffffff`,
-    },
+    background: { default: `#f7f7f7`, paper: `#ffffff` },
   },
 });
 

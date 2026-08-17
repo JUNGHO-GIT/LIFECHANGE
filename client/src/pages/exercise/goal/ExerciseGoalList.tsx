@@ -10,11 +10,11 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { ExerciseGoal, ExerciseGoalType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "@exportLibs";
 import { formatDateMmDd, formatDateYyyyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
+import { ExerciseGoalChart } from "./ExerciseGoalChart";
 
 declare interface ExerciseTotals {
   count: number;
@@ -379,7 +379,7 @@ export const ExerciseGoalList = memo(() => {
   // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
     // 7-0. summary
-    const goalSummarySection = () => (
+    const summarySection = () => (
       <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
@@ -395,92 +395,7 @@ export const ExerciseGoalList = memo(() => {
         <Hr m={20} className={`bg-light`} />
 
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
-            <ResponsiveContainer width={124} height={124}>
-              <PieChart>
-                <Pie
-                  data={goalSummary.chartData}
-                  cx={`50%`}
-                  cy={`50%`}
-                  innerRadius={40}
-                  outerRadius={58}
-                  dataKey={`value`}
-                  nameKey={`name`}
-                  startAngle={90}
-                  endAngle={-270}
-                  paddingAngle={goalSummary.chartData.length > 1 ? 2 : 0}
-                  stroke={`#fff`}
-                  strokeWidth={2}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={520}
-                  animationEasing={`ease-out`}
-                >
-                  {goalSummary.chartData.map((item) => (
-                    <Cell key={item.name} fill={item.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-            <Div className={`chart-center`}>
-              <Div className={`fs-1rem fw-700 black`}>
-                {goalSummary.overallPercentText}
-              </Div>
-              <Div className={`fs-0-55rem fw-600 dark mt-3px`}>
-                {translate(`goal`)}
-              </Div>
-            </Div>
-          </Grid>
-
-          <Grid size={6} className={`legend p-relative d-col-center`}>
-            <Div className={`d-row-between mb-5px w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.volume }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`volume`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {goalSummary.avgVolumeText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between mb-5px w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.cardio }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`cardio`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {goalSummary.avgCardioText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.scale }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`scale`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {goalSummary.avgScaleText}
-                </Div>
-              </Div>
-            </Div>
-          </Grid>
-        </Grid>
+        <ExerciseGoalChart />
 
         <Hr m={20} className={`bg-light`} />
 
@@ -508,6 +423,7 @@ export const ExerciseGoalList = memo(() => {
                     {row.actualText}
                     {` / `}
                     {row.goalText}
+                    {` ${row.key === `scale` ? localUnit : translate(row.unit)}`}
                   </Div>
                   <Div className={`fs-0-55rem fw-700`} style={{ color: row.color, flex: `0 0 auto` }}>
                     {row.diffText}
@@ -607,6 +523,11 @@ export const ExerciseGoalList = memo(() => {
                             {insertComma(item.exercise_goal_count ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`c`)}
+                          </Div>
+                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -618,6 +539,11 @@ export const ExerciseGoalList = memo(() => {
                             {insertComma(item.exercise_record_total_count ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`c`)}
+                          </Div>
+                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -627,6 +553,11 @@ export const ExerciseGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_count_color}`}>
                             {insertComma(item.exercise_record_diff_count ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`c`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -660,6 +591,11 @@ export const ExerciseGoalList = memo(() => {
                             {insertComma(item.exercise_goal_volume ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`vol`)}
+                          </Div>
+                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -671,6 +607,11 @@ export const ExerciseGoalList = memo(() => {
                             {insertComma(item.exercise_record_total_volume ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`vol`)}
+                          </Div>
+                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -680,6 +621,11 @@ export const ExerciseGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_volume_color}`}>
                             {insertComma(item.exercise_record_diff_volume ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`vol`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -714,7 +660,7 @@ export const ExerciseGoalList = memo(() => {
                           </Div>
                         </Grid>
                         <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
                             {translate(`min`)}
                           </Div>
                         </Grid>
@@ -730,7 +676,7 @@ export const ExerciseGoalList = memo(() => {
                           </Div>
                         </Grid>
                         <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
                             {translate(`min`)}
                           </Div>
                         </Grid>
@@ -746,7 +692,7 @@ export const ExerciseGoalList = memo(() => {
                           </Div>
                         </Grid>
                         <Grid size={2} className={`d-row-center`}>
-                          <Div className={`fs-0-6rem`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
                             {translate(`min`)}
                           </Div>
                         </Grid>
@@ -781,6 +727,11 @@ export const ExerciseGoalList = memo(() => {
                             {insertComma(item.exercise_goal_scale ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {localUnit}
+                          </Div>
+                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -792,6 +743,11 @@ export const ExerciseGoalList = memo(() => {
                             {insertComma(item.exercise_record_total_scale ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {localUnit}
+                          </Div>
+                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -801,6 +757,11 @@ export const ExerciseGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.exercise_record_diff_scale_color}`}>
                             {insertComma(item.exercise_record_diff_scale ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-6rem`}>
+                            {localUnit}
                           </Div>
                         </Grid>
                       </Grid>
@@ -817,7 +778,7 @@ export const ExerciseGoalList = memo(() => {
     // 7-10. return
     return (
       <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
-        {goalSummarySection()}
+        {summarySection()}
         <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`exercise`} /> : listSection()}
       </Paper>

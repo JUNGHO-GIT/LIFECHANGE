@@ -19,14 +19,15 @@ export { CalendarList } from "@pages/calendar/CalendarList";
 export { CalendarDetail } from "@pages/calendar/CalendarDetail";
 
 // exercise ----------------------------------------------------------------------------------------
-export { ExerciseChart } from "@pages/exercise/chart/ExerciseChart";
+export { ExerciseRecordChart } from "@pages/exercise/record/ExerciseRecordChart";
 export { ExerciseGoalList } from "@pages/exercise/goal/ExerciseGoalList";
 export { ExerciseGoalDetail } from "@pages/exercise/goal/ExerciseGoalDetail";
 export { ExerciseRecordList } from "@pages/exercise/record/ExerciseRecordList";
 export { ExerciseRecordDetail } from "@pages/exercise/record/ExerciseRecordDetail";
+export { ExerciseFavoriteList } from "@pages/exercise/favorite/ExerciseFavoriteList";
 
 // food --------------------------------------------------------------------------------------------
-export { FoodChart } from "@pages/food/chart/FoodChart";
+export { FoodRecordChart } from "@pages/food/record/FoodRecordChart";
 export { FoodGoalList } from "@pages/food/goal/FoodGoalList";
 export { FoodGoalDetail } from "@pages/food/goal/FoodGoalDetail";
 export { FoodFindList } from "@pages/food/find/FoodFindList";
@@ -35,18 +36,20 @@ export { FoodRecordList } from "@pages/food/record/FoodRecordList";
 export { FoodRecordDetail } from "@pages/food/record/FoodRecordDetail";
 
 // money --------------------------------------------------------------------------------------------
-export { MoneyChart } from "@pages/money/chart/MoneyChart";
+export { MoneyRecordChart } from "@pages/money/record/MoneyRecordChart";
 export { MoneyGoalList } from "@pages/money/goal/MoneyGoalList";
 export { MoneyGoalDetail } from "@pages/money/goal/MoneyGoalDetail";
 export { MoneyRecordList } from "@pages/money/record/MoneyRecordList";
 export { MoneyRecordDetail } from "@pages/money/record/MoneyRecordDetail";
+export { MoneyFavoriteList } from "@pages/money/favorite/MoneyFavoriteList";
 
 // sleep --------------------------------------------------------------------------------------------
-export { SleepChart } from "@pages/sleep/chart/SleepChart";
+export { SleepRecordChart } from "@pages/sleep/record/SleepRecordChart";
 export { SleepGoalList } from "@pages/sleep/goal/SleepGoalList";
 export { SleepGoalDetail } from "@pages/sleep/goal/SleepGoalDetail";
 export { SleepRecordList } from "@pages/sleep/record/SleepRecordList";
 export { SleepRecordDetail } from "@pages/sleep/record/SleepRecordDetail";
+export { SleepFavoriteList } from "@pages/sleep/favorite/SleepFavoriteList";
 
 // user --------------------------------------------------------------------------------------------
 export { UserAppSetting } from "@pages/user/UserAppSetting";

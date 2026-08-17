@@ -13,7 +13,7 @@ import { axios } from "@exportLibs";
 import { insertComma, sync, handleNumberInput } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, Count, Delete, Input } from "@exportContainers";
-import { Icons, Bg, Div, Paper, Grid, Br } from "@exportComponents";
+import { Bg, Div, Paper, Grid, Br } from "@exportComponents";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodGoalDetail = memo(() => {
@@ -375,6 +375,9 @@ export const FoodGoalDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`kc`)
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999_999);
                     if (processedValue === null) {
@@ -398,17 +401,20 @@ export const FoodGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_goal_carb}
                   error={ERRORS?.[i]?.food_goal_carb}
                   label={
-									DATE?.dateType === `day` ? (
-										translate(`goalCarb`)
-									) : (
-										`${translate(`goalCarb`)} (${translate(`total`)})`
-									)
+                    DATE?.dateType === `day` ? (
+                      translate(`goalCarb`)
+                    ) : (
+                      `${translate(`goalCarb`)} (${translate(`total`)})`
+                    )
                   }
                   startadornment={(
                     <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.carb }}>
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`g`)
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999_999);
                     if (processedValue === null) {
@@ -432,17 +438,20 @@ export const FoodGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_goal_protein}
                   error={ERRORS?.[i]?.food_goal_protein}
                   label={
-									DATE?.dateType === `day` ? (
-										translate(`goalProtein`)
-									) : (
-										`${translate(`goalProtein`)} (${translate(`total`)})`
-									)
+                    DATE?.dateType === `day` ? (
+                      translate(`goalProtein`)
+                    ) : (
+                      `${translate(`goalProtein`)} (${translate(`total`)})`
+                    )
                   }
                   startadornment={(
                     <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.protein }}>
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`g`)
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999_999);
                     if (processedValue === null) {
@@ -466,17 +475,20 @@ export const FoodGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_goal_fat}
                   error={ERRORS?.[i]?.food_goal_fat}
                   label={
-									DATE?.dateType === `day` ? (
-										translate(`goalFat`)
-									) : (
-										`${translate(`goalFat`)} (${translate(`total`)})`
-									)
+                    DATE?.dateType === `day` ? (
+                      translate(`goalFat`)
+                    ) : (
+                      `${translate(`goalFat`)} (${translate(`total`)})`
+                    )
                   }
                   startadornment={(
                     <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.fat }}>
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`g`)
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999_999);
                     if (processedValue === null) {

@@ -532,6 +532,9 @@ export const ExerciseRecordDetail = memo(() => {
                   {`●`}
                 </Div>
               )}
+              endadornment={
+                translate(`vol`)
+              }
             />
           </Grid>
         </Grid>
@@ -549,6 +552,9 @@ export const ExerciseRecordDetail = memo(() => {
                   {`●`}
                 </Div>
               )}
+              endadornment={
+                translate(`hm`)
+              }
             />
           </Grid>
         </Grid>
@@ -564,6 +570,9 @@ export const ExerciseRecordDetail = memo(() => {
                   {`●`}
                 </Div>
               )}
+              endadornment={
+                localUnit
+              }
               onChange={(e: any) => {
                 const processedValue: string | null = handleNumberInput(e.target.value, 999, 2);
                 if (processedValue === null) {
@@ -708,6 +717,9 @@ export const ExerciseRecordDetail = memo(() => {
                     {`●`}
                   </Div>
                 )}
+                endadornment={
+                  translate(`s`)
+                }
                 onChange={(e: any) => {
                   const processedValue: string | null = handleNumberInput(e.target.value, 999);
                   if (processedValue === null) {
@@ -737,6 +749,9 @@ export const ExerciseRecordDetail = memo(() => {
                     {`●`}
                   </Div>
                 )}
+                endadornment={
+                  translate(`r`)
+                }
                 onChange={(e: any) => {
                   const processedValue: string | null = handleNumberInput(e.target.value, 999);
                   if (processedValue === null) {
@@ -770,6 +785,9 @@ export const ExerciseRecordDetail = memo(() => {
                     {`●`}
                   </Div>
                 )}
+                endadornment={
+                  localUnit
+                }
                 onChange={(e: any) => {
                   const processedValue: string | null = handleNumberInput(e.target.value, 999);
                   if (processedValue === null) {

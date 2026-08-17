@@ -12,25 +12,31 @@ import { router as AdminRouter } from "@routers/admin/AdminRouter";
 import { router as GoogleRouter } from "@routers/auth/GoogleRouter";
 // calendar
 import { router as CalendarRouter } from "@routers/calendar/CalendarRouter";
-import { createFavoriteRouter } from "@routers/common/FavoriteRouter";
 // exercise
-import { router as ExerciseChartRouter } from "@routers/exercise/ExerciseChartRouter";
+import { router as ExerciseRecordChartRouter } from "@routers/exercise/ExerciseRecordChartRouter";
+import { router as ExerciseGoalChartRouter } from "@routers/exercise/ExerciseGoalChartRouter";
 import { router as ExerciseGoalRouter } from "@routers/exercise/ExerciseGoalRouter";
 import { router as ExerciseRecordRouter } from "@routers/exercise/ExerciseRecordRouter";
+import { router as ExerciseFavoriteRouter } from "@routers/exercise/ExerciseFavoriteRouter";
 // food
-import { router as FoodChartRouter } from "@routers/food/FoodChartRouter";
+import { router as FoodRecordChartRouter } from "@routers/food/FoodRecordChartRouter";
+import { router as FoodGoalChartRouter } from "@routers/food/FoodGoalChartRouter";
 import { router as FoodFavoriteRouter } from "@routers/food/FoodFavoriteRouter";
 import { router as FoodFindRouter } from "@routers/food/FoodFindRouter";
 import { router as FoodGoalRouter } from "@routers/food/FoodGoalRouter";
 import { router as FoodRecordRouter } from "@routers/food/FoodRecordRouter";
 // money
-import { router as MoneyChartRouter } from "@routers/money/MoneyChartRouter";
+import { router as MoneyRecordChartRouter } from "@routers/money/MoneyRecordChartRouter";
+import { router as MoneyGoalChartRouter } from "@routers/money/MoneyGoalChartRouter";
 import { router as MoneyGoalRouter } from "@routers/money/MoneyGoalRouter";
 import { router as MoneyRecordRouter } from "@routers/money/MoneyRecordRouter";
+import { router as MoneyFavoriteRouter } from "@routers/money/MoneyFavoriteRouter";
 // sleep
-import { router as SleepChartRouter } from "@routers/sleep/SleepChartRouter";
+import { router as SleepRecordChartRouter } from "@routers/sleep/SleepRecordChartRouter";
+import { router as SleepGoalChartRouter } from "@routers/sleep/SleepGoalChartRouter";
 import { router as SleepGoalRouter } from "@routers/sleep/SleepGoalRouter";
 import { router as SleepRecordRouter } from "@routers/sleep/SleepRecordRouter";
+import { router as SleepFavoriteRouter } from "@routers/sleep/SleepFavoriteRouter";
 import { router as UserRouter } from "@routers/user/UserRouter";
 // user
 import { router as UserSyncRouter } from "@routers/user/UserSyncRouter";
@@ -303,29 +309,41 @@ app.get(`${preFix}/ready`, (_req: Request, res: Response) => {
 app.use(`${preFix}/calendar`, CalendarRouter);
 
 // exercise
-app.use(`${preFix}/exercise/chart`, ExerciseChartRouter);
+// 레거시 호환 경로 (구 클라이언트 /exercise/chart 호출 유지)
+app.use(`${preFix}/exercise/chart`, ExerciseRecordChartRouter);
+app.use(`${preFix}/exercise/record/chart`, ExerciseRecordChartRouter);
+app.use(`${preFix}/exercise/goal/chart`, ExerciseGoalChartRouter);
 app.use(`${preFix}/exercise/goal`, ExerciseGoalRouter);
 app.use(`${preFix}/exercise/record`, ExerciseRecordRouter);
-app.use(`${preFix}/exercise/favorite`, createFavoriteRouter(`exercise`));
+app.use(`${preFix}/exercise/favorite`, ExerciseFavoriteRouter);
 
 // food
-app.use(`${preFix}/food/chart`, FoodChartRouter);
+// 레거시 호환 경로 (구 클라이언트 /food/chart 호출 유지)
+app.use(`${preFix}/food/chart`, FoodRecordChartRouter);
+app.use(`${preFix}/food/record/chart`, FoodRecordChartRouter);
+app.use(`${preFix}/food/goal/chart`, FoodGoalChartRouter);
 app.use(`${preFix}/food/goal`, FoodGoalRouter);
 app.use(`${preFix}/food/record`, FoodRecordRouter);
 app.use(`${preFix}/food/favorite`, FoodFavoriteRouter);
 app.use(`${preFix}/food/find`, FoodFindRouter);
 
 // money
-app.use(`${preFix}/money/chart`, MoneyChartRouter);
+// 레거시 호환 경로 (구 클라이언트 /money/chart 호출 유지)
+app.use(`${preFix}/money/chart`, MoneyRecordChartRouter);
+app.use(`${preFix}/money/record/chart`, MoneyRecordChartRouter);
+app.use(`${preFix}/money/goal/chart`, MoneyGoalChartRouter);
 app.use(`${preFix}/money/goal`, MoneyGoalRouter);
 app.use(`${preFix}/money/record`, MoneyRecordRouter);
-app.use(`${preFix}/money/favorite`, createFavoriteRouter(`money`));
+app.use(`${preFix}/money/favorite`, MoneyFavoriteRouter);
 
 // sleep
-app.use(`${preFix}/sleep/chart`, SleepChartRouter);
+// 레거시 호환 경로 (구 클라이언트 /sleep/chart 호출 유지)
+app.use(`${preFix}/sleep/chart`, SleepRecordChartRouter);
+app.use(`${preFix}/sleep/record/chart`, SleepRecordChartRouter);
+app.use(`${preFix}/sleep/goal/chart`, SleepGoalChartRouter);
 app.use(`${preFix}/sleep/goal`, SleepGoalRouter);
 app.use(`${preFix}/sleep/record`, SleepRecordRouter);
-app.use(`${preFix}/sleep/favorite`, createFavoriteRouter(`sleep`));
+app.use(`${preFix}/sleep/favorite`, SleepFavoriteRouter);
 
 // user (민감 엔드포인트 — rate-limit 적용)
 app.use(`${preFix}/user/sync`, sensitiveLimiter, UserSyncRouter);

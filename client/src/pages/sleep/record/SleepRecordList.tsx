@@ -10,11 +10,11 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { SleepRecord, SleepRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "@exportLibs";
 import { formatDateMmDd, formatDateYyyyMmDd } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
+import { SleepRecordChart } from "./SleepRecordChart";
 
 declare interface SleepTimeStat {
   dateStart: string;
@@ -300,103 +300,8 @@ export const SleepRecordList = memo(() => {
         <Hr m={20} className={`bg-light`} />
 
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
-            <ResponsiveContainer width={124} height={124}>
-              <PieChart>
-                <Pie
-                  data={recordSummary.chartData}
-                  cx={`50%`}
-                  cy={`50%`}
-                  innerRadius={40}
-                  outerRadius={58}
-                  dataKey={`value`}
-                  nameKey={`name`}
-                  startAngle={90}
-                  endAngle={-270}
-                  paddingAngle={recordSummary.chartData.length > 1 ? 2 : 0}
-                  stroke={`#fff`}
-                  strokeWidth={2}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={520}
-                  animationEasing={`ease-out`}
-                >
-                  {recordSummary.chartData.map((item) => (
-                    <Cell key={item.name} fill={item.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-            <Div className={`chart-center`}>
-              <Div className={`fs-0-5rem fw-700 mb-5px`} style={{
-                color: chartThemeColors.bedTime,
-                lineHeight: `1.15`
-              }}>
-                {`취침 ${recordSummary.bedPercent}%`}
-              </Div>
-              <Div className={`fs-0-5rem fw-700 mb-5px`} style={{
-                color: chartThemeColors.wakeTime,
-                lineHeight: `1.15`
-              }}>
-                {`기상 ${recordSummary.wakePercent}%`}
-              </Div>
-              <Div className={`fs-0-5rem fw-700`} style={{
-                color: chartThemeColors.sleepTime,
-                lineHeight: `1.15`
-              }}>
-                {`수면 ${recordSummary.sleepPercent}%`}
-              </Div>
-            </Div>
-          </Grid>
-
-          <Grid size={6} className={`legend p-relative d-col-center`}>
-            <Div className={`d-row-between mb-5px w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.bedTime }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`bedTime`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`}>
-                  {recordSummary.avgBedText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between mb-5px w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.wakeTime }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`wakeTime`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`}>
-                  {recordSummary.avgWakeText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.sleepTime }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`sleepTime`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`}>
-                  {recordSummary.avgSleepText}
-                </Div>
-              </Div>
-            </Div>
-          </Grid>
+        <Grid size={12}>
+          <SleepRecordChart />
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
@@ -417,6 +322,9 @@ export const SleepRecordList = memo(() => {
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestSleepText}
                 </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(`hm`)}
+                </Div>
               </Div>
             </Div>
             <Div className={`stat-card`}>
@@ -431,6 +339,9 @@ export const SleepRecordList = memo(() => {
               <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestSleepText}
+                </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(`hm`)}
                 </Div>
               </Div>
             </Div>
@@ -502,6 +413,9 @@ export const SleepRecordList = memo(() => {
                       <Div className={`fs-0-75rem fw-700`}>
                         {item.sleep_record_sleepTime ?? item.sleep_section?.[0]?.sleep_record_sleepTime ?? `00:00`}
                       </Div>
+                      <Div className={`fs-0-55rem fw-600 dark ml-5px`}>
+                        {translate(`hm`)}
+                      </Div>
                     </Div>
                   </Grid>
                 </Grid>
@@ -526,6 +440,11 @@ export const SleepRecordList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.sleep_record_bedTime_color ?? item.sleep_section?.[0]?.sleep_record_bedTime_color ?? ``}`}>
                             {item.sleep_record_bedTime ?? item.sleep_section?.[0]?.sleep_record_bedTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`hm`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -553,6 +472,11 @@ export const SleepRecordList = memo(() => {
                             {item.sleep_record_wakeTime ?? item.sleep_section?.[0]?.sleep_record_wakeTime}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`hm`)}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -576,6 +500,11 @@ export const SleepRecordList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.sleep_record_sleepTime_color ?? item.sleep_section?.[0]?.sleep_record_sleepTime_color ?? ``}`}>
                             {item.sleep_record_sleepTime ?? item.sleep_section?.[0]?.sleep_record_sleepTime}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`hm`)}
                           </Div>
                         </Grid>
                       </Grid>

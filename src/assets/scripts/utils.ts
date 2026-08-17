@@ -128,3 +128,96 @@ export const hashPw = async (combinedPw: string) => {
 export const comparePw = async (inputPw: string, storedPw: string) => {
   return bcrypt.compare(inputPw, storedPw);
 };
+
+// 5-1. toNumber -------------------------------------------------------------------------------------
+export const toNumber = (value?: string | number | null): number => {
+  const normalized: string = String(value ?? `0`).replaceAll(`,`, ``).trim().toLowerCase();
+  const unit: string = normalized.slice(-1);
+  const numericText: string = unit === `k` || unit === `m`
+    ? normalized.slice(0, -1)
+    : normalized;
+  const multiplier: number = unit === `m` ? 1_000_000 : unit === `k` ? 1_000 : 1;
+  const result: number = Number(numericText) * multiplier;
+  return Number.isFinite(result) ? result : 0;
+};
+
+// 5-2. toMinutes ------------------------------------------------------------------------------------
+export const toMinutes = (value?: string | number | null): number => {
+  const [ hours = `0`, minutes = `0` ] = String(value ?? `00:00`).split(`:`);
+  const result: number = (Number(hours) * 60) + Number(minutes);
+  return Number.isFinite(result) ? result : 0;
+};
+
+// 5-3. average --------------------------------------------------------------------------------------
+export const average = (values: number[]): number => {
+  return values.length > 0
+    ? values.reduce((sum: number, value: number) => sum + value, 0) / values.length
+    : 0;
+};
+
+// 5-4. clockAverage ---------------------------------------------------------------------------------
+export const clockAverage = (values: number[]): number => {
+  if (values.length === 0) {
+    return 0;
+  }
+  const radians: number[] = values.map((value: number) => (value / 1_440) * Math.PI * 2);
+  const sinAvg: number = average(radians.map((value: number) => Math.sin(value)));
+  const cosAvg: number = average(radians.map((value: number) => Math.cos(value)));
+  const angle: number = Math.atan2(sinAvg, cosAvg);
+  const normalized: number = angle < 0 ? angle + (Math.PI * 2) : angle;
+  return Math.round((normalized / (Math.PI * 2)) * 1_440) % 1_440;
+};
+
+// 6-1. GoalChartMetric ------------------------------------------------------------------------------
+export declare interface GoalChartMetric {
+  key: string;
+  goal: number;
+  record: number;
+  percent: number;
+}
+
+// 6-2. createMetric -----------------------------------------------------------------------------------
+export const createMetric = (
+  key: string,
+  goal: number,
+  record: number,
+  inverse: boolean = false,
+): GoalChartMetric => {
+  const percent: number = goal <= 0
+    ? 0
+    : inverse
+      ? record <= goal ? 100 : Math.round((goal / record) * 100)
+      : Math.round((record / goal) * 100);
+  return {
+    key,
+    goal: Math.round(goal * 10) / 10,
+    record: Math.round(record * 10) / 10,
+    percent,
+  };
+};
+
+// 6-3. createClockMetric --------------------------------------------------------------------------------
+export const createClockMetric = (
+  key: string,
+  goal: number,
+  record: number,
+): GoalChartMetric => {
+  const diff: number = Math.min(Math.abs(record - goal), 1_440 - Math.abs(record - goal));
+  const percent: number = goal <= 0 || record <= 0
+    ? 0
+    : diff <= 10 ? 100 : diff <= 20 ? 80 : diff <= 40 ? 60 : diff <= 60 ? 40 : 0;
+  return { key, goal, record, percent };
+};
+
+// 6-4. createToleranceMetric -----------------------------------------------------------------------------
+export const createToleranceMetric = (
+  key: string,
+  goal: number,
+  record: number,
+): GoalChartMetric => {
+  const diff: number = Math.abs(record - goal);
+  const percent: number = goal <= 0
+    ? 0
+    : diff <= 10 ? 100 : diff <= 20 ? 80 : diff <= 40 ? 60 : diff <= 60 ? 40 : 0;
+  return { key, goal, record, percent };
+};

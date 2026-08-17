@@ -68,12 +68,10 @@
     "noLib": false,
     "noResolve": false,
     "noImplicitOverride": true,
-    "noImplicitUseStrict": false,
     "noEmitHelpers": false,
     "noErrorTruncation": true,
     "noUncheckedIndexedAccess": false,
     "noPropertyAccessFromIndexSignature": false,
-    "noStrictGenericChecks": false,
     "disableReferencedProjectLoad": false,
     "disableSolutionSearching": false,
     "disableSourceOfProjectReferenceRedirect": false,
@@ -81,7 +79,6 @@
     "preserveSymlinks": true,
     "preserveConstEnums": false,
     "preserveWatchOutput": false,
-    "preserveValueImports": false,
     "emitBOM": false,
     "emitDeclarationOnly": false,
     "emitDecoratorMetadata": true,
@@ -92,9 +89,6 @@
     "allowArbitraryExtensions": true,
     "allowUnreachableCode": true,
     "allowUnusedLabels": true,
-    "keyofStringsOnly": false,
-    "suppressExcessPropertyErrors": false,
-    "suppressImplicitAnyIndexErrors": false,
     "strict": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
@@ -104,7 +98,6 @@
     "useDefineForClassFields": true,
     "useUnknownInCatchVariables": true,
     "importHelpers": true,
-    "importsNotUsedAsValues": "remove",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler"
@@ -119,5 +112,5 @@
     "./src/**/*.ts",
     "./src/**/*.tsx"
   ],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "client", "out", "**/*.spec.ts", "**/*.test.ts"]
 }

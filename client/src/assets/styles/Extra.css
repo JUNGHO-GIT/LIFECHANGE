@@ -48,7 +48,6 @@
   padding: 10px 15px 10px 15px;
 }
 .legend div {
-  font-size: max(0.76rem, 12px) !important;
   white-space: nowrap;
   word-break: keep-all;
 }
@@ -114,6 +113,8 @@
 .accordion {
   padding: 10px 10px 10px 10px !important;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  border-color: #e7eef3 !important;
+  box-shadow: 0 6px 22px rgba(8, 118, 185, 0.07) !important;
 }
 .accordion:hover {
   transform: translateY(-2px);

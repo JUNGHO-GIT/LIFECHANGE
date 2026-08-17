@@ -11,11 +11,11 @@ import { useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { MoneyRecord, MoneyRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "@exportLibs";
 import { formatDateMmDd, formatDateYyyyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
+import { MoneyRecordChart } from "./MoneyRecordChart";
 
 declare interface MoneyAmountStat {
   dateStart: string;
@@ -278,82 +278,8 @@ export const MoneyRecordList = memo(() => {
         <Hr m={20} className={`bg-light`} />
 
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
-            <ResponsiveContainer width={124} height={124}>
-              <PieChart>
-                <Pie
-                  data={recordSummary.chartData}
-                  cx={`50%`}
-                  cy={`50%`}
-                  innerRadius={40}
-                  outerRadius={58}
-                  dataKey={`value`}
-                  nameKey={`name`}
-                  startAngle={90}
-                  endAngle={-270}
-                  paddingAngle={recordSummary.chartData.length > 1 ? 2 : 0}
-                  stroke={`#fff`}
-                  strokeWidth={2}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={520}
-                  animationEasing={`ease-out`}
-                >
-                  {recordSummary.chartData.map((item) => (
-                    <Cell key={item.name} fill={item.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-            <Div className={`chart-center`}>
-              <Div className={`fs-0-5rem fw-700 mb-5px`} style={{
-                color: chartThemeColors.income,
-                lineHeight: `1.15`
-              }}>
-                {`수입 ${recordSummary.incomePercent}%`}
-              </Div>
-              <Div className={`fs-0-5rem fw-700`} style={{
-                color: chartThemeColors.expense,
-                lineHeight: `1.15`
-              }}>
-                {`지출 ${recordSummary.expensePercent}%`}
-              </Div>
-            </Div>
-          </Grid>
-
-          <Grid size={6} className={`legend p-relative d-col-center`}>
-            <Div className={`d-row-between mb-5px w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.income }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`income`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`}>
-                  {recordSummary.totalIncomeText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.expense }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`expense`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`}>
-                  {recordSummary.totalExpenseText}
-                </Div>
-              </Div>
-            </Div>
-          </Grid>
+        <Grid size={12}>
+          <MoneyRecordChart />
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
@@ -374,6 +300,9 @@ export const MoneyRecordList = memo(() => {
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestExpenseText}
                 </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(localCurrency)}
+                </Div>
               </Div>
             </Div>
             <Div className={`stat-card`}>
@@ -389,6 +318,9 @@ export const MoneyRecordList = memo(() => {
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestExpenseText}
                 </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(localCurrency)}
+                </Div>
               </Div>
             </Div>
             <Div className={`stat-card`}>
@@ -403,6 +335,9 @@ export const MoneyRecordList = memo(() => {
               <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.avgExpenseText}
+                </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(localCurrency)}
                 </Div>
               </Div>
             </Div>
@@ -473,6 +408,9 @@ export const MoneyRecordList = memo(() => {
                       <Div className={`fs-0-75rem fw-700`}>
                         {insertComma(item.money_record_total_expense ?? `0`)}
                       </Div>
+                      <Div className={`fs-0-55rem fw-600 dark ml-5px`}>
+                        {translate(localCurrency)}
+                      </Div>
                     </Div>
                   </Grid>
                 </Grid>
@@ -499,6 +437,11 @@ export const MoneyRecordList = memo(() => {
                             {insertComma(item.money_record_total_income ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(localCurrency)}
+                          </Div>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -522,6 +465,11 @@ export const MoneyRecordList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.money_record_total_expense_color}`}>
                             {insertComma(item.money_record_total_expense ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(localCurrency)}
                           </Div>
                         </Grid>
                       </Grid>

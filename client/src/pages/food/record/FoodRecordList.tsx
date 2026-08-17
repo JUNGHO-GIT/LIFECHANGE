@@ -10,20 +10,13 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodRecord, FoodRecordType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "@exportLibs";
 import { formatDateYyyyMmDd, formatDateYyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
+import { FoodRecordChart } from "./FoodRecordChart";
 
 // ----------------------------------------------------------------------------------------------
-type NutritionTotals = {
-  kcal: number;
-  carb: number;
-  protein: number;
-  fat: number;
-};
-
 interface RecordKcalStat {
   dateStart: string;
   dateEnd: string;
@@ -91,41 +84,21 @@ export const FoodRecordList = memo(() => {
   const deferredObject = useDeferredValue(OBJECT);
 
   // 3. summary ----------------------------------------------------------------------------------
-  // - 기록 1건당 평균 섭취량 요약
+  // - 기록 기간의 칼로리 범위 요약
   const recordSummary = useMemo(() => {
     const toNumber = (value?: string | number | null) => {
       const result = Number(String(value ?? `0`).replaceAll(`,`, ``));
       return Number.isFinite(result) ? result : 0;
     };
-    const roundToTenth = (value: number) => Math.round(value * 10) / 10;
     const formatNumber = (value: number) => insertComma(Math.round(value));
     const validRecords = OBJECT.filter((item) => (
       item.food_record_dateStart && item.food_record_dateStart !== `0000-00-00`
     ));
-    const recordCount = validRecords.length;
     const kcalRecords: RecordKcalStat[] = validRecords.map((item) => ({
       dateStart: item.food_record_dateStart,
       dateEnd: item.food_record_dateEnd,
       kcal: toNumber(item.food_record_total_kcal),
     }));
-    const recordTotals = validRecords.reduce<NutritionTotals>((sum, item) => ({
-      kcal: sum.kcal + toNumber(item.food_record_total_kcal),
-      carb: sum.carb + toNumber(item.food_record_total_carb),
-      protein: sum.protein + toNumber(item.food_record_total_protein),
-      fat: sum.fat + toNumber(item.food_record_total_fat),
-    }), {
-      kcal: 0,
-      carb: 0,
-      protein: 0,
-      fat: 0,
-    });
-    const averageKcal = recordCount > 0 ? recordTotals.kcal / recordCount : 0;
-    const averageTotals: NutritionTotals = {
-      kcal: Math.round(averageKcal),
-      carb: recordCount > 0 ? roundToTenth(recordTotals.carb / recordCount) : 0,
-      protein: recordCount > 0 ? roundToTenth(recordTotals.protein / recordCount) : 0,
-      fat: recordCount > 0 ? roundToTenth(recordTotals.fat / recordCount) : 0,
-    };
     const emptyKcalRecord: RecordKcalStat = {
       dateStart: ``,
       dateEnd: ``,
@@ -137,6 +110,7 @@ export const FoodRecordList = memo(() => {
     const lowestRecord = kcalRecords.reduce((lowest, item) => (
       item.kcal < lowest.kcal ? item : lowest
     ), kcalRecords[0] ?? emptyKcalRecord);
+
     // 3-1. 기록 기간 표시 ---------------------------------------------------------------------
     const formatRecordDate = (item: RecordKcalStat) => {
       if (!item.dateStart) {
@@ -147,36 +121,14 @@ export const FoodRecordList = memo(() => {
       }
       return `${formatDateYyMmDd(item.dateStart)} - ${formatDateYyMmDd(item.dateEnd)}`;
     };
-    const macroTotal = averageTotals.carb + averageTotals.protein + averageTotals.fat;
-    const carbPercent = macroTotal > 0 ? Math.round((averageTotals.carb / macroTotal) * 100) : 0;
-    const proteinBase = macroTotal > 0 ? Math.round((averageTotals.protein / macroTotal) * 100) : 0;
-    const proteinPercent = Math.min(100 - carbPercent, proteinBase);
-    const fatPercent = macroTotal > 0 ? 100 - carbPercent - proteinPercent : 0;
-    const chartData = macroTotal > 0 ? [
-      { name: `carb`, value: averageTotals.carb, percent: carbPercent, color: chartThemeColors.carb },
-      { name: `protein`, value: averageTotals.protein, percent: proteinPercent, color: chartThemeColors.protein },
-      { name: `fat`, value: averageTotals.fat, percent: fatPercent, color: chartThemeColors.fat },
-    ].filter((item) => item.value > 0) : [
-      { name: `Empty`, value: 1, percent: 0, color: `#edf0f4` },
-    ];
 
     return {
-      recordCount,
-      totalKcalText: formatNumber(recordTotals.kcal),
-      averageKcalText: formatNumber(averageTotals.kcal),
-      averageCarbText: formatNumber(averageTotals.carb),
-      averageProteinText: formatNumber(averageTotals.protein),
-      averageFatText: formatNumber(averageTotals.fat),
       highestKcalText: formatNumber(highestRecord.kcal),
       highestDateText: formatRecordDate(highestRecord),
       lowestKcalText: formatNumber(lowestRecord.kcal),
       lowestDateText: formatRecordDate(lowestRecord),
-      chartData,
-      carbPercent,
-      proteinPercent,
-      fatPercent,
     };
-  }, [OBJECT, chartThemeColors]);
+  }, [OBJECT]);
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   useEffect(() => {
@@ -258,152 +210,22 @@ export const FoodRecordList = memo(() => {
   // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
     // 7-0. summary
-    const recordSummarySection = () => (
+    const summarySection = () => (
       <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
           <Grid size={12} className={`d-row-left`}>
-            <Div className={`fs-0-95rem fw-600 mr-auto`}>
+            <Div className={`fs-0-95rem fw-600`}>
               {`${formatDateYyyyMmDd(DATE?.dateStart)} - ${formatDateYyyyMmDd(DATE?.dateEnd)}`}
-            </Div>
-            <Div className={`fs-0-9rem fw-600 dark-grey`}>
-              {`(${translate(`avg`)})`}
             </Div>
           </Grid>
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
+
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
-            <ResponsiveContainer width={124} height={124}>
-              <PieChart>
-                <Pie
-                  data={recordSummary.chartData}
-                  cx={`50%`}
-                  cy={`50%`}
-                  innerRadius={40}
-                  outerRadius={58}
-                  dataKey={`value`}
-                  nameKey={`name`}
-                  startAngle={90}
-                  endAngle={-270}
-                  paddingAngle={recordSummary.chartData.length > 1 ? 2 : 0}
-                  stroke={`#fff`}
-                  strokeWidth={2}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={520}
-                  animationEasing={`ease-out`}
-                >
-                  {recordSummary.chartData.map((item) => (
-                    <Cell key={item.name} fill={item.color} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(value: any, name: any, item: any) => {
-                    const payload = item?.payload;
-                    const isEmpty = payload?.name === `Empty`;
-                    const label = isEmpty ? translate(`record`) : translate(name as string);
-                    const displayValue = isEmpty ? 0 : Number(value);
-                    const unit = ``;
-                    const percent = payload?.percent ? ` (${payload.percent}%)` : ``;
-                    return [ `${insertComma(displayValue)}${unit}${percent}`, label ];
-                  }}
-                  contentStyle={{
-                    borderRadius: `8px`,
-                    boxShadow: `0 6px 18px 0 rgba(15, 23, 42, 0.1)`,
-                    padding: `8px`,
-                    border: `1px solid #edf0f4`,
-                    background: `#fff`,
-                    color: `#666`,
-                  }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-            <Div className={`chart-center`}>
-              <Div className={`fs-0-5rem fw-700 mb-5px`} style={{
-                color: chartThemeColors.carb,
-                lineHeight: `1.15`
-              }}>
-                {`${translate(`carb`)} ${recordSummary.carbPercent}%`}
-              </Div>
-              <Div className={`fs-0-5rem fw-700 mb-5px`} style={{
-                color: chartThemeColors.protein,
-                lineHeight: `1.15`
-              }}>
-                {`${translate(`protein`)} ${recordSummary.proteinPercent}%`}
-              </Div>
-              <Div className={`fs-0-5rem fw-700`} style={{
-                color: chartThemeColors.fat,
-                lineHeight: `1.15`
-              }}>
-                {`${translate(`fat`)} ${recordSummary.fatPercent}%`}
-              </Div>
-            </Div>
-          </Grid>
-          <Grid size={6} className={`legend p-relative d-col-center`}>
-            <Div className={`d-row-between w-100p mb-5px`}>
-              <Div className={`d-row-center`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.carb }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {`${translate(`carb`)}`}
-                </Div>
-              </Div>
-              <Div className={`d-row-right`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {recordSummary.averageCarbText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p mb-5px`}>
-              <Div className={`d-row-center`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.protein }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {`${translate(`protein`)}`}
-                </Div>
-              </Div>
-              <Div className={`d-row-right`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {recordSummary.averageProteinText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p mb-5px`}>
-              <Div className={`d-row-center`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.fat }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {`${translate(`fat`)}`}
-                </Div>
-              </Div>
-              <Div className={`d-row-right`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {recordSummary.averageFatText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p`}>
-              <Div className={`d-row-center`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.kcal }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {`${translate(`kcal`)}`}
-                </Div>
-              </Div>
-              <Div className={`d-row-right`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {recordSummary.averageKcalText}
-                </Div>
-              </Div>
-            </Div>
-          </Grid>
+        <Grid container={true} spacing={0}>
+          <FoodRecordChart />
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
@@ -424,6 +246,9 @@ export const FoodRecordList = memo(() => {
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.highestKcalText}
                 </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(`kc`)}
+                </Div>
               </Div>
             </Div>
             <Div className={`stat-card`}>
@@ -438,6 +263,9 @@ export const FoodRecordList = memo(() => {
               <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestKcalText}
+                </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(`kc`)}
                 </Div>
               </Div>
             </Div>
@@ -508,6 +336,9 @@ export const FoodRecordList = memo(() => {
                       <Div className={`fs-0-75rem fw-700`}>
                         {insertComma(item.food_record_total_kcal ?? `0`)}
                       </Div>
+                      <Div className={`fs-0-55rem fw-600 dark ml-5px`}>
+                        {translate(`kc`)}
+                      </Div>
                     </Div>
                   </Grid>
                 </Grid>
@@ -532,6 +363,11 @@ export const FoodRecordList = memo(() => {
                         <Grid size={10} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.food_record_total_kcal_color}`}>
                             {insertComma(item.food_record_total_kcal ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`kc`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -560,6 +396,9 @@ export const FoodRecordList = memo(() => {
                           </Div>
                         </Grid>
                         <Grid size={2} className={`d-row-right`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -587,6 +426,9 @@ export const FoodRecordList = memo(() => {
                           </Div>
                         </Grid>
                         <Grid size={2} className={`d-row-right`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -614,6 +456,9 @@ export const FoodRecordList = memo(() => {
                           </Div>
                         </Grid>
                         <Grid size={2} className={`d-row-right`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
+                          </Div>
                         </Grid>
                       </Grid>
                     </Grid>
@@ -629,7 +474,7 @@ export const FoodRecordList = memo(() => {
     // 7-10. return
     return (
       <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
-        {recordSummarySection()}
+        {summarySection()}
         <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`food`} /> : listSection()}
       </Paper>

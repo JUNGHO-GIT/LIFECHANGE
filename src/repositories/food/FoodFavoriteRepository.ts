@@ -9,21 +9,19 @@ import { User } from "@schemas/user/User";
 
 // 1. list -------------------------------------------------------------------------------
 export const list = async (user_id_param: string) => {
-  const finalResult: any = await User.aggregate([
+  const finalResult: Record<string, any> | null = await User.findOne(
     {
-      $match: {
-        user_id: user_id_param,
-      },
+      user_id: user_id_param,
     },
     {
-      $project: {
-        _id: 0,
-        "user_favorite._id": 0,
-      },
+      _id: 0,
+      user_favorite: 1,
     },
-  ]);
+  ).lean();
 
-  return finalResult[0]?.user_favorite;
+  return (finalResult?.user_favorite ?? []).map(
+    ({ _id: _drop, ...rest }: any) => rest,
+  );
 };
 
 // 4. update -----------------------------------------------------------------------------

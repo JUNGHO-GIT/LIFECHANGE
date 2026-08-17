@@ -10,11 +10,11 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { MoneyGoal, MoneyGoalType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "@exportLibs";
 import { formatDateMmDd, formatDateYyyyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
+import { MoneyGoalChart } from "./MoneyGoalChart";
 
 // -------------------------------------------------------------------------------------------------
 declare interface MoneyGoalSource {
@@ -285,7 +285,7 @@ export const MoneyGoalList = memo(() => {
   // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
     // 7-0. summary
-    const goalSummarySection = () => (
+    const summarySection = () => (
       <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
@@ -301,82 +301,8 @@ export const MoneyGoalList = memo(() => {
         <Hr m={20} className={`bg-light`} />
 
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
-            <ResponsiveContainer width={124} height={124}>
-              <PieChart>
-                <Pie
-                  data={goalSummary.chartData}
-                  cx={`50%`}
-                  cy={`50%`}
-                  innerRadius={40}
-                  outerRadius={58}
-                  dataKey={`value`}
-                  nameKey={`name`}
-                  startAngle={90}
-                  endAngle={-270}
-                  paddingAngle={goalSummary.chartData.length > 1 ? 2 : 0}
-                  stroke={`#fff`}
-                  strokeWidth={2}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={520}
-                  animationEasing={`ease-out`}
-                >
-                  {goalSummary.chartData.map((item) => (
-                    <Cell key={item.name} fill={item.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-            <Div className={`chart-center`}>
-              <Div className={`fs-0-5rem fw-700 mb-5px`} style={{
-                color: chartThemeColors.income,
-                lineHeight: `1.15`,
-              }}>
-                {`수입 ${goalSummary.incomePercent}%`}
-              </Div>
-              <Div className={`fs-0-5rem fw-700`} style={{
-                color: chartThemeColors.expense,
-                lineHeight: `1.15`,
-              }}>
-                {`지출 ${goalSummary.expensePercent}%`}
-              </Div>
-            </Div>
-          </Grid>
-
-          <Grid size={6} className={`legend p-relative d-col-center`}>
-            <Div className={`d-row-between mb-5px w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.income }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`income`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {goalSummary.totalIncomeText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p`}>
-              <Div className={`d-row-center mb-5px`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.expense }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`expense`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right mb-5px`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {goalSummary.totalExpenseText}
-                </Div>
-              </Div>
-            </Div>
-          </Grid>
+        <Grid container={true} spacing={0}>
+          <MoneyGoalChart />
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
@@ -405,6 +331,7 @@ export const MoneyGoalList = memo(() => {
                     {row.actualText}
                     {` / `}
                     {row.goalText}
+                    {` ${translate(localCurrency)}`}
                   </Div>
                   <Div className={`fs-0-55rem fw-700`} style={{ color: row.color, flex: `0 0 auto` }}>
                     {row.diffText}
@@ -506,6 +433,11 @@ export const MoneyGoalList = memo(() => {
                             {insertComma(item.money_goal_income ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(localCurrency)}
+                          </Div>
+                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -517,6 +449,11 @@ export const MoneyGoalList = memo(() => {
                             {insertComma(item.money_record_total_income ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(localCurrency)}
+                          </Div>
+                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -526,6 +463,11 @@ export const MoneyGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.money_record_diff_income_color}`}>
                             {insertComma(item.money_record_diff_income ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(localCurrency)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -559,6 +501,11 @@ export const MoneyGoalList = memo(() => {
                             {insertComma(item.money_goal_expense ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(localCurrency)}
+                          </Div>
+                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -570,6 +517,11 @@ export const MoneyGoalList = memo(() => {
                             {insertComma(item.money_record_total_expense ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(localCurrency)}
+                          </Div>
+                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -579,6 +531,11 @@ export const MoneyGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.money_record_diff_expense_color}`}>
                             {insertComma(item.money_record_diff_expense ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(localCurrency)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -595,7 +552,7 @@ export const MoneyGoalList = memo(() => {
     // 7-10. return
     return (
       <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
-        {goalSummarySection()}
+        {summarySection()}
         <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`money`} /> : listSection()}
       </Paper>

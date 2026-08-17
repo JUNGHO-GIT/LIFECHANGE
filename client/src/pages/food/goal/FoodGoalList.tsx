@@ -10,11 +10,11 @@ import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
 import { FoodGoal, FoodGoalType } from "@exportSchemas";
 import { axios } from "@exportLibs";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "@exportLibs";
 import { formatDateYyyyMmDd, insertComma } from "@exportScripts";
 import { Footer, Empty, Dialog } from "@exportLayouts";
 import { Div, Hr, Icons, Paper, Grid } from "@exportComponents";
 import { Accordion, AccordionSummary, AccordionDetails } from "@exportMuis";
+import { FoodGoalChart } from "./FoodGoalChart";
 
 // -------------------------------------------------------------------------------------------------
 type NutritionTotals = {
@@ -332,127 +332,22 @@ export const FoodGoalList = memo(() => {
   // 7. list -----------------------------------------------------------------------------------
   const listNode = () => {
     // 7-0. summary
-    const goalSummarySection = () => (
+    const summarySection = () => (
       <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
           <Grid size={12} className={`d-row-left`}>
-            <Div className={`period fs-0-95rem fw-600`}>
-              {formatDateYyyyMmDd(DATE?.dateStart)}
-              {` -`}
-              {formatDateYyyyMmDd(DATE?.dateEnd)}
+            <Div className={`fs-0-95rem fw-600`}>
+              {`${formatDateYyyyMmDd(DATE?.dateStart)} - ${formatDateYyyyMmDd(DATE?.dateEnd)}`}
             </Div>
           </Grid>
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
+
         {/** row 2 **/}
-        <Grid container={true} spacing={2}>
-          <Grid size={6} className={`d-row-center p-relative chart w-124px h-124px`}>
-            <ResponsiveContainer width={124} height={124}>
-              <PieChart>
-                <Pie
-                  data={goalSummary.chartData}
-                  cx={`50%`}
-                  cy={`50%`}
-                  innerRadius={40}
-                  outerRadius={58}
-                  dataKey={`value`}
-                  nameKey={`name`}
-                  startAngle={90}
-                  endAngle={-270}
-                  paddingAngle={goalSummary.chartData.length > 1 ? 2 : 0}
-                  stroke={`#fff`}
-                  strokeWidth={2}
-                  isAnimationActive={true}
-                  animationBegin={0}
-                  animationDuration={520}
-                  animationEasing={`ease-out`}
-                >
-                  {goalSummary.chartData.map((item) => (
-                    <Cell key={item.name} fill={item.color} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(value: any, name: any, item: any) => {
-                    const payload = item?.payload;
-                    const isEmpty = payload?.name === `Empty`;
-                    const label = isEmpty ? translate(`record`) : translate(name as string);
-                    const displayValue = isEmpty ? 0 : Number(value);
-                    const unit = ``;
-                    const percent = payload?.percent ? ` (${payload.percent}%)` : ``;
-                    return [ `${insertComma(displayValue)}${unit}${percent}`, label ];
-                  }}
-                  contentStyle={{
-                    borderRadius: `8px`,
-                    boxShadow: `0 6px 18px 0 rgba(15, 23, 42, 0.1)`,
-                    padding: `8px`,
-                    border: `1px solid #edf0f4`,
-                    background: `#fff`,
-                    color: `#666`,
-                  }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-            <Div className={`chart-center`}>
-              <Div className={`fs-0-5rem fw-700 mb-5px`} style={{ color: chartThemeColors.carb }}>
-                {`탄 ${goalSummary.carbPercent}%`}
-              </Div>
-              <Div className={`fs-0-5rem fw-700 mb-5px`} style={{ color: chartThemeColors.protein }}>
-                {`단 ${goalSummary.proteinPercent}%`}
-              </Div>
-              <Div className={`fs-0-5rem fw-700`} style={{ color: chartThemeColors.fat }}>
-                {`지 ${goalSummary.fatPercent}%`}
-              </Div>
-            </Div>
-          </Grid>
-          <Grid size={6} className={`legend p-relative d-col-center`}>
-            <Div className={`d-row-between w-100p mb-5px`}>
-              <Div className={`d-row-center`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.carb }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`carb`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {goalSummary.totalCarbText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p mb-5px`}>
-              <Div className={`d-row-center`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.protein }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`protein`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {goalSummary.totalProteinText}
-                </Div>
-              </Div>
-            </Div>
-            <Div className={`d-row-between w-100p`}>
-              <Div className={`d-row-center`}>
-                <Div className={`fs-0-6rem mr-3px`} style={{ color: chartThemeColors.fat }}>
-                  {`●`}
-                </Div>
-                <Div className={`fs-0-6rem fw-600 dark`}>
-                  {translate(`fat`)}
-                </Div>
-              </Div>
-              <Div className={`d-row-right`}>
-                <Div className={`fs-0-7rem fw-600 black mr-5px`} compact={true}>
-                  {goalSummary.totalFatText}
-                </Div>
-              </Div>
-            </Div>
-          </Grid>
+        <Grid container={true} spacing={0}>
+          <FoodGoalChart />
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
@@ -580,6 +475,11 @@ export const FoodGoalList = memo(() => {
                             {insertComma(item.food_goal_kcal ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`kc`)}
+                          </Div>
+                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -591,6 +491,11 @@ export const FoodGoalList = memo(() => {
                             {insertComma(item.food_record_total_kcal ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`kc`)}
+                          </Div>
+                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -600,6 +505,11 @@ export const FoodGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_kcal_color}`}>
                             {insertComma(item.food_record_diff_kcal ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`kc`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -633,6 +543,11 @@ export const FoodGoalList = memo(() => {
                             {insertComma(item.food_goal_carb ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -644,6 +559,11 @@ export const FoodGoalList = memo(() => {
                             {insertComma(item.food_record_total_carb ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -653,6 +573,11 @@ export const FoodGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_carb_color}`}>
                             {insertComma(item.food_record_diff_carb ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -686,6 +611,11 @@ export const FoodGoalList = memo(() => {
                             {insertComma(item.food_goal_protein ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -697,6 +627,11 @@ export const FoodGoalList = memo(() => {
                             {insertComma(item.food_record_total_protein ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -706,6 +641,11 @@ export const FoodGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_protein_color}`}>
                             {insertComma(item.food_record_diff_protein ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -739,6 +679,11 @@ export const FoodGoalList = memo(() => {
                             {insertComma(item.food_goal_fat ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
                         {/** record * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -750,6 +695,11 @@ export const FoodGoalList = memo(() => {
                             {insertComma(item.food_record_total_fat ?? `0`)}
                           </Div>
                         </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
+                          </Div>
+                        </Grid>
                         {/** diff * */}
                         <Grid size={4} className={`d-row-center`}>
                           <Div className={`fs-0-7rem fw-500 dark`}>
@@ -759,6 +709,11 @@ export const FoodGoalList = memo(() => {
                         <Grid size={6} className={`d-row-right`}>
                           <Div className={`fs-0-8rem fw-600 ${item.food_record_diff_fat_color}`}>
                             {insertComma(item.food_record_diff_fat ?? `0`)}
+                          </Div>
+                        </Grid>
+                        <Grid size={2} className={`d-row-center`}>
+                          <Div className={`fs-0-55rem fw-600 dark`}>
+                            {translate(`g`)}
                           </Div>
                         </Grid>
                       </Grid>
@@ -775,7 +730,7 @@ export const FoodGoalList = memo(() => {
     // 7-10. return
     return (
       <Paper className={`content-wrapper radius-2 border-light-1 shadow-1 h-min-75vh`}>
-        {goalSummarySection()}
+        {summarySection()}
         <Hr m={25} className={`bg-light`} />
         {COUNT.totalCnt === 0 ? <Empty DATE={DATE} extra={`food`} /> : listSection()}
       </Paper>

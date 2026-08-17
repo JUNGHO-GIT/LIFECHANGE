@@ -188,18 +188,18 @@ export const percent = async (user_id_param: string, DATE_param: any) => {
     const bedArr = Array.isArray(doc?.sleep_record_bedTime)
       ? doc.sleep_record_bedTime
       : doc?.sleep_record_bedTime
-        ? [doc.sleep_record_bedTime]
-        : [];
+      ? [doc.sleep_record_bedTime]
+      : [];
     const wakeArr = Array.isArray(doc?.sleep_record_wakeTime)
       ? doc.sleep_record_wakeTime
       : doc?.sleep_record_wakeTime
-        ? [doc.sleep_record_wakeTime]
-        : [];
+      ? [doc.sleep_record_wakeTime]
+      : [];
     const sleepArr = Array.isArray(doc?.sleep_record_sleepTime)
       ? doc.sleep_record_sleepTime
       : doc?.sleep_record_sleepTime
-        ? [doc.sleep_record_sleepTime]
-        : [];
+      ? [doc.sleep_record_sleepTime]
+      : [];
 
     bedArr.forEach((val: any) => {
       totalBedDecimal += timeToDecimal(val ?? `00:00`);
@@ -269,10 +269,9 @@ export const scale = async (user_id_param: string, DATE_param: any) => {
 
   // 2024-08-04T15:30:20.805Z -> 2024-08-04
   // dateStart: isCustom 임의기간 조회 시 DATE.dateStart, 기본 동기는 가입일(regDt)
-  const regDt: string =
-    (DATE_param?.isCustom === true && DATE_param?.dateStart)
-      ? DATE_param.dateStart
-      : findRegDt?.user_regDt?.toISOString().slice(0, 10);
+  const regDt: string = (DATE_param?.isCustom === true && DATE_param?.dateStart)
+    ? DATE_param.dateStart
+    : findRegDt?.user_regDt?.toISOString().slice(0, 10);
   const todayDt: string = DATE_param?.dateEnd;
 
   // 최초 체중 조회

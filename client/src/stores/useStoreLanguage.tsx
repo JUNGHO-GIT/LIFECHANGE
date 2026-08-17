@@ -1062,6 +1062,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         ko: `기록`,
         en: `Record`,
       },
+      remain: {
+        ko: `남음`,
+        en: `Remain`,
+      },
       recordTabs: {
         ko: `기록`,
         en: `Record`,
@@ -1369,6 +1373,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
       viewYear: {
         ko: `년별`,
         en: `Year`,
+      },
+      vol: {
+        ko: `vol`,
+        en: `vol`,
       },
       volume: {
         ko: `볼륨`,

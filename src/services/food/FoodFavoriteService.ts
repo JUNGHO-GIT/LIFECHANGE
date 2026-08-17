@@ -16,7 +16,7 @@ export const list = async (user_id_param: string) => {
   let statusResult: string = ``;
 
   findResult = await repository.list(user_id_param);
-  totalCntResult = findResult?.length;
+  totalCntResult = findResult?.length ?? 0;
 
   if (!findResult) {
     finalResult = [];

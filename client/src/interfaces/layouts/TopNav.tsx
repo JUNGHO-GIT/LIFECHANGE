@@ -144,12 +144,12 @@ export const TopNav = memo(() => {
   }, [ firstStr, smileImage ]);
 
   const [ dataArray, _setDataArray ] = useState({
-    exercise: [ `chart`, `goal`, `record`, `favorite` ],
-    food: [ `chart`, `goal`, `record`, `favorite`, `find` ],
-    today: [ `chart`, `goal`, `record` ],
+    exercise: [`goal`, `record`, `favorite` ],
+    food: [ `goal`, `record`, `favorite`, `find` ],
+    today: [ `goal`, `record` ],
     calendar: [`calendar`],
-    money: [ `chart`, `goal`, `record`, `favorite` ],
-    sleep: [ `chart`, `goal`, `record`, `favorite` ],
+    money: [ `goal`, `record`, `favorite` ],
+    sleep: [ `goal`, `record`, `favorite` ],
     admin: [`dashboard`],
   });
 
@@ -168,26 +168,26 @@ export const TopNav = memo(() => {
         calendar: { key: `calendar`, value: `calendar` },
       },
       food: {
-        chart: { key: `food`, value: `chart` },
+        // chart: { key: `food`, value: `chart` },
         favorite: { key: `food`, value: `favorite` },
         find: { key: `food`, value: `find` },
         goal: { key: `food`, value: `goal` },
         record: { key: `food`, value: `record` },
       },
       exercise: {
-        chart: { key: `exercise`, value: `chart` },
+        // chart: { key: `exercise`, value: `chart` },
         favorite: { key: `exercise`, value: `favorite` },
         goal: { key: `exercise`, value: `goal` },
         record: { key: `exercise`, value: `record` },
       },
       money: {
-        chart: { key: `money`, value: `chart` },
+        // chart: { key: `money`, value: `chart` },
         favorite: { key: `money`, value: `favorite` },
         goal: { key: `money`, value: `goal` },
         record: { key: `money`, value: `record` },
       },
       sleep: {
-        chart: { key: `sleep`, value: `chart` },
+        // chart: { key: `sleep`, value: `chart` },
         favorite: { key: `sleep`, value: `favorite` },
         goal: { key: `sleep`, value: `goal` },
         record: { key: `sleep`, value: `record` },
@@ -461,6 +461,9 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
+                    endadornment={
+                      localUnit
+                    }
                   />
                 </Grid>
               </Grid>
@@ -479,6 +482,9 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
+                    endadornment={
+                      localUnit
+                    }
                   />
                 </Grid>
               </Grid>
@@ -632,6 +638,9 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
+                    endadornment={
+                      translate(`g`)
+                    }
                   />
                 </Grid>
               </Grid>
@@ -662,6 +671,9 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
+                    endadornment={
+                      translate(`g`)
+                    }
                   />
                 </Grid>
               </Grid>
@@ -692,6 +704,9 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
+                    endadornment={
+                      translate(`g`)
+                    }
                   />
                 </Grid>
               </Grid>
@@ -823,6 +838,9 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
+                    endadornment={
+                      localCurrency
+                    }
                   />
                 </Grid>
               </Grid>
@@ -847,6 +865,9 @@ export const TopNav = memo(() => {
                         className={`w-15px h-15px hover`}
                       />
                     )}
+                    endadornment={
+                      localCurrency
+                    }
                   />
                 </Grid>
               </Grid>

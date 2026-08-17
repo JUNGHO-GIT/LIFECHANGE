@@ -13,7 +13,7 @@ import { axios } from "@exportLibs";
 import { insertComma, setSession, getSession, sync, handleNumberInput } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
 import { PickerDay, Count, Delete, Input, Select } from "@exportContainers";
-import { Img, Bg, Icons, Div, Paper, Grid, Br } from "@exportComponents";
+import { Bg, Icons, Div, Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
@@ -555,6 +555,9 @@ export const FoodRecordDetail = memo(() => {
                   {`●`}
                 </Div>
               )}
+              endadornment={
+                translate(`kc`)
+              }
             />
           </Grid>
           <Grid size={6}>
@@ -568,6 +571,9 @@ export const FoodRecordDetail = memo(() => {
                   {`●`}
                 </Div>
               )}
+              endadornment={
+                translate(`g`)
+              }
             />
           </Grid>
         </Grid>
@@ -585,6 +591,9 @@ export const FoodRecordDetail = memo(() => {
                   {`●`}
                 </Div>
               )}
+              endadornment={
+                translate(`g`)
+              }
             />
           </Grid>
           <Grid size={6}>
@@ -598,6 +607,9 @@ export const FoodRecordDetail = memo(() => {
                   {`●`}
                 </Div>
               )}
+              endadornment={
+                translate(`g`)
+              }
             />
           </Grid>
         </Grid>
@@ -834,6 +846,9 @@ export const FoodRecordDetail = memo(() => {
                     {`●`}
                   </Div>
                 )}
+                endadornment={
+                  translate(`kc`)
+                }
                 onChange={(e: any) => {
                   const processedValue: string | null = handleNumberInput(e.target.value, 9999);
                   if (processedValue === null) {
@@ -864,6 +879,9 @@ export const FoodRecordDetail = memo(() => {
                     {`●`}
                   </Div>
                 )}
+                endadornment={
+                  translate(`g`)
+                }
                 onChange={(e: any) => {
                   const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
                   if (processedValue === null) {
@@ -898,6 +916,9 @@ export const FoodRecordDetail = memo(() => {
                     {`●`}
                   </Div>
                 )}
+                endadornment={
+                  translate(`g`)
+                }
                 onChange={(e: any) => {
                   const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
                   if (processedValue === null) {
@@ -928,6 +949,9 @@ export const FoodRecordDetail = memo(() => {
                     {`●`}
                   </Div>
                 )}
+                endadornment={
+                  translate(`g`)
+                }
                 onChange={(e: any) => {
                   const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
                   if (processedValue === null) {

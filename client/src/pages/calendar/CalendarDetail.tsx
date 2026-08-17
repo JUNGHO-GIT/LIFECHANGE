@@ -582,6 +582,9 @@ export const CalendarDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`s`)
+                  }
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999);
                     processedValue !== null && (
@@ -610,6 +613,9 @@ export const CalendarDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`r`)
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999);
                     processedValue !== null && (
@@ -642,6 +648,9 @@ export const CalendarDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    localUnit
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999);
                     processedValue !== null && (
@@ -889,6 +898,9 @@ export const CalendarDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`kc`)
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 9999);
                     processedValue !== null && (
@@ -917,6 +929,9 @@ export const CalendarDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`g`)
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
                     processedValue !== null && (
@@ -949,6 +964,9 @@ export const CalendarDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`g`)
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
                     processedValue !== null && (
@@ -977,6 +995,9 @@ export const CalendarDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    translate(`g`)
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999, 1);
                     processedValue !== null && (
@@ -1133,6 +1154,9 @@ export const CalendarDetail = memo(() => {
                       {`●`}
                     </Div>
                   )}
+                  endadornment={
+                    localCurrency
+                  }
                   onChange={(e: any) => {
                     const processedValue: string | null = handleNumberInput(e.target.value, 999_999_999);
                     processedValue !== null && (

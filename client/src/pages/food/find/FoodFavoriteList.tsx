@@ -134,7 +134,7 @@ export const FoodFavoriteList = memo(() => {
       setLOADING(false);
       setALERT({
         open: true,
-        msg: translate(error.response.data.msg as string),
+        msg: translate(error.response?.data?.msg ?? `searchError`),
         severity: `error`,
       });
       console.error(error);
@@ -170,7 +170,7 @@ export const FoodFavoriteList = memo(() => {
       setLOADING(false);
       setALERT({
         open: true,
-        msg: translate(error.response.data.msg as string),
+        msg: translate(error.response?.data?.msg ?? `searchError`),
         severity: `error`,
       });
       console.error(error);
