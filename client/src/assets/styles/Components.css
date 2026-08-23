@@ -36,7 +36,7 @@
   justify-content: center !important;
   background: rgba(237, 243, 247, 0.78) !important;
   pointer-events: auto;
-  animation: loaderBackdropIn 0.08s ease-out both;
+  animation: loaderBackdropIn var(--duration-instant) var(--ease-out) both;
   z-index: var(--z-loader) !important;
 }
 .loader-panel {
@@ -59,12 +59,24 @@
   border-radius: 50%;
   animation: loaderSpin 0.8s linear infinite !important;
 }
+.loader-exit {
+  animation: loaderBackdropOut var(--duration-instant) var(--ease-out) both;
+  pointer-events: none;
+}
 @keyframes loaderBackdropIn {
   0% {
     opacity: 0;
   }
   100% {
     opacity: 1;
+  }
+}
+@keyframes loaderBackdropOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 @keyframes loaderSpin {
@@ -76,9 +88,14 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .loader-wrapper,
   .app-loader-indicator {
     animation: none;
+  }
+  .loader-wrapper {
+    animation: loaderBackdropIn var(--duration-fast) ease both;
+  }
+  .loader-exit {
+    animation: loaderBackdropOut var(--duration-instant) ease both;
   }
 }
 

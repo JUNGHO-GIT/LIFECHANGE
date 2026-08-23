@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from "@exportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useChartMotion, useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { MoneyLine, MoneyLineType } from "@exportSchemas";
 import { axios } from "@exportLibs";
@@ -24,6 +24,7 @@ declare interface MoneyRecordChartLineProps {
 export const MoneyRecordChartLine = memo((props: MoneyRecordChartLineProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
+  const chartMotion = useChartMotion();
   const { URL_OBJECT, PATH, sessionId, chartThemeColors, moneyChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -186,10 +187,7 @@ export const MoneyRecordChartLine = memo((props: MoneyRecordChartLineProps) => {
               strokeWidth={2}
               activeDot={{ r: 3 }}
               dot={false}
-              isAnimationActive={true}
-              animationBegin={0}
-              animationDuration={400}
-              animationEasing={`linear`}
+              {...chartMotion}
             />
           )}
           {TYPE_STATE.line.includes(`expense`) && (
@@ -200,10 +198,7 @@ export const MoneyRecordChartLine = memo((props: MoneyRecordChartLineProps) => {
               strokeWidth={2}
               activeDot={{ r: 3 }}
               dot={false}
-              isAnimationActive={true}
-              animationBegin={0}
-              animationDuration={400}
-              animationEasing={`linear`}
+              {...chartMotion}
             />
           )}
           <Tooltip

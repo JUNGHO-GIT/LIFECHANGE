@@ -329,9 +329,9 @@ export const UserCategory = memo(() => {
                                 e.stopPropagation();
                                 const target: any = e.currentTarget;
                                 target.classList.add(`shake`);
-                                setTimeout(() => {
+                                target.addEventListener(`animationend`, () => {
                                   target.classList.remove(`shake`);
-                                }, 700);
+                                }, { once: true });
                               }
                             }}
                             onChange={(e: any) => {
@@ -453,9 +453,9 @@ export const UserCategory = memo(() => {
                                   e.stopPropagation();
                                   const target: any = e.currentTarget;
                                   target.classList.add(`shake`);
-                                  setTimeout(() => {
+                                  target.addEventListener(`animationend`, () => {
                                     target.classList.remove(`shake`);
-                                  }, 700);
+                                  }, { once: true });
                                 }
                               }}
                               onChange={(e: any) => {

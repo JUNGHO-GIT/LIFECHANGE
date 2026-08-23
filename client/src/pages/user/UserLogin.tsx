@@ -383,7 +383,7 @@ export const UserLogin = memo(() => {
               {translate(`notId`)}
             </Div>
             <Div
-              className={`fs-0-8rem blue pointer`}
+              className={`fs-0-8rem text-link pointer`}
               onClick={() => {
                 void navigate(`/user/signup`);
               }}
@@ -400,7 +400,7 @@ export const UserLogin = memo(() => {
               {translate(`forgotPw`)}
             </Div>
             <Div
-              className={`fs-0-8rem blue pointer`}
+              className={`fs-0-8rem text-link pointer`}
               onClick={() => {
                 void navigate(`/user/resetPw`);
               }}

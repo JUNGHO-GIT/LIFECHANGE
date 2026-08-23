@@ -35,6 +35,7 @@ export const UserAppInfo = memo(() => {
       <Grid container={true} spacing={2}>
         <Grid size={12} className={`d-center`}>
           <Img
+            alt={`lifechange`}
             hover={true}
             shadow={false}
             radius={false}

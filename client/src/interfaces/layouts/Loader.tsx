@@ -14,6 +14,7 @@ declare interface LoaderProps {
 }
 
 const LOADER_DELAY_MS: number = 250;
+const LOADER_EXIT_MS: number = 80;
 
 // -------------------------------------------------------------------------------------------------
 export const Loader = memo(({ active }: LoaderProps) => {
@@ -25,13 +26,14 @@ export const Loader = memo(({ active }: LoaderProps) => {
   // 전환(NAVIGATING)과 명시 active는 지연 없이 즉시 표시, 인페이지 데이터 로딩만 지연 적용
   const immediate: boolean = active === true || NAVIGATING;
   const [ isVisible, setIsVisible ] = useState<boolean>(active === true);
+  const [ isExiting, setIsExiting ] = useState<boolean>(false);
 
   // 2. 전환은 즉시, 인페이지 데이터 로딩은 짧은 지연 후 표시 -------------------------------------
   useEffect(() => {
     if (!sourceLoading) {
-      setIsVisible(false);
       return;
     }
+    setIsExiting(false);
     if (immediate) {
       setIsVisible(true);
       return;
@@ -46,6 +48,21 @@ export const Loader = memo(({ active }: LoaderProps) => {
     };
   }, [ immediate, sourceLoading ]);
 
+  // 2. 완료 응답은 짧은 opacity 퇴장 후 제거 ----------------------------------
+  useEffect(() => {
+    if (sourceLoading || !isVisible) {
+      return;
+    }
+    setIsExiting(true);
+    const timerId: number = window.setTimeout(() => {
+      setIsVisible(false);
+      setIsExiting(false);
+    }, LOADER_EXIT_MS);
+    return () => {
+      window.clearTimeout(timerId);
+    };
+  }, [ sourceLoading, isVisible ]);
+
   // 7.loader --------------------------------------------------------------------------------------
   const loaderNode = () => (
     isVisible ? (
@@ -53,7 +70,7 @@ export const Loader = memo(({ active }: LoaderProps) => {
         aria-busy={true}
         aria-label={`loading`}
         aria-live={`polite`}
-        className={`loader-wrapper`}
+        className={isExiting ? `loader-wrapper loader-exit` : `loader-wrapper`}
         role={`status`}
       >
         <Div className={`loader-panel`}>

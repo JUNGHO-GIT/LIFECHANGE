@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from "@exportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useChartMotion, useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreAlert, useStoreLanguage, useStoreLoading } from "@exportStores";
 import { axios, Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "@exportLibs";
 import { insertComma } from "@exportScripts";
@@ -29,6 +29,7 @@ declare interface SleepGoalChartPieProps {
 export const SleepGoalChartPie = memo((props: SleepGoalChartPieProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
+  const chartMotion = useChartMotion();
   const { URL_OBJECT, PATH, sessionId, chartThemeColors } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -185,10 +186,7 @@ export const SleepGoalChartPie = memo((props: SleepGoalChartPieProps) => {
                 stroke={`#fff`}
                 strokeWidth={2}
                 paddingAngle={chartData.length > 1 ? 2 : 0}
-                isAnimationActive={true}
-                animationBegin={0}
-                animationDuration={520}
-                animationEasing={`ease-out`}
+                {...chartMotion}
               >
                 {chartData.map((item) => <Cell key={item.name} fill={item.color} />)}
               </Pie>

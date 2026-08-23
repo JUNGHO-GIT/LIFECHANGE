@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from "@exportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useChartMotion, useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { ExercisePie, ExercisePieType } from "@exportSchemas";
 import { axios } from "@exportLibs";
@@ -32,6 +32,7 @@ declare interface PieProps {
 export const ExerciseRecordChartPie = memo((props: ExerciseRecordChartPieProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
+  const chartMotion = useChartMotion();
   const { URL_OBJECT, PATH, chartColors, sessionId } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -285,10 +286,7 @@ export const ExerciseRecordChartPie = memo((props: ExerciseRecordChartPieProps) 
             outerRadius={110}
             fill={`#8884d8`}
             dataKey={`value`}
-            isAnimationActive={true}
-            animationBegin={0}
-            animationDuration={400}
-            animationEasing={`linear`}
+            {...chartMotion}
           >
             {object?.map((_entry: any, index: number) => (
               <Cell key={`cell-${_entry.name ?? _entry.dataKey ?? _entry.value}`} fill={chartColors[index % chartColors?.length]} />

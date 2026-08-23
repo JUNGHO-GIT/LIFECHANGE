@@ -25,9 +25,9 @@ export const InputBase = memo((props: any) => {
       e.stopPropagation();
       const target = e.currentTarget;
       target.classList.add(`shake`);
-      setTimeout(() => {
+      target.addEventListener(`animationend`, () => {
         target.classList.remove(`shake`);
-      }, 700);
+      }, { once: true });
     }
     else if (props?.locked !== `locked` && !props?.disabled) {
       props?.onClick?.(e);

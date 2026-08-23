@@ -50,11 +50,13 @@
   min-height: 44px !important;
   border-radius: var(--radius-sm) !important;
   color: var(--color-text-muted) !important;
-  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+  transition:
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
 }
 .MuiBottomNavigationAction-root.Mui-selected {
   background-color: rgba(8, 118, 185, 0.08) !important;
-  color: var(--color-primary) !important;
+  color: var(--color-link) !important;
   font-weight: bold !important;
   text-decoration: none !important;
   scale: 1 !important;
@@ -141,12 +143,15 @@
   min-height: 0px !important;
 }
 .MuiButton-root {
-  min-height: 36px !important;
+  min-height: 44px !important;
   border-radius: var(--radius-sm) !important;
   font-weight: 700 !important;
   letter-spacing: 0 !important;
   text-transform: none !important;
-  transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease, transform var(--duration-fast) var(--ease-out) !important;
+  transition:
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    transform var(--duration-fast) var(--ease-out) !important;
 }
 .MuiButton-contained {
   box-shadow: 0 6px 16px rgba(8, 118, 185, 0.18) !important;
@@ -160,8 +165,8 @@
   border-radius: var(--radius-sm) !important;
 }
 .MuiInputBase-root .MuiIconButton-root {
-  min-width: 36px !important;
-  min-height: 36px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
 }
 .MuiButton-root:active,
 .MuiIconButton-root:active {
@@ -264,7 +269,7 @@
   padding: 0px !important;
 }
 .MuiTab-root {
-  min-height: 36px !important;
+  min-height: 44px !important;
   border: 1px solid var(--color-border-subtle) !important;
   border-radius: var(--radius-sm) !important;
   color: var(--color-text-muted) !important;
@@ -273,10 +278,10 @@
 .MuiTab-root.Mui-selected {
   background: rgba(8, 118, 185, 0.08) !important;
   border-color: var(--color-border-strong) !important;
-  color: var(--color-primary) !important;
+  color: var(--color-link) !important;
 }
 .MuiMenuItem-root {
-  min-height: 40px !important;
+  min-height: 44px !important;
   border-radius: 6px;
 }
 .MuiMenuItem-root.Mui-selected {
@@ -297,10 +302,14 @@
 @media (prefers-reduced-motion: reduce) {
   .MuiBottomNavigationAction-root,
   .MuiButton-root {
-    transition-property: background-color, border-color, box-shadow, color !important;
+    transition-property: background-color, border-color, color !important;
   }
+  .MuiButton-contained:hover,
   .MuiButton-root:active,
   .MuiIconButton-root:active {
     transform: none;
+  }
+  .MuiSkeleton-root {
+    animation: none !important;
   }
 }

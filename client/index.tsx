@@ -26,7 +26,7 @@ import { ErrorBoundary } from "@interfaces/layouts/ErrorBoundary";
 import { Header } from "@interfaces/layouts/Header";
 import { Loader } from "@interfaces/layouts/Loader";
 import { TopNav } from "@interfaces/layouts/TopNav";
-import { useStoreLoading } from "@exportStores";
+import { useStoreLanguage, useStoreLoading } from "@exportStores";
 import { CssBaseline, createTheme, ThemeProvider } from "@exportMuis";
 import { BrowserRouter, createRoot, lazy, memo, Route, Routes, Suspense, useEffect } from "@exportReacts";
 import { registerInterceptor } from "@assets/scripts/interceptor";
@@ -208,6 +208,7 @@ const preloadRouteModules = (): (() => void) => {
 // 앱 라우트 ----------------------------------------------------------------------------------
 const App = memo(() => {
   const { PATH, navigate, sessionId } = useCommonValue();
+  const { translate } = useStoreLanguage();
   const setNAVIGATING = useStoreLoading((state) => state.setNAVIGATING);
   useRoot(PATH, navigate, sessionId);
   useScrollTop(PATH);
@@ -237,6 +238,16 @@ const App = memo(() => {
     !PATH.includes(`/user`) &&
     !PATH.includes(`/auth/error`) &&
     !PATH.includes(`/auth/privacy`);
+  const headingAliases: Record<string, string> = {
+    appSetting: `Application settings`,
+    error: translate(`networkError`),
+    google: translate(`googleLogin`),
+  };
+  const routeHeading: string = PATH
+    .split(`/`)
+    .filter((segment) => segment && ![`admin`, `auth`, `detail`, `list`, `user`].includes(segment))
+    .map((segment) => headingAliases[segment] ?? translate(segment))
+    .join(` · `) || `lifechange`;
 
   return (
     <div className={`App`}>
@@ -245,59 +256,62 @@ const App = memo(() => {
       <Loader />
       <Alert />
       <Confirm />
-      <Suspense fallback={<Loader active={true} />}>
-        <Routes>
-          {/** home * */}
-          <Route path={`/`} element={<div />} />
-          {/** admin * */}
-          <Route path={`/admin/dashboard/*`} element={<AdminDashboard />} />
-          {/** auth * */}
-          <Route path={`/auth/error/*`} element={<AuthError />} />
-          <Route path={`/auth/google/*`} element={<AuthGoogle />} />
-          <Route path={`/auth/privacy/*`} element={<AuthPrivacy />} />
-          {/** calendar * */}
-          <Route path={`/calendar/list/*`} element={<CalendarList />} />
-          <Route path={`/calendar/detail/*`} element={<CalendarDetail />} />
-          {/** exercise * */}
-          <Route path={`/exercise/chart/list/*`} element={<ExerciseRecordChart />} />
-          <Route path={`/exercise/goal/list/*`} element={<ExerciseGoalList />} />
-          <Route path={`/exercise/goal/detail/*`} element={<ExerciseGoalDetail />} />
-          <Route path={`/exercise/record/list/*`} element={<ExerciseRecordList />} />
-          <Route path={`/exercise/record/detail/*`} element={<ExerciseRecordDetail />} />
-          <Route path={`/exercise/favorite/list/*`} element={<ExerciseFavoriteList />} />
-          {/** food * */}
-          <Route path={`/food/chart/list/*`} element={<FoodRecordChart />} />
-          <Route path={`/food/goal/list/*`} element={<FoodGoalList />} />
-          <Route path={`/food/goal/detail/*`} element={<FoodGoalDetail />} />
-          <Route path={`/food/record/list/*`} element={<FoodRecordList />} />
-          <Route path={`/food/record/detail/*`} element={<FoodRecordDetail />} />
-          <Route path={`/food/favorite/list/*`} element={<FoodFavoriteList />} />
-          <Route path={`/food/find/list/*`} element={<FoodFindList />} />
-          {/** money * */}
-          <Route path={`/money/chart/list/*`} element={<MoneyRecordChart />} />
-          <Route path={`/money/goal/list/*`} element={<MoneyGoalList />} />
-          <Route path={`/money/goal/detail/*`} element={<MoneyGoalDetail />} />
-          <Route path={`/money/record/list/*`} element={<MoneyRecordList />} />
-          <Route path={`/money/record/detail/*`} element={<MoneyRecordDetail />} />
-          <Route path={`/money/favorite/list/*`} element={<MoneyFavoriteList />} />
-          {/** sleep * */}
-          <Route path={`/sleep/chart/list/*`} element={<SleepRecordChart />} />
-          <Route path={`/sleep/goal/list/*`} element={<SleepGoalList />} />
-          <Route path={`/sleep/goal/detail/*`} element={<SleepGoalDetail />} />
-          <Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
-          <Route path={`/sleep/record/detail/*`} element={<SleepRecordDetail />} />
-          <Route path={`/sleep/favorite/list/*`} element={<SleepFavoriteList />} />
-          {/** user * */}
-          <Route path={`/user/appInfo/*`} element={<UserAppInfo />} />
-          <Route path={`/user/appSetting/*`} element={<UserAppSetting />} />
-          <Route path={`/user/signup/*`} element={<UserSignup />} />
-          <Route path={`/user/login/*`} element={<UserLogin />} />
-          <Route path={`/user/resetPw/*`} element={<UserResetPw />} />
-          <Route path={`/user/detail/*`} element={<UserDetail />} />
-          <Route path={`/user/delete/*`} element={<UserDelete />} />
-          <Route path={`/user/category/*`} element={<UserCategory />} />
-        </Routes>
-      </Suspense>
+      <main className={`app-main`}>
+        <h1 className={`visually-hidden`}>{routeHeading}</h1>
+        <Suspense fallback={<Loader active={true} />}>
+          <Routes>
+            {/** home * */}
+            <Route path={`/`} element={<div />} />
+            {/** admin * */}
+            <Route path={`/admin/dashboard/*`} element={<AdminDashboard />} />
+            {/** auth * */}
+            <Route path={`/auth/error/*`} element={<AuthError />} />
+            <Route path={`/auth/google/*`} element={<AuthGoogle />} />
+            <Route path={`/auth/privacy/*`} element={<AuthPrivacy />} />
+            {/** calendar * */}
+            <Route path={`/calendar/list/*`} element={<CalendarList />} />
+            <Route path={`/calendar/detail/*`} element={<CalendarDetail />} />
+            {/** exercise * */}
+            <Route path={`/exercise/chart/list/*`} element={<ExerciseRecordChart />} />
+            <Route path={`/exercise/goal/list/*`} element={<ExerciseGoalList />} />
+            <Route path={`/exercise/goal/detail/*`} element={<ExerciseGoalDetail />} />
+            <Route path={`/exercise/record/list/*`} element={<ExerciseRecordList />} />
+            <Route path={`/exercise/record/detail/*`} element={<ExerciseRecordDetail />} />
+            <Route path={`/exercise/favorite/list/*`} element={<ExerciseFavoriteList />} />
+            {/** food * */}
+            <Route path={`/food/chart/list/*`} element={<FoodRecordChart />} />
+            <Route path={`/food/goal/list/*`} element={<FoodGoalList />} />
+            <Route path={`/food/goal/detail/*`} element={<FoodGoalDetail />} />
+            <Route path={`/food/record/list/*`} element={<FoodRecordList />} />
+            <Route path={`/food/record/detail/*`} element={<FoodRecordDetail />} />
+            <Route path={`/food/favorite/list/*`} element={<FoodFavoriteList />} />
+            <Route path={`/food/find/list/*`} element={<FoodFindList />} />
+            {/** money * */}
+            <Route path={`/money/chart/list/*`} element={<MoneyRecordChart />} />
+            <Route path={`/money/goal/list/*`} element={<MoneyGoalList />} />
+            <Route path={`/money/goal/detail/*`} element={<MoneyGoalDetail />} />
+            <Route path={`/money/record/list/*`} element={<MoneyRecordList />} />
+            <Route path={`/money/record/detail/*`} element={<MoneyRecordDetail />} />
+            <Route path={`/money/favorite/list/*`} element={<MoneyFavoriteList />} />
+            {/** sleep * */}
+            <Route path={`/sleep/chart/list/*`} element={<SleepRecordChart />} />
+            <Route path={`/sleep/goal/list/*`} element={<SleepGoalList />} />
+            <Route path={`/sleep/goal/detail/*`} element={<SleepGoalDetail />} />
+            <Route path={`/sleep/record/list/*`} element={<SleepRecordList />} />
+            <Route path={`/sleep/record/detail/*`} element={<SleepRecordDetail />} />
+            <Route path={`/sleep/favorite/list/*`} element={<SleepFavoriteList />} />
+            {/** user * */}
+            <Route path={`/user/appInfo/*`} element={<UserAppInfo />} />
+            <Route path={`/user/appSetting/*`} element={<UserAppSetting />} />
+            <Route path={`/user/signup/*`} element={<UserSignup />} />
+            <Route path={`/user/login/*`} element={<UserLogin />} />
+            <Route path={`/user/resetPw/*`} element={<UserResetPw />} />
+            <Route path={`/user/detail/*`} element={<UserDetail />} />
+            <Route path={`/user/delete/*`} element={<UserDelete />} />
+            <Route path={`/user/category/*`} element={<UserCategory />} />
+          </Routes>
+        </Suspense>
+      </main>
       {noneBottom ? <BottomNav /> : null}
     </div>
   );
@@ -339,7 +353,7 @@ const appTheme = createTheme({
     primary: { main: `#0876b9` },
     secondary: { main: `#005f9e` },
     error: { main: `#f44336` },
-    text: { primary: `#243746`, secondary: `#738997` },
+    text: { primary: `#243746`, secondary: `#4d6777` },
     divider: `#d9e5ec`,
     background: { default: `#edf3f7`, paper: `#ffffff` },
   },

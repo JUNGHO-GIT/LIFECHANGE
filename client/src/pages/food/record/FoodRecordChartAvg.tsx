@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from "@exportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useChartMotion, useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { FoodAvgKcal, FoodAvgNut, FoodAvgType } from "@exportSchemas";
 import { axios } from "@exportLibs";
@@ -24,6 +24,7 @@ declare interface FoodRecordChartAvgProps {
 export const FoodRecordChartAvg = memo((props: FoodRecordChartAvgProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
+  const chartMotion = useChartMotion();
   const { URL_OBJECT, PATH, sessionId, chartThemeColors, foodChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -202,10 +203,7 @@ export const FoodRecordChartAvg = memo((props: FoodRecordChartAvgProps) => {
               fill={chartThemeColors.kcal}
               radius={[ 10, 10, 0, 0 ]}
               minPointSize={1}
-              isAnimationActive={true}
-              animationBegin={0}
-              animationDuration={400}
-              animationEasing={`linear`}
+              {...chartMotion}
             />
           )}
           {TYPE_STATE.line === (`nut`) && (
@@ -215,30 +213,21 @@ export const FoodRecordChartAvg = memo((props: FoodRecordChartAvgProps) => {
                 fill={chartThemeColors.carb}
                 radius={[ 10, 10, 0, 0 ]}
                 minPointSize={1}
-                isAnimationActive={true}
-                animationBegin={0}
-                animationDuration={400}
-                animationEasing={`linear`}
+                {...chartMotion}
               />
               <Bar
                 dataKey={`protein`}
                 fill={chartThemeColors.protein}
                 radius={[ 10, 10, 0, 0 ]}
                 minPointSize={1}
-                isAnimationActive={true}
-                animationBegin={0}
-                animationDuration={400}
-                animationEasing={`linear`}
+                {...chartMotion}
               />
               <Bar
                 dataKey={`fat`}
                 fill={chartThemeColors.fat}
                 radius={[ 10, 10, 0, 0 ]}
                 minPointSize={1}
-                isAnimationActive={true}
-                animationBegin={0}
-                animationDuration={400}
-                animationEasing={`linear`}
+                {...chartMotion}
               />
             </>
           )}

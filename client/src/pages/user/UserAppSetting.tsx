@@ -284,7 +284,7 @@ export const UserAppSetting = memo(() => {
                     void navigate(`/user/delete`);
                   }}
                 >
-                  <TableCell className={`w-90vw p-15px red`}>
+                  <TableCell className={`w-90vw p-15px text-danger`}>
                     {translate(`userDelete`)}
                   </TableCell>
                   <TableCell className={`w-10vw p-15px`}>

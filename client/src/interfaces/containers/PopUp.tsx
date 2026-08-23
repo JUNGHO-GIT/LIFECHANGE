@@ -157,6 +157,10 @@ export const PopUp = memo((props: any) => {
           vertical: `center`,
           horizontal: `center`,
         }}
+        transitionDuration={{
+          enter: 200,
+          exit: 160,
+        }}
         keepMounted={false}
         disableRestoreFocus={false}
         slotProps={{

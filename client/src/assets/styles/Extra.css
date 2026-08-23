@@ -114,7 +114,7 @@
   border-top: 1px solid #edf3f7 !important;
   justify-content: center !important;
   min-height: 30px !important;
-  transition: background-color 0.16s ease;
+  transition: background-color var(--duration-fast) ease;
 }
 .cat-menu-add.Mui-selected {
   background: transparent !important;
@@ -126,7 +126,6 @@
   flex-direction: column;
   gap: 12px;
   min-width: 0;
-  animation: catPanelIn 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .cat-head {
   align-items: center;
@@ -145,7 +144,7 @@
 .cat-tab {
   flex: 1 1 0;
   min-width: 0;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transition: transform var(--duration-fast) var(--ease-in-out);
 }
 .cat-tab-on {
   transform: translateY(-1px);
@@ -160,7 +159,6 @@
   overflow-x: hidden;
   overflow-y: auto;
   padding: 2px 2px 2px 2px;
-  animation: catListIn 0.22s ease both;
 }
 .cat-row {
   align-items: center;
@@ -172,8 +170,11 @@
   min-width: 0;
   padding: 4px 6px 4px 6px;
   -webkit-touch-callout: none;
-  animation: catRowIn 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
-  transition: background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  scale: 1;
+  transition:
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    scale var(--duration-fast) var(--ease-out);
 }
 .cat-row-new {
   background: rgba(8, 118, 185, 0.06);
@@ -185,14 +186,19 @@
   box-shadow: 0 0 0 3px rgba(8, 118, 185, 0.14);
 }
 .cat-row-out {
-  animation: catRowOut 0.2s ease-in forwards;
+  animation: catRowOut 0.2s var(--ease-out) forwards;
   pointer-events: none;
+}
+.cat-row-enter {
+  animation: catRowIn var(--duration-fast) var(--ease-out) both;
 }
 .cat-row-press {
   animation: none;
   border-color: #cfe0ec;
-  transform: scale(0.985);
-  transition: transform 0.1s ease-out, border-color 0.18s ease;
+  scale: 0.985;
+  transition:
+    scale 0.1s var(--ease-out),
+    border-color var(--duration-fast) ease;
 }
 .cat-row-drag {
   background: #ffffff;
@@ -201,15 +207,16 @@
   position: relative;
   z-index: 5;
   animation: none;
-  will-change: transform;
+  scale: 1.02;
+  will-change: transform, scale;
 }
 .cat-row-shift {
   animation: none;
-  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--duration-fast) var(--ease-out);
 }
 .cat-row-settle {
   animation: none;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform var(--duration-standard) var(--ease-out);
 }
 .cat-row-act {
   align-items: center;
@@ -229,7 +236,10 @@
   justify-content: center;
   min-width: 22px;
   user-select: none;
-  transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  transition:
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease,
+    transform var(--duration-fast) var(--ease-out);
 }
 .cat-row-drag .cat-row-no {
   background: var(--color-primary);
@@ -279,34 +289,11 @@
   padding-top: 8px;
 }
 .cat-add {
-  transition: transform 0.16s ease;
-}
-.cat-add:hover {
-  transform: scale(1.16);
+  transition: transform var(--duration-fast) ease;
 }
 .cat-btn {
   flex: 0 0 auto;
   min-width: 68px !important;
-}
-@keyframes catPanelIn {
-  0% {
-    opacity: 0;
-    transform: translateY(8px) scale(0.97);
-  }
-  100% {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes catListIn {
-  0% {
-    opacity: 0;
-    transform: translateX(6px);
-  }
-  100% {
-    opacity: 1;
-    transform: none;
-  }
 }
 @keyframes catRowIn {
   0% {
@@ -328,30 +315,50 @@
     transform: translateX(14px) scale(0.96);
   }
 }
+@keyframes catRowFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 @media (max-width: 360px) {
   .cat-btn {
     min-width: 56px !important;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cat-panel,
-  .cat-list,
-  .cat-row,
-  .cat-row-out,
-  .cat-row-settle {
-    animation: none;
+  .cat-row-enter {
+    animation: fadeIn var(--duration-fast) ease both;
+  }
+  .cat-row-out {
+    animation: catRowFadeOut var(--duration-fast) ease both;
   }
   .cat-row,
-  .cat-row-shift,
-  .cat-row-settle,
   .cat-row-no,
   .cat-tab,
   .cat-add,
   .cat-menu-add {
+    transition-property: background-color, border-color, color, opacity;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: ease;
+  }
+  .cat-row-shift {
     transition: none;
+  }
+  .cat-row-settle {
+    transition: transform var(--duration-instant) ease;
   }
   .cat-row-press,
   .cat-add:hover {
+    transform: none;
+  }
+  .cat-row-press,
+  .cat-row-drag {
+    scale: 1;
+  }
+  .cat-tab-on {
     transform: none;
   }
 }
@@ -359,11 +366,16 @@
 /** etc **********************************************************************************/
 .accordion {
   padding: 10px 10px 10px 10px !important;
-  transition: transform var(--duration-fast) var(--ease-out), border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) ease;
   border-color: var(--color-border) !important;
   box-shadow: var(--shadow-soft) !important;
 }
 @media (hover: hover) and (pointer: fine) {
+  .cat-add:hover {
+    transform: scale(1.16);
+  }
   .accordion:hover {
     transform: translateY(-2px);
     border-color: var(--color-border-strong) !important;
@@ -376,6 +388,10 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .accordion {
-    transition-property: border-color, box-shadow;
+    transition-property: border-color;
+  }
+  .cat-add:hover,
+  .accordion:hover {
+    transform: none;
   }
 }

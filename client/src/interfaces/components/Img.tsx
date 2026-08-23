@@ -70,7 +70,7 @@ const preloadImage = (src: string): Promise<void> => {
 // -------------------------------------------------------------------------------------------------
 export const Img = memo((
   {
-    group, src, hover, shadow, radius, border, min, max, loading, ...props
+    group, src, hover, shadow, radius, border, min, max, loading, alt = ``, ...props
   }: ImgProps,
 ) => {
 
@@ -83,7 +83,6 @@ export const Img = memo((
   const skeletonRef = useRef<HTMLDivElement | null>(null);
 
   // 2-2. useState ---------------------------------------------------------------------------------
-  const [ fileName, setFileName ] = useState<string>(``);
   const [ imgSrc, setImgSrc ] = useState<string>(``);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
   const [ isEmptyHandled, setIsEmptyHandled ] = useState<boolean>(false);
@@ -143,7 +142,6 @@ export const Img = memo((
       ? (() => {
         isEmptyHandledRef.current = true;
         setIsEmptyHandled(true);
-        setFileName(`empty`);
         setImgSrc(fallback);
         setIsLoading(false);
       })()
@@ -181,13 +179,6 @@ export const Img = memo((
           : `${GCLOUD_URL}/${group ?? `main`}/${trimmed}`
       );
 
-    const resolvedName: string = finalSrc === fallback ? `empty` : (
-      isBlob || isData
-        ? `preview`
-        : (trimmed.split(`/`).pop()?.split(`?`)[0]?.split(`#`)[0]?.split(`.`)[0] ?? `img`)
-    );
-
-    setFileName(resolvedName);
     setImgSrc(finalSrc);
     currentImgSrcRef.current = finalSrc;
 
@@ -245,7 +236,7 @@ export const Img = memo((
   const imageNode = useMemo(() => (
     <img
       {...restProps}
-      alt={fileName}
+      alt={alt}
       key={imgSrc}
       src={imgSrc}
       loading={loading ?? `lazy`}
@@ -265,7 +256,7 @@ export const Img = memo((
       }}
     />
   ), [
-    restProps, fileName, imgSrc, loading, imageClass, handleImageError, userOnLoad, userOnError,
+    restProps, alt, imgSrc, loading, imageClass, handleImageError, userOnLoad, userOnError,
   ]);
 
   // 10. return ----------------------------------------------------------------------------------

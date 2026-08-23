@@ -22,9 +22,9 @@ export const TextArea = memo((props: any) => {
       e.stopPropagation();
       const target: any = e.currentTarget;
       target.classList.add(`shake`);
-      setTimeout(() => {
+      target.addEventListener(`animationend`, () => {
         target.classList.remove(`shake`);
-      }, 700);
+      }, { once: true });
     }
     else if (props?.locked !== `locked` && !props?.disabled) {
       props?.onClick?.(e);

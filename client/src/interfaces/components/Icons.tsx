@@ -182,9 +182,9 @@ export const Icons = memo((props: any) => {
         if (props?.locked === `locked`) {
           const target: any = e.currentTarget;
           target.classList.add(`shake`);
-          setTimeout(() => {
+          target.addEventListener(`animationend`, () => {
             target.classList.remove(`shake`);
-          }, 700);
+          }, { once: true });
         }
         // 2. locked 아닌 경우
         else {

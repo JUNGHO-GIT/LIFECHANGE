@@ -27,6 +27,8 @@ declare interface PressCtx {
   uid: string;
   index: number;
   part: string;
+  pointerId: number;
+  element: HTMLDivElement;
   x: number;
   y: number;
 }
@@ -34,6 +36,8 @@ declare interface PressCtx {
 declare interface DragCtx {
   uid: string;
   part: string;
+  pointerId: number;
+  element: HTMLDivElement;
   from: number;
   to: number;
   step: number;
@@ -63,9 +67,9 @@ declare interface CategoryEditProps {
   onSave: (_result: CategoryEditResult) => void;
 }
 
-// 퇴장 애니메이션(.cat-row-out) 길이와 동일해야 실제 제거 시점이 맞음 -------------------------
-const REMOVE_MS: number = 200;
-const SETTLE_MS: number = 300;
+// animation/transition 이벤트 유실 시 상태 고착 방지 --------------------------
+const REMOVE_FALLBACK_MS: number = 500;
+const SETTLE_FALLBACK_MS: number = 600;
 const NAME_MAX: number = 20;
 const LIST_GAP: number = 8;
 // 스마트폰 기준 길게 누르기 임계값과 스크롤 판정 허용 이동량 ----------------------------------
@@ -121,6 +125,7 @@ export const CategoryEdit = memo((
   const [ EDITING, setEDITING ] = useState<string>(``);
   const [ DRAFT, setDRAFT ] = useState<string>(``);
   const [ REMOVING, setREMOVING ] = useState<string>(``);
+  const [ ENTERING, setENTERING ] = useState<string>(``);
   const [ PRESSING, setPRESSING ] = useState<string>(``);
   const [ SETTLE, setSETTLE ] = useState<SettleState | null>(null);
   const [ DRAG, setDRAG ] = useState<DragState | null>(null);
@@ -133,6 +138,7 @@ export const CategoryEdit = memo((
   const frameRef: React.RefObject<number | null> = useRef<number | null>(null);
   const settleFrameRef: React.RefObject<number | null> = useRef<number | null>(null);
   const suppressRef: React.RefObject<boolean> = useRef<boolean>(false);
+  const removePartRef: React.RefObject<string> = useRef<string>(``);
   const pressTimerRef: React.RefObject<ReturnType<typeof setTimeout> | null> = useRef<
     ReturnType<typeof setTimeout> | null
   >(null);
@@ -195,6 +201,7 @@ export const CategoryEdit = memo((
       ...prev,
       [PART]: [ ...(prev[PART] ?? []), { uid: uid, name: ``, origin: `` } ],
     }));
+    setENTERING(uid);
     setDRAFT(``);
     setEDITING(uid);
   }, [ rows.length, maxCount, commitDraft, PART, setALERT, translate ]);
@@ -214,6 +221,22 @@ export const CategoryEdit = memo((
   }, []);
 
   // 4-6. handle: 소분류 삭제 --------------------------------------------------------------------
+  const finishRemove = useCallback((uid: string) => {
+    const part: string = removePartRef.current;
+    if (!part) {
+      return;
+    }
+    if (removeTimerRef.current) {
+      clearTimeout(removeTimerRef.current);
+      removeTimerRef.current = null;
+    }
+    setROWS((prev) => ({
+      ...prev,
+      [part]: (prev[part] ?? []).filter((row: CategoryRow) => row.uid !== uid),
+    }));
+    removePartRef.current = ``;
+    setREMOVING(``);
+  }, []);
   const handleRemove = useCallback((uid: string) => {
     if (REMOVING) {
       return;
@@ -229,15 +252,30 @@ export const CategoryEdit = memo((
     const part: string = PART;
     setEDITING(``);
     setDRAFT(``);
+    removePartRef.current = part;
     setREMOVING(uid);
     removeTimerRef.current = setTimeout(() => {
-      setROWS((prev) => ({
-        ...prev,
-        [part]: (prev[part] ?? []).filter((row: CategoryRow) => row.uid !== uid),
-      }));
-      setREMOVING(``);
-    }, REMOVE_MS);
-  }, [ REMOVING, rows.length, PART, setALERT, translate ]);
+      finishRemove(uid);
+    }, REMOVE_FALLBACK_MS);
+  }, [ REMOVING, rows.length, PART, setALERT, translate, finishRemove ]);
+  const handleRowAnimationEnd = useCallback((e: React.AnimationEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+    const uid: string = e.currentTarget.dataset.rowUid ?? ``;
+    if (
+      (e.animationName === `catRowIn` || e.animationName === `fadeIn`) &&
+      ENTERING === uid
+    ) {
+      setENTERING(``);
+    }
+    if (
+      (e.animationName === `catRowOut` || e.animationName === `catRowFadeOut`) &&
+      REMOVING === uid
+    ) {
+      finishRemove(uid);
+    }
+  }, [ ENTERING, REMOVING, finishRemove ]);
 
   // 4-7. handle: 길게 누르기 해제 ----------------------------------------------------------------
   const clearPress = useCallback(() => {
@@ -329,6 +367,8 @@ export const CategoryEdit = memo((
     dragRef.current = {
       uid: press.uid,
       part: press.part,
+      pointerId: press.pointerId,
+      element: press.element,
       from: press.index,
       to: press.index,
       step: step,
@@ -339,6 +379,12 @@ export const CategoryEdit = memo((
       lastTo: press.index,
       lastDy: 0,
     };
+    try {
+      press.element.setPointerCapture(press.pointerId);
+    }
+    catch {
+      // 이미 해제된 포인터는 전역 추적으로 계속 처리
+    }
     // 드래그 종료 직후 발생하는 click이 이름 변경으로 이어지지 않도록 차단
     suppressRef.current = true;
     haptic(12);
@@ -350,6 +396,23 @@ export const CategoryEdit = memo((
   }, [runDragFrame]);
 
   // 4-11. handle: 드래그 확정 -------------------------------------------------------------------
+  const finishSettle = useCallback(() => {
+    if (settleTimerRef.current) {
+      clearTimeout(settleTimerRef.current);
+      settleTimerRef.current = null;
+    }
+    setSETTLE(null);
+  }, []);
+  const handleRowTransitionEnd = useCallback((e: React.TransitionEvent<HTMLDivElement>) => {
+    if (
+      e.target !== e.currentTarget ||
+      e.propertyName !== `transform` ||
+      SETTLE?.uid !== (e.currentTarget.dataset.rowUid ?? ``)
+    ) {
+      return;
+    }
+    finishSettle();
+  }, [ SETTLE, finishSettle ]);
   const commitDrag = useCallback(() => {
     const ctx: DragCtx | null = dragRef.current;
     if (frameRef.current !== null) {
@@ -358,6 +421,9 @@ export const CategoryEdit = memo((
     }
     dragRef.current = null;
     setDRAG(null);
+    if (ctx?.element.hasPointerCapture(ctx.pointerId)) {
+      ctx.element.releasePointerCapture(ctx.pointerId);
+    }
     if (!ctx || ctx.from === ctx.to) {
       return;
     }
@@ -375,16 +441,19 @@ export const CategoryEdit = memo((
       settleFrameRef.current = requestAnimationFrame(() => {
         setSETTLE({ uid: ctx.uid, dy: 0 });
         settleTimerRef.current = setTimeout(() => {
-          setSETTLE(null);
-        }, SETTLE_MS);
+          finishSettle();
+        }, SETTLE_FALLBACK_MS);
       });
     });
-  }, []);
+  }, [finishSettle]);
 
   // 4-12. handle: 길게 누르기 시작 ---------------------------------------------------------------
   const handlePressStart = useCallback((
     e: React.PointerEvent<HTMLDivElement>, row: CategoryRow, index: number,
   ) => {
+    if (dragRef.current || pressRef.current) {
+      return;
+    }
     suppressRef.current = false;
     const target: HTMLElement | null = e.target as HTMLElement | null;
     // 수정/삭제 버튼은 정렬 제스처 대상이 아님
@@ -399,6 +468,8 @@ export const CategoryEdit = memo((
       uid: row.uid,
       index: index,
       part: PART,
+      pointerId: e.pointerId,
+      element: e.currentTarget,
       x: e.clientX,
       y: e.clientY,
     };
@@ -439,11 +510,17 @@ export const CategoryEdit = memo((
   useEffect(() => {
     const handleMove = (e: PointerEvent): void => {
       if (dragRef.current) {
+        if (e.pointerId !== dragRef.current.pointerId) {
+          return;
+        }
         dragRef.current.clientY = e.clientY;
         return;
       }
       const press: PressCtx | null = pressRef.current;
       if (!press) {
+        return;
+      }
+      if (e.pointerId !== press.pointerId) {
         return;
       }
       // 임계값 이전 이동은 목록 스크롤 의도로 보고 길게 누르기를 취소
@@ -454,7 +531,13 @@ export const CategoryEdit = memo((
         clearPress();
       }
     };
-    const handleUp = (): void => {
+    const handleUp = (e: PointerEvent): void => {
+      const pointerId: number | undefined = (
+        dragRef.current?.pointerId ?? pressRef.current?.pointerId
+      );
+      if (pointerId !== undefined && e.pointerId !== pointerId) {
+        return;
+      }
       clearPress();
       dragRef.current && commitDrag();
     };
@@ -642,6 +725,7 @@ export const CategoryEdit = memo((
           const rowClass: string = [
             `cat-row`,
             row.origin === `` ? `cat-row-new` : ``,
+            ENTERING === row.uid ? `cat-row-enter` : ``,
             editing ? `cat-row-edit` : ``,
             removing ? `cat-row-out` : ``,
             PRESSING === row.uid ? `cat-row-press` : ``,
@@ -650,7 +734,7 @@ export const CategoryEdit = memo((
             settling ? `cat-row-settle` : ``,
           ].filter(Boolean).join(` `);
           const rowTransform: string | undefined = (
-            dragging ? `translateY(${DRAG?.dy ?? 0}px) scale(1.02)`
+            dragging ? `translateY(${DRAG?.dy ?? 0}px)`
               : settling ? `translateY(${SETTLE?.dy ?? 0}px)`
                 : (shift !== 0 ? `translateY(${shift}px)` : undefined)
           );
@@ -659,13 +743,13 @@ export const CategoryEdit = memo((
             <Div
               key={row.uid}
               className={rowClass}
-              style={{
-                animationDelay: removing ? `0ms` : `${Math.min(idx, 9) * 26}ms`,
-                transform: rowTransform,
-              }}
+              data-row-uid={row.uid}
+              style={{ transform: rowTransform }}
+              onAnimationEnd={handleRowAnimationEnd}
               onPointerDown={(e: React.PointerEvent<HTMLDivElement>) => {
                 handlePressStart(e, row, idx);
               }}
+              onTransitionEnd={handleRowTransitionEnd}
             >
               <Div className={`cat-row-no`}>
                 {rowNumber(idx)}

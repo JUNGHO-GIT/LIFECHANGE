@@ -52,6 +52,9 @@
   color: var(--color-text);
   background: var(--color-surface);
   font-size: 0.82rem;
+  transition:
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
 }
 .react-calendar .calendar-tile {
   display: inline-grid;

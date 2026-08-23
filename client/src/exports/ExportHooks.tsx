@@ -30,3 +30,4 @@ export { useRoot } from "@hooks/util/useRoot";
 export { useScrollTop } from "@hooks/util/useScrollTop";
 export { useFoodSection } from "@hooks/util/useFoodSection";
 export { useTime } from "@hooks/util/useTime";
+export { useChartMotion, useReducedMotion } from "@hooks/util/useMotion";

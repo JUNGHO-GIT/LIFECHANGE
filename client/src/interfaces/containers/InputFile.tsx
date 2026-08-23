@@ -236,6 +236,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
           return (
             <Div className={`d-row-center`} key={`${file.name}-${file.lastModified}-${file.size}`}>
               <Img
+                alt={file.name}
                 key={src || `${file.name}-${file.lastModified}-${file.size}`}
                 max={25}
                 hover={true}
@@ -272,6 +273,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
         {fileExisting.map((file: any, index: number) => (
           <Div className={`d-row-center`} key={file}>
             <Img
+              alt={file}
               max={25}
               hover={true}
               shadow={true}

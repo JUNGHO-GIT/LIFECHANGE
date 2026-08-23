@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from "@exportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useChartMotion, useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { axios } from "@exportLibs";
 import { insertComma } from "@exportScripts";
@@ -30,6 +30,7 @@ declare interface ExerciseGoalChartPieProps {
 export const ExerciseGoalChartPie = memo((props: ExerciseGoalChartPieProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
+  const chartMotion = useChartMotion();
   const { URL_OBJECT, PATH, sessionId, chartThemeColors, localUnit } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -195,10 +196,7 @@ export const ExerciseGoalChartPie = memo((props: ExerciseGoalChartPieProps) => {
                 stroke={`#fff`}
                 strokeWidth={2}
                 paddingAngle={chartData.length > 1 ? 2 : 0}
-                isAnimationActive={true}
-                animationBegin={0}
-                animationDuration={520}
-                animationEasing={`ease-out`}
+                {...chartMotion}
               >
                 {chartData.map((item) => <Cell key={item.name} fill={item.color} />)}
               </Pie>

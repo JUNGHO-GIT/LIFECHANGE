@@ -546,7 +546,7 @@ export const UserSignup = memo(() => {
               {translate(`alreadyId`)}
             </Div>
             <Div
-              className={`fs-0-8rem blue pointer`}
+              className={`fs-0-8rem text-link pointer`}
               onClick={() => {
                 void navigate(`/user/login`);
               }}
@@ -563,7 +563,7 @@ export const UserSignup = memo(() => {
               {translate(`forgotPw`)}
             </Div>
             <Div
-              className={`fs-0-8rem blue pointer`}
+              className={`fs-0-8rem text-link pointer`}
               onClick={() => {
                 void navigate(`/user/resetPw`);
               }}

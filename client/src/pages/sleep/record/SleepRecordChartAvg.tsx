@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from "@exportReacts";
-import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
+import { useChartMotion, useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { SleepAvg, SleepAvgType } from "@exportSchemas";
 import { axios } from "@exportLibs";
@@ -24,6 +24,7 @@ declare interface SleepRecordChartAvgProps {
 export const SleepRecordChartAvg = memo((props: SleepRecordChartAvgProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
+  const chartMotion = useChartMotion();
   const { URL_OBJECT, PATH, sessionId, chartThemeColors, sleepChartArray } = useCommonValue();
   const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
@@ -187,10 +188,7 @@ export const SleepRecordChartAvg = memo((props: SleepRecordChartAvgProps) => {
               fill={chartThemeColors.bedTime}
               radius={[ 10, 10, 0, 0 ]}
               minPointSize={1}
-              isAnimationActive={true}
-              animationBegin={0}
-              animationDuration={400}
-              animationEasing={`linear`}
+              {...chartMotion}
             />
           )}
           {TYPE_STATE.line.includes(`wakeTime`) && (
@@ -199,10 +197,7 @@ export const SleepRecordChartAvg = memo((props: SleepRecordChartAvgProps) => {
               fill={chartThemeColors.wakeTime}
               radius={[ 10, 10, 0, 0 ]}
               minPointSize={1}
-              isAnimationActive={true}
-              animationBegin={0}
-              animationDuration={400}
-              animationEasing={`linear`}
+              {...chartMotion}
             />
           )}
           {TYPE_STATE.line.includes(`sleepTime`) && (
@@ -211,10 +206,7 @@ export const SleepRecordChartAvg = memo((props: SleepRecordChartAvgProps) => {
               fill={chartThemeColors.sleepTime}
               radius={[ 10, 10, 0, 0 ]}
               minPointSize={1}
-              isAnimationActive={true}
-              animationBegin={0}
-              animationDuration={400}
-              animationEasing={`linear`}
+              {...chartMotion}
             />
           )}
           <Tooltip

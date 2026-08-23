@@ -47,6 +47,7 @@ export const Header = memo(() => {
         onClick={handleClickCalendar}
       >
         <Img
+          alt={`lifechange`}
           hover={true}
           shadow={false}
           radius={false}
@@ -55,6 +56,7 @@ export const Header = memo(() => {
           className={`h-max-35px mr-2vw`}
         />
         <Img
+          alt={``}
           hover={true}
           shadow={false}
           radius={false}
