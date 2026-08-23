@@ -1,5 +1,5 @@
 /**
- * @file token.test.ts
+ * @file jwt.test.ts
  * @description 액세스 토큰 발급·검증 회귀 테스트
  *              왕복 검증, 서명 위조 거부, 만료 거부, 형식 오류 거부, alg 조작 거부,
  *              토큰 세대(tv) 클레임 필수화를 DB 없이 헤르메틱하게 검증.
@@ -9,7 +9,7 @@
 
 import { describe, expect, test } from "bun:test";
 import crypto from "node:crypto";
-import { createToken, readToken } from "@assets/scripts/token";
+import { createToken, readToken } from "@assets/scripts/jwt";
 
 // 0. 테스트 보조 ------------------------------------------------------------------------------------
 const TV: string = `tokenGeneration1`;

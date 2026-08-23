@@ -1,5 +1,5 @@
 /**
- * @file token.ts
+ * @file jwt.ts
  * @description HS256 서명 액세스 토큰 발급·검증 (node:crypto 기반, 외부 JWT 의존성 없음)
  * @author Jungho
  * @since 2026-08-22
