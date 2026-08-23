@@ -1,6 +1,0 @@
-- 'link "404: 현재 찾을 수 없는 페이지를 요청 하였습니다. 존재하지 않는 주소를 입력하였거나, 요청하신 페이지의 주소가 변경, 삭제되어 찾을 수 없습니다. Under development" [ref=e9] [cursor=pointer]':
-  - /url: /
-  - generic [ref=e10]:
-    - 'heading "404: 현재 찾을 수 없는 페이지를 요청 하였습니다." [level=1] [ref=e11]'
-    - heading "존재하지 않는 주소를 입력하였거나, 요청하신 페이지의 주소가 변경, 삭제되어 찾을 수 없습니다." [level=6] [ref=e12]
-    - img "Under development" [ref=e14]

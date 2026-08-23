@@ -1,4 +1,0 @@
-- generic [ref=f2e2]:
-  - status "loading" [ref=f2e4]
-  - status "lifechange loading" [ref=f2e7]:
-    - img "LIFECHANGE" [ref=f2e8]
