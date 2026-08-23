@@ -73,13 +73,52 @@ export default defineConfig(({ command, mode }) => {
   const baseUrl: string = env.VITE_APP_PUBLIC_URL || `/lifechange`;
   const publicUrl: string = env.VITE_APP_PUBLIC_URL || `/lifechange`;
 
+  // 2-1. CSP 정책 값 --------------------------------------------------------------------------------
+  // - connect-src 를 API origin 으로 한정해 XSS 발생 시 임의 외부 전송을 막음
+  // - emotion 이 런타임에 style 태그를 주입하므로 style-src 는 unsafe-inline 이 불가피함
+  // - meta 태그는 frame-ancestors 를 무시하므로 클릭재킹 차단은 정적 호스팅 헤더에서 별도 설정해야 함
+  const cdnOrigin: string = `https://jungho-dev.github.io`;
+  const apiOrigin: string = (() => {
+    const raw: string = String(env.VITE_APP_SERVER_URL ?? ``).trim();
+    if (raw === ``) {
+      return ``;
+    }
+    try {
+      return new URL(raw).origin;
+    }
+    catch {
+      return ``;
+    }
+  })();
+  const cspValue: string = [
+    `default-src 'self'`,
+    `base-uri 'self'`,
+    `object-src 'none'`,
+    `form-action 'self'`,
+    `script-src 'self'`,
+    `style-src 'self' 'unsafe-inline' ${cdnOrigin}`,
+    `font-src 'self' data: ${cdnOrigin}`,
+    `img-src 'self' data: blob: https:`,
+    `connect-src 'self' ${apiOrigin}`.trim(),
+  ].join(`; `);
+
   // 3. plugins --------------------------------------------------------------------------------------
+  // - CSP 주입은 dev 서버가 넣는 인라인 스크립트를 깨뜨리므로 빌드 산출물에만 적용함
+  const cspPlugin: Plugin = {
+    name: `lifechange-csp`,
+    apply: `build`,
+    transformIndexHtml: (html: string): string => html.replace(
+      `<!-- meta -->`,
+      `<!-- meta -->\n    <meta http-equiv="Content-Security-Policy" content="${cspValue}" />`,
+    ),
+  };
   const plugins: NonNullable<UserConfig[`plugins`]> = [
     react({
       devTarget: `esnext`,
       jsxImportSource: `@emotion/react`,
     }),
     ...(isProd && isBuild ? [
+        cspPlugin,
         vtCmpr({
           verbose: false,
           disable: false,
@@ -165,7 +204,6 @@ export default defineConfig(({ command, mode }) => {
             if (id.includes(`node_modules/axios`) || id.includes(`node_modules/zustand`) || id.includes(`node_modules/moment`)) {
               return `vendor`;
             }
-            return;
           },
           assetFileNames: (assetInfo) => {
             const info: string[] = assetInfo.name ? assetInfo.name.split(`.`) : [];

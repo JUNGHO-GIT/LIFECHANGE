@@ -301,6 +301,11 @@ export const create = async (
     }
   }
 
+  // 삭제 후 생성이 실패했다면 원본을 되돌려 데이터 유실을 막음
+  if (deleteResult && !createResult) {
+    await repository.restore(deleteResult);
+  }
+
   if (!createResult) {
     finalResult = null;
     statusResult = `fail`;
@@ -357,6 +362,11 @@ export const update = async (
         dateStart,
         dateEnd,
       );
+      // 삭제 후 쓰기가 실패했다면 원본을 되돌려 데이터 유실을 막음
+      if (deleteResult && !updateResult) {
+        await repository.restore(deleteResult);
+      }
+
       if (!updateResult) {
         finalResult = null;
         statusResult = `fail`;
@@ -385,6 +395,11 @@ export const update = async (
           dateEnd,
         );
       }
+      // 삭제 후 쓰기가 실패했다면 원본을 되돌려 데이터 유실을 막음
+      if (deleteResult && !updateResult) {
+        await repository.restore(deleteResult);
+      }
+
       if (!updateResult) {
         finalResult = null;
         statusResult = `fail`;

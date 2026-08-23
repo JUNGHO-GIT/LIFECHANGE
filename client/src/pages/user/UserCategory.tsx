@@ -242,8 +242,13 @@ export const UserCategory = memo(() => {
       });
     }
     else if (type === `record_title`) {
-      // @ts-ignore
-      if (OBJECT?.[dataType]?.[selectedIdx?.category2Idx]?.[`${dataType}_record_title`]?.length <= 2) {
+      // 도메인 유니언은 동적 키로 직접 인덱싱할 수 없으므로 가드 후 레코드로 직항해 @ts-ignore 없이 조회함
+      const titleRow: unknown = OBJECT?.[dataType]?.[selectedIdx?.category2Idx];
+      const titleList: unknown = titleRow !== null && typeof titleRow === `object`
+        ? (titleRow as Record<string, unknown>)[`${dataType}_record_title`]
+        : undefined;
+      const titleCount: number = Array.isArray(titleList) ? titleList.length : 0;
+      if (titleCount <= 2) {
         setALERT({
           open: true,
           msg: translate(`cantBeDeletedLastItem`),

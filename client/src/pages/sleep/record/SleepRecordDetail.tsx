@@ -112,7 +112,7 @@ export const SleepRecordDetail = memo(() => {
     );
     const itsNew: boolean = (
       OBJECT.sleep_record_dateStart === `0000-00-00` &&
-			OBJECT.sleep_record_dateEnd === `0000-00-00`
+      OBJECT.sleep_record_dateEnd === `0000-00-00`
     );
 
     setFLOW((prev) => ({
@@ -279,29 +279,29 @@ export const SleepRecordDetail = memo(() => {
       },
     })
     .then((res: any) => {
-			res.data.status === `success` ? (() => {
-			  setLOADING(false);
-			  setALERT({
-			    open: true,
-			    msg: translate(res.data.msg as string),
-			    severity: `success`,
-			  });
-			  void navigate(toList, {
-			    state: {
-			      dateType: ``,
-			      dateStart: dateRef.current.dateStart,
-			      dateEnd: dateRef.current.dateEnd,
-			    },
-			  });
-			  void sync();
-			})() : (() => {
-			  setLOADING(false);
-			  setALERT({
-			    open: true,
-			    msg: translate(res.data.msg as string),
-			    severity: `error`,
-			  });
-			})();
+      res.data.status === `success` ? (() => {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `success`,
+        });
+        void navigate(toList, {
+          state: {
+            dateType: ``,
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd,
+          },
+        });
+        void sync();
+      })() : (() => {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+      })();
     })
     .catch((error: any) => {
       setLOADING(false);
@@ -331,29 +331,29 @@ export const SleepRecordDetail = memo(() => {
       },
     })
     .then((res: any) => {
-			res.data.status === `success` ? (() => {
-			  setLOADING(false);
-			  setALERT({
-			    open: true,
-			    msg: translate(res.data.msg as string),
-			    severity: `success`,
-			  });
-			  void navigate(toList, {
-			    state: {
-			      dateType: ``,
-			      dateStart: dateRef.current.dateStart,
-			      dateEnd: dateRef.current.dateEnd,
-			    },
-			  });
-			  void sync();
-			})() : (() => {
-			  setLOADING(false);
-			  setALERT({
-			    open: true,
-			    msg: translate(res.data.msg as string),
-			    severity: `error`,
-			  });
-			})();
+      res.data.status === `success` ? (() => {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `success`,
+        });
+        void navigate(toList, {
+          state: {
+            dateType: ``,
+            dateStart: dateRef.current.dateStart,
+            dateEnd: dateRef.current.dateEnd,
+          },
+        });
+        void sync();
+      })() : (() => {
+        setLOADING(false);
+        setALERT({
+          open: true,
+          msg: translate(res.data.msg as string),
+          severity: `error`,
+        });
+      })();
     })
     .catch((error: any) => {
       setLOADING(false);

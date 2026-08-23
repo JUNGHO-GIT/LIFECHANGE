@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useMemo, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { MoneyLine, MoneyLineType } from "@exportSchemas";
@@ -17,6 +17,7 @@ import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 declare interface MoneyRecordChartLineProps {
   TYPE?: any;
   setTYPE?: any;
+  DATE?: any;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -42,17 +43,23 @@ export const MoneyRecordChartLine = memo((props: MoneyRecordChartLineProps) => {
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
-  const [ DATE, _setDATE ] = useState({
-    dateType: ``,
-    dateStart: getDayFmt(),
-    dateEnd: getDayFmt(),
-    weekStartFmt: getWeekStartFmt(),
-    weekEndFmt: getWeekEndFmt(),
-    monthStartFmt: getMonthStartFmt(),
-    monthEndFmt: getMonthEndFmt(),
-    yearStartFmt: getYearStartFmt(),
-    yearEndFmt: getYearEndFmt(),
-  });
+
+  // 2-2. useMemo --------------------------------------------------------------------------------
+  // - 리스트의 DATE가 주어지면 그 날짜 기준으로 주/월/년 범위를 계산
+  const DATE = useMemo(() => {
+    const base: string = props?.DATE?.dateStart ?? getDayFmt();
+    return {
+      dateType: ``,
+      dateStart: base,
+      dateEnd: props?.DATE?.dateEnd ?? base,
+      weekStartFmt: getWeekStartFmt(base),
+      weekEndFmt: getWeekEndFmt(base),
+      monthStartFmt: getMonthStartFmt(base),
+      monthEndFmt: getMonthEndFmt(base),
+      yearStartFmt: getYearStartFmt(base),
+      yearEndFmt: getYearEndFmt(base),
+    };
+  }, [ props?.DATE?.dateStart, props?.DATE?.dateEnd ]);
 
   // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[MoneyLineType]>([MoneyLine]);
@@ -76,10 +83,10 @@ export const MoneyRecordChartLine = memo((props: MoneyRecordChartLineProps) => {
           }),
         ]);
         setOBJECT_WEEK(
-					resWeek.data.result?.length > 0 ? resWeek.data.result : [MoneyLine]
+          resWeek.data.result?.length > 0 ? resWeek.data.result : [MoneyLine]
         );
         setOBJECT_MONTH(
-					resMonth.data.result?.length > 0 ? resMonth.data.result : [MoneyLine]
+          resMonth.data.result?.length > 0 ? resMonth.data.result : [MoneyLine]
         );
       }
       catch (error: any) {
@@ -126,120 +133,120 @@ export const MoneyRecordChartLine = memo((props: MoneyRecordChartLineProps) => {
     let object: any = null;
     let endStr: string = ``;
 
-		(TYPE_STATE.section === `week`) ? (() => {
-		  object = OBJECT_WEEK;
-		  endStr = ``;
-		})()
-		: (TYPE_STATE.section === `month`) && (() => {
-		  object = OBJECT_MONTH;
-		  endStr = ``;
-		})();
+    (TYPE_STATE.section === `week`) ? (() => {
+      object = OBJECT_WEEK;
+      endStr = ``;
+    })()
+    : (TYPE_STATE.section === `month`) && (() => {
+      object = OBJECT_MONTH;
+      endStr = ``;
+    })();
 
-		const { domain, ticks, formatterY } = formatY(object, moneyChartArray, `money`);
-		return (
-		  <ResponsiveContainer width={`100%`} height={`100%`}>
-		    <LineChart
-		      data={object as any[]}
-		      margin={{ top: 20, right: 20, bottom: 10, left: 20 }}
-		      barGap={20}
-		      barCategoryGap={`20%`}
-		    >
-		      <defs>
-		        <filter id={`textBackground`} x={0} y={0} width={1} height={1}>
-		          <feFlood floodColor={`#f9f9f9`} />
-		          <feComposite in={`SourceGraphic`} />
-		        </filter>
-		      </defs>
-		      <CartesianGrid
-		        strokeDasharray={`3 3`}
-		        stroke={`#f5f5f5`}
-		      />
-		      <XAxis
-		        type={`category`}
-		        dataKey={`name`}
-		        tickLine={false}
-		        axisLine={false}
-		        tick={{ fill: `#666`, fontSize: 14 }}
-		      />
-		      <YAxis
-		        width={30}
-		        type={`number`}
-		        domain={domain}
-		        tickLine={false}
-		        axisLine={false}
-		        ticks={ticks}
-		        tick={{ fill: `#666`, fontSize: 14 }}
-		        tickFormatter={formatterY}
-		      />
-		      {TYPE_STATE.line.includes(`income`) && (
-		        <Line
-		          dataKey={`income`}
-		          type={`monotone`}
-		          stroke={chartThemeColors.income}
-		          strokeWidth={2}
-		          activeDot={{ r: 3 }}
-		          dot={false}
-		          isAnimationActive={true}
-		          animationBegin={0}
-		          animationDuration={400}
-		          animationEasing={`linear`}
-		        />
-		      )}
-		      {TYPE_STATE.line.includes(`expense`) && (
-		        <Line
-		          dataKey={`expense`}
-		          type={`monotone`}
-		          stroke={chartThemeColors.expense}
-		          strokeWidth={2}
-		          activeDot={{ r: 3 }}
-		          dot={false}
-		          isAnimationActive={true}
-		          animationBegin={0}
-		          animationDuration={400}
-		          animationEasing={`linear`}
-		        />
-		      )}
-		      <Tooltip
-		        labelFormatter={(_label: any, payload: any) => {
-		          const name: string = payload?.length > 0 ? payload[0]?.payload.name : ``;
-		          const date: string = payload?.length > 0 ? payload[0]?.payload.date : ``;
-		          return `${translate(name)} (${formatDateMmDd(date)})`;
-		        }}
-		        formatter={(value: any, name: any) => {
-		          const customName: string = translate(name as string);
-		          return [ `${Number(value).toLocaleString()} ${endStr}`, customName ];
-		        }}
-		        cursor={{
-		          fill: `rgba(0, 0, 0, 0.1)`,
-		        }}
-		        contentStyle={{
-		          borderRadius: `10px`,
-		          boxShadow: `0 2px 4px 0 rgba(0, 0, 0, 0.1)`,
-		          padding: `10px`,
-		          border: `none`,
-		          background: `#fff`,
-		          color: `#666`,
-		        }}
-		      />
-		      <Legend
-		        iconType={`circle`}
-		        iconSize={8}
-		        verticalAlign={`bottom`}
-		        align={`center`}
-		        formatter={(value) => {
-		          return translate(value as string);
-		        }}
-		        wrapperStyle={{
-		          width: `95%`,
-		          display: `flex`,
-		          justifyContent: `center`,
-		          alignItems: `center`,
-		          fontSize: `0.8rem`,
-		        }}
-		      />
-		    </LineChart>
-		  </ResponsiveContainer>
-		);
+    const { domain, ticks, formatterY } = formatY(object, moneyChartArray, `money`);
+    return (
+      <ResponsiveContainer width={`100%`} height={`100%`}>
+        <LineChart
+          data={object as any[]}
+          margin={{ top: 20, right: 20, bottom: 10, left: 20 }}
+          barGap={20}
+          barCategoryGap={`20%`}
+        >
+          <defs>
+            <filter id={`textBackground`} x={0} y={0} width={1} height={1}>
+              <feFlood floodColor={`#f9f9f9`} />
+              <feComposite in={`SourceGraphic`} />
+            </filter>
+          </defs>
+          <CartesianGrid
+            strokeDasharray={`3 3`}
+            stroke={`#f5f5f5`}
+          />
+          <XAxis
+            type={`category`}
+            dataKey={`name`}
+            tickLine={false}
+            axisLine={false}
+            tick={{ fill: `#666`, fontSize: 14 }}
+          />
+          <YAxis
+            width={30}
+            type={`number`}
+            domain={domain}
+            tickLine={false}
+            axisLine={false}
+            ticks={ticks}
+            tick={{ fill: `#666`, fontSize: 14 }}
+            tickFormatter={formatterY}
+          />
+          {TYPE_STATE.line.includes(`income`) && (
+            <Line
+              dataKey={`income`}
+              type={`monotone`}
+              stroke={chartThemeColors.income}
+              strokeWidth={2}
+              activeDot={{ r: 3 }}
+              dot={false}
+              isAnimationActive={true}
+              animationBegin={0}
+              animationDuration={400}
+              animationEasing={`linear`}
+            />
+          )}
+          {TYPE_STATE.line.includes(`expense`) && (
+            <Line
+              dataKey={`expense`}
+              type={`monotone`}
+              stroke={chartThemeColors.expense}
+              strokeWidth={2}
+              activeDot={{ r: 3 }}
+              dot={false}
+              isAnimationActive={true}
+              animationBegin={0}
+              animationDuration={400}
+              animationEasing={`linear`}
+            />
+          )}
+          <Tooltip
+            labelFormatter={(_label: any, payload: any) => {
+              const name: string = payload?.length > 0 ? payload[0]?.payload.name : ``;
+              const date: string = payload?.length > 0 ? payload[0]?.payload.date : ``;
+              return `${translate(name)} (${formatDateMmDd(date)})`;
+            }}
+            formatter={(value: any, name: any) => {
+              const customName: string = translate(name as string);
+              return [ `${Number(value).toLocaleString()} ${endStr}`, customName ];
+            }}
+            cursor={{
+              fill: `rgba(0, 0, 0, 0.1)`,
+            }}
+            contentStyle={{
+              borderRadius: `10px`,
+              boxShadow: `0 2px 4px 0 rgba(0, 0, 0, 0.1)`,
+              padding: `10px`,
+              border: `none`,
+              background: `#fff`,
+              color: `#666`,
+            }}
+          />
+          <Legend
+            iconType={`circle`}
+            iconSize={8}
+            verticalAlign={`bottom`}
+            align={`center`}
+            formatter={(value) => {
+              return translate(value as string);
+            }}
+            wrapperStyle={{
+              width: `95%`,
+              display: `flex`,
+              justifyContent: `center`,
+              alignItems: `center`,
+              fontSize: `0.8rem`,
+            }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    );
   };
 
   // 10. return ----------------------------------------------------------------------------------

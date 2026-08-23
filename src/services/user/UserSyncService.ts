@@ -403,22 +403,22 @@ export const nutrition = async (user_id_param: string, DATE_param: any) => {
     ),
   );
   curAvgKcalIntake = String(
-    (Number.parseFloat(totalKcalIntake ?? `0`) / (findTotalCnt ?? 1)).toFixed(
+    (Number.parseFloat(totalKcalIntake ?? `0`) / (findTotalCnt || 1)).toFixed(
       0,
     ),
   );
   curAvgCarbIntake = String(
-    (Number.parseFloat(totalCarbIntake ?? `0`) / (findTotalCnt ?? 1)).toFixed(
+    (Number.parseFloat(totalCarbIntake ?? `0`) / (findTotalCnt || 1)).toFixed(
       0,
     ),
   );
   curAvgProteinIntake = String(
     (
-      Number.parseFloat(totalProteinIntake ?? `0`) / (findTotalCnt ?? 1)
+      Number.parseFloat(totalProteinIntake ?? `0`) / (findTotalCnt || 1)
     ).toFixed(0),
   );
   curAvgFatIntake = String(
-    (Number.parseFloat(totalFatIntake ?? `0`) / (findTotalCnt ?? 1)).toFixed(0),
+    (Number.parseFloat(totalFatIntake ?? `0`) / (findTotalCnt || 1)).toFixed(0),
   );
 
   if (!findInitNutrition && !findAllInformation) {

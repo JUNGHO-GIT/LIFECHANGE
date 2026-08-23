@@ -473,7 +473,6 @@ export const scale = {
         },
       },
       {
-        upsert: true,
         returnDocument: `after`,
       },
     );
@@ -642,7 +641,6 @@ export const nutrition = {
         },
       },
       {
-        upsert: true,
         returnDocument: `after`,
       },
     );
@@ -1006,7 +1004,6 @@ export const property = {
         },
       },
       {
-        upsert: true,
         returnDocument: `after`,
       },
     );

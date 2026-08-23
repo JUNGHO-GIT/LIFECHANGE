@@ -109,11 +109,11 @@ export const FoodFindList = memo(() => {
         totalCnt: res.data.totalCnt ?? 0,
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-      setIsExpanded(() => {
-        if (resultLength !== isExpanded.length) {
+      setIsExpanded((prev: { expanded: boolean }[]) => {
+        if (resultLength !== prev.length) {
           return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
-        return isExpanded;
+        return prev;
       });
     })
     .catch((error: any) => {
@@ -157,19 +157,19 @@ export const FoodFindList = memo(() => {
       food_record_fat: item.food_record_fat,
     };
 
-		// uncheck
-		(nextSelected.has(key)) ? (() => {
-		  nextSelected.delete(key);
-		  sectionArray = sectionArray.filter((i: any) => i.food_record_key !== key);
-		})()
-		// checked
-		: (() => {
-		  nextSelected.add(key);
-		  !sectionArray.some((i: any) => i.food_record_key === key) && sectionArray.push(newItem);
-		})();
+    // uncheck
+    (nextSelected.has(key)) ? (() => {
+      nextSelected.delete(key);
+      sectionArray = sectionArray.filter((i: any) => i.food_record_key !== key);
+    })()
+    // checked
+    : (() => {
+      nextSelected.add(key);
+      !sectionArray.some((i: any) => i.food_record_key === key) && sectionArray.push(newItem);
+    })();
 
-		setSelectedKeys(nextSelected);
-		setSession(`section`, `food`, ``, sectionArray);
+    setSelectedKeys(nextSelected);
+    setSession(`section`, `food`, ``, sectionArray);
   };
 
   // 7. find ---------------------------------------------------------------------------------------

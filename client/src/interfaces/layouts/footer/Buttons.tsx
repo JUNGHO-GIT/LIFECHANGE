@@ -133,18 +133,18 @@ export const Buttons = memo((
           className={`ml-2vw mr-2vw`}
           onClick={(e: any) => {
             if (state.FLOW?.theme === `calendar`) {
-							state.FLOW?.exist ? (
-								handleSave(`update`)
-							) : (
-								handleSave(`create`)
-							);
+              state.FLOW?.exist ? (
+                handleSave(`update`)
+              ) : (
+                handleSave(`create`)
+              );
             }
             else {
-							state.FLOW?.exist ? (
-								state.FLOW?.itsMe ? handleSave(`update`) : popTrigger.openPopup(e.currentTarget)
-							) : (
-								handleSave(`create`)
-							);
+              state.FLOW?.exist ? (
+                state.FLOW?.itsMe ? handleSave(`update`) : popTrigger.openPopup(e.currentTarget)
+              ) : (
+                handleSave(`create`)
+              );
             }
           }}
         >
@@ -156,21 +156,21 @@ export const Buttons = memo((
 
   // 10. return ----------------------------------------------------------------------------------
   return (
-		(isUserCategory || isUserDetail) ? (
-			<Grid container={true} spacing={1}>
-			  <Grid size={10} className={`d-center`}>
-			    {saveBtn}
-			  </Grid>
-			</Grid>
-		) : (isCalendarDetail || isDetail) ? (
-			<Grid container={true} spacing={1}>
-			  <Grid size={10} className={`d-center`}>
-			    {saveBtn}
-			    {deleteBtn}
-			    {isFoodRecordDetail ? toFindBtn : null}
-		    {isRecordDetail ? favoriteBtn : null}
-			  </Grid>
-			</Grid>
-		) : null
+    (isUserCategory || isUserDetail) ? (
+      <Grid container={true} spacing={1}>
+        <Grid size={10} className={`d-center`}>
+          {saveBtn}
+        </Grid>
+      </Grid>
+    ) : (isCalendarDetail || isDetail) ? (
+      <Grid container={true} spacing={1}>
+        <Grid size={10} className={`d-center`}>
+          {saveBtn}
+          {deleteBtn}
+          {isFoodRecordDetail ? toFindBtn : null}
+        {isRecordDetail ? favoriteBtn : null}
+        </Grid>
+      </Grid>
+    ) : null
   );
 });

@@ -8,6 +8,7 @@
 import { useState, memo } from "@exportReacts";
 import { useCommonValue } from "@exportHooks";
 import { useStoreLanguage, useStoreConfirm } from "@exportStores";
+import { axios } from "@exportLibs";
 import { setLocal } from "@exportScripts";
 import { PopUp } from "@exportContainers";
 import { Icons, Div, Br, Paper, Grid } from "@exportComponents";
@@ -17,7 +18,7 @@ import { TableContainer, Table, TableBody, TableRow, TableCell } from "@exportMu
 export const UserAppSetting = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
-  const { navigate, isAdmin, localLang } = useCommonValue();
+  const { navigate, isAdmin, localLang, URL_USER } = useCommonValue();
   const { translate } = useStoreLanguage();
   const { setCONFIRM } = useStoreConfirm();
 
@@ -25,14 +26,23 @@ export const UserAppSetting = memo(() => {
   const [ lang, setLang ] = useState<string | undefined>(localLang);
 
   // 4-1. handle -------------------------------------------------------------------------------------
+  // - 서버 토큼 세대를 갱싱해 보관 중이던 액세스 토큼까지 무효화한 뒤 로컬 자객을 지움
+  // - 서버 호출 실패는 로그아웃 자신을 말지 않음 (로컬 정리는 finally 에서 항상 수행)
   const handleLogout = () => {
-    setLocal(`setting`, `id`, ``, {
-      autoLogin: `false`,
-      autoLoginId: ``,
-      autoLoginPw: ``,
+    void axios.post(`${URL_USER}/logout`, {})
+    .catch((error: any) => {
+      console.error(error);
+    })
+    .finally(() => {
+      setLocal(`setting`, `id`, ``, {
+        autoLogin: `false`,
+        autoLoginId: ``,
+        autoLoginToken: ``,
+        isGoogle: `false`,
+      });
+      sessionStorage.clear();
+      void navigate(`/user/login`);
     });
-    sessionStorage.clear();
-    void navigate(`/user/login`);
   };
 
   // 4-2. handle -------------------------------------------------------------------------------------

@@ -7,6 +7,9 @@
 
 import "@assets/scripts/fetch";
 import { loadEnv } from "@assets/scripts/env";
+import { sanitizeMongoKeys } from "@assets/scripts/sanitize";
+// auth
+import { requireAdmin, requireAuth } from "@middlewares/auth/AuthMiddleware";
 // admin
 import { router as AdminRouter } from "@routers/admin/AdminRouter";
 import { router as GoogleRouter } from "@routers/auth/GoogleRouter";
@@ -62,6 +65,7 @@ const preFix: string = process.env.HTTP_PREFIX ?? ``;
     `DB_PASS`,
     `DB_HOST`,
     `DB_PORT`,
+    `JWT_SECRET`,
   ];
   const missingKeys: string[] = requiredKeys.filter((key) => {
     const value: string = String(process.env[key] ?? ``).trim();
@@ -80,6 +84,12 @@ const preFix: string = process.env.HTTP_PREFIX ?? ``;
 
   if (!Number.isFinite(Number(process.env.HTTP_PORT))) {
     console.error(`[ENV] HTTP_PORT 형식 오류: ${process.env.HTTP_PORT}`);
+    process.exit(1);
+  }
+
+  // 짧은 서명키는 토큰 위조 리스크로 이어지므로 최소 길이를 요구함
+  if (String(process.env.JWT_SECRET ?? ``).trim().length < 32) {
+    console.error(`[ENV] JWT_SECRET 은 32자 이상이어야 합니다.`);
     process.exit(1);
   }
 })();
@@ -186,6 +196,12 @@ if (isDev) {
   });
 }
 
+// 프록시 신뢰 범위 --------------------------------------------------------------------------------
+// - 리버스 프록시 뒤에 배포되므로 X-Forwarded-For 를 신뢰하지 않으면 모든 요잭이 프록시 IP
+//   하나로 집계되어 rate limit 이 전 사용자 공용 버킷이 됨
+// - 과다 신뢰는 IP 위조를 허용하므로 기본은 직전 통과 토큼 1단계만 신뢰함
+app.set(`trust proxy`, Number(process.env.TRUST_PROXY_HOPS ?? 1));
+
 // qs 파서 적용 ------------------------------------------------------------------------------------
 app.set(`query parser`, (str: string) => qs.parse(str));
 
@@ -194,9 +210,19 @@ const bodyLimit: string = process.env.HTTP_BODY_LIMIT ?? `1mb`;
 app.use(express.json({ limit: bodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: bodyLimit }));
 // helmet 보안 헤더 -----------------------------------------------------------------------------
+// - 이 서버는 JSON API 만 반환하므로 하위 리소스 로드를 전면 차단하는 CSP 가 기본값이 됨
+// - 클라이언트 정적 자원은 별도 호스팅이므로 여기서의 CSP 가 화면 렌더를 제약하지 않음
 app.use(
   helmet({
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: {
+      useDefaults: false,
+      directives: {
+        defaultSrc: [`'none'`],
+        baseUri: [`'none'`],
+        formAction: [`'none'`],
+        frameAncestors: [`'none'`],
+      },
+    },
     crossOriginEmbedderPolicy: false,
   }),
 );
@@ -240,7 +266,8 @@ app.use(
   cors({
     origin: corsOrigin,
     methods: [`GET`, `POST`, `DELETE`, `PUT`],
-    credentials: true,
+    // 인증은 Authorization 헤더만 사용하므로 쿠키 동반 요청을 허용하지 않음
+    credentials: false,
     allowedHeaders: [`Content-Type`, `Authorization`],
     exposedHeaders: [`Authorization`],
     maxAge: 3600,
@@ -251,29 +278,21 @@ app.use(
 app.use(compression());
 
 // NoSQL 주입 방어(sanitize) -------------------------------------------------------------------
-const sanitizeMongoKeys = (value: unknown, depth: number): void => {
-  // 순환/과대 중첩 방어용 깊이 상한
-  if (depth > 20 || value === null || typeof value !== `object`) {
-    return;
-  }
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      sanitizeMongoKeys(item, depth + 1);
-    }
-    return;
-  }
-  const target = value as Record<string, unknown>;
-  for (const key of Object.keys(target)) {
-    if (key.startsWith(`$`) || key.includes(`.`)) {
-      delete target[key];
-      continue;
-    }
-    sanitizeMongoKeys(target[key], depth + 1);
-  }
-};
-// req.query 는 express 5 에서 getter-only 라 in-place 로만 정리
+// - 정리 구현은 서버 경로와 서버 내부 파싱 경로가 같은 기지를 공용해야 하므로 유틸로 분리함
+// req.query 는 express 5 에서 접근할 때마다 재파싱하는 getter 라 in-place 정리가 사라짐
+// 정리한 결과를 고정 값으로 재정의해 이후 모든 읽기가 동일한 sanitized 객체를 보게 함
 app.use((req: Request, _res: Response, next: NextFunction) => {
-  sanitizeMongoKeys(req.query, 0);
+  const query: Record<string, unknown> = {
+    ...(req.query as Record<string, unknown>),
+  };
+  sanitizeMongoKeys(query, 0);
+  Object.defineProperty(req, `query`, {
+    value: query,
+    configurable: true,
+    enumerable: true,
+    writable: true,
+  });
+
   sanitizeMongoKeys(req.body, 0);
   sanitizeMongoKeys(req.params, 0);
   next();
@@ -293,6 +312,20 @@ const sensitiveLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+// 자객증명 추정·인증코드 남용 방어용 전용 리및트 (일반 조회보다 훨심 엄겪한 창)
+const authWindowMs: number = Number(
+  process.env.AUTH_LIMIT_WINDOW_MS ?? 10 * 60 * 1000,
+);
+const authLimitMax: number = isDev
+  ? Number(process.env.AUTH_LIMIT_MAX_DEV ?? 100_000)
+  : Number(process.env.AUTH_LIMIT_MAX ?? 20);
+const authLimiter = rateLimit({
+  windowMs: authWindowMs,
+  max: authLimitMax,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // 헬스체크/레디니스 -----------------------------------------------------------------------------
 app.get(`${preFix}/health`, (_req: Request, res: Response) => {
   res.status(200).json({ status: `ok` });
@@ -305,60 +338,71 @@ app.get(`${preFix}/ready`, (_req: Request, res: Response) => {
 });
 
 // 라우터 설정 -------------------------------------------------------------------------------------
+// - 도메인 라우터는 전원 requireAuth 게이트, 본문·쿼리의 user_id 는 토큰 주체로 대체됨
+// - 공개 경로는 로그인·가입·비밀번호재설정·이메일인증·구글 OAuth·헬스체크만 해당함
 // calendar
-app.use(`${preFix}/calendar`, CalendarRouter);
+app.use(`${preFix}/calendar`, requireAuth, CalendarRouter);
 
 // exercise
 // 레거시 호환 경로 (구 클라이언트 /exercise/chart 호출 유지)
-app.use(`${preFix}/exercise/chart`, ExerciseRecordChartRouter);
-app.use(`${preFix}/exercise/record/chart`, ExerciseRecordChartRouter);
-app.use(`${preFix}/exercise/goal/chart`, ExerciseGoalChartRouter);
-app.use(`${preFix}/exercise/goal`, ExerciseGoalRouter);
-app.use(`${preFix}/exercise/record`, ExerciseRecordRouter);
-app.use(`${preFix}/exercise/favorite`, ExerciseFavoriteRouter);
+app.use(`${preFix}/exercise/chart`, requireAuth, ExerciseRecordChartRouter);
+app.use(`${preFix}/exercise/record/chart`, requireAuth, ExerciseRecordChartRouter);
+app.use(`${preFix}/exercise/goal/chart`, requireAuth, ExerciseGoalChartRouter);
+app.use(`${preFix}/exercise/goal`, requireAuth, ExerciseGoalRouter);
+app.use(`${preFix}/exercise/record`, requireAuth, ExerciseRecordRouter);
+app.use(`${preFix}/exercise/favorite`, requireAuth, ExerciseFavoriteRouter);
 
 // food
 // 레거시 호환 경로 (구 클라이언트 /food/chart 호출 유지)
-app.use(`${preFix}/food/chart`, FoodRecordChartRouter);
-app.use(`${preFix}/food/record/chart`, FoodRecordChartRouter);
-app.use(`${preFix}/food/goal/chart`, FoodGoalChartRouter);
-app.use(`${preFix}/food/goal`, FoodGoalRouter);
-app.use(`${preFix}/food/record`, FoodRecordRouter);
-app.use(`${preFix}/food/favorite`, FoodFavoriteRouter);
-app.use(`${preFix}/food/find`, FoodFindRouter);
+app.use(`${preFix}/food/chart`, requireAuth, FoodRecordChartRouter);
+app.use(`${preFix}/food/record/chart`, requireAuth, FoodRecordChartRouter);
+app.use(`${preFix}/food/goal/chart`, requireAuth, FoodGoalChartRouter);
+app.use(`${preFix}/food/goal`, requireAuth, FoodGoalRouter);
+app.use(`${preFix}/food/record`, requireAuth, FoodRecordRouter);
+app.use(`${preFix}/food/favorite`, requireAuth, FoodFavoriteRouter);
+app.use(`${preFix}/food/find`, requireAuth, FoodFindRouter);
 
 // money
 // 레거시 호환 경로 (구 클라이언트 /money/chart 호출 유지)
-app.use(`${preFix}/money/chart`, MoneyRecordChartRouter);
-app.use(`${preFix}/money/record/chart`, MoneyRecordChartRouter);
-app.use(`${preFix}/money/goal/chart`, MoneyGoalChartRouter);
-app.use(`${preFix}/money/goal`, MoneyGoalRouter);
-app.use(`${preFix}/money/record`, MoneyRecordRouter);
-app.use(`${preFix}/money/favorite`, MoneyFavoriteRouter);
+app.use(`${preFix}/money/chart`, requireAuth, MoneyRecordChartRouter);
+app.use(`${preFix}/money/record/chart`, requireAuth, MoneyRecordChartRouter);
+app.use(`${preFix}/money/goal/chart`, requireAuth, MoneyGoalChartRouter);
+app.use(`${preFix}/money/goal`, requireAuth, MoneyGoalRouter);
+app.use(`${preFix}/money/record`, requireAuth, MoneyRecordRouter);
+app.use(`${preFix}/money/favorite`, requireAuth, MoneyFavoriteRouter);
 
 // sleep
 // 레거시 호환 경로 (구 클라이언트 /sleep/chart 호출 유지)
-app.use(`${preFix}/sleep/chart`, SleepRecordChartRouter);
-app.use(`${preFix}/sleep/record/chart`, SleepRecordChartRouter);
-app.use(`${preFix}/sleep/goal/chart`, SleepGoalChartRouter);
-app.use(`${preFix}/sleep/goal`, SleepGoalRouter);
-app.use(`${preFix}/sleep/record`, SleepRecordRouter);
-app.use(`${preFix}/sleep/favorite`, SleepFavoriteRouter);
+app.use(`${preFix}/sleep/chart`, requireAuth, SleepRecordChartRouter);
+app.use(`${preFix}/sleep/record/chart`, requireAuth, SleepRecordChartRouter);
+app.use(`${preFix}/sleep/goal/chart`, requireAuth, SleepGoalChartRouter);
+app.use(`${preFix}/sleep/goal`, requireAuth, SleepGoalRouter);
+app.use(`${preFix}/sleep/record`, requireAuth, SleepRecordRouter);
+app.use(`${preFix}/sleep/favorite`, requireAuth, SleepFavoriteRouter);
 
-// user (민감 엔드포인트 — rate-limit 적용)
-app.use(`${preFix}/user/sync`, sensitiveLimiter, UserSyncRouter);
+// 자객증명을 다루는 공개 경로는 UserRouter 마운트 전에 전용 리및트를 섞어 부루트포스를 제한함
+app.use(`${preFix}/user/login`, authLimiter);
+app.use(`${preFix}/user/resetPw`, authLimiter);
+app.use(`${preFix}/user/email/send`, authLimiter);
+app.use(`${preFix}/user/email/verify`, authLimiter);
+
+// user (민감 엔드포인트 — rate-limit 적용, 공개·보호 혼재로 UserRouter 내부에서 직접 지정)
+app.use(`${preFix}/user/sync`, sensitiveLimiter, requireAuth, UserSyncRouter);
 app.use(`${preFix}/user`, sensitiveLimiter, UserRouter);
 
 // admin
-app.use(`${preFix}/admin`, AdminRouter);
+app.use(`${preFix}/admin`, requireAdmin, AdminRouter);
 app.use(`${preFix}/auth/google`, sensitiveLimiter, GoogleRouter);
 
 // 0. 에러처리 미들웨어 -----------------------------------------------------------------------
+// - 내부 예외 본문은 로그로만 남기고 상세는 서버 밖으로 보내지 않음
+// - 키 이름은 라우터 계약과 동일하게 msg 로 통일해 클라이언트 번역 경로에 맞춤
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
-  res.status(500).send({
-    status: 500,
-    message: err.message,
+  res.status(500).json({
+    status: `error`,
+    msg: `serverError`,
+    result: null,
   });
 });
 

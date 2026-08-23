@@ -34,7 +34,7 @@
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  background: rgba(244, 249, 252, 0.68) !important;
+  background: rgba(237, 243, 247, 0.78) !important;
   pointer-events: auto;
   animation: loaderBackdropIn 0.08s ease-out both;
   z-index: var(--z-loader) !important;
@@ -45,10 +45,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(8, 118, 185, 0.14);
-  border-radius: 18px;
-  box-shadow: 0 10px 28px rgba(21, 53, 75, 0.11);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-raised);
 }
 .app-loader-indicator {
   width: 26px !important;
@@ -90,4 +90,11 @@
 /** snackbar **************************************************************************************/
 .snackbar-top {
   z-index: var(--z-alert) !important;
+}
+.snackbar-top .MuiAlert-standard {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border-subtle) !important;
+  border-left: 3px solid currentColor !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-raised) !important;
 }

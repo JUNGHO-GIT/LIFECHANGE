@@ -8,20 +8,21 @@
 import { React, useState, useEffect, useRef, useCallback, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateMoney } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
-import { MoneyRecord, MoneyRecordType } from "@exportSchemas";
+import { MoneyRecord, MoneyRecordType, type CategoryType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { insertComma, sync, handleNumberInput, getSession, setSession } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
-import { PickerDay, Memo, Count, Delete, Select, Input } from "@exportContainers";
+import { PickerDay, Memo, Count, Delete, Select, Input, PopUp, CategoryEdit } from "@exportContainers";
 import { Icons, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 import { Checkbox, MenuItem } from "@exportMuis";
+import type { CategoryEditGroup, CategoryEditResult, MoneyCategoryItem } from "@exportTypes";
 
 // -------------------------------------------------------------------------------------------------
 export const MoneyRecordDetail = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
   const {
-    URL_OBJECT, navigate, sessionId, localCurrency, moneyArray,
+    URL_OBJECT, URL_USER, navigate, sessionId, localCurrency, moneyArray: moneySession,
     toList, bgColors, location_dateStart, location_dateEnd, chartThemeColors,
   } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -63,6 +64,8 @@ export const MoneyRecordDetail = memo(() => {
     dateStart: location_dateStart ?? getDayFmt(),
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
+  const [ moneyArray, setMoneyArray ] = useState<MoneyCategoryItem[]>(moneySession);
+  const [ CATEGORY_PART, setCATEGORY_PART ] = useState<string>(``);
 
   // 2-2. useDeferredValue ----------------------------------------------------------------------
   // 섹션 항목 렌더를 비긴급으로 분리: 진입 시 화면 틀이 먼저 그려지고 상세 항목은 다음 프레임에 채워짐
@@ -82,6 +85,10 @@ export const MoneyRecordDetail = memo(() => {
     dateStart: string;
     dateEnd: string;
   }> = useRef(DATE);
+  const categoryPopRef: React.RefObject<{
+    openPopup: (_anchorEl: any) => void;
+    closePopup: () => void;
+  } | null> = useRef(null);
 
   // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
@@ -108,7 +115,7 @@ export const MoneyRecordDetail = memo(() => {
       );
       const itsNew: boolean = (
         OBJECT.money_record_dateStart === `0000-00-00` &&
-				OBJECT.money_record_dateEnd === `0000-00-00`
+        OBJECT.money_record_dateEnd === `0000-00-00`
       );
 
       setFLOW((prev) => ({
@@ -198,7 +205,7 @@ export const MoneyRecordDetail = memo(() => {
         ...prev,
         money_section: prev.money_section?.sort((a: any, b: any) => (
           moneyArray.findIndex((item: any) => item.money_record_part === a.money_record_part) -
-					moneyArray.findIndex((item: any) => item.money_record_part === b.money_record_part)
+          moneyArray.findIndex((item: any) => item.money_record_part === b.money_record_part)
         )),
       }));
 
@@ -254,10 +261,10 @@ export const MoneyRecordDetail = memo(() => {
       }
       return {
         totalIncome: Number(acc.totalIncome) +
-				(cur.money_record_part === `income` ? Number(cur.money_record_amount) : 0),
+        (cur.money_record_part === `income` ? Number(cur.money_record_amount) : 0),
 
         totalExpense: Number(acc.totalExpense) +
-				(cur.money_record_part === `expense` ? Number(cur.money_record_amount) : 0),
+        (cur.money_record_part === `expense` ? Number(cur.money_record_amount) : 0),
       };
     }, {
       totalIncome: 0,
@@ -438,6 +445,133 @@ export const MoneyRecordDetail = memo(() => {
       setLOADING(false);
     });
   }, [ URL_OBJECT, sessionId, setLOADING, setALERT, translate ]);
+
+  // 3. flow ------------------------------------------------------------------------------------
+  const flowSaveCategory = async (result: CategoryEditResult, closePopup: () => void) => {
+    setLOADING(true);
+    try {
+      const resDetail: any = await axios.get(`${URL_USER}/category/detail`, {
+        params: {
+          user_id: sessionId,
+        },
+      });
+      const baseCategory: CategoryType | null = resDetail?.data?.result ?? null;
+      if (!baseCategory || !Array.isArray(baseCategory.money)) {
+        setALERT({
+          open: true,
+          msg: translate(`saveFailed`),
+          severity: `error`,
+        });
+        return;
+      }
+      const head: MoneyCategoryItem = baseCategory.money?.[0] ?? {
+        money_record_part: `all`,
+        money_record_title: [`all`],
+      };
+      const edited: MoneyCategoryItem[] = result.groups.map((group: CategoryEditGroup) => {
+        const source: MoneyCategoryItem | undefined = baseCategory.money?.find((item: MoneyCategoryItem) => (
+          item?.money_record_part === group.part
+        ));
+        return {
+          money_record_part: group.part,
+          money_record_title: [
+            source?.money_record_title?.[0] ?? `all`,
+            ...group.titles,
+          ],
+        };
+      });
+      const untouched: MoneyCategoryItem[] = (baseCategory.money ?? []).slice(1).filter((item: MoneyCategoryItem) => (
+        !result.groups.some((group: CategoryEditGroup) => group.part === item?.money_record_part)
+      ));
+      const nextCategory: MoneyCategoryItem[] = [ head, ...edited, ...untouched ];
+      const resUpdate: any = await axios.post(`${URL_USER}/category/update`, {
+        user_id: sessionId,
+        OBJECT: {
+          ...baseCategory,
+          money: nextCategory,
+        },
+      });
+      if (resUpdate?.data?.status !== `success`) {
+        setALERT({
+          open: true,
+          msg: translate((resUpdate?.data?.msg as string) ?? `saveFailed`),
+          severity: `error`,
+        });
+        return;
+      }
+      const synced: any = await sync(`category`);
+      const syncedCategory: MoneyCategoryItem[] = (
+        Array.isArray(synced?.money) ? synced.money : nextCategory
+      );
+      setMoneyArray(syncedCategory);
+
+      const renameMap: Map<string, string> = new Map<string, string>(
+        result.renames.map((item) => [ `${item.part}::${item.from}`, item.to ]),
+      );
+      const removeSet: Set<string> = new Set<string>(
+        result.removes.map((item) => `${item.part}::${item.title}`),
+      );
+      let reselect: boolean = false;
+      if (renameMap.size > 0 || removeSet.size > 0) {
+        const remap = (section: any) => {
+          const part: string = section?.money_record_part ?? ``;
+          const title: string = section?.money_record_title ?? ``;
+          const titles: string[] = (
+            syncedCategory.find((item: MoneyCategoryItem) => (
+              item?.money_record_part === part
+            ))?.money_record_title ?? []
+          );
+          const renamed: string = renameMap.get(`${part}::${title}`) ?? title;
+          const nextTitle: string = (
+            removeSet.has(`${part}::${title}`) || !titles.includes(renamed)
+              ? (titles[0] ?? ``)
+              : renamed
+          );
+          if (nextTitle === title) {
+            return section;
+          }
+          if (nextTitle !== renamed) {
+            reselect = true;
+          }
+          const nextSection: any = {
+            ...section,
+            money_record_title: nextTitle,
+          };
+          return section?.money_record_key ? {
+            ...nextSection,
+            money_record_key: handleMoneyFavorite(nextSection).money_record_key,
+          } : nextSection;
+        };
+        const nextSection: any[] = (objectRef.current?.money_section ?? []).map(remap);
+        setOBJECT((prev) => ({
+          ...prev,
+          money_section: nextSection,
+        }));
+        const sessionSection: any = getSession(`section`, `money`, ``) ?? [];
+        if (Array.isArray(sessionSection) && sessionSection.length > 0) {
+          setSession(`section`, `money`, ``, sessionSection.map(remap));
+        }
+      }
+
+      setALERT({
+        open: true,
+        msg: translate(reselect ? `categoryChanged` : (resUpdate?.data?.msg as string) ?? `saveSuccessful`),
+        severity: reselect ? `warning` : `success`,
+      });
+      closePopup();
+    }
+    catch (error: any) {
+      setALERT({
+        open: true,
+        msg: translate((error?.response?.data?.msg as string) ?? `saveError`),
+        severity: `error`,
+      });
+      console.error(error);
+    }
+    finally {
+      setLOADING(false);
+    }
+  };
 
   // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
@@ -648,6 +782,9 @@ export const MoneyRecordDetail = memo(() => {
                   error={ERRORS?.[i]?.money_record_title}
                   onChange={(e: any) => {
                     const value: string = String(e.target.value ?? ``);
+                    if (value === `__category_edit__`) {
+                      return;
+                    }
                     setOBJECT((prev) => ({
                       ...prev,
                       money_section: prev.money_section?.map((section: any, idx: number) => (
@@ -668,6 +805,22 @@ export const MoneyRecordDetail = memo(() => {
                       {translate(title as string)}
                     </MenuItem>
                   ))}
+                  <MenuItem
+                    key={`__category_edit__`}
+                    value={`__category_edit__`}
+                    className={`cat-menu-add`}
+                    onClick={() => {
+                      setCATEGORY_PART(item?.money_record_part ?? ``);
+                      categoryPopRef.current?.openPopup(null);
+                    }}
+                  >
+                    <Icons
+                      key={`Plus`}
+                      name={`Plus`}
+                      isIconButton={false}
+                      className={`w-14px h-14px navy`}
+                    />
+                  </MenuItem>
                 </Select>
               </Grid>
             </Grid>
@@ -838,12 +991,37 @@ export const MoneyRecordDetail = memo(() => {
 
   // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
-    <Dialog
-      COUNT={COUNT}
-      setCOUNT={setCOUNT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
-    />
+    <>
+      <Dialog
+        COUNT={COUNT}
+        setCOUNT={setCOUNT}
+        LOCKED={LOCKED}
+        setLOCKED={setLOCKED}
+      />
+      <PopUp
+        type={`innerCenter`}
+        position={`center`}
+        direction={`center`}
+        contents={(popState: any) => (
+          <CategoryEdit
+            groups={(moneyArray ?? []).slice(1).map((item: MoneyCategoryItem) => ({
+              part: item?.money_record_part ?? ``,
+              titles: (item?.money_record_title ?? []).slice(1),
+            }))}
+            activePart={CATEGORY_PART}
+            limit={20}
+            onClose={popState.closePopup}
+            onSave={(result: CategoryEditResult) => {
+              void flowSaveCategory(result, popState.closePopup);
+            }}
+          />
+        )}
+        children={(popTrigger: any) => {
+          categoryPopRef.current = popTrigger;
+          return null;
+        }}
+      />
+    </>
   );
 
   // 9. footer ----------------------------------------------------------------------------------

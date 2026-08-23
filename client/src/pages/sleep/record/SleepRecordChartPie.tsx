@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useMemo, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { SleepPie, SleepPieType } from "@exportSchemas";
@@ -16,6 +16,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@expo
 declare interface SleepRecordChartPieProps {
   TYPE?: any;
   setTYPE?: any;
+  DATE?: any;
 }
 declare interface PieProps {
   cx?: number;
@@ -50,17 +51,23 @@ export const SleepRecordChartPie = memo((props: SleepRecordChartPieProps) => {
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
-  const [ DATE, _setDATE ] = useState({
-    dateType: ``,
-    dateStart: getDayFmt(),
-    dateEnd: getDayFmt(),
-    weekStartFmt: getWeekStartFmt(),
-    weekEndFmt: getWeekEndFmt(),
-    monthStartFmt: getMonthStartFmt(),
-    monthEndFmt: getMonthEndFmt(),
-    yearStartFmt: getYearStartFmt(),
-    yearEndFmt: getYearEndFmt(),
-  });
+
+  // 2-2. useMemo --------------------------------------------------------------------------------
+  // - 리스트의 DATE가 주어지면 그 날짜 기준으로 주/월/년 범위를 계산
+  const DATE = useMemo(() => {
+    const base: string = props?.DATE?.dateStart ?? getDayFmt();
+    return {
+      dateType: ``,
+      dateStart: base,
+      dateEnd: props?.DATE?.dateEnd ?? base,
+      weekStartFmt: getWeekStartFmt(base),
+      weekEndFmt: getWeekEndFmt(base),
+      monthStartFmt: getMonthStartFmt(base),
+      monthEndFmt: getMonthEndFmt(base),
+      yearStartFmt: getYearStartFmt(base),
+      yearEndFmt: getYearEndFmt(base),
+    };
+  }, [ props?.DATE?.dateStart, props?.DATE?.dateEnd ]);
 
   // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<[SleepPieType]>([SleepPie]);
@@ -90,17 +97,17 @@ export const SleepRecordChartPie = memo((props: SleepRecordChartPieProps) => {
 
         // 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
         setOBJECT_WEEK(
-					resWeek.data.result && Array.isArray(resWeek.data.result)
+          resWeek.data.result && Array.isArray(resWeek.data.result)
           ? resWeek.data.result
           : [SleepPie]
         );
         setOBJECT_MONTH(
-					resMonth.data.result && Array.isArray(resMonth.data.result)
+          resMonth.data.result && Array.isArray(resMonth.data.result)
           ? resMonth.data.result
           : [SleepPie]
         );
         setOBJECT_YEAR(
-					resYear.data.result && Array.isArray(resYear.data.result)
+          resYear.data.result && Array.isArray(resYear.data.result)
           ? resYear.data.result
           : [SleepPie]
         );

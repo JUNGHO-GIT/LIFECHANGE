@@ -307,11 +307,11 @@ export const FoodGoalList = memo(() => {
         newSectionCnt: res.data.sectionCnt ?? 0,
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-      setIsExpanded(() => {
-        if (resultLength !== isExpanded.length) {
+      setIsExpanded((prev: { expanded: boolean }[]) => {
+        if (resultLength !== prev.length) {
           return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
-        return isExpanded;
+        return prev;
       });
     })
     .catch((error: any) => {
@@ -336,9 +336,21 @@ export const FoodGoalList = memo(() => {
       <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
-          <Grid size={12} className={`d-row-left`}>
+          <Grid size={12} className={`d-row-center`}>
             <Div className={`fs-0-95rem fw-600`}>
-              {`${formatDateYyyyMmDd(DATE?.dateStart)} - ${formatDateYyyyMmDd(DATE?.dateEnd)}`}
+              {`${formatDateYyyyMmDd(DATE?.dateStart)}`}
+            </Div>
+            <Div className={`fs-0-85rem fw-600 dark-grey`}>
+               {`(${translate(getDayNotFmt(DATE?.dateStart).format(`ddd`))})`}
+            </Div>
+            <Div className={`fs-0-95rem fw-600 mx-10px`}>
+              {`-`}
+            </Div>
+            <Div className={`fs-0-95rem fw-600`}>
+              {`${formatDateYyyyMmDd(DATE?.dateEnd)}`}
+            </Div>
+            <Div className={`fs-0-85rem fw-600 dark-grey`}>
+               {`(${translate(getDayNotFmt(DATE?.dateEnd).format(`ddd`))})`}
             </Div>
           </Grid>
         </Grid>
@@ -347,7 +359,9 @@ export const FoodGoalList = memo(() => {
 
         {/** row 2 **/}
         <Grid container={true} spacing={0}>
-          <FoodGoalChart />
+          <Grid size={12} className={`d-row-center`}>
+            <FoodGoalChart DATE={DATE} />
+          </Grid>
         </Grid>
 
         <Hr m={20} className={`bg-light`} />

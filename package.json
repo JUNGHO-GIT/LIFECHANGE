@@ -1,6 +1,6 @@
 {
   "name": "lifechange-server",
-  "version": "2.4.1",
+  "version": "2.4.4",
   "type": "module",
   "main": "index.ts",
   "license": "Apache-2.0",
@@ -8,10 +8,16 @@
     "node": ">=20"
   },
   "overrides": {
+    "ip-address": "^10.5.0",
     "webidl-conversions": "8.0.1",
     "whatwg-url": "17.1.0"
   },
   "scripts": {
+    "dev": "tsx --tsconfig tsconfig.json index.ts",
+    "start": "pm2 start ecosystem.config.cjs --env production",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "biome check .",
+    "test": "bun test src",
     "git": "bun ~/.bootstrap/bootstrap-sync.ts --git",
     "swc": "bun ~/.bootstrap/bootstrap-sync.ts --swc",
     "sync": "bun ~/.bootstrap/bootstrap-sync.ts --sync",
@@ -31,15 +37,15 @@
     "helmet": "^8.3.0",
     "jsonwebtoken": "9.0.3",
     "moment-timezone": "0.6.3",
-    "mongoose": "9.9.2",
+    "mongoose": "9.9.3",
     "node-fetch": "3.3.2",
     "nodemailer": "9.0.5",
     "qs": "6.15.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.8",
+    "@biomejs/biome": "2.5.10",
     "@swc/cli": "0.8.1",
-    "@swc/core": "1.16.0",
+    "@swc/core": "1.16.1",
     "@swc/helpers": "0.5.23",
     "@types/compression": "^1.8.1",
     "@types/cors": "2.8.19",

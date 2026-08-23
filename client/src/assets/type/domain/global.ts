@@ -9,51 +9,51 @@ import type { Location, NavigateFunction } from "@exportReacts";
 
 // 공통 리터럴 · 유틸 타입 -------------------------------------------------------------------------
 export type FirstPathType =
-	| `today`
-	| `calendar`
-	| `exercise`
-	| `food`
-	| `money`
-	| `sleep`
-	| `user`
-	| `auth`
-	| `admin`
-	| (string & {});
+  | `today`
+  | `calendar`
+  | `exercise`
+  | `food`
+  | `money`
+  | `sleep`
+  | `user`
+  | `auth`
+  | `admin`
+  | (string & {});
 
 export type SecondPathType =
-	| `goal`
-	| `record`
-	| `find`
-	| `favorite`
-	| `chart`
-	| `dashboard`
-	| (string & {});
+  | `goal`
+  | `record`
+  | `find`
+  | `favorite`
+  | `chart`
+  | `dashboard`
+  | (string & {});
 
 export type SortType = `asc` | `desc`;
 export type DateTypeLiteral = `` | `day` | `week` | `month` | `year`;
 
 export type FoodLineMetricType =
-	| `kcal`
-	 | `carb`
-	| `protein`
-	| `fat`
-	| (string & {});
+  | `kcal`
+   | `carb`
+  | `protein`
+  | `fat`
+  | (string & {});
 
 export type ExerciseChartMetricType =
-	| `volume`
-	| `cardio`
-	| (string & {});
+  | `volume`
+  | `cardio`
+  | (string & {});
 
 export type MoneyChartMetricType =
-	| `income`
-	| `expense`
-	| (string & {});
+  | `income`
+  | `expense`
+  | (string & {});
 
 export type SleepChartMetricType =
-	| `bedTime`
-	| `wakeTime`
-	| `sleepTime`
-	| (string & {});
+  | `bedTime`
+  | `wakeTime`
+  | `sleepTime`
+  | (string & {});
 
 // 라우팅 상태 -------------------------------------------------------------------------------------
 export interface LocationStateType {
@@ -191,6 +191,26 @@ export interface MoneyCategoryItem {
 }
 export interface SleepCategoryItem {
   sleep_record_part: string;
+}
+
+// 분류 편집 계약: 필터 전용 센티넬(index 0)을 제외한 사용자 편집 대상만 다룸 --------------------
+export interface CategoryEditGroup {
+  part: string;
+  titles: string[];
+}
+export interface CategoryEditRename {
+  part: string;
+  from: string;
+  to: string;
+}
+export interface CategoryEditRemove {
+  part: string;
+  title: string;
+}
+export interface CategoryEditResult {
+  groups: CategoryEditGroup[];
+  renames: CategoryEditRename[];
+  removes: CategoryEditRemove[];
 }
 export interface SessionPercentBlock {
   score?: string;
@@ -470,6 +490,7 @@ export interface CommonValueType {
   SUBFIX_FOOD: string;
   SUBFIX_MONEY: string;
   SUBFIX_SLEEP: string;
+  SUBFIX_USER: string;
 
   URL_OBJECT: string;
   URL_CALENDAR: string;
@@ -480,6 +501,7 @@ export interface CommonValueType {
   URL_FOOD: string;
   URL_MONEY: string;
   URL_SLEEP: string;
+  URL_USER: string;
 
   isAdmin: string | boolean;
   sessionId: string;

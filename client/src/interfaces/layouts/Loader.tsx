@@ -48,19 +48,19 @@ export const Loader = memo(({ active }: LoaderProps) => {
 
   // 7.loader --------------------------------------------------------------------------------------
   const loaderNode = () => (
-		isVisible ? (
-			<Div
-			  aria-busy={true}
-			  aria-label={`loading`}
-			  aria-live={`polite`}
-			  className={`loader-wrapper`}
-			  role={`status`}
-			>
-			  <Div className={`loader-panel`}>
-			    <Div className={`app-loader-indicator`} />
-			  </Div>
-			</Div>
-		) : null
+    isVisible ? (
+      <Div
+        aria-busy={true}
+        aria-label={`loading`}
+        aria-live={`polite`}
+        className={`loader-wrapper`}
+        role={`status`}
+      >
+        <Div className={`loader-panel`}>
+          <Div className={`app-loader-indicator`} />
+        </Div>
+      </Div>
+    ) : null
   );
 
   // 10. return ----------------------------------------------------------------------------------

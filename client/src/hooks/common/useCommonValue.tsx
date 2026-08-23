@@ -11,8 +11,15 @@ import {
   useLocation,
   useMemo,
   useNavigate,
+  useSyncExternalStore,
 } from "@exportReacts";
-import { getLocalRoot, getSessionRoot } from "@assets/scripts/storage";
+import {
+  getLocalRoot,
+  getLocalVersion,
+  getSessionRoot,
+  getSessionVersion,
+  subscribeStorage,
+} from "@assets/scripts/storage";
 import { useStoreLoading } from "@exportStores";
 import type {
   CommonValueType,
@@ -116,14 +123,18 @@ export const useCommonValue = (): CommonValueType => {
   const env: EnvType = import.meta.env as unknown as EnvType;
   const TITLE: string = env.VITE_APP_TITLE ?? ``;
 
+  // 스토리지 원본 버전을 구독해 sync() 뒤 갱신이 경로 이동 없이도 즉시 반영되게 함
   // 캐시된 root 사용: 페이지 전환 시 컴포넌트마다 전체 객체를 재파싱하지 않도록
+  const localVersion: string = useSyncExternalStore(subscribeStorage, getLocalVersion);
+  const sessionVersion: string = useSyncExternalStore(subscribeStorage, getSessionVersion);
+
   const localTitle: LocalTitleType = useMemo(() => {
     return getLocalRoot() as LocalTitleType;
-  }, [TITLE, location.pathname]);
+  }, [TITLE, localVersion]);
 
   const sessionTitle: SessionTitleType = useMemo(() => {
     return getSessionRoot() as SessionTitleType;
-  }, [TITLE, location.pathname]);
+  }, [TITLE, sessionVersion]);
 
   // 세션 파생값 기본 객체 생성 ----------------------------------------------------------------------
   const scaleDefault = useMemo(() => ({
@@ -319,6 +330,7 @@ export const useCommonValue = (): CommonValueType => {
     SUBFIX_FOOD: env.VITE_APP_FOOD ?? ``,
     SUBFIX_MONEY: env.VITE_APP_MONEY ?? ``,
     SUBFIX_SLEEP: env.VITE_APP_SLEEP ?? ``,
+    SUBFIX_USER: env.VITE_APP_USER ?? ``,
     // API URLs
     URL_OBJECT: (env.VITE_APP_SERVER_URL ?? ``) + (env[`VITE_APP_${(pathParts[1] ?? ``).toUpperCase()}`] ?? ``),
     URL_CALENDAR: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_CALENDAR ?? ``),
@@ -329,6 +341,7 @@ export const useCommonValue = (): CommonValueType => {
     URL_FOOD: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_FOOD ?? ``),
     URL_MONEY: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_MONEY ?? ``),
     URL_SLEEP: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_SLEEP ?? ``),
+    URL_USER: (env.VITE_APP_SERVER_URL ?? ``) + (env.VITE_APP_USER ?? ``),
     // Admin & Session ID
     isAdmin: sessionTitle?.setting?.id?.admin ?? ``,
     sessionId: sessionTitle?.setting?.id?.sessionId ?? ``,

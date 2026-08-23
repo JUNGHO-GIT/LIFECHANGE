@@ -40,8 +40,8 @@ router.get(`/exist`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -81,8 +81,8 @@ router.get(`/list`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -120,8 +120,8 @@ router.get(`/detail`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -157,8 +157,8 @@ router.post(`/create`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -195,8 +195,8 @@ router.put(`/update`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -231,8 +231,8 @@ router.delete(`/delete`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });

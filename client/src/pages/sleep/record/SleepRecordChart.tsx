@@ -16,7 +16,12 @@ import { Paper, Grid, Div, Hr } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const SleepRecordChart = memo(() => {
+declare interface SleepRecordChartProps {
+  DATE?: any;
+}
+
+// -------------------------------------------------------------------------------------------------
+export const SleepRecordChart = memo((props: SleepRecordChartProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
   const { PATH } = useCommonValue();
@@ -105,7 +110,7 @@ export const SleepRecordChart = memo(() => {
         <Hr m={20} className={`bg-light`} />
         <Grid size={12} className={`d-col-center`}>
           <Div className={`w-100p h-300px`}>
-            <SleepRecordChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />
+            <SleepRecordChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} DATE={props?.DATE} />
           </Div>
         </Grid>
       </Grid>
@@ -165,7 +170,7 @@ export const SleepRecordChart = memo(() => {
         <Hr m={20} className={`bg-light`} />
         <Grid size={12} className={`d-col-center`}>
           <Div className={`w-100p h-300px`}>
-            <SleepRecordChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+            <SleepRecordChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} DATE={props?.DATE} />
           </Div>
         </Grid>
       </Grid>
@@ -225,7 +230,7 @@ export const SleepRecordChart = memo(() => {
         <Hr m={20} className={`bg-light`} />
         <Grid size={12} className={`d-col-center`}>
           <Div className={`w-100p h-300px`}>
-            <SleepRecordChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+            <SleepRecordChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} DATE={props?.DATE} />
           </Div>
         </Grid>
       </Grid>

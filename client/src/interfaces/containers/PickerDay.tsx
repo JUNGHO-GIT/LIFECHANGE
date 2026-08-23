@@ -362,30 +362,30 @@ export const PickerDay = memo((
         }}
       >
         {isGoalDetail ? (
-					[ `week`, `month`, `year` ]?.map((item: any) => (
-					  <MenuItem
-					    key={item}
-					    value={item}
-					    selected={item === dateTypeInSave}
-					  >
-					    <Div className={`fs-0-8rem`}>
-					      {translate(item as string)}
-					    </Div>
-					  </MenuItem>
-					))
-				) : (
-					[`day`]?.map((item: any) => (
-					  <MenuItem
-					    key={item}
-					    value={item}
-					    selected={item === dateTypeInSave}
-					  >
-					    <Div className={`fs-0-8rem`}>
-					      {translate(item as string)}
-					    </Div>
-					  </MenuItem>
-					))
-				)}
+          [ `week`, `month`, `year` ]?.map((item: any) => (
+            <MenuItem
+              key={item}
+              value={item}
+              selected={item === dateTypeInSave}
+            >
+              <Div className={`fs-0-8rem`}>
+                {translate(item as string)}
+              </Div>
+            </MenuItem>
+          ))
+        ) : (
+          [`day`]?.map((item: any) => (
+            <MenuItem
+              key={item}
+              value={item}
+              selected={item === dateTypeInSave}
+            >
+              <Div className={`fs-0-8rem`}>
+                {translate(item as string)}
+              </Div>
+            </MenuItem>
+          ))
+        )}
       </Select>
     );
 
@@ -435,9 +435,9 @@ export const PickerDay = memo((
                         EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(` - `) &&
-														item.split(` - `)?.length === 2 &&
-														getDayFmt(day) >= item.split(` - `)[0] &&
-														getDayFmt(day) <= item.split(` - `)[1]
+                            item.split(` - `)?.length === 2 &&
+                            getDayFmt(day) >= item.split(` - `)[0] &&
+                            getDayFmt(day) <= item.split(` - `)[1]
                           ) {
                             isBadged = true;
                           }
@@ -642,9 +642,9 @@ export const PickerDay = memo((
                         EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(` - `) &&
-														item.split(` - `)?.length === 2 &&
-														getDayFmt(day) >= item.split(` - `)[0] &&
-														getDayFmt(day) <= item.split(` - `)[1]
+                            item.split(` - `)?.length === 2 &&
+                            getDayFmt(day) >= item.split(` - `)[0] &&
+                            getDayFmt(day) <= item.split(` - `)[1]
                           ) {
                             isBadged = true;
                           }
@@ -877,9 +877,9 @@ export const PickerDay = memo((
                         EXIST?.day.forEach((item: any) => {
                           if (
                             item.split(` - `) &&
-														item.split(` - `)?.length === 2 &&
-														getDayFmt(day) >= item.split(` - `)[0] &&
-														getDayFmt(day) <= item.split(` - `)[1]
+                            item.split(` - `)?.length === 2 &&
+                            getDayFmt(day) >= item.split(` - `)[0] &&
+                            getDayFmt(day) <= item.split(` - `)[1]
                           ) {
                             isBadged = true;
                           }
@@ -1250,22 +1250,22 @@ export const PickerDay = memo((
     // 10. return ----------------------------------------------------------------------------------
     return (
 
-			// 1-1. 리스트 (Goal)
-			isGoalList ? (
-				<Grid container={true} spacing={1}>
-				  <Grid size={3} className={`d-center`}>
-				    {dateTypeInListSection()}
-				  </Grid>
-				  <Grid size={9} className={`d-center`}>
-				    {dateTypeInList === `day` && daySection()}
-				    {dateTypeInList === `week` && weekSection()}
-				    {dateTypeInList === `month` && monthSection()}
-				    {dateTypeInList === `year` && yearSection()}
-				  </Grid>
-				</Grid>
-			)
+      // 1-1. 리스트 (Goal)
+      isGoalList ? (
+        <Grid container={true} spacing={1}>
+          <Grid size={3} className={`d-center`}>
+            {dateTypeInListSection()}
+          </Grid>
+          <Grid size={9} className={`d-center`}>
+            {dateTypeInList === `day` && daySection()}
+            {dateTypeInList === `week` && weekSection()}
+            {dateTypeInList === `month` && monthSection()}
+            {dateTypeInList === `year` && yearSection()}
+          </Grid>
+        </Grid>
+      )
 
-			// 1-2. 리스트 (Record)
+      // 1-2. 리스트 (Record)
       : isRecordList ? (
         <Grid container={true} spacing={1}>
           <Grid size={3} className={`d-center`}>

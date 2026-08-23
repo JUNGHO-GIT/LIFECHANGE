@@ -280,3 +280,23 @@ export const deletes = async (
 
   return finalResult;
 };
+
+// 6. restore --------------------------------------------------------------------------------------
+// - 삭제 후 후속 쓰기가 실패한 경우 원본 문서를 그대로 되돌림 (트랜잭션 미사용 보상 처리)
+// - 채번·훅을 우회해 _id 포함 원본을 손실 없이 되돌려야 하므로 드라이버 insertOne 을 사용함
+export const restore = async (doc_param: any) => {
+  if (!doc_param) {
+    return null;
+  }
+
+  try {
+    const finalResult: any = await ExerciseGoal.collection.insertOne(doc_param);
+
+    return finalResult;
+  }
+  catch (error: unknown) {
+    console.error(`[restore] ExerciseGoal 원본 복구 실패`, error);
+
+    return null;
+  }
+};

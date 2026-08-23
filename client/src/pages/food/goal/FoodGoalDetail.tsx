@@ -364,11 +364,11 @@ export const FoodGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.food_goal_kcal}
                   error={ERRORS?.[i]?.food_goal_kcal}
                   label={
-									DATE?.dateType === `day` ? (
-										translate(`goalKcal`)
-									) : (
-										`${translate(`goalKcal`)} (${translate(`total`)})`
-									)
+                  DATE?.dateType === `day` ? (
+                    translate(`goalKcal`)
+                  ) : (
+                    `${translate(`goalKcal`)} (${translate(`total`)})`
+                  )
                   }
                   startadornment={(
                     <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.kcal }}>

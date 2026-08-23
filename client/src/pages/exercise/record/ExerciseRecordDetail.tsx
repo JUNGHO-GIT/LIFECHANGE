@@ -11,19 +11,20 @@ import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores"
 import { axios } from "@exportLibs";
 import { insertComma, sync, getSession, setSession } from "@exportScripts";
 import { handleNumberInput } from "@exportScripts";
-import { ExerciseRecord, ExerciseRecordType } from "@exportSchemas";
+import { ExerciseRecord, ExerciseRecordType, type CategoryType } from "@exportSchemas";
 import { Footer, Dialog } from "@exportLayouts";
-import { PickerDay, PickerTime, Count, Delete, Select, Input } from "@exportContainers";
+import { PickerDay, PickerTime, Count, Delete, Select, Input, PopUp, CategoryEdit } from "@exportContainers";
 import { Icons, Bg, Div, Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
+import type { CategoryEditGroup, CategoryEditResult, ExerciseCategoryItem } from "@exportTypes";
 
 // -------------------------------------------------------------------------------------------------
 export const ExerciseRecordDetail = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
   const {
-    URL_OBJECT, PATH, navigate, toList,
-    sessionId, localUnit, bgColors, exerciseArray, chartThemeColors,
+    URL_OBJECT, URL_USER, PATH, navigate, toList,
+    sessionId, localUnit, bgColors, exerciseArray: exerciseSession, chartThemeColors,
     location_dateStart, location_dateEnd,
   } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -65,6 +66,8 @@ export const ExerciseRecordDetail = memo(() => {
     dateStart: location_dateStart ?? getDayFmt(),
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
+  const [ exerciseArray, setExerciseArray ] = useState<ExerciseCategoryItem[]>(exerciseSession);
+  const [ CATEGORY_PART, setCATEGORY_PART ] = useState<string>(``);
 
   // 2-2. useDeferredValue ----------------------------------------------------------------------
   // - 항목 렌더를 비긴급으로 분리
@@ -85,6 +88,10 @@ export const ExerciseRecordDetail = memo(() => {
     dateStart: string;
     dateEnd: string;
   }> = useRef(DATE);
+  const categoryPopRef: React.RefObject<{
+    openPopup: (_anchorEl: any) => void;
+    closePopup: () => void;
+  } | null> = useRef(null);
 
   // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
@@ -204,7 +211,7 @@ export const ExerciseRecordDetail = memo(() => {
         ...prev,
         exercise_section: prev.exercise_section?.sort((a: any, b: any) => (
           exerciseArray.findIndex((item: any) => item.exercise_record_part === a.exercise_record_part) -
-					exerciseArray.findIndex((item: any) => item.exercise_record_part === b.exercise_record_part)
+          exerciseArray.findIndex((item: any) => item.exercise_record_part === b.exercise_record_part)
         )),
       }));
 
@@ -445,6 +452,133 @@ export const ExerciseRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, setLOADING, setALERT, translate ]);
 
+  // 3. flow ------------------------------------------------------------------------------------
+  const flowSaveCategory = async (result: CategoryEditResult, closePopup: () => void) => {
+    setLOADING(true);
+    try {
+      const resDetail: any = await axios.get(`${URL_USER}/category/detail`, {
+        params: {
+          user_id: sessionId,
+        },
+      });
+      const baseCategory: CategoryType | null = resDetail?.data?.result ?? null;
+      if (!baseCategory || !Array.isArray(baseCategory.exercise)) {
+        setALERT({
+          open: true,
+          msg: translate(`saveFailed`),
+          severity: `error`,
+        });
+        return;
+      }
+      const head: ExerciseCategoryItem = baseCategory.exercise?.[0] ?? {
+        exercise_record_part: `all`,
+        exercise_record_title: [`all`],
+      };
+      const edited: ExerciseCategoryItem[] = result.groups.map((group: CategoryEditGroup) => {
+        const source: ExerciseCategoryItem | undefined = baseCategory.exercise?.find((item: ExerciseCategoryItem) => (
+          item?.exercise_record_part === group.part
+        ));
+        return {
+          exercise_record_part: group.part,
+          exercise_record_title: [
+            source?.exercise_record_title?.[0] ?? `all`,
+            ...group.titles,
+          ],
+        };
+      });
+      const untouched: ExerciseCategoryItem[] = (baseCategory.exercise ?? []).slice(1).filter((item: ExerciseCategoryItem) => (
+        !result.groups.some((group: CategoryEditGroup) => group.part === item?.exercise_record_part)
+      ));
+      const nextCategory: ExerciseCategoryItem[] = [ head, ...edited, ...untouched ];
+      const resUpdate: any = await axios.post(`${URL_USER}/category/update`, {
+        user_id: sessionId,
+        OBJECT: {
+          ...baseCategory,
+          exercise: nextCategory,
+        },
+      });
+      if (resUpdate?.data?.status !== `success`) {
+        setALERT({
+          open: true,
+          msg: translate((resUpdate?.data?.msg as string) ?? `saveFailed`),
+          severity: `error`,
+        });
+        return;
+      }
+      const synced: any = await sync(`category`);
+      const syncedCategory: ExerciseCategoryItem[] = (
+        Array.isArray(synced?.exercise) ? synced.exercise : nextCategory
+      );
+      setExerciseArray(syncedCategory);
+
+      const renameMap: Map<string, string> = new Map<string, string>(
+        result.renames.map((item) => [ `${item.part}::${item.from}`, item.to ]),
+      );
+      const removeSet: Set<string> = new Set<string>(
+        result.removes.map((item) => `${item.part}::${item.title}`),
+      );
+      let reselect: boolean = false;
+      if (renameMap.size > 0 || removeSet.size > 0) {
+        const remap = (section: any) => {
+          const part: string = section?.exercise_record_part ?? ``;
+          const title: string = section?.exercise_record_title ?? ``;
+          const titles: string[] = (
+            syncedCategory.find((item: ExerciseCategoryItem) => (
+              item?.exercise_record_part === part
+            ))?.exercise_record_title ?? []
+          );
+          const renamed: string = renameMap.get(`${part}::${title}`) ?? title;
+          const nextTitle: string = (
+            removeSet.has(`${part}::${title}`) || !titles.includes(renamed)
+              ? (titles[0] ?? ``)
+              : renamed
+          );
+          if (nextTitle === title) {
+            return section;
+          }
+          if (nextTitle !== renamed) {
+            reselect = true;
+          }
+          const nextSection: any = {
+            ...section,
+            exercise_record_title: nextTitle,
+          };
+          return section?.exercise_record_key ? {
+            ...nextSection,
+            exercise_record_key: handleExerciseFavorite(nextSection).exercise_record_key,
+          } : nextSection;
+        };
+        const nextSection: any[] = (objectRef.current?.exercise_section ?? []).map(remap);
+        setOBJECT((prev) => ({
+          ...prev,
+          exercise_section: nextSection,
+        }));
+        const sessionSection: any = getSession(`section`, `exercise`, ``) ?? [];
+        if (Array.isArray(sessionSection) && sessionSection.length > 0) {
+          setSession(`section`, `exercise`, ``, sessionSection.map(remap));
+        }
+      }
+
+      setALERT({
+        open: true,
+        msg: translate(reselect ? `categoryChanged` : (resUpdate?.data?.msg as string) ?? `saveSuccessful`),
+        severity: reselect ? `warning` : `success`,
+      });
+      closePopup();
+    }
+    catch (error: any) {
+      setALERT({
+        open: true,
+        msg: translate((error?.response?.data?.msg as string) ?? `saveError`),
+        severity: `error`,
+      });
+      console.error(error);
+    }
+    finally {
+      setLOADING(false);
+    }
+  };
+
   // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
     const currentItem: any = OBJECT?.exercise_section?.[index];
@@ -675,6 +809,9 @@ export const ExerciseRecordDetail = memo(() => {
                 error={ERRORS?.[i]?.exercise_record_title}
                 onChange={(e: any) => {
                   const value: string = String(e.target.value ?? ``);
+                  if (value === `__category_edit__`) {
+                    return;
+                  }
                   setOBJECT((prev: any) => ({
                     ...prev,
                     exercise_section: prev.exercise_section?.map((section: any, idx: number) => (
@@ -699,6 +836,22 @@ export const ExerciseRecordDetail = memo(() => {
                     </MenuItem>
                   )) ?? [];
                 })()}
+                <MenuItem
+                  key={`__category_edit__`}
+                  value={`__category_edit__`}
+                  className={`cat-menu-add`}
+                  onClick={() => {
+                    setCATEGORY_PART(item?.exercise_record_part ?? ``);
+                    categoryPopRef.current?.openPopup(null);
+                  }}
+                >
+                  <Icons
+                    key={`Plus`}
+                    name={`Plus`}
+                    isIconButton={false}
+                    className={`w-14px h-14px navy`}
+                  />
+                </MenuItem>
               </Select>
             </Grid>
           </Grid>
@@ -835,14 +988,39 @@ export const ExerciseRecordDetail = memo(() => {
 
   // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
-    <Dialog
-      COUNT={COUNT}
-      setCOUNT={setCOUNT}
-      OBJECT={OBJECT}
-      setOBJECT={setOBJECT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
-    />
+    <>
+      <Dialog
+        COUNT={COUNT}
+        setCOUNT={setCOUNT}
+        OBJECT={OBJECT}
+        setOBJECT={setOBJECT}
+        LOCKED={LOCKED}
+        setLOCKED={setLOCKED}
+      />
+      <PopUp
+        type={`innerCenter`}
+        position={`center`}
+        direction={`center`}
+        contents={(popState: any) => (
+          <CategoryEdit
+            groups={(exerciseArray ?? []).slice(1).map((item: ExerciseCategoryItem) => ({
+              part: item?.exercise_record_part ?? ``,
+              titles: (item?.exercise_record_title ?? []).slice(1),
+            }))}
+            activePart={CATEGORY_PART}
+            limit={20}
+            onClose={popState.closePopup}
+            onSave={(result: CategoryEditResult) => {
+              void flowSaveCategory(result, popState.closePopup);
+            }}
+          />
+        )}
+        children={(popTrigger: any) => {
+          categoryPopRef.current = popTrigger;
+          return null;
+        }}
+      />
+    </>
   );
 
   // 9. footer ----------------------------------------------------------------------------------

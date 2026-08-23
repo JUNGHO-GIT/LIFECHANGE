@@ -63,11 +63,97 @@ export const emailVerifyEmail = async (user_id_param: string) => {
   return finalResult;
 };
 
+// 1-4. email - deleteCode -------------------------------------------------------------------------
+// - 인증에 사용된 코드를 제거해 재사용을 막음
+export const emailDeleteCode = async (user_id_param: string) => {
+  const finalResult: any = await Verify.deleteMany({
+    verify_id: user_id_param,
+  });
+
+  return finalResult;
+};
+
+// 1-5. email - issueTicket ------------------------------------------------------------------------
+// - 코드 대조 성공 사실을 서버측 일회용 티켓으로 치환해 이후 단계가 인증을 증명할 수 있게 함
+// - 코드는 즉시 비워 재사용을 막고, 만료는 verify_regDt TTL 이 그대로 관장함
+export const emailIssueTicket = async (
+  user_id_param: string,
+  ticket_param: string,
+) => {
+  const finalResult: any = await Verify.findOneAndUpdate(
+    {
+      verify_id: user_id_param,
+    },
+    {
+      $set: {
+        verify_code: ``,
+        verify_ticket: ticket_param,
+      },
+    },
+    {
+      returnDocument: `after`,
+    },
+  ).lean();
+
+  return finalResult;
+};
+
+// 1-6. email - consumeTicket ----------------------------------------------------------------------
+// - 조회와 삭제를 한 연산으로 묶어 동일 티켓의 동시 2회 사용을 원자적으로 차단함
+export const emailConsumeTicket = async (
+  user_id_param: string,
+  ticket_param: string,
+) => {
+  const finalResult: any = await Verify.findOneAndDelete({
+    verify_id: user_id_param,
+    verify_ticket: ticket_param,
+  }).lean();
+
+  return finalResult;
+};
+
 // 2-1. user - checkId -----------------------------------------------------------------------------
 export const userCheckId = async (user_id_param: string) => {
   const finalResult: any = await User.findOne({
     user_id: user_id_param,
   }).lean();
+
+  return finalResult;
+};
+
+// 2-1-1. user - findTokenVersion ------------------------------------------------------------------
+// - 인증 보도에서 세대만 대조하므로 필드 1개로 제한해 조회 보도를 잡음
+export const userFindTokenVersion = async (user_id_param: string) => {
+  const finalResult: any = await User.findOne({
+    user_id: user_id_param,
+  })
+  .select(`user_tokenVersion`)
+  .lean();
+
+  return finalResult;
+};
+
+// 2-1-2. user - rotateTokenVersion ----------------------------------------------------------------
+// - 세대를 갱싱해 기존 발급 토큼 전부를 무효화함 (밀번호 해시는 건드리지 않음)
+export const userRotateTokenVersion = async (
+  user_id_param: string,
+  version_param: string,
+) => {
+  const finalResult: any = await User.findOneAndUpdate(
+    {
+      user_id: user_id_param,
+    },
+    {
+      $set: {
+        user_tokenVersion: version_param,
+      },
+    },
+    {
+      returnDocument: `after`,
+    },
+  )
+  .select(`user_tokenVersion`)
+  .lean();
 
   return finalResult;
 };
@@ -142,10 +228,11 @@ export const userResetPw = async (user_id_param: string, OBJECT_param: any) => {
       $set: {
         user_token: OBJECT_param.user_token,
         user_pw: OBJECT_param.user_pw,
+        // 밀번호 변경 시 세대도 갱싱해 기존 발급 토큼 전부를 즐시 무효화함
+        user_tokenVersion: OBJECT_param.user_tokenVersion,
       },
     },
     {
-      upsert: true,
       returnDocument: `after`,
     },
   );
@@ -153,29 +240,20 @@ export const userResetPw = async (user_id_param: string, OBJECT_param: any) => {
   return finalResult;
 };
 
-// 2-4. user - login -------------------------------------------------------------------------------
-export const userLogin = async (
-  user_id_param: string,
-  user_pw_param: string,
-) => {
-  const finalResult: any = await User.findOne({
-    user_id: user_id_param,
-    user_pw: user_pw_param,
-  }).lean();
-
-  return finalResult;
-};
-
 // 2-5. user - detail ------------------------------------------------------------------------------
+// - 비밀번호 해시와 계정 토큰은 상세 조회 재료가 아니므로 프로젝션에서 제외함
 export const userDetail = async (user_id_param: string) => {
   const finalResult: any = await User.findOne({
     user_id: user_id_param,
-  }).lean();
+  })
+  .select(`-user_pw -user_token`)
+  .lean();
 
   return finalResult;
 };
 
 // 2-6. user - update ------------------------------------------------------------------------------
+// - upsert 를 두면 임의 이메일로 유령 계정이 생성되고 user_number 채번도 누락되므로 제거함
 export const userUpdate = async (user_id_param: string, OBJECT_param: any) => {
   const finalResult: any = await User.findOneAndUpdate(
     {
@@ -190,10 +268,11 @@ export const userUpdate = async (user_id_param: string, OBJECT_param: any) => {
       },
     },
     {
-      upsert: true,
       returnDocument: `after`,
     },
-  );
+  )
+  .select(`-user_pw -user_token`)
+  .lean();
 
   return finalResult;
 };
@@ -281,10 +360,11 @@ export const categoryUpdate = async (
       },
     },
     {
-      upsert: true,
       returnDocument: `after`,
     },
-  ).lean();
+  )
+  .select(`-user_pw -user_token`)
+  .lean();
 
   return finalResult;
 };

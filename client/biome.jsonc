@@ -1,4 +1,10 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.1/schema.json",
-  "extends": ["../../biome.jsonc"]
+  "$schema": "https://biomejs.dev/schemas/2.5.9/schema.json",
+  "extends": ["../../biome.jsonc"],
+  // root 는 extends 로 상속되지 않으므로 중첩 설정에서 명시해야 함
+  "root": false,
+  // 상위 vcs.useIgnoreFile 상속 시 client/.gitignore 부재로 실패하므로 무효화함
+  "vcs": {
+    "useIgnoreFile": false
+  }
 }

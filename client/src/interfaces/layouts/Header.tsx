@@ -65,25 +65,25 @@ export const Header = memo(() => {
       </Div>
     );
     const btnSection = () => (
-			firstStr !== `user` ? (
-				<Icons
-				  key={`Settings`}
-				  name={`Settings`}
-				  isIconButton={true}
-				  className={`w-25px h-25px`}
-				  onClick={handleClickSetting}
-				/>
-			) : (
-				<Icons
-				  key={`ArrowRight`}
-				  name={`ArrowRight`}
-				  isIconButton={true}
-				  className={`w-25px h-25px`}
-				  onClick={() => {
-				    void navigate(-1);
-				  }}
-				/>
-			)
+      firstStr !== `user` ? (
+        <Icons
+          key={`Settings`}
+          name={`Settings`}
+          isIconButton={true}
+          className={`w-25px h-25px`}
+          onClick={handleClickSetting}
+        />
+      ) : (
+        <Icons
+          key={`ArrowRight`}
+          name={`ArrowRight`}
+          isIconButton={true}
+          className={`w-25px h-25px`}
+          onClick={() => {
+            void navigate(-1);
+          }}
+        />
+      )
     );
     return (
       <Paper className={`layout-wrapper d-row-between p-sticky top-0vh h-8vh radius-2 border-light-1 shadow-1`}>

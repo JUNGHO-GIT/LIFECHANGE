@@ -78,7 +78,7 @@ export const FoodGoal: FoodGoalType = {
   food_record_total_kcal: `0`,
   food_record_total_kcal_color: ``,
   food_record_total_carb: `0`,
-  food_record_total_carb_color:	``,
+  food_record_total_carb_color:  ``,
   food_record_total_protein: `0`,
   food_record_total_protein_color: ``,
   food_record_total_fat: `0`,

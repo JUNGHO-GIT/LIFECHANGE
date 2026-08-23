@@ -8,21 +8,22 @@
 import { React, useState, useEffect, useRef, useCallback, useDeferredValue, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useValidateFood } from "@exportHooks";
 import { useStoreLanguage, useStoreAlert, useStoreLoading } from "@exportStores";
-import { FoodRecord, FoodRecordType } from "@exportSchemas";
+import { FoodRecord, FoodRecordType, type CategoryType } from "@exportSchemas";
 import { axios } from "@exportLibs";
 import { insertComma, setSession, getSession, sync, handleNumberInput } from "@exportScripts";
 import { Footer, Dialog } from "@exportLayouts";
-import { PickerDay, Count, Delete, Input, Select } from "@exportContainers";
+import { PickerDay, Count, Delete, Input, Select, PopUp, CategoryEdit } from "@exportContainers";
 import { Bg, Icons, Div, Paper, Grid, Br } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
+import type { CategoryEditGroup, CategoryEditResult, FoodCategoryItem } from "@exportTypes";
 
 // -------------------------------------------------------------------------------------------------
 export const FoodRecordDetail = memo(() => {
 
   // 1. common ----------------------------------------------------------------------------------
   const {
-    URL_OBJECT, navigate, toList, sessionId,
-    foodArray, bgColors, chartThemeColors,
+    URL_OBJECT, URL_USER, navigate, toList, sessionId,
+    foodArray: foodSession, bgColors, chartThemeColors,
     location_dateStart, location_dateEnd,
   } = useCommonValue();
   const { getDayFmt, getMonthStartFmt, getMonthEndFmt } = useCommonDate();
@@ -64,6 +65,8 @@ export const FoodRecordDetail = memo(() => {
     dateStart: location_dateStart ?? getDayFmt(),
     dateEnd: location_dateEnd ?? getDayFmt(),
   });
+  const [ foodArray, setFoodArray ] = useState<FoodCategoryItem[]>(foodSession);
+  const [ CATEGORY_PART, setCATEGORY_PART ] = useState<string>(``);
 
   // 2-2. useDeferredValue ----------------------------------------------------------------------
   // - 항목 렌더를 비긴급으로 분리
@@ -91,6 +94,10 @@ export const FoodRecordDetail = memo(() => {
     protein: number;
     fat: number;
   }>>({});
+  const categoryPopRef: React.RefObject<{
+    openPopup: (_anchorEl: any) => void;
+    closePopup: () => void;
+  } | null> = useRef(null);
 
   // 2-3. useEffect ------------------------------------------------------------------------------
   useEffect(() => {
@@ -227,8 +234,8 @@ export const FoodRecordDetail = memo(() => {
       setOBJECT((prev) => ({
         ...prev,
         food_section: prev?.food_section
-				? [ ...[...prev.food_section]?.sort((a, b) => Number.parseInt(a.food_record_part) - Number.parseInt(b.food_record_part)), ...sectionArray ]
-				: [...sectionArray],
+        ? [ ...[...prev.food_section]?.sort((a, b) => Number.parseInt(a.food_record_part) - Number.parseInt(b.food_record_part)), ...sectionArray ]
+        : [...sectionArray],
       }));
 
       setCOUNT((prev) => ({
@@ -455,6 +462,117 @@ export const FoodRecordDetail = memo(() => {
     });
   }, [ URL_OBJECT, sessionId, setLOADING, setALERT, translate ]);
 
+  // 3. flow ------------------------------------------------------------------------------------
+  const flowSaveCategory = async (result: CategoryEditResult, closePopup: () => void) => {
+    setLOADING(true);
+    try {
+      const resDetail: any = await axios.get(`${URL_USER}/category/detail`, {
+        params: {
+          user_id: sessionId,
+        },
+      });
+      const baseCategory: CategoryType | null = resDetail?.data?.result ?? null;
+      if (!baseCategory || !Array.isArray(baseCategory.food)) {
+        setALERT({
+          open: true,
+          msg: translate(`saveFailed`),
+          severity: `error`,
+        });
+        return;
+      }
+      // 식단은 소분류 없이 대분류(part) 자체가 편집 대상이므로 단일 그룹(`food`)으로 매핑
+      const head: FoodCategoryItem = baseCategory.food?.[0] ?? {
+        food_record_part: `all`,
+      };
+      const editedTitles: string[] = result.groups.find((group: CategoryEditGroup) => (
+        group.part === `food`
+      ))?.titles ?? [];
+      const edited: FoodCategoryItem[] = editedTitles.map((part: string) => ({
+        food_record_part: part,
+      }));
+      const nextCategory: FoodCategoryItem[] = [ head, ...edited ];
+      const resUpdate: any = await axios.post(`${URL_USER}/category/update`, {
+        user_id: sessionId,
+        OBJECT: {
+          ...baseCategory,
+          food: nextCategory,
+        },
+      });
+      if (resUpdate?.data?.status !== `success`) {
+        setALERT({
+          open: true,
+          msg: translate((resUpdate?.data?.msg as string) ?? `saveFailed`),
+          severity: `error`,
+        });
+        return;
+      }
+      const synced: any = await sync(`category`);
+      const syncedCategory: FoodCategoryItem[] = (
+        Array.isArray(synced?.food) ? synced.food : nextCategory
+      );
+      setFoodArray(syncedCategory);
+
+      const renameMap: Map<string, string> = new Map<string, string>(
+        result.renames.map((item) => [ item.from, item.to ]),
+      );
+      const removeSet: Set<string> = new Set<string>(
+        result.removes.map((item) => item.title),
+      );
+      let reselect: boolean = false;
+      if (renameMap.size > 0 || removeSet.size > 0) {
+        const parts: string[] = syncedCategory.map((item: FoodCategoryItem) => (
+          item?.food_record_part ?? ``
+        )).filter((part: string) => part !== `all`);
+        const remap = (section: any) => {
+          const part: string = section?.food_record_part ?? ``;
+          const renamed: string = renameMap.get(part) ?? part;
+          const nextPart: string = (
+            removeSet.has(part) || !parts.includes(renamed)
+              ? (parts[0] ?? part)
+              : renamed
+          );
+          if (nextPart === part) {
+            return section;
+          }
+          if (nextPart !== renamed) {
+            reselect = true;
+          }
+          return {
+            ...section,
+            food_record_part: nextPart,
+          };
+        };
+        const nextSection: any[] = (objectRef.current?.food_section ?? []).map(remap);
+        setOBJECT((prev) => ({
+          ...prev,
+          food_section: nextSection,
+        }));
+        const sessionSection: any = getSession(`section`, `food`, ``) ?? [];
+        if (Array.isArray(sessionSection) && sessionSection.length > 0) {
+          setSession(`section`, `food`, ``, sessionSection.map(remap));
+        }
+      }
+
+      setALERT({
+        open: true,
+        msg: translate(reselect ? `categoryChanged` : (resUpdate?.data?.msg as string) ?? `saveSuccessful`),
+        severity: reselect ? `warning` : `success`,
+      });
+      closePopup();
+    }
+    catch (error: any) {
+      setALERT({
+        open: true,
+        msg: translate((error?.response?.data?.msg as string) ?? `saveError`),
+        severity: `error`,
+      });
+      console.error(error);
+    }
+    finally {
+      setLOADING(false);
+    }
+  };
+
   // 4-3. handle --------------------------------------------------------------------------------
   const handleDelete = useCallback((index: number) => {
 
@@ -668,6 +786,9 @@ export const FoodRecordDetail = memo(() => {
                 error={ERRORS?.[i]?.food_record_part}
                 onChange={(e: any) => {
                   let value: string = String(e.target.value ?? ``);
+                  if (value === `__category_edit__`) {
+                    return;
+                  }
                   setOBJECT((prev: any) => ({
                     ...prev,
                     food_section: prev.food_section?.map((section: any, idx: number) => (
@@ -688,6 +809,22 @@ export const FoodRecordDetail = memo(() => {
                     {translate(part.food_record_part as string)}
                   </MenuItem>
                 ))}
+                <MenuItem
+                  key={`__category_edit__`}
+                  value={`__category_edit__`}
+                  className={`cat-menu-add`}
+                  onClick={() => {
+                    setCATEGORY_PART(`food`);
+                    categoryPopRef.current?.openPopup(null);
+                  }}
+                >
+                  <Icons
+                    key={`Plus`}
+                    name={`Plus`}
+                    isIconButton={false}
+                    className={`w-14px h-14px navy`}
+                  />
+                </MenuItem>
               </Select>
             </Grid>
             <Grid size={3}>
@@ -988,14 +1125,43 @@ export const FoodRecordDetail = memo(() => {
 
   // 8. dialog ----------------------------------------------------------------------------------
   const dialogNode = () => (
-    <Dialog
-      COUNT={COUNT}
-      setCOUNT={setCOUNT}
-      OBJECT={OBJECT}
-      setOBJECT={setOBJECT}
-      LOCKED={LOCKED}
-      setLOCKED={setLOCKED}
-    />
+    <>
+      <Dialog
+        COUNT={COUNT}
+        setCOUNT={setCOUNT}
+        OBJECT={OBJECT}
+        setOBJECT={setOBJECT}
+        LOCKED={LOCKED}
+        setLOCKED={setLOCKED}
+      />
+      <PopUp
+        type={`innerCenter`}
+        position={`center`}
+        direction={`center`}
+        contents={(popState: any) => (
+          <CategoryEdit
+            groups={[
+              {
+                part: `food`,
+                titles: (foodArray ?? []).slice(1).map((item: FoodCategoryItem) => (
+                  item?.food_record_part ?? ``
+                )),
+              },
+            ]}
+            activePart={CATEGORY_PART}
+            limit={20}
+            onClose={popState.closePopup}
+            onSave={(result: CategoryEditResult) => {
+              void flowSaveCategory(result, popState.closePopup);
+            }}
+          />
+        )}
+        children={(popTrigger: any) => {
+          categoryPopRef.current = popTrigger;
+          return null;
+        }}
+      />
+    </>
   );
 
   // 9. footer ----------------------------------------------------------------------------------

@@ -309,7 +309,22 @@ const fontFamily: string = `'Pretendard Variable', Pretendard, FontAwesome, -app
 // 테마 팔레트 -----------------------------------------------------------------------------------
 const appTheme = createTheme({
   typography: {
-    fontFamily: fontFamily
+    fontFamily: fontFamily,
+    h1: {
+      fontWeight: 800,
+      letterSpacing: `-0.02em`,
+    },
+    h2: {
+      fontWeight: 750,
+      letterSpacing: `-0.015em`,
+    },
+    button: {
+      fontWeight: 700,
+      textTransform: `none`,
+    },
+  },
+  shape: {
+    borderRadius: 12,
   },
   components: {
     MuiButtonBase: {
@@ -324,7 +339,9 @@ const appTheme = createTheme({
     primary: { main: `#0876b9` },
     secondary: { main: `#005f9e` },
     error: { main: `#f44336` },
-    background: { default: `#f7f7f7`, paper: `#ffffff` },
+    text: { primary: `#243746`, secondary: `#738997` },
+    divider: `#d9e5ec`,
+    background: { default: `#edf3f7`, paper: `#ffffff` },
   },
 });
 

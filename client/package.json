@@ -24,6 +24,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "test:e2e": "playwright test",
     "git": "bun run ~/.bootstrap/bootstrap-sync.ts --git",
     "swc": "bun run ~/.bootstrap/bootstrap-sync.ts --swc",
     "sync": "bun run ~/.bootstrap/bootstrap-sync.ts --sync",
@@ -34,7 +36,7 @@
     "@emotion/styled": "11.14.1",
     "@mui/material": "9.3.1",
     "@mui/system": "9.3.0",
-    "@mui/x-date-pickers": "9.11.0",
+    "@mui/x-date-pickers": "9.12.0",
     "@react-hooks-library/core": "1.0.0",
     "axios": "1.19.0",
     "countries-and-timezones": "3.10.0",
@@ -51,11 +53,11 @@
     "zustand": "5.0.15"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.8",
+    "@biomejs/biome": "2.5.10",
     "@mui/types": "9.3.0",
     "@playwright/test": "1.62.1",
     "@swc/cli": "0.8.1",
-    "@swc/core": "1.16.0",
+    "@swc/core": "1.16.1",
     "@swc/helpers": "0.5.23",
     "@types/node": "26.2.0",
     "@types/react": "19.2.18",
@@ -67,7 +69,7 @@
     "tsc-alias": "1.9.2",
     "tsx": "4.23.12",
     "typescript": "7.0.2",
-    "vite": "8.2.1",
+    "vite": "8.2.2",
     "vite-plugin-compression": "0.5.1"
   }
 }

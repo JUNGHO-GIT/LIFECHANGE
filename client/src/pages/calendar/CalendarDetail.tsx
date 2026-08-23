@@ -109,7 +109,7 @@ export const CalendarDetail = memo(() => {
       );
       const itsNew: boolean = (
         OBJECT.calendar_exercise_dateStart === `0000-00-00` &&
-				OBJECT.calendar_exercise_dateEnd === `0000-00-00`
+        OBJECT.calendar_exercise_dateEnd === `0000-00-00`
       );
       setFLOW((prev) => ({
         ...prev,
@@ -213,14 +213,14 @@ export const CalendarDetail = memo(() => {
     const totals: any = OBJECT?.calendar_exercise_section?.reduce((acc: any, cur: any) => ({
       totalVolume: (
         Number(acc.totalVolume) +
-				Number(cur.exercise_record_set) *
-				Number(cur.exercise_record_rep) *
-				Number(cur.exercise_record_weight)
+        Number(cur.exercise_record_set) *
+        Number(cur.exercise_record_rep) *
+        Number(cur.exercise_record_weight)
       ),
       totalCardio: (
         Number(acc.totalCardio) +
-				Number(cur.exercise_record_cardio.split(`:`)[0]) * 60 +
-				Number(cur.exercise_record_cardio.split(`:`)[1])
+        Number(cur.exercise_record_cardio.split(`:`)[0]) * 60 +
+        Number(cur.exercise_record_cardio.split(`:`)[1])
       ),
     }), {
       totalVolume: 0,
@@ -511,11 +511,11 @@ export const CalendarDetail = memo(() => {
                     setOBJECT((prev: CalendarType) => ({
                       ...prev,
                       calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
-												idx === i ? {
-												  ...section,
-												  exercise_record_part: value,
-												  exercise_record_title: (foundItem as any)?.exercise_record_title?.[0] ?? ``,
-												} : section
+                        idx === i ? {
+                          ...section,
+                          exercise_record_part: value,
+                          exercise_record_title: (foundItem as any)?.exercise_record_title?.[0] ?? ``,
+                        } : section
                       )),
                     }));
                   }}
@@ -543,10 +543,10 @@ export const CalendarDetail = memo(() => {
                     setOBJECT((prev: CalendarType) => ({
                       ...prev,
                       calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
-												idx === i ? {
-												  ...section,
-												  exercise_record_title: value,
-												} : section
+                        idx === i ? {
+                          ...section,
+                          exercise_record_title: value,
+                        } : section
                       )),
                     }));
                   }}
@@ -591,10 +591,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  exercise_record_set: processedValue,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            exercise_record_set: processedValue,
+                          } : section
                         )),
                       }))
                     );
@@ -622,10 +622,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  exercise_record_rep: processedValue,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            exercise_record_rep: processedValue,
+                          } : section
                         )),
                       }))
                     );
@@ -657,10 +657,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_exercise_section: prev.calendar_exercise_section?.map((section: CalendarExerciseSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  exercise_record_weight: processedValue,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            exercise_record_weight: processedValue,
+                          } : section
                         )),
                       }))
                     );
@@ -746,10 +746,10 @@ export const CalendarDetail = memo(() => {
                     setOBJECT((prev: CalendarType) => ({
                       ...prev,
                       calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-												idx === i ? {
-												  ...section,
-												  food_record_part: value,
-												} : section
+                        idx === i ? {
+                          ...section,
+                          food_record_part: value,
+                        } : section
                       )),
                     }));
                   }}
@@ -820,10 +820,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  food_record_gram: processedValue,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            food_record_gram: processedValue,
+                          } : section
                         )),
                       }))
                     );
@@ -848,10 +848,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  food_record_name: value,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            food_record_name: value,
+                          } : section
                         )),
                       }))
                     );
@@ -872,10 +872,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  food_record_brand: value,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            food_record_brand: value,
+                          } : section
                         )),
                       }))
                     );
@@ -907,10 +907,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  food_record_kcal: processedValue,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            food_record_kcal: processedValue,
+                          } : section
                         )),
                       }))
                     );
@@ -938,10 +938,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  food_record_carb: processedValue,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            food_record_carb: processedValue,
+                          } : section
                         )),
                       }))
                     );
@@ -973,10 +973,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  food_record_protein: processedValue,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            food_record_protein: processedValue,
+                          } : section
                         )),
                       }))
                     );
@@ -1004,10 +1004,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_food_section: prev.calendar_food_section?.map((section: CalendarFoodSectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  food_record_fat: processedValue,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            food_record_fat: processedValue,
+                          } : section
                         )),
                       }))
                     );
@@ -1083,11 +1083,11 @@ export const CalendarDetail = memo(() => {
                     setOBJECT((prev: CalendarType) => ({
                       ...prev,
                       calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
-												idx === i ? {
-												  ...section,
-												  money_record_part: value,
-												  money_record_title: (foundItem as any)?.money_record_title?.[0] ?? ``,
-												} : section
+                        idx === i ? {
+                          ...section,
+                          money_record_part: value,
+                          money_record_title: (foundItem as any)?.money_record_title?.[0] ?? ``,
+                        } : section
                       )),
                     }));
                   }}
@@ -1115,10 +1115,10 @@ export const CalendarDetail = memo(() => {
                     setOBJECT((prev: CalendarType) => ({
                       ...prev,
                       calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
-												idx === i ? {
-												  ...section,
-												  money_record_title: value,
-												} : section
+                        idx === i ? {
+                          ...section,
+                          money_record_title: value,
+                        } : section
                       )),
                     }));
                   }}
@@ -1163,10 +1163,10 @@ export const CalendarDetail = memo(() => {
                       setOBJECT((prev: CalendarType) => ({
                         ...prev,
                         calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
-													idx === i ? {
-													  ...section,
-													  money_record_amount: processedValue,
-													} : section
+                          idx === i ? {
+                            ...section,
+                            money_record_amount: processedValue,
+                          } : section
                         )),
                       }))
                     );
@@ -1200,10 +1200,10 @@ export const CalendarDetail = memo(() => {
                     setOBJECT((prev: CalendarType) => ({
                       ...prev,
                       calendar_money_section: prev.calendar_money_section?.map((section: CalendarMoneySectionType, idx: number) => (
-												idx === i ? {
-												  ...section,
-												  money_record_include: e.target.checked ? `Y` : `N`,
-												} : section
+                        idx === i ? {
+                          ...section,
+                          money_record_include: e.target.checked ? `Y` : `N`,
+                        } : section
                       )),
                     }));
                   }}

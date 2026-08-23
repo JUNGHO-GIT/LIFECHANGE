@@ -41,8 +41,8 @@ router.get(`/list`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -77,8 +77,8 @@ router.put(`/update`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });

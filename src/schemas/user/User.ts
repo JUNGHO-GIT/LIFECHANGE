@@ -56,6 +56,7 @@ declare interface UserType extends mongoose.Document {
   user_number: number;
   user_google: string;
   user_token: string;
+  user_tokenVersion: string;
   user_pw: string;
   user_image: string;
   user_initScale: string;
@@ -105,6 +106,12 @@ const schema = new mongoose.Schema({
     required: false,
   },
   user_token: {
+    type: String,
+    default: ``,
+    required: false,
+  },
+  // 액세스 토큼 세대 — user_token 은 밀번호 해시 솔트 성분이라 같이 다를 수 없으므로 분리함
+  user_tokenVersion: {
     type: String,
     default: ``,
     required: false,
@@ -432,8 +439,11 @@ const schema = new mongoose.Schema({
 });
 
 // 2. index ---------------------------------------------------------------------------------------
+// - user_id 는 계정 실질 키로 동시 가입 경합을 DB 차원에서 막기 위해 유일 제약을 걸었음
 schema.index({
   user_id: 1,
+}, {
+  unique: true,
 });
 
 // 3. counter --------------------------------------------------------------------------------------

@@ -513,8 +513,9 @@ export const percent = async (object: any) => {
     };
   };
 
+  // 서비스 반환은 { status, result } 최상위 계약 — result.status 는 존재하지 않음
   const newObject: any = {
-    status: object?.result?.status,
+    status: object?.status,
     result: {
       exercise: {
         ...exercise,

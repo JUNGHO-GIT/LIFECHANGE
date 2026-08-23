@@ -6,6 +6,7 @@
  */
 
 // -------------------------------------------------------------------------------------------------
+export { CategoryEdit } from "@interfaces/containers/CategoryEdit";
 export { PopUp } from "@interfaces/containers/PopUp";
 export { Count } from "@interfaces/containers/Count";
 export { Delete } from "@interfaces/containers/Delete";

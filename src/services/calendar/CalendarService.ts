@@ -252,7 +252,10 @@ export const update = async (
     finalResult.exercise = exerciseResult;
   } else if (
     !isCreate &&
-    OBJECT_param?.calendar_exercise_dateStart !== `0000-00-00`
+    // 미지정(undefined) 과 기록없음(0000-00-00) 을 구분해 의도치 않은 기존 기록 삭제를 막음
+    typeof OBJECT_param?.calendar_exercise_dateStart === `string` &&
+    OBJECT_param.calendar_exercise_dateStart !== `` &&
+    OBJECT_param.calendar_exercise_dateStart !== `0000-00-00`
   ) {
     exerciseResult = await ExerciseRecordService.deletes(
       user_id_param,
@@ -287,7 +290,10 @@ export const update = async (
     finalResult.food = foodResult;
   } else if (
     !isCreate &&
-    OBJECT_param?.calendar_food_dateStart !== `0000-00-00`
+    // 미지정(undefined) 과 기록없음(0000-00-00) 을 구분해 의도치 않은 기존 기록 삭제를 막음
+    typeof OBJECT_param?.calendar_food_dateStart === `string` &&
+    OBJECT_param.calendar_food_dateStart !== `` &&
+    OBJECT_param.calendar_food_dateStart !== `0000-00-00`
   ) {
     foodResult = await FoodRecordService.deletes(user_id_param, DATE_param);
     finalResult.food = foodResult;
@@ -317,7 +323,10 @@ export const update = async (
     finalResult.money = moneyResult;
   } else if (
     !isCreate &&
-    OBJECT_param?.calendar_money_dateStart !== `0000-00-00`
+    // 미지정(undefined) 과 기록없음(0000-00-00) 을 구분해 의도치 않은 기존 기록 삭제를 막음
+    typeof OBJECT_param?.calendar_money_dateStart === `string` &&
+    OBJECT_param.calendar_money_dateStart !== `` &&
+    OBJECT_param.calendar_money_dateStart !== `0000-00-00`
   ) {
     moneyResult = await MoneyRecordService.deletes(user_id_param, DATE_param);
     finalResult.money = moneyResult;
@@ -346,7 +355,10 @@ export const update = async (
     finalResult.sleep = sleepResult;
   } else if (
     !isCreate &&
-    OBJECT_param?.calendar_sleep_dateStart !== `0000-00-00`
+    // 미지정(undefined) 과 기록없음(0000-00-00) 을 구분해 의도치 않은 기존 기록 삭제를 막음
+    typeof OBJECT_param?.calendar_sleep_dateStart === `string` &&
+    OBJECT_param.calendar_sleep_dateStart !== `` &&
+    OBJECT_param.calendar_sleep_dateStart !== `0000-00-00`
   ) {
     sleepResult = await SleepRecordService.deletes(user_id_param, DATE_param);
     finalResult.sleep = sleepResult;

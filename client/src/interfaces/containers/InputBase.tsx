@@ -73,32 +73,32 @@ export const InputBase = memo((props: any) => {
     "& .MuiInputBase-root": {
       cursor: (
         props?.readOnly && (
-					props?.onClick ? `pointer` : `not-allowed`
+          props?.onClick ? `pointer` : `not-allowed`
         )
       ),
       backgroundColor: (
-				props?.disabled ? `#f7f7f7` : (
-					props?.readOnly && (
-						props?.onClick ? `transparent` : `#f7f7f7`
-					)
-				)
+        props?.disabled ? `#f7f7f7` : (
+          props?.readOnly && (
+            props?.onClick ? `transparent` : `#f7f7f7`
+          )
+        )
       ),
       "&:hover": {
         backgroundColor: (
-					props?.disabled ? `#f7f7f7` : (
-						props?.readOnly && (
-							props?.onClick ? `transparent` : `#f7f7f7`
-						)
-					)
+          props?.disabled ? `#f7f7f7` : (
+            props?.readOnly && (
+              props?.onClick ? `transparent` : `#f7f7f7`
+            )
+          )
         ),
       },
       "&:focus": {
         backgroundColor: (
-					props?.disabled ? `#f7f7f7` : (
-						props?.readOnly && (
-							props?.onClick ? `transparent` : `#f7f7f7`
-						)
-					)
+          props?.disabled ? `#f7f7f7` : (
+            props?.readOnly && (
+              props?.onClick ? `transparent` : `#f7f7f7`
+            )
+          )
         ),
       },
     },
@@ -113,37 +113,37 @@ export const InputBase = memo((props: any) => {
         !!((props?.readOnly ?? props?.locked === `locked`))
       ),
       className: (
-				props?.inputclass?.includes(`fs-`) ? (
-					`text-left ${props?.inputclass ?? ``}`
-				) : (
-					`fs-0-95rem text-left ${props?.inputclass ?? ``}`
-				)
+        props?.inputclass?.includes(`fs-`) ? (
+          `text-left ${props?.inputclass ?? ``}`
+        ) : (
+          `fs-0-95rem text-left ${props?.inputclass ?? ``}`
+        )
       ),
       startAdornment: (
-				props?.startadornment ? (
-					typeof props?.startadornment === `string` ? (
-						<div className={`d-center fs-0-8rem ${props?.adornmentclass ?? ``}`}>
-						  {props?.startadornment}
-						</div>
-					) : (
-						<div className={`d-center ${props?.adornmentclass ?? ``}`}>
-						  {props?.startadornment}
-						</div>
-					)
-				) : null
+        props?.startadornment ? (
+          typeof props?.startadornment === `string` ? (
+            <div className={`d-center fs-0-8rem ${props?.adornmentclass ?? ``}`}>
+              {props?.startadornment}
+            </div>
+          ) : (
+            <div className={`d-center ${props?.adornmentclass ?? ``}`}>
+              {props?.startadornment}
+            </div>
+          )
+        ) : null
       ),
       endAdornment: (
-				props?.endadornment ? (
-					typeof props?.endadornment === `string` ? (
-						<div className={`d-center fs-0-8rem ${props?.adornmentclass ?? ``}`}>
-						  {props?.endadornment}
-						</div>
-					) : (
-						<div className={`d-center ${props?.adornmentclass ?? ``}`}>
-						  {props?.endadornment}
-						</div>
-					)
-				) : null
+        props?.endadornment ? (
+          typeof props?.endadornment === `string` ? (
+            <div className={`d-center fs-0-8rem ${props?.adornmentclass ?? ``}`}>
+              {props?.endadornment}
+            </div>
+          ) : (
+            <div className={`d-center ${props?.adornmentclass ?? ``}`}>
+              {props?.endadornment}
+            </div>
+          )
+        ) : null
       ),
     },
     htmlInput: {

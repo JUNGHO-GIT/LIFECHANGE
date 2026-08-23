@@ -138,16 +138,16 @@ export const Img = memo((
     cached && (cached.status = `error`);
     const fallback: string = EMPTY_IMAGE_SRC;
 
-		// empty.svg 자체가 에러난 경우 다시 호출하지 않도록 차단 (ref로 제어해서 무한 루프 방지)
-		!isEmptyHandledRef.current && current !== EMPTY_IMAGE_SRC
-			? (() => {
-			  isEmptyHandledRef.current = true;
-			  setIsEmptyHandled(true);
-			  setFileName(`empty`);
-			  setImgSrc(fallback);
-			  setIsLoading(false);
-			})()
-			: setIsLoading(false);
+    // empty.svg 자체가 에러난 경우 다시 호출하지 않도록 차단 (ref로 제어해서 무한 루프 방지)
+    !isEmptyHandledRef.current && current !== EMPTY_IMAGE_SRC
+      ? (() => {
+        isEmptyHandledRef.current = true;
+        setIsEmptyHandled(true);
+        setFileName(`empty`);
+        setImgSrc(fallback);
+        setIsLoading(false);
+      })()
+      : setIsLoading(false);
   }, []);
 
   // 5. useEffect (src 설정 + 이미지 로딩 캐시) -------------------------------------------------------
@@ -166,26 +166,26 @@ export const Img = memo((
     // 파일명일 때만 검증 (blob/data/http는 그대로 허용)
     const invalidName: boolean = !isAbsoluteUrl && (
       !trimmed
-			|| !trimmed.includes(`.`)
-			|| trimmed.startsWith(`.`)
-			|| trimmed.endsWith(`.`)
-			|| trimmed === `.`
-			|| trimmed.length < 3
+      || !trimmed.includes(`.`)
+      || trimmed.startsWith(`.`)
+      || trimmed.endsWith(`.`)
+      || trimmed === `.`
+      || trimmed.length < 3
     );
 
     const finalSrc: string = (!src || src === `` || src === `empty` || typeof src !== `string` || invalidName)
-			? fallback
-			: (
-				group === `new` || isAbsoluteUrl
-					? trimmed
-					: `${GCLOUD_URL}/${group ?? `main`}/${trimmed}`
-			);
+      ? fallback
+      : (
+        group === `new` || isAbsoluteUrl
+          ? trimmed
+          : `${GCLOUD_URL}/${group ?? `main`}/${trimmed}`
+      );
 
     const resolvedName: string = finalSrc === fallback ? `empty` : (
-			isBlob || isData
-				? `preview`
-				: (trimmed.split(`/`).pop()?.split(`?`)[0]?.split(`#`)[0]?.split(`.`)[0] ?? `img`)
-		);
+      isBlob || isData
+        ? `preview`
+        : (trimmed.split(`/`).pop()?.split(`?`)[0]?.split(`#`)[0]?.split(`.`)[0] ?? `img`)
+    );
 
     setFileName(resolvedName);
     setImgSrc(finalSrc);

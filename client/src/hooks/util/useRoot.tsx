@@ -19,15 +19,15 @@ export const useRoot = (
   useEffect(() => {
     if (
       !PATH.includes(`user/login`) && !PATH.includes(`user/signup`) &&
-			!PATH.includes(`user/resetPw`) && !PATH.includes(`user/delete`) &&
-			!PATH.includes(`auth`) && !PATH.includes(`error`) &&
-			PATH === `/`
+      !PATH.includes(`user/resetPw`) && !PATH.includes(`user/delete`) &&
+      !PATH.includes(`auth`) && !PATH.includes(`error`) &&
+      PATH === `/`
     ) {
-			!sessionId ? (() => {
-			  void navigate(`/user/login`);
-			})() : (() => {
-			  void navigate(`/calendar/list`);
-			})();
+      !sessionId ? (() => {
+        void navigate(`/user/login`);
+      })() : (() => {
+        void navigate(`/calendar/list`);
+      })();
     }
   }, [ PATH, sessionId, navigate ]);
 };

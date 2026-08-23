@@ -851,6 +851,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
         ko: `최고 체중`,
         en: `Max BodyWeight`,
       },
+      avgScale: {
+        ko: `평균 체중`,
+        en: `Avg BodyWeight`,
+      },
       minExpense: {
         ko: `최저 지출`,
         en: `Min Expense`,
@@ -858,6 +862,10 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
       minSleepTime: {
         ko: `최저 수면`,
         en: `Min Sleep`,
+      },
+      avgSleepTime: {
+        ko: `평균 수면`,
+        en: `Avg Sleep`,
       },
       memo: {
         ko: `메모`,
@@ -2082,6 +2090,26 @@ export const useStoreLanguage: UseBoundStore<StoreApi<LanguageState>> = create<L
       errorMoneyTitle: {
         ko: `소분류를 선택해주세요`,
         en: `Please select Title`,
+      },
+      errorCategoryTitle: {
+        ko: `분류명을 입력해주세요`,
+        en: `Please enter a Category name`,
+      },
+      duplicatedCategory: {
+        ko: `이미 사용 중인 분류명입니다`,
+        en: `This Category name is already in use`,
+      },
+      cantBeAddedMoreItem: {
+        ko: `더 이상 추가할 수 없습니다`,
+        en: `No more items can be added`,
+      },
+      reorderHint: {
+        ko: `길게 눌러 움직이면 새 순서로 바뀌어요`,
+        en: `Press and hold, then drag to reorder`,
+      },
+      categoryChanged: {
+        ko: `삭제된 분류의 항목은 소분류를 다시 선택해주세요`,
+        en: `Please reselect Title for items of deleted Category`,
       },
       errorMoneyAmount: {
         ko: `금액을 입력해주세요`,

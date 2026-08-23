@@ -32,8 +32,8 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
   // 3. util --------------------------------------------------------------------------------------
   const isSameFile = (a: File, b: File) => (
     a.name === b.name &&
-		a.size === b.size &&
-		a.lastModified === b.lastModified
+    a.size === b.size &&
+    a.lastModified === b.lastModified
   );
 
   const areSameFileList = (a: File[], b: File[]) => {
@@ -62,7 +62,7 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
   useEffect(() => {
     const nextFiles: File[] = props?.value ?? [];
     setFileList((prev: File[]) => (
-			areSameFileList(prev ?? [], nextFiles ?? []) ? prev : nextFiles
+      areSameFileList(prev ?? [], nextFiles ?? []) ? prev : nextFiles
     ));
   }, [props?.value]);
 
@@ -116,42 +116,42 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
     const existingCount: number = fileExisting?.length ?? 0;
     const currentCount: number = currentFiles?.length ?? 0;
 
-		// 파일이 이미지가 아닌 경우
-		!hasError && incoming.some((file: File) => !file.type.startsWith(`image/`)) ? (
-			hasError = true,
-			errorMsg = `이미지 파일만 업로드 가능합니다.`
-		) : null;
+    // 파일이 이미지가 아닌 경우
+    !hasError && incoming.some((file: File) => !file.type.startsWith(`image/`)) ? (
+      hasError = true,
+      errorMsg = `이미지 파일만 업로드 가능합니다.`
+    ) : null;
 
-		// 파일이 3mb 이상인 경우
-		!hasError && incoming.some((file: File) => (file.size > 3 * 1024 * 1024)) ? (
-			hasError = true,
-			errorMsg = `파일은 최대 3MB까지 업로드 가능합니다.`
-		) : null;
+    // 파일이 3mb 이상인 경우
+    !hasError && incoming.some((file: File) => (file.size > 3 * 1024 * 1024)) ? (
+      hasError = true,
+      errorMsg = `파일은 최대 3MB까지 업로드 가능합니다.`
+    ) : null;
 
-		// 중복 제거 (name/size/lastModified)
-		const nonDuplicateFiles: File[] = !hasError ? incoming.filter((newFile: File) => (
-		  !currentFiles.some((existingFile: File) => isSameFile(existingFile, newFile))
-		)) : [];
+    // 중복 제거 (name/size/lastModified)
+    const nonDuplicateFiles: File[] = !hasError ? incoming.filter((newFile: File) => (
+      !currentFiles.some((existingFile: File) => isSameFile(existingFile, newFile))
+    )) : [];
 
-		// 파일 제한 체크 (현재 기준)
-		!hasError && (existingCount + currentCount + nonDuplicateFiles.length > fileLimit) ? (
-			hasError = true,
-			errorMsg = `파일은 최대 ${fileLimit}개까지 업로드 가능합니다.`
-		) : null;
+    // 파일 제한 체크 (현재 기준)
+    !hasError && (existingCount + currentCount + nonDuplicateFiles.length > fileLimit) ? (
+      hasError = true,
+      errorMsg = `파일은 최대 ${fileLimit}개까지 업로드 가능합니다.`
+    ) : null;
 
-		hasError ? (
-			setALERT({
-			  open: true,
-			  severity: `error`,
-			  msg: errorMsg,
-			})
-		) : (
-			(() => {
-			  const updatedFiles: File[] = [ ...currentFiles, ...nonDuplicateFiles ];
-			  setFileList(updatedFiles);
-			  props.onChange(updatedFiles);
-			})()
-		);
+    hasError ? (
+      setALERT({
+        open: true,
+        severity: `error`,
+        msg: errorMsg,
+      })
+    ) : (
+      (() => {
+        const updatedFiles: File[] = [ ...currentFiles, ...nonDuplicateFiles ];
+        setFileList(updatedFiles);
+        props.onChange(updatedFiles);
+      })()
+    );
   };
 
   // 5. handle -------------------------------------------------------------------------------------
@@ -160,19 +160,19 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
     e.preventDefault();
     e.stopPropagation();
 
-		!fileInputRef.current || isPickingRef.current ? null : (() => {
-		  isPickingRef.current = true;
+    !fileInputRef.current || isPickingRef.current ? null : (() => {
+      isPickingRef.current = true;
 
-		  const onFocus = () => {
-		    isPickingRef.current = false;
-		    window.removeEventListener(`focus`, onFocus);
-		  };
+      const onFocus = () => {
+        isPickingRef.current = false;
+        window.removeEventListener(`focus`, onFocus);
+      };
 
-		  window.addEventListener(`focus`, onFocus, { once: true });
+      window.addEventListener(`focus`, onFocus, { once: true });
 
-		  fileInputRef.current.value = ``;
-		  fileInputRef.current.click();
-		})();
+      fileInputRef.current.value = ``;
+      fileInputRef.current.click();
+    })();
   };
 
   // 6. handle (파일 삭제) -------------------------------------------------------------------------
@@ -347,11 +347,11 @@ export const InputFile = memo(({ handleExistingFilesChange, ...props }: any) => 
             height: fileHeight,
           },
           className: (
-						props?.inputclass?.includes(`fs-`) ? (
-							`text-left ${props?.inputclass ?? ``}`
-						) : (
-							`fs-0-9rem text-left ${props?.inputclass ?? ``}`
-						)
+            props?.inputclass?.includes(`fs-`) ? (
+              `text-left ${props?.inputclass ?? ``}`
+            ) : (
+              `fs-0-9rem text-left ${props?.inputclass ?? ``}`
+            )
           ),
           startAdornment: adornmentNode,
           endAdornment: endAdornmentNode,

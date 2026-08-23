@@ -344,8 +344,13 @@ export const update = {
           money_record_total_expense: newExpense,
           money_record_updateDt: new Date(),
         },
+        // 섹션 배열을 그대로 push 하면 중첩 배열이 되어 캐스팅이 실패하므로 원소 단위로 추가함
         $push: {
-          money_section: OBJECT_param.money_section,
+          money_section: {
+            $each: Array.isArray(OBJECT_param.money_section)
+              ? OBJECT_param.money_section
+              : [ OBJECT_param.money_section ],
+          },
         },
         $setOnInsert: setOnInsert,
       },
@@ -422,4 +427,24 @@ export const deletes = async (
   }).lean();
 
   return finalResult;
+};
+
+// 6. restore --------------------------------------------------------------------------------------
+// - 삭제 후 후속 쓰기가 실패한 경우 원본 문서를 그대로 되돌림 (트랜잭션 미사용 보상 처리)
+// - 채번·훅을 우회해 _id 포함 원본을 손실 없이 되돌려야 하므로 드라이버 insertOne 을 사용함
+export const restore = async (doc_param: any) => {
+  if (!doc_param) {
+    return null;
+  }
+
+  try {
+    const finalResult: any = await MoneyRecord.collection.insertOne(doc_param);
+
+    return finalResult;
+  }
+  catch (error: unknown) {
+    console.error(`[restore] MoneyRecord 원본 복구 실패`, error);
+
+    return null;
+  }
 };

@@ -367,11 +367,11 @@ export const ExerciseGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_goal_count}
                   error={ERRORS?.[i]?.exercise_goal_count}
                   label={
-									DATE?.dateType === `day` ? (
-										translate(`goalCount`)
-									) : (
-										`${translate(`goalCount`)} (${translate(`total`)})`
-									)
+                  DATE?.dateType === `day` ? (
+                    translate(`goalCount`)
+                  ) : (
+                    `${translate(`goalCount`)} (${translate(`total`)})`
+                  )
                   }
                   startadornment={(
                     <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartColors[5] }}>
@@ -404,11 +404,11 @@ export const ExerciseGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.exercise_goal_volume}
                   error={ERRORS?.[i]?.exercise_goal_volume}
                   label={
-									DATE?.dateType === `day` ? (
-										translate(`goalVolume`)
-									) : (
-										`${translate(`goalVolume`)} (${translate(`total`)})`
-									)
+                  DATE?.dateType === `day` ? (
+                    translate(`goalVolume`)
+                  ) : (
+                    `${translate(`goalVolume`)} (${translate(`total`)})`
+                  )
                   }
                   startadornment={(
                     <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.volume }}>

@@ -39,10 +39,10 @@ export const Memo = memo((
     setOBJECT((prev: any) => ({
       ...prev,
       [targetSection]: prev[targetSection]?.map((section: any, idx: number) => (
-				idx === i ? {
-				  ...section,
-				  [extra]: e.target.value ?? ``,
-				} : section
+        idx === i ? {
+          ...section,
+          [extra]: e.target.value ?? ``,
+        } : section
       )),
     }));
   }, [ setOBJECT, targetSection, i, extra ]);

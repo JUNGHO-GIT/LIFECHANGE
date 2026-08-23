@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useMemo, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { FoodPie, FoodPieType } from "@exportSchemas";
@@ -16,6 +16,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@expo
 declare interface FoodRecordChartPieProps {
   TYPE?: any;
   setTYPE?: any;
+  DATE?: any;
 }
 declare interface PieProps {
   cx?: number;
@@ -50,17 +51,23 @@ export const FoodRecordChartPie = memo((props: FoodRecordChartPieProps) => {
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
-  const [ DATE, _setDATE ] = useState({
-    dateType: ``,
-    dateStart: getDayFmt(),
-    dateEnd: getDayFmt(),
-    weekStartFmt: getWeekStartFmt(),
-    weekEndFmt: getWeekEndFmt(),
-    monthStartFmt: getMonthStartFmt(),
-    monthEndFmt: getMonthEndFmt(),
-    yearStartFmt: getYearStartFmt(),
-    yearEndFmt: getYearEndFmt(),
-  });
+
+  // 2-2. useMemo --------------------------------------------------------------------------------
+  // - 리스트의 DATE가 주어지면 그 날짜 기준으로 주/월/년 범위를 계산
+  const DATE = useMemo(() => {
+    const base: string = props?.DATE?.dateStart ?? getDayFmt();
+    return {
+      dateType: ``,
+      dateStart: base,
+      dateEnd: props?.DATE?.dateEnd ?? base,
+      weekStartFmt: getWeekStartFmt(base),
+      weekEndFmt: getWeekEndFmt(base),
+      monthStartFmt: getMonthStartFmt(base),
+      monthEndFmt: getMonthEndFmt(base),
+      yearStartFmt: getYearStartFmt(base),
+      yearEndFmt: getYearEndFmt(base),
+    };
+  }, [ props?.DATE?.dateStart, props?.DATE?.dateEnd ]);
 
   // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_KCAL_WEEK, setOBJECT_KCAL_WEEK ] = useState<[FoodPieType]>([FoodPie]);
@@ -93,32 +100,32 @@ export const FoodRecordChartPie = memo((props: FoodRecordChartPieProps) => {
 
         // 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
         setOBJECT_KCAL_WEEK(
-					resWeek.data.result.kcal && Array.isArray(resWeek.data.result.kcal)
+          resWeek.data.result.kcal && Array.isArray(resWeek.data.result.kcal)
           ? resWeek.data.result.kcal
           : [FoodPie]
         );
         setOBJECT_NUT_WEEK(
-					resWeek.data.result.nut && Array.isArray(resWeek.data.result.nut)
+          resWeek.data.result.nut && Array.isArray(resWeek.data.result.nut)
           ? resWeek.data.result.nut
           : [FoodPie]
         );
         setOBJECT_KCAL_MONTH(
-					resMonth.data.result.kcal && Array.isArray(resMonth.data.result.kcal)
+          resMonth.data.result.kcal && Array.isArray(resMonth.data.result.kcal)
           ? resMonth.data.result.kcal
           : [FoodPie]
         );
         setOBJECT_NUT_MONTH(
-					resMonth.data.result.nut && Array.isArray(resMonth.data.result.nut)
+          resMonth.data.result.nut && Array.isArray(resMonth.data.result.nut)
           ? resMonth.data.result.nut
           : [FoodPie]
         );
         setOBJECT_KCAL_YEAR(
-					resYear.data.result.kcal && Array.isArray(resYear.data.result.kcal)
+          resYear.data.result.kcal && Array.isArray(resYear.data.result.kcal)
           ? resYear.data.result.kcal
           : [FoodPie]
         );
         setOBJECT_NUT_YEAR(
-					resYear.data.result.nut && Array.isArray(resYear.data.result.nut)
+          resYear.data.result.nut && Array.isArray(resYear.data.result.nut)
           ? resYear.data.result.nut
           : [FoodPie]
         );
@@ -176,66 +183,66 @@ export const FoodRecordChartPie = memo((props: FoodRecordChartPieProps) => {
     let object: any = null;
     let endStr: string = ``;
 
-		(TYPE_STATE.section === `week` && TYPE_STATE.line === `kcal`) ? (() => {
-		  object = OBJECT_KCAL_WEEK;
-		  endStr = `kcal`;
-		})()
-		: (TYPE_STATE.section === `week` && TYPE_STATE.line === `nut`) ? (() => {
-		  object = OBJECT_NUT_WEEK;
-		  endStr = `g`;
-		})()
-		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `kcal`) ? (() => {
-		  object = OBJECT_KCAL_MONTH;
-		  endStr = `kcal`;
-		})()
-		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `nut`) ? (() => {
-		  object = OBJECT_NUT_MONTH;
-		  endStr = `g`;
-		})()
-		: (TYPE_STATE.section === `year` && TYPE_STATE.line === `kcal`) ? (() => {
-		  object = OBJECT_KCAL_YEAR;
-		  endStr = `kcal`;
-		})()
-		: (TYPE_STATE.section === `year` && TYPE_STATE.line === `nut`) ? (() => {
-		  object = OBJECT_NUT_YEAR;
-		  endStr = `g`;
-		})()
-		: null;
+    (TYPE_STATE.section === `week` && TYPE_STATE.line === `kcal`) ? (() => {
+      object = OBJECT_KCAL_WEEK;
+      endStr = `kcal`;
+    })()
+    : (TYPE_STATE.section === `week` && TYPE_STATE.line === `nut`) ? (() => {
+      object = OBJECT_NUT_WEEK;
+      endStr = `g`;
+    })()
+    : (TYPE_STATE.section === `month` && TYPE_STATE.line === `kcal`) ? (() => {
+      object = OBJECT_KCAL_MONTH;
+      endStr = `kcal`;
+    })()
+    : (TYPE_STATE.section === `month` && TYPE_STATE.line === `nut`) ? (() => {
+      object = OBJECT_NUT_MONTH;
+      endStr = `g`;
+    })()
+    : (TYPE_STATE.section === `year` && TYPE_STATE.line === `kcal`) ? (() => {
+      object = OBJECT_KCAL_YEAR;
+      endStr = `kcal`;
+    })()
+    : (TYPE_STATE.section === `year` && TYPE_STATE.line === `nut`) ? (() => {
+      object = OBJECT_NUT_YEAR;
+      endStr = `g`;
+    })()
+    : null;
 
-		if (
-		  cx === undefined
+    if (
+      cx === undefined
       || cy === undefined
       || midAngle === undefined
       || innerRadius === undefined
       || outerRadius === undefined
       || value === undefined
       || index === undefined
-		) {
-		  return null;
-		}
+    ) {
+      return null;
+    }
 
-		const RADIAN: number = Math.PI / 180;
-		const radius: number = innerRadius + (outerRadius - innerRadius) / 2;
-		const x: number = cx + radius * Math.cos(-midAngle * RADIAN);
-		const y: number = cy + radius * Math.sin(-midAngle * RADIAN);
+    const RADIAN: number = Math.PI / 180;
+    const radius: number = innerRadius + (outerRadius - innerRadius) / 2;
+    const x: number = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y: number = cy + radius * Math.sin(-midAngle * RADIAN);
 
-		return (
-		  <text
-		    x={x}
-		    y={y}
-		    fill={`white`}
-		    textAnchor={`middle`}
-		    dominantBaseline={`central`}
-		    className={`fs-0-6rem`}
-		  >
-		    <tspan x={x} dy={`-0.5em`} dx={`0.4em`}>
-		      {object?.[index]?.name ? translate(object?.[index]?.name as string) : ``}
-		    </tspan>
-		    <tspan x={x} dy={`1.4em`} dx={`0.4em`}>
-		      {`${Number(value).toLocaleString()} ${endStr}`}
-		    </tspan>
-		  </text>
-		);
+    return (
+      <text
+        x={x}
+        y={y}
+        fill={`white`}
+        textAnchor={`middle`}
+        dominantBaseline={`central`}
+        className={`fs-0-6rem`}
+      >
+        <tspan x={x} dy={`-0.5em`} dx={`0.4em`}>
+          {object?.[index]?.name ? translate(object?.[index]?.name as string) : ``}
+        </tspan>
+        <tspan x={x} dy={`1.4em`} dx={`0.4em`}>
+          {`${Number(value).toLocaleString()} ${endStr}`}
+        </tspan>
+      </text>
+    );
   };
 
   // 5-1. chart ------------------------------------------------------------------------------------

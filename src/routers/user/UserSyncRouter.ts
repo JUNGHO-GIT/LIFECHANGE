@@ -43,8 +43,8 @@ router.get(`/category`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -83,8 +83,8 @@ router.get(`/percent`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -122,8 +122,8 @@ router.get(`/scale`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -161,8 +161,8 @@ router.get(`/nutrition`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -200,8 +200,8 @@ router.get(`/favorite`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -239,8 +239,8 @@ router.get(`/property`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error as string,
-      error: error as string,
+      msg: `serverError`,
+      result: null,
     });
   }
 });

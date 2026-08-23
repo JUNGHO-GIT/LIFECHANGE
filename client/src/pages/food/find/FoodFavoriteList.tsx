@@ -260,7 +260,7 @@ export const FoodFavoriteList = memo(() => {
                       checked={
                         !!(
                           checkedQueries[`${PAGING.query}_${PAGING.page}`] &&
-														checkedQueries[`${PAGING.query}_${PAGING.page}`]?.[i]
+                            checkedQueries[`${PAGING.query}_${PAGING.page}`]?.[i]
                         )
                       }
                       onChange={(e: any) => {

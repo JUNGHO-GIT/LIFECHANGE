@@ -16,7 +16,12 @@ import { Paper, Grid, Div, Hr } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const FoodRecordChart = memo(() => {
+declare interface FoodRecordChartProps {
+  DATE?: any;
+}
+
+// -------------------------------------------------------------------------------------------------
+export const FoodRecordChart = memo((props: FoodRecordChartProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
   const { PATH } = useCommonValue();
@@ -104,7 +109,7 @@ export const FoodRecordChart = memo(() => {
         <Hr m={20} className={`bg-light`} />
         <Grid size={12} className={`d-col-center`}>
           <Div className={`w-100p h-300px`}>
-            <FoodRecordChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />
+            <FoodRecordChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} DATE={props?.DATE} />
           </Div>
         </Grid>
       </Grid>
@@ -163,7 +168,7 @@ export const FoodRecordChart = memo(() => {
         <Hr m={20} className={`bg-light`} />
         <Grid size={12} className={`d-col-center`}>
           <Div className={`w-100p h-300px`}>
-            <FoodRecordChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+            <FoodRecordChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} DATE={props?.DATE} />
           </Div>
         </Grid>
       </Grid>
@@ -222,7 +227,7 @@ export const FoodRecordChart = memo(() => {
         <Hr m={20} className={`bg-light`} />
         <Grid size={12} className={`d-col-center`}>
           <Div className={`w-100p h-300px`}>
-            <FoodRecordChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+            <FoodRecordChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} DATE={props?.DATE} />
           </Div>
         </Grid>
       </Grid>

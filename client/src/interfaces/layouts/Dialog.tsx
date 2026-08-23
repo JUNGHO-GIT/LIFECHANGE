@@ -261,40 +261,40 @@ export const Dialog = memo((
           }}
         >
           {PATH.includes(`/favorite/list`) ? (
-						<SpeedDialAction
-						  key={translate(`search`)}
-						  slotProps={{ tooltip: { title: translate(`search`) } }}
-						  className={open ? `` : `d-none`}
-						  icon={(
-						    <Icons
-						      key={`Search`}
-						      name={`Search`}
-						      isIconButton={false}
-						      className={`w-23px h-23px`}
-						    />
-						  )}
-		  onClick={() => {
-		    void navigate(firstStr === `food` ? `/food/find/list` : toDetail);
-		  }}
-						/>
-					) : (
-						<SpeedDialAction
-						  key={translate(`favorite`)}
-						  slotProps={{ tooltip: { title: translate(`favorite`) } }}
-						  className={open ? `` : `d-none`}
-						  icon={(
-						    <Icons
-						      key={`star_on`}
-						      name={`star_on`}
-						      isIconButton={false}
-						      className={`w-23px h-23px`}
-						    />
-						  )}
-						  onClick={() => {
-						    void navigate(`/food/favorite/list`);
-						  }}
-						/>
-					)}
+            <SpeedDialAction
+              key={translate(`search`)}
+              slotProps={{ tooltip: { title: translate(`search`) } }}
+              className={open ? `` : `d-none`}
+              icon={(
+                <Icons
+                  key={`Search`}
+                  name={`Search`}
+                  isIconButton={false}
+                  className={`w-23px h-23px`}
+                />
+              )}
+      onClick={() => {
+        void navigate(firstStr === `food` ? `/food/find/list` : toDetail);
+      }}
+            />
+          ) : (
+            <SpeedDialAction
+              key={translate(`favorite`)}
+              slotProps={{ tooltip: { title: translate(`favorite`) } }}
+              className={open ? `` : `d-none`}
+              icon={(
+                <Icons
+                  key={`star_on`}
+                  name={`star_on`}
+                  isIconButton={false}
+                  className={`w-23px h-23px`}
+                />
+              )}
+              onClick={() => {
+                void navigate(`/food/favorite/list`);
+              }}
+            />
+          )}
           <SpeedDialAction
             key={translate(`save`)}
             slotProps={{ tooltip: { title: translate(`save`) } }}
@@ -394,21 +394,21 @@ export const Dialog = memo((
             slotProps={{ tooltip: { title: translate(`itemLock`) } }}
             className={open ? `` : `d-none`}
             icon={
-							LOCKED === `locked` ? (
-								<Icons
-								  key={`UnLock`}
-								  name={`UnLock`}
-								  isIconButton={false}
-								  className={`w-25px h-25px`}
-								/>
-							) : (
-								<Icons
-								  key={`Lock`}
-								  name={`Lock`}
-								  isIconButton={false}
-								  className={`w-25px h-25px`}
-								/>
-							)
+              LOCKED === `locked` ? (
+                <Icons
+                  key={`UnLock`}
+                  name={`UnLock`}
+                  isIconButton={false}
+                  className={`w-25px h-25px`}
+                />
+              ) : (
+                <Icons
+                  key={`Lock`}
+                  name={`Lock`}
+                  isIconButton={false}
+                  className={`w-25px h-25px`}
+                />
+              )
             }
             onClick={() => {
               if (setLOCKED) {
@@ -489,21 +489,21 @@ export const Dialog = memo((
             slotProps={{ tooltip: { title: translate(`itemLock`) } }}
             className={open ? `` : `d-none`}
             icon={
-							LOCKED === `locked` ? (
-								<Icons
-								  key={`UnLock`}
-								  name={`UnLock`}
-								  isIconButton={false}
-								  className={`w-25px h-25px`}
-								/>
-							) : (
-								<Icons
-								  key={`Lock`}
-								  name={`Lock`}
-								  isIconButton={false}
-								  className={`w-25px h-25px`}
-								/>
-							)
+              LOCKED === `locked` ? (
+                <Icons
+                  key={`UnLock`}
+                  name={`UnLock`}
+                  isIconButton={false}
+                  className={`w-25px h-25px`}
+                />
+              ) : (
+                <Icons
+                  key={`Lock`}
+                  name={`Lock`}
+                  isIconButton={false}
+                  className={`w-25px h-25px`}
+                />
+              )
             }
             onClick={() => {
               if (setLOCKED) {
@@ -556,22 +556,22 @@ export const Dialog = memo((
     );
     // 10. return
     return (
-			isGoalList ? (
-				listGoalSection()
-			)
-			: isFindList || isFavoriteList ? (
-				findSection()
-			)
-			: isList ? (
-				listRecordSection()
-			)
-			: isCalendar && isDetail ? (
-				calendarDetailSection()
-			)
-			: isDetail ? (
+      isGoalList ? (
+        listGoalSection()
+      )
+      : isFindList || isFavoriteList ? (
+        findSection()
+      )
+      : isList ? (
+        listRecordSection()
+      )
+      : isCalendar && isDetail ? (
+        calendarDetailSection()
+      )
+      : isDetail ? (
         detailSection()
-			)
-			: null
+      )
+      : null
     );
   };
 

@@ -68,9 +68,9 @@ export const PickerTime = memo((
       secondStr === `goal` && extra === `exercise_goal_cardio` && (() => {
         setTargetStr(`exercise`);
         setTranslateStr(
-					DATE?.dateType === `day`
-					? translate(`goalCardio`)
-					: `${translate(`goalCardio`)} (${translate(`total`)})`,
+          DATE?.dateType === `day`
+          ? translate(`goalCardio`)
+          : `${translate(`goalCardio`)} (${translate(`total`)})`,
         );
       })();
 
@@ -89,27 +89,27 @@ export const PickerTime = memo((
         extra === `sleep_goal_bedTime` && (() => {
           setTargetStr(`sleep`);
           setTranslateStr(
-						DATE?.dateType === `day`
-						? translate(`goalBedTime`)
-						: `${translate(`goalBedTime`)} (${translate(`avg`)})`,
+            DATE?.dateType === `day`
+            ? translate(`goalBedTime`)
+            : `${translate(`goalBedTime`)} (${translate(`avg`)})`,
           );
         })();
 
         extra === `sleep_goal_wakeTime` && (() => {
           setTargetStr(`sleep`);
           setTranslateStr(
-						DATE?.dateType === `day`
-						? translate(`goalWakeTime`)
-						: `${translate(`goalWakeTime`)} (${translate(`avg`)})`,
+            DATE?.dateType === `day`
+            ? translate(`goalWakeTime`)
+            : `${translate(`goalWakeTime`)} (${translate(`avg`)})`,
           );
         })();
 
         extra === `sleep_goal_sleepTime` && (() => {
           setTargetStr(`sleep`);
           setTranslateStr(
-						DATE?.dateType === `day`
-						? translate(`goalSleepTime`)
-						: `${translate(`goalSleepTime`)} (${translate(`avg`)})`,
+            DATE?.dateType === `day`
+            ? translate(`goalSleepTime`)
+            : `${translate(`goalSleepTime`)} (${translate(`avg`)})`,
           );
         })();
       })();
@@ -137,10 +137,10 @@ export const PickerTime = memo((
     setOBJECT((prev: any) => ({
       ...prev,
       [`calendar_${targetStr}_section`]: prev?.[`calendar_${targetStr}_section`]?.map((section: any, idx: number) => (
-				idx === i ? {
-				  ...section,
-				  [extra]: moment(e).format(`HH:mm`),
-				} : section
+        idx === i ? {
+          ...section,
+          [extra]: moment(e).format(`HH:mm`),
+        } : section
       )),
     }));
   }, [ setOBJECT, targetStr, i, extra ]);
@@ -158,10 +158,10 @@ export const PickerTime = memo((
     setOBJECT((prev: any) => ({
       ...prev,
       [`${firstStr}_section`]: prev?.[`${firstStr}_section`]?.map((section: any, idx: number) => (
-				idx === i ? {
-				  ...section,
-				  [extra]: moment(e).format(`HH:mm`),
-				} : section
+        idx === i ? {
+          ...section,
+          [extra]: moment(e).format(`HH:mm`),
+        } : section
       )),
     }));
   }, [ setOBJECT, firstStr, i, extra ]);
@@ -221,8 +221,8 @@ export const PickerTime = memo((
             endadornment={translate(`hm`)}
             onClick={(e: any) => {
               extra !== `sleep_record_sleepTime` &&
-							LOCKED === `unlocked` &&
-							popTrigger.openPopup(e.currentTarget);
+              LOCKED === `unlocked` &&
+              popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -262,7 +262,7 @@ export const PickerTime = memo((
             endadornment={translate(`hm`)}
             onClick={(e: any) => {
               LOCKED === `unlocked` &&
-							popTrigger.openPopup(e.currentTarget);
+              popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}
@@ -302,8 +302,8 @@ export const PickerTime = memo((
             endadornment={translate(`hm`)}
             onClick={(e: any) => {
               extra !== `sleep_record_sleepTime` &&
-							LOCKED === `unlocked` &&
-							popTrigger.openPopup(e.currentTarget);
+              LOCKED === `unlocked` &&
+              popTrigger.openPopup(e.currentTarget);
             }}
           />
         )}

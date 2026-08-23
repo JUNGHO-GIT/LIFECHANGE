@@ -6,6 +6,7 @@
  */
 
 import * as repository from "@repositories/money/MoneyRecordRepository";
+import { sanitizeMongoKeys } from "@assets/scripts/sanitize";
 import * as goalRepository from "@repositories/money/MoneyGoalRepository";
 
 // 0. exist ----------------------------------------------------------------------------------------
@@ -64,8 +65,9 @@ export const list = async (
   PAGING_param: any,
 ) => {
 
-  if (typeof DATE_param === `string`) { try { DATE_param = JSON.parse(DATE_param); } catch (e) {} }
-  if (typeof PAGING_param === `string`) { try { PAGING_param = JSON.parse(PAGING_param); } catch (e) {} }
+  // 파싱으로 새로 만든 객체는 요청 단계 sanitize 를 거치지 않으므로 여기서 다시 정리함
+  if (typeof DATE_param === `string`) { try { DATE_param = JSON.parse(DATE_param); sanitizeMongoKeys(DATE_param); } catch (e) {} }
+  if (typeof PAGING_param === `string`) { try { PAGING_param = JSON.parse(PAGING_param); sanitizeMongoKeys(PAGING_param); } catch (e) {} }
 
   // result 변수 선언
   let findResult: any = null;
@@ -222,6 +224,11 @@ export const create = async (
     }
   }
 
+  // 삭제 후 생성이 실패했다면 원본을 되돌려 데이터 유실을 막음
+  if (deleteResult && !createResult) {
+    await repository.restore(deleteResult);
+  }
+
   if (!createResult) {
     finalResult = null;
     statusResult = `fail`;
@@ -329,6 +336,11 @@ export const update = async (
         statusResult = `success`;
       }
     }
+  }
+
+  // 삭제 후 쓰기가 실패했다면 원본을 되돌려 데이터 유실을 막음
+  if (deleteResult && !updateResult) {
+    await repository.restore(deleteResult);
   }
 
   if (!updateResult) {

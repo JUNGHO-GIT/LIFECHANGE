@@ -132,13 +132,13 @@ export const list = async (
       const g: any = grouped[dateKey];
       const firstDoc: any = g.docs[0];
       const avgBed: string = decimalToTime(
-        g.totalBedDecimal / (g.bedCount ?? 1),
+        g.totalBedDecimal / (g.bedCount || 1),
       );
       const avgWake: string = decimalToTime(
-        g.totalWakeDecimal / (g.wakeCount ?? 1),
+        g.totalWakeDecimal / (g.wakeCount || 1),
       );
       const avgSleep: string = decimalToTime(
-        g.totalSleepDecimal / (g.sleepCount ?? 1),
+        g.totalSleepDecimal / (g.sleepCount || 1),
       );
       return {
         _id: firstDoc?._id ?? null,
@@ -297,6 +297,11 @@ export const create = async (
     }
   }
 
+  // 삭제 후 생성이 실패했다면 원본을 되돌려 데이터 유실을 막음
+  if (deleteResult && !createResult) {
+    await repository.restore(deleteResult);
+  }
+
   if (!createResult) {
     finalResult = null;
     statusResult = `fail`;
@@ -396,6 +401,11 @@ export const update = async (
         );
       }
     }
+  }
+
+  // 삭제 후 쓰기가 실패했다면 원본을 되돌려 데이터 유실을 막음
+  if (deleteResult && !updateResult) {
+    await repository.restore(deleteResult);
   }
 
   if (!updateResult) {

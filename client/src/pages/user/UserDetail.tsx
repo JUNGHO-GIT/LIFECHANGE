@@ -54,7 +54,8 @@ export const UserDetail = memo(() => {
     })
     .then((res: any) => {
       setLOADING(false);
-      setOBJECT(res.data.result ? res.data.result : {});
+      // 본문 부재 시 빈 스키마로 대체 — {} 폴백은 필수 필드 부재로 렌더 중 크래시를 유발함
+      setOBJECT(res.data.result ?? User);
     })
     .catch((error: any) => {
       setLOADING(false);
@@ -154,7 +155,7 @@ export const UserDetail = memo(() => {
                 <Input
                   readOnly={true}
                   label={translate(`regDt`)}
-                  value={item?.user_regDt.split(`T`)[0]}
+                  value={item?.user_regDt ? String(item.user_regDt).split(`T`)[0] : ``}
                 />
               </Grid>
             </Grid>
@@ -300,11 +301,11 @@ export const UserDetail = memo(() => {
                   readOnly={true}
                   label={translate(`curPropertyExclusion`)}
                   value={
-										includingExclusions ? (
-											  insertComma(item.user_curPropertyAll ?? `0`)
-										) : (
-											  insertComma(item.user_curPropertyExclusion ?? `0`)
-										)
+                    includingExclusions ? (
+                        insertComma(item.user_curPropertyAll ?? `0`)
+                    ) : (
+                        insertComma(item.user_curPropertyExclusion ?? `0`)
+                    )
                   }
                   startadornment={(
                     <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.income }}>

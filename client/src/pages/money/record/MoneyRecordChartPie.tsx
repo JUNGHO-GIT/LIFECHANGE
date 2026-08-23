@@ -5,7 +5,7 @@
  * @since 2025-12-26
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useMemo, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { MoneyPie, MoneyPieType } from "@exportSchemas";
@@ -16,6 +16,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "@expo
 declare interface MoneyRecordChartPieProps {
   TYPE?: any;
   setTYPE?: any;
+  DATE?: any;
 }
 declare interface PieProps {
   cx?: number;
@@ -50,17 +51,23 @@ export const MoneyRecordChartPie = memo((props: MoneyRecordChartPieProps) => {
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
-  const [ DATE, _setDATE ] = useState({
-    dateType: ``,
-    dateStart: getDayFmt(),
-    dateEnd: getDayFmt(),
-    weekStartFmt: getWeekStartFmt(),
-    weekEndFmt: getWeekEndFmt(),
-    monthStartFmt: getMonthStartFmt(),
-    monthEndFmt: getMonthEndFmt(),
-    yearStartFmt: getYearStartFmt(),
-    yearEndFmt: getYearEndFmt(),
-  });
+
+  // 2-2. useMemo --------------------------------------------------------------------------------
+  // - 리스트의 DATE가 주어지면 그 날짜 기준으로 주/월/년 범위를 계산
+  const DATE = useMemo(() => {
+    const base: string = props?.DATE?.dateStart ?? getDayFmt();
+    return {
+      dateType: ``,
+      dateStart: base,
+      dateEnd: props?.DATE?.dateEnd ?? base,
+      weekStartFmt: getWeekStartFmt(base),
+      weekEndFmt: getWeekEndFmt(base),
+      monthStartFmt: getMonthStartFmt(base),
+      monthEndFmt: getMonthEndFmt(base),
+      yearStartFmt: getYearStartFmt(base),
+      yearEndFmt: getYearEndFmt(base),
+    };
+  }, [ props?.DATE?.dateStart, props?.DATE?.dateEnd ]);
 
   // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_INCOME_WEEK, setOBJECT_INCOME_WEEK ] = useState<[MoneyPieType]>([MoneyPie]);
@@ -93,32 +100,32 @@ export const MoneyRecordChartPie = memo((props: MoneyRecordChartPieProps) => {
 
         // 서버에서 기본값을 포함한 응답을 받으므로 직접 설정
         setOBJECT_INCOME_WEEK(
-					resWeek.data.result.income && Array.isArray(resWeek.data.result.income)
+          resWeek.data.result.income && Array.isArray(resWeek.data.result.income)
           ? resWeek.data.result.income
           : [MoneyPie]
         );
         setOBJECT_EXPENSE_WEEK(
-					resWeek.data.result.expense && Array.isArray(resWeek.data.result.expense)
+          resWeek.data.result.expense && Array.isArray(resWeek.data.result.expense)
           ? resWeek.data.result.expense
           : [MoneyPie]
         );
         setOBJECT_INCOME_MONTH(
-					resMonth.data.result.income && Array.isArray(resMonth.data.result.income)
+          resMonth.data.result.income && Array.isArray(resMonth.data.result.income)
           ? resMonth.data.result.income
           : [MoneyPie]
         );
         setOBJECT_EXPENSE_MONTH(
-					resMonth.data.result.expense && Array.isArray(resMonth.data.result.expense)
+          resMonth.data.result.expense && Array.isArray(resMonth.data.result.expense)
           ? resMonth.data.result.expense
           : [MoneyPie]
         );
         setOBJECT_INCOME_YEAR(
-					resYear.data.result.income && Array.isArray(resYear.data.result.income)
+          resYear.data.result.income && Array.isArray(resYear.data.result.income)
           ? resYear.data.result.income
           : [MoneyPie]
         );
         setOBJECT_EXPENSE_YEAR(
-					resYear.data.result.expense && Array.isArray(resYear.data.result.expense)
+          resYear.data.result.expense && Array.isArray(resYear.data.result.expense)
           ? resYear.data.result.expense
           : [MoneyPie]
         );
@@ -177,59 +184,59 @@ export const MoneyRecordChartPie = memo((props: MoneyRecordChartPieProps) => {
 
     let object: any = null;
 
-		(TYPE_STATE.section === `week` && TYPE_STATE.line === `income`) ? (() => {
-		  object = OBJECT_INCOME_WEEK;
-		})()
-		: (TYPE_STATE.section === `week` && TYPE_STATE.line === `expense`) ? (() => {
-		  object = OBJECT_EXPENSE_WEEK;
-		})()
-		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `income`) ? (() => {
-		  object = OBJECT_INCOME_MONTH;
-		})()
-		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `expense`) ? (() => {
-		  object = OBJECT_EXPENSE_MONTH;
-		})()
-		: (TYPE_STATE.section === `year` && TYPE_STATE.line === `income`) ? (() => {
-		  object = OBJECT_INCOME_YEAR;
-		})()
-		: (TYPE_STATE.section === `year` && TYPE_STATE.line === `expense`) && (() => {
-		  object = OBJECT_EXPENSE_YEAR;
-		})();
+    (TYPE_STATE.section === `week` && TYPE_STATE.line === `income`) ? (() => {
+      object = OBJECT_INCOME_WEEK;
+    })()
+    : (TYPE_STATE.section === `week` && TYPE_STATE.line === `expense`) ? (() => {
+      object = OBJECT_EXPENSE_WEEK;
+    })()
+    : (TYPE_STATE.section === `month` && TYPE_STATE.line === `income`) ? (() => {
+      object = OBJECT_INCOME_MONTH;
+    })()
+    : (TYPE_STATE.section === `month` && TYPE_STATE.line === `expense`) ? (() => {
+      object = OBJECT_EXPENSE_MONTH;
+    })()
+    : (TYPE_STATE.section === `year` && TYPE_STATE.line === `income`) ? (() => {
+      object = OBJECT_INCOME_YEAR;
+    })()
+    : (TYPE_STATE.section === `year` && TYPE_STATE.line === `expense`) && (() => {
+      object = OBJECT_EXPENSE_YEAR;
+    })();
 
-		if (
-		  cx === undefined
+    if (
+      cx === undefined
       || cy === undefined
       || midAngle === undefined
       || innerRadius === undefined
       || outerRadius === undefined
       || value === undefined
       || index === undefined
-		) {
-		  return null;
-		}
+    ) {
+      return null;
+    }
 
-		const RADIAN: number = Math.PI / 180;
-		const radius: number = innerRadius + (outerRadius - innerRadius) / 2;
-		const x: number = cx + radius * Math.cos(-midAngle * RADIAN);
-		const y: number = cy + radius * Math.sin(-midAngle * RADIAN);
+    const RADIAN: number = Math.PI / 180;
+    const radius: number = innerRadius + (outerRadius - innerRadius) / 2;
+    const x: number = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y: number = cy + radius * Math.sin(-midAngle * RADIAN);
 
-		return (
-		  <text
-		    x={x}
-		    y={y}
-		    fill={`white`}
-		    textAnchor={`middle`}
-		    dominantBaseline={`central`}
-		    className={`fs-0-6rem`}
-		  >
-		    <tspan x={x} dy={`-0.5em`} dx={`0.4em`}>
-		      {object?.[index]?.name ? translate(object?.[index].name as string) : ``}
-		    </tspan>
-		    <tspan x={x} dy={`1.4em`} dx={`0.4em`}>
-		      {Number(value).toLocaleString()}
-		    </tspan>
-		  </text>
-		);
+    return (
+      <text
+        x={x}
+        y={y}
+        fill={`white`}
+        textAnchor={`middle`}
+        dominantBaseline={`central`}
+        className={`fs-0-6rem`}
+      >
+        <tspan x={x} dy={`-0.5em`} dx={`0.4em`}>
+          {object?.[index]?.name ? translate(object?.[index].name as string) : ``}
+        </tspan>
+        <tspan x={x} dy={`1.4em`} dx={`0.4em`}>
+          {Number(value).toLocaleString()}
+        </tspan>
+      </text>
+    );
   };
 
   // 5-1. chart ------------------------------------------------------------------------------------
@@ -238,96 +245,96 @@ export const MoneyRecordChartPie = memo((props: MoneyRecordChartPieProps) => {
     let object: any[] = [MoneyPie];
     let endStr: string = ``;
 
-		(TYPE_STATE.section === `week` && TYPE_STATE.line === `income`) ? (() => {
-		  object = OBJECT_INCOME_WEEK;
-		})()
-		: (TYPE_STATE.section === `week` && TYPE_STATE.line === `expense`) ? (() => {
-		  object = OBJECT_EXPENSE_WEEK;
-		})()
-		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `income`) ? (() => {
-		  object = OBJECT_INCOME_MONTH;
-		})()
-		: (TYPE_STATE.section === `month` && TYPE_STATE.line === `expense`) ? (() => {
-		  object = OBJECT_EXPENSE_MONTH;
-		})()
-		: (TYPE_STATE.section === `year` && TYPE_STATE.line === `income`) ? (() => {
-		  object = OBJECT_INCOME_YEAR;
-		})()
-		: (TYPE_STATE.section === `year` && TYPE_STATE.line === `expense`) && (() => {
-		  object = OBJECT_EXPENSE_YEAR;
-		})();
+    (TYPE_STATE.section === `week` && TYPE_STATE.line === `income`) ? (() => {
+      object = OBJECT_INCOME_WEEK;
+    })()
+    : (TYPE_STATE.section === `week` && TYPE_STATE.line === `expense`) ? (() => {
+      object = OBJECT_EXPENSE_WEEK;
+    })()
+    : (TYPE_STATE.section === `month` && TYPE_STATE.line === `income`) ? (() => {
+      object = OBJECT_INCOME_MONTH;
+    })()
+    : (TYPE_STATE.section === `month` && TYPE_STATE.line === `expense`) ? (() => {
+      object = OBJECT_EXPENSE_MONTH;
+    })()
+    : (TYPE_STATE.section === `year` && TYPE_STATE.line === `income`) ? (() => {
+      object = OBJECT_INCOME_YEAR;
+    })()
+    : (TYPE_STATE.section === `year` && TYPE_STATE.line === `expense`) && (() => {
+      object = OBJECT_EXPENSE_YEAR;
+    })();
 
-		// 안전장치: object가 비어있거나 null인 경우 기본값 설정
-		if (!object || !Array.isArray(object) || object.length === 0) {
-		  object = [MoneyPie];
-		}
+    // 안전장치: object가 비어있거나 null인 경우 기본값 설정
+    if (!object || !Array.isArray(object) || object.length === 0) {
+      object = [MoneyPie];
+    }
 
-		return (
-		  <ResponsiveContainer width={`100%`} height={`100%`}>
-		    <PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
-		      <defs>
-		        <filter id={`textBackground`} x={0} y={0} width={1} height={1}>
-		          <feFlood floodColor={`#f9f9f9`} />
-		          <feComposite in={`SourceGraphic`} />
-		        </filter>
-		      </defs>
-		      <Pie
-		        data={object}
-		        cx={`50%`}
-		        cy={`35%`}
-		        label={renderPie as any}
-		        labelLine={false}
-		        outerRadius={110}
-		        fill={`#8884d8`}
-		        dataKey={`value`}
-		        isAnimationActive={true}
-		        animationBegin={0}
-		        animationDuration={400}
-		        animationEasing={`linear`}
-		      >
-		        {object?.map((_entry: any, index: number) => (
-		          <Cell
-		            key={`cell-${_entry.name ?? _entry.dataKey ?? _entry.value}`}
-		            fill={_entry.name === `Empty`
-		              ? `#edf0f4`
-		              : chartThemeColors[TYPE_STATE.line]
-		                ?? chartColors[index % chartColors.length]}
-		            fillOpacity={_entry.name === `Empty`
-		              ? 1
-		              : Math.max(0.6, 1 - (index * 0.1))}
-		          />
-		        ))}
-		      </Pie>
-		      <Tooltip
-		        formatter={(value: any, name: any) => {
-		          const customName: string = translate(name as string);
-		          return [ `${Number(value).toLocaleString()} ${endStr}`, customName ];
-		        }}
-		        contentStyle={{
-		          backgroundColor: `rgba(255, 255, 255, 0.8)`,
-		          border: `none`,
-		          borderRadius: `10px`,
-		        }}
-		      />
-		      <Legend
-		        iconType={`circle`}
-		        iconSize={8}
-		        verticalAlign={`bottom`}
-		        align={`center`}
-		        formatter={(value) => {
-		          return translate(value as string);
-		        }}
-		        wrapperStyle={{
-		          width: `95%`,
-		          display: `flex`,
-		          justifyContent: `center`,
-		          alignItems: `center`,
-		          fontSize: `0.8rem`,
-		        }}
-		      />
-		    </PieChart>
-		  </ResponsiveContainer>
-		);
+    return (
+      <ResponsiveContainer width={`100%`} height={`100%`}>
+        <PieChart margin={{ top: 60, right: 20, bottom: 10, left: 20 }}>
+          <defs>
+            <filter id={`textBackground`} x={0} y={0} width={1} height={1}>
+              <feFlood floodColor={`#f9f9f9`} />
+              <feComposite in={`SourceGraphic`} />
+            </filter>
+          </defs>
+          <Pie
+            data={object}
+            cx={`50%`}
+            cy={`35%`}
+            label={renderPie as any}
+            labelLine={false}
+            outerRadius={110}
+            fill={`#8884d8`}
+            dataKey={`value`}
+            isAnimationActive={true}
+            animationBegin={0}
+            animationDuration={400}
+            animationEasing={`linear`}
+          >
+            {object?.map((_entry: any, index: number) => (
+              <Cell
+                key={`cell-${_entry.name ?? _entry.dataKey ?? _entry.value}`}
+                fill={_entry.name === `Empty`
+                  ? `#edf0f4`
+                  : chartThemeColors[TYPE_STATE.line]
+                    ?? chartColors[index % chartColors.length]}
+                fillOpacity={_entry.name === `Empty`
+                  ? 1
+                  : Math.max(0.6, 1 - (index * 0.1))}
+              />
+            ))}
+          </Pie>
+          <Tooltip
+            formatter={(value: any, name: any) => {
+              const customName: string = translate(name as string);
+              return [ `${Number(value).toLocaleString()} ${endStr}`, customName ];
+            }}
+            contentStyle={{
+              backgroundColor: `rgba(255, 255, 255, 0.8)`,
+              border: `none`,
+              borderRadius: `10px`,
+            }}
+          />
+          <Legend
+            iconType={`circle`}
+            iconSize={8}
+            verticalAlign={`bottom`}
+            align={`center`}
+            formatter={(value) => {
+              return translate(value as string);
+            }}
+            wrapperStyle={{
+              width: `95%`,
+              display: `flex`,
+              justifyContent: `center`,
+              alignItems: `center`,
+              fontSize: `0.8rem`,
+            }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    );
   };
 
   // 10. return ----------------------------------------------------------------------------------

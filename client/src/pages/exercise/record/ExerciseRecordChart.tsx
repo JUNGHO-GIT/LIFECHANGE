@@ -16,7 +16,12 @@ import { Paper, Grid, Div, Hr } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const ExerciseRecordChart = memo(() => {
+declare interface ExerciseRecordChartProps {
+  DATE?: any;
+}
+
+// -------------------------------------------------------------------------------------------------
+export const ExerciseRecordChart = memo((props: ExerciseRecordChartProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
   const { PATH } = useCommonValue();
@@ -108,7 +113,7 @@ export const ExerciseRecordChart = memo(() => {
         <Hr m={20} className={`bg-light`} />
         <Grid size={12} className={`d-col-center`}>
           <Div className={`w-100p h-300px`}>
-            <ExerciseRecordChartPie TYPE={TYPE_PIE_SAFE} setTYPE={setTYPE_PIE} />
+            <ExerciseRecordChartPie TYPE={TYPE_PIE_SAFE} setTYPE={setTYPE_PIE} DATE={props?.DATE} />
           </Div>
         </Grid>
       </Grid>
@@ -168,7 +173,7 @@ export const ExerciseRecordChart = memo(() => {
         <Hr m={20} className={`bg-light`} />
         <Grid size={12} className={`d-col-center`}>
           <Div className={`w-100p h-300px`}>
-            <ExerciseRecordChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} />
+            <ExerciseRecordChartLine TYPE={TYPE_LINE} setTYPE={setTYPE_LINE} DATE={props?.DATE} />
           </Div>
         </Grid>
       </Grid>
@@ -227,7 +232,7 @@ export const ExerciseRecordChart = memo(() => {
         <Hr m={20} className={`bg-light`} />
         <Grid size={12} className={`d-col-center`}>
           <Div className={`w-100p h-300px`}>
-            <ExerciseRecordChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} />
+            <ExerciseRecordChartAvg TYPE={TYPE_AVG} setTYPE={setTYPE_AVG} DATE={props?.DATE} />
           </Div>
         </Grid>
       </Grid>

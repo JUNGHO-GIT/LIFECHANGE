@@ -187,34 +187,34 @@ export const formatY = (OBJECT: unknown, array: unknown, type: string, _extra?: 
       };
 
       const config = (
-				type === `sleep` ? {
-				  maxValue: maxValue,
-				  tickInterval: _extra === `line` ? 5 : 1,
-				  topValue: _extra === `line` ? Math.ceil(maxValue / 100) * 100 : 24,
-				} : type === `money` ? (() => {
-				  const { niceTick, top } = computeNiceTick(maxValue, 6);
-				  return {
-				    maxValue: maxValue,
-				    tickInterval: niceTick,
-				    topValue: top,
-				  };
-				})() : type === `food` ? (() => {
-				  const { niceTick, top } = computeNiceTick(maxValue, 6);
-				  return {
-				    maxValue: maxValue,
-				    tickInterval: Math.max(niceTick, 1),
-				    topValue: top,
-				  };
-				})() : type === `exercise` ? (() => {
-				  const { niceTick, top } = computeNiceTick(maxValue, 6);
-				  return {
-				    maxValue: maxValue,
-				    tickInterval: Math.max(niceTick, 1),
-				    topValue: top,
-				  };
-				})() : (() => {
-				  throw new Error(`formatY: type error`);
-				})()
+        type === `sleep` ? {
+          maxValue: maxValue,
+          tickInterval: _extra === `line` ? 5 : 1,
+          topValue: _extra === `line` ? Math.ceil(maxValue / 100) * 100 : 24,
+        } : type === `money` ? (() => {
+          const { niceTick, top } = computeNiceTick(maxValue, 6);
+          return {
+            maxValue: maxValue,
+            tickInterval: niceTick,
+            topValue: top,
+          };
+        })() : type === `food` ? (() => {
+          const { niceTick, top } = computeNiceTick(maxValue, 6);
+          return {
+            maxValue: maxValue,
+            tickInterval: Math.max(niceTick, 1),
+            topValue: top,
+          };
+        })() : type === `exercise` ? (() => {
+          const { niceTick, top } = computeNiceTick(maxValue, 6);
+          return {
+            maxValue: maxValue,
+            tickInterval: Math.max(niceTick, 1),
+            topValue: top,
+          };
+        })() : (() => {
+          throw new Error(`formatY: type error`);
+        })()
       ) as {
         maxValue: number;
         tickInterval: number;

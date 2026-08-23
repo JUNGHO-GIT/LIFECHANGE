@@ -249,7 +249,7 @@ const schema = new mongoose.Schema(
         },
         money_amount: {
           type: String,
-          default: 0,
+          default: `0`,
           required: false,
         },
         money_content: {

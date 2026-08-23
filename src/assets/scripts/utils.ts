@@ -13,6 +13,7 @@ loadEnv();
 
 // 1-1. number -------------------------------------------------------------------------------------
 export const randomNumber = (data: number) => Math.floor(Math.random() * data);
+
 // 1-2. time ---------------------------------------------------------------------------------------
 export const randomTime = () => {
   const hour: string = Math.floor(Math.random() * 23)

@@ -363,10 +363,10 @@ export const MoneyGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.money_goal_income}
                   error={ERRORS?.[i]?.money_goal_income}
                   label={DATE?.dateType === `day` ? (
-										translate(`goalIncome`)
-									) : (
-										`${translate(`goalIncome`)} (${translate(`total`)})`
-									)}
+                    translate(`goalIncome`)
+                  ) : (
+                    `${translate(`goalIncome`)} (${translate(`total`)})`
+                  )}
                   startadornment={(
                     <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.income }}>
                       {`●`}
@@ -398,11 +398,11 @@ export const MoneyGoalDetail = memo(() => {
                   inputRef={REFS?.[i]?.money_goal_expense}
                   error={ERRORS?.[i]?.money_goal_expense}
                   label={
-										DATE?.dateType === `day` ? (
-											translate(`goalExpense`)
-										) : (
-											`${translate(`goalExpense`)} (${translate(`total`)})`
-										)
+                    DATE?.dateType === `day` ? (
+                      translate(`goalExpense`)
+                    ) : (
+                      `${translate(`goalExpense`)} (${translate(`total`)})`
+                    )
                   }
                   startadornment={(
                     <Div className={`fs-0-6rem ml-2vw`} style={{ color: chartThemeColors.expense }}>

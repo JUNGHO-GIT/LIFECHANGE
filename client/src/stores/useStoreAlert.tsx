@@ -27,6 +27,13 @@ export const useStoreAlert = create<AlertState>((set) => ({
     severity: `success`,
   },
   setALERT: (payload) => {
+    const msg: string = String(payload.msg ?? ``).trim();
+
+    // 취소된 요청의 catch 는 사용자 오류가 아니므로 알림을 열지 않음
+    if (payload.open === true && (msg === `` || msg === `requestCanceled`)) {
+      return;
+    }
+
     set((state) => ({
       ALERT: {
         ...state.ALERT,

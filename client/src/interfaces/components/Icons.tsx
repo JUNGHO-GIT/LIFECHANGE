@@ -155,7 +155,9 @@ export const Icons = memo((props: any) => {
   }
   else if (svgRawByName[String(props.name).toLowerCase()]?.startsWith(`<svg`)) {
     // className 을 <svg> 에 직접 부여 → 크기 클래스와 색 클래스(currentColor)가 그대로 적용됨; 파일명은 소문자라 이름 정규화
-    const svgHtml: string = svgRawByName[String(props.name).toLowerCase()].replace(`<svg `, `<svg class="${iconClassName}" `);
+    // 원본 svg 문자열의 속성 문맥에 그대로 들어가므로 클래스명은 안전 문자만 남겨 속성 탈출을 차단
+    const safeClassName: string = iconClassName.replace(/[^A-Za-z0-9_\- ]/g, ``);
+    const svgHtml: string = svgRawByName[String(props.name).toLowerCase()].replace(`<svg `, `<svg class="${safeClassName}" `);
     IconComponent = (
       <span style={{ display: `contents` }} dangerouslySetInnerHTML={{ __html: svgHtml }} />
     );

@@ -140,11 +140,11 @@ export const MoneyRecordList = memo(() => {
         newSectionCnt: res.data.sectionCnt ?? 0,
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-      setIsExpanded(() => {
-        if (resultLength !== isExpanded.length) {
+      setIsExpanded((prev: { expanded: boolean }[]) => {
+        if (resultLength !== prev.length) {
           return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
-        return isExpanded;
+        return prev;
       });
     })
     .catch((error: any) => {
@@ -265,12 +265,21 @@ export const MoneyRecordList = memo(() => {
       <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
-          <Grid size={12} className={`d-row-left`}>
-            <Div className={`fs-0-95rem fw-600 mr-auto`}>
-              {`${formatDateYyyyMmDd(DATE?.dateStart)} - ${formatDateYyyyMmDd(DATE?.dateEnd)}`}
+          <Grid size={12} className={`d-row-center`}>
+            <Div className={`fs-0-95rem fw-600`}>
+              {`${formatDateYyyyMmDd(DATE?.dateStart)}`}
             </Div>
-            <Div className={`fs-0-9rem fw-600 dark-grey`}>
-              {`(${translate(`total`)})`}
+            <Div className={`fs-0-85rem fw-600 dark-grey`}>
+               {`(${translate(getDayNotFmt(DATE?.dateStart).format(`ddd`))})`}
+            </Div>
+            <Div className={`fs-0-95rem fw-600 mx-10px`}>
+              {`-`}
+            </Div>
+            <Div className={`fs-0-95rem fw-600`}>
+              {`${formatDateYyyyMmDd(DATE?.dateEnd)}`}
+            </Div>
+            <Div className={`fs-0-85rem fw-600 dark-grey`}>
+               {`(${translate(getDayNotFmt(DATE?.dateEnd).format(`ddd`))})`}
             </Div>
           </Grid>
         </Grid>
@@ -278,8 +287,10 @@ export const MoneyRecordList = memo(() => {
         <Hr m={20} className={`bg-light`} />
 
         {/** row 2 **/}
-        <Grid size={12}>
-          <MoneyRecordChart />
+        <Grid container={true} spacing={0}>
+          <Grid size={12} className={`d-row-center`}>
+            <MoneyRecordChart DATE={DATE} />
+          </Grid>
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
@@ -326,7 +337,7 @@ export const MoneyRecordList = memo(() => {
             <Div className={`stat-card`}>
               <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
-                  {`${translate(`expense`)} ${translate(`avg`)}`}
+                  {`${translate(`avg`)} ${translate(`expense`)}`}
                 </Div>
                 <Div className={`stat-meta fs-0-55rem dark mt-3px`}>
                   {`${recordSummary.recordCnt}${translate(`count`)}`}

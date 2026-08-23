@@ -39,8 +39,8 @@ router.get(`/pie/week`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -75,8 +75,8 @@ router.get(`/pie/month`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });
@@ -111,8 +111,8 @@ router.get(`/pie/year`, async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       status: `error`,
-      msg: error instanceof Error ? error.message : String(error),
-      error: error instanceof Error ? error.message : String(error),
+      msg: `serverError`,
+      result: null,
     });
   }
 });

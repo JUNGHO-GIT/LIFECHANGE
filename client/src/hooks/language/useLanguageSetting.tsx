@@ -35,8 +35,19 @@ export const useLanguageSetting = () => {
     // ex. US
       const isoCode: string = getCountryForTimezone(timeZone)?.id ?? ``;
 
-    // ex. USD
-      const currency: string = getAllInfoByISO(isoCode).currency;
+    // ex. USD (UTC 등 미매핑 타임존은 통화 조회가 throw 하므로 기본값으로 흡수함)
+      const readCurrency = (): string => {
+        if (isoCode === ``) {
+          return `USD`;
+        }
+        try {
+          return getAllInfoByISO(isoCode).currency;
+        }
+        catch {
+          return `USD`;
+        }
+      };
+      const currency: string = readCurrency();
 
     // 미국인 경우 lbs, 그 외에는 kg 설정
       const unit: string = isoCode === `US` ? `lbs` : `kg`;
@@ -62,14 +73,21 @@ export const useLanguageSetting = () => {
       });
     };
 
+    // 로컬 동기화 실패는 화면 기능을 막지 않으므로 기록만 하고 unhandled rejection 을 만들지 않음
+    const runSyncLocale = (): void => {
+      syncLocale().catch((error: unknown) => {
+        console.error(`[locale] 동기화 실패`, error);
+      });
+    };
+
     const idleId: number | null = typeof window.requestIdleCallback === `function`
       ? window.requestIdleCallback(() => {
-        void syncLocale();
+        runSyncLocale();
       })
       : null;
     const timeoutId: ReturnType<typeof setTimeout> | null = idleId === null
       ? setTimeout(() => {
-        void syncLocale();
+        runSyncLocale();
       }, 0)
       : null;
 

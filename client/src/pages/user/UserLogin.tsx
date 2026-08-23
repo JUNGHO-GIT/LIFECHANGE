@@ -27,7 +27,6 @@ export const UserLogin = memo(() => {
 
   // 2-2. useState ---------------------------------------------------------------------------------
   const [ OBJECT, setOBJECT ] = useState<UserType>(User);
-  const [ loginTrigger, setLoginTrigger ] = useState<boolean>(false);
   const [ checkedSaveId, setCheckedSaveId ] = useState<boolean>(false);
   const [ checkedAutoLogin, setCheckedAutoLogin ] = useState<boolean>(false);
 
@@ -40,45 +39,40 @@ export const UserLogin = memo(() => {
   }, [OBJECT]);
 
   // 2-3. useEffect -----------------------------------------------------------------------------
-  // 트리거가 활성화된 경우
+  // 초기 로드 시 보관된 토큰으로 세션 복원 (평문 비밀번호 보관 방식을 대체함)
   useEffect(() => {
-    if (loginTrigger) {
-      (async () => {
-        try {
-          await flowSave();
-        }
-        finally {
-          setLoginTrigger(false);
-        }
-      })();
-    }
-  }, [loginTrigger]);
+    const { autoLogin, autoLoginId, autoLoginToken } = getLocal(`setting`, `id`, ``) || {};
 
-  // 2-3. useEffect -----------------------------------------------------------------------------
-  // 초기 로드 시 자동로그인 설정 가져오기
-  useEffect(() => {
-    const { autoLogin, autoLoginId, autoLoginPw } = getLocal(`setting`, `id`, ``) || {};
-
-    // 자동로그인 o
-    if (autoLogin === `true`) {
-      setCheckedAutoLogin(true);
-      setOBJECT((prev) => ({
-        ...prev,
-        user_id: autoLoginId,
-        user_pw: autoLoginPw,
-      }));
-      setLoginTrigger(true);
-    }
-    // 자동로그인 x
-    else if (autoLogin === `false`) {
+    // 자동로그인 미사용 또는 보관 토큰 부재
+    if (autoLogin !== `true` || !autoLoginToken) {
       setCheckedAutoLogin(false);
-      setOBJECT((prev) => ({
-        ...prev,
-        user_id: ``,
-        user_pw: ``,
-      }));
-      setLoginTrigger(false);
+      return;
     }
+
+    setCheckedAutoLogin(true);
+    setOBJECT((prev) => ({
+      ...prev,
+      user_id: autoLoginId ?? ``,
+    }));
+    setLOADING(true);
+    axios.get(`${URL_OBJECT}/session`)
+    .then((res: any) => {
+      if (res.data.status === `success`) {
+        setSession(`setting`, `id`, ``, {
+          sessionId: res.data.result.user_id,
+          admin: res.data.admin === `admin` ? `true` : `false`,
+          token: autoLoginToken,
+        });
+        void navigate(`/calendar/list`);
+        void sync();
+      }
+    })
+    .catch(() => {
+      // 토큰 만료·폐기는 인터셉터가 자격을 정리하므로 로그인 화면을 그대로 유지함
+    })
+    .finally(() => {
+      setLOADING(false);
+    });
   }, []);
 
   // 2-3. useEffect -----------------------------------------------------------------------------
@@ -104,23 +98,16 @@ export const UserLogin = memo(() => {
   }, []);
 
   // 2-3. useEffect -----------------------------------------------------------------------------
-  // 자동로그인 활성화된 경우
+  // 자동로그인 해제만 여기서 처리하고, 자격(토큰) 저장은 로그인 성공 시점에만 수행함
   useEffect(() => {
-    if (checkedAutoLogin) {
-      setLocal(`setting`, `id`, ``, {
-        autoLogin: `true`,
-        autoLoginId: OBJECT.user_id,
-        autoLoginPw: OBJECT.user_pw,
-      });
-    }
-    else {
+    if (!checkedAutoLogin) {
       setLocal(`setting`, `id`, ``, {
         autoLogin: `false`,
         autoLoginId: ``,
-        autoLoginPw: ``,
+        autoLoginToken: ``,
       });
     }
-  }, [ checkedAutoLogin, OBJECT.user_id ]);
+  }, [checkedAutoLogin]);
 
   // 2-3. useEffect -----------------------------------------------------------------------------
   // 아이디 저장 활성화된 경우
@@ -149,7 +136,6 @@ export const UserLogin = memo(() => {
     axios.post(`${URL_OBJECT}/login`, {
       user_id: objectRef.current.user_id,
       user_pw: objectRef.current.user_pw,
-      isAutoLogin: checkedAutoLogin,
     })
     .then((res: any) => {
       if (res.data.status === `success`) {
@@ -157,11 +143,22 @@ export const UserLogin = memo(() => {
         setSession(`setting`, `id`, ``, {
           sessionId: res.data.result.user_id,
           admin: res.data.admin === `admin` ? `true` : `false`,
+          token: res.data.token ?? ``,
+        });
+        // 자동로그인 선택 시 평문 비밀번호 대신 액세스 토큰만 보관함
+        setLocal(`setting`, `id`, ``, checkedAutoLogin ? {
+          autoLogin: `true`,
+          autoLoginId: res.data.result.user_id,
+          autoLoginToken: res.data.token ?? ``,
+        } : {
+          autoLogin: `false`,
+          autoLoginId: ``,
+          autoLoginToken: ``,
         });
         void navigate(`/calendar/list`);
         void sync();
       }
-      else if (res.data.status === `isGoogleUser`) {
+      else if (res.data.status === `isGoogle`) {
         setLOADING(false);
         setALERT({
           open: true,

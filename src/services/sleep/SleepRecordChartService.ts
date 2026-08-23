@@ -531,26 +531,31 @@ export const avgWeek = async (user_id_param: string, DATE_param: any) => {
   let finalResult: any[] = [];
   let statusResult: string = ``;
 
-  // sum, count 변수 선언
-  let sumBedTime: number[] = new Array<number>(5).fill(0);
-  let sumWakeTime: number[] = new Array<number>(5).fill(0);
-  let sumSleepTime: number[] = new Array<number>(5).fill(0);
-  let countRecords: number[] = new Array<number>(5).fill(0);
-
   // date 변수 정의
   const monthStartFmt: string = DATE_param.monthStartFmt;
 
+  // 주차 수 계산 (월 1일이 주 후반이면 6주에 걸쳐 고정 5주는 마지막 주를 누락시킴)
+  const firstWeekStart: moment.Moment = moment(monthStartFmt).startOf(`month`).startOf(`isoWeek`);
+  const lastWeekStart: moment.Moment = moment(monthStartFmt).endOf(`month`).startOf(`isoWeek`);
+  const weekCount: number = lastWeekStart.diff(firstWeekStart, `weeks`) + 1;
+
+  // sum, count 변수 선언
+  let sumBedTime: number[] = new Array<number>(weekCount).fill(0);
+  let sumWakeTime: number[] = new Array<number>(weekCount).fill(0);
+  let sumSleepTime: number[] = new Array<number>(weekCount).fill(0);
+  let countRecords: number[] = new Array<number>(weekCount).fill(0);
+
   // weekStartDate 정의
   const weekStartDate: moment.Moment[] = Array.from(
-    { length: 5 },
-    (_v, i: number) => moment(monthStartFmt).startOf(`month`).add(i, `weeks`),
+    { length: weekCount },
+    (_v, i: number) => firstWeekStart.clone().add(i, `weeks`),
   );
 
   // ex. 00주차
-  const name: string[] = Array.from({ length: 5 }, (_, i) => `week${i + 1}`);
+  const name: string[] = Array.from({ length: weekCount }, (_, i) => `week${i + 1}`);
 
   // ex. 00-00 - 00-00
-  const date: string[] = Array.from({ length: 5 }, (_, i) => {
+  const date: string[] = Array.from({ length: weekCount }, (_, i) => {
     const startOfWeek: string = weekStartDate[i]
       .clone()
       .startOf(`isoWeek`)

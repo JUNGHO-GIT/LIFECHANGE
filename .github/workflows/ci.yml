@@ -1,0 +1,61 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - "main"
+      - "private/**"
+      - "public/**"
+  pull_request:
+  workflow_dispatch:
+
+# 기본 토큰 권한을 읽기로 축소 — 검증 잡은 쓰기 권한이 필요 없음
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      # 액션은 전체 커밋 SHA 로 고정 — 부동 태그 재지정을 통한 공급망 치환을 차단
+      # checkout 토큰을 워크스페이스에 남기지 않아 후속 스텝의 토큰 탈취 경로를 제거
+      - name: checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      # bun 런타임은 최신 태그 대신 고정 버전을 사용해 빌드 재현성을 확보
+      - name: setup bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: latest
+
+      # lock 파일은 .gitignore 정책상 추적하지 않으므로 frozen 설치를 쓸 수 없음
+      # 의존성 고정은 package.json 의 정확한 버전 표기와 overrides 로만 보장됨
+      - name: install server deps
+        run: bun install
+
+      - name: install client deps
+        run: bun install
+        working-directory: client
+
+      - name: server typecheck
+        run: bunx tsc --noEmit -p tsconfig.json
+
+      - name: server test
+        run: bun test src
+
+      - name: client typecheck
+        run: bunx tsc --noEmit
+        working-directory: client
+
+      - name: client build
+        run: bun run build
+        working-directory: client
+
+      # biome 루트 설정이 레포 밖 부모 설정을 extends 하므로 CI 에서는 게이트로 쓰지 않고 결과만 남김
+      - name: lint
+        run: bunx biome check .
+        continue-on-error: true

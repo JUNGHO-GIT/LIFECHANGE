@@ -181,10 +181,10 @@ export const useTime = (
     }
   }, [
     strLow,
-		type === `goal` && strLow === `exercise` ? (typeof OBJECT[`exercise_goal_dateStart`] === `string` ? OBJECT[`exercise_goal_dateStart`] : ``) : ``,
-		type === `goal` && strLow === `exercise` ? (typeof OBJECT[`exercise_goal_dateEnd`] === `string` ? OBJECT[`exercise_goal_dateEnd`] : ``) : ``,
-		type === `goal` && strLow === `sleep` ? (typeof OBJECT[`sleep_goal_bedTime`] === `string` ? OBJECT[`sleep_goal_bedTime`] : ``) : ``,
-		type === `goal` && strLow === `sleep` ? (typeof OBJECT[`sleep_goal_wakeTime`] === `string` ? OBJECT[`sleep_goal_wakeTime`] : ``) : ``,
-		sleepSectionKey,
+    type === `goal` && strLow === `exercise` ? (typeof OBJECT[`exercise_goal_dateStart`] === `string` ? OBJECT[`exercise_goal_dateStart`] : ``) : ``,
+    type === `goal` && strLow === `exercise` ? (typeof OBJECT[`exercise_goal_dateEnd`] === `string` ? OBJECT[`exercise_goal_dateEnd`] : ``) : ``,
+    type === `goal` && strLow === `sleep` ? (typeof OBJECT[`sleep_goal_bedTime`] === `string` ? OBJECT[`sleep_goal_bedTime`] : ``) : ``,
+    type === `goal` && strLow === `sleep` ? (typeof OBJECT[`sleep_goal_wakeTime`] === `string` ? OBJECT[`sleep_goal_wakeTime`] : ``) : ``,
+    sleepSectionKey,
   ]);
 };

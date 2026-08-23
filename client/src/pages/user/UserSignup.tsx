@@ -132,6 +132,7 @@ export const UserSignup = memo(() => {
         setOBJECT((prev) => ({
           ...prev,
           user_id_verified: true,
+          user_verify_ticket: String(res.data.result?.user_verify_ticket ?? ``),
         }));
       }
       else {
@@ -144,6 +145,7 @@ export const UserSignup = memo(() => {
         setOBJECT((prev) => ({
           ...prev,
           user_id_verified: false,
+          user_verify_ticket: ``,
         }));
       }
     })

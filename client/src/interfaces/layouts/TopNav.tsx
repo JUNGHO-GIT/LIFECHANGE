@@ -893,79 +893,79 @@ export const TopNav = memo(() => {
     // 7-5. tabs -------------------------------------------------------------------------------------
     const tabsSection = () => {
       const currentTabValue: any = (
-				firstStr ? (
-					(selectedTab as any)[firstStr] ?? (dataArray as any)[firstStr]?.[0]
-				) : null
+        firstStr ? (
+          (selectedTab as any)[firstStr] ?? (dataArray as any)[firstStr]?.[0]
+        ) : null
       );
       return currentTabValue ? (
-				<>
-				  <Tabs
-				    value={currentTabValue}
-				    variant={`fullWidth`}
-				    component={`div`}
-				    scrollButtons={false}
-				    allowScrollButtonsMobile={false}
-				    selectionFollowsFocus={true}
-				    sx={{
-				      [`& .MuiTabs-indicator`]: {
-				        display: `none`,
-				      },
-				    }}
-				  >
-				    <Tab
-				      label={translate(currentTabValue)}
-				      value={currentTabValue}
-				      className={`fs-1-2rem fw-700`}
-				      onClick={(e) => {
-				        setSelectedAnchorEl((prev) => ({
-				          ...prev,
-				          [firstStr]: e.currentTarget,
-				        }));
-				      }}
-				    />
-				  </Tabs>
-				  <Menu
-				    anchorEl={selectedAnchorEl[firstStr]}
-				    open={Boolean(selectedAnchorEl[firstStr])}
-				    anchorOrigin={{
-				      vertical: `bottom`,
-				      horizontal: `center`,
-				    }}
-				    transformOrigin={{
-				      vertical: `top`,
-				      horizontal: `center`,
-				    }}
-				    slotProps={{
-				      paper: {
-				        className: `py-0px px-10px`,
-				      },
-				    }}
-				    onClose={() => {
-				      setSelectedAnchorEl((prev) => ({
-				        ...prev,
-				        [firstStr]: null,
-				      }));
-				    }}
-				  >
-				    {dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
-				      <MenuItem
-				        key={tabName}
-				        selected={currentTabValue === tabName}
-				        className={`text-center`}
-				        onClick={() => {
-				          handleClickTobNav(tabName);
-				          setSelectedAnchorEl((prev) => ({
-				            ...prev,
-				            [firstStr]: null,
-				          }));
-				        }}
-				      >
-				        {translate(tabName)}
-				      </MenuItem>
-				    ))}
-				  </Menu>
-				</>
-			) : null;
+        <>
+          <Tabs
+            value={currentTabValue}
+            variant={`fullWidth`}
+            component={`div`}
+            scrollButtons={false}
+            allowScrollButtonsMobile={false}
+            selectionFollowsFocus={true}
+            sx={{
+              [`& .MuiTabs-indicator`]: {
+                display: `none`,
+              },
+            }}
+          >
+            <Tab
+              label={translate(currentTabValue)}
+              value={currentTabValue}
+              className={`fs-1-2rem fw-700`}
+              onClick={(e) => {
+                setSelectedAnchorEl((prev) => ({
+                  ...prev,
+                  [firstStr]: e.currentTarget,
+                }));
+              }}
+            />
+          </Tabs>
+          <Menu
+            anchorEl={selectedAnchorEl[firstStr]}
+            open={Boolean(selectedAnchorEl[firstStr])}
+            anchorOrigin={{
+              vertical: `bottom`,
+              horizontal: `center`,
+            }}
+            transformOrigin={{
+              vertical: `top`,
+              horizontal: `center`,
+            }}
+            slotProps={{
+              paper: {
+                className: `py-0px px-10px`,
+              },
+            }}
+            onClose={() => {
+              setSelectedAnchorEl((prev) => ({
+                ...prev,
+                [firstStr]: null,
+              }));
+            }}
+          >
+            {dataArray?.[firstStr as keyof typeof dataArray]?.map((tabName: string) => (
+              <MenuItem
+                key={tabName}
+                selected={currentTabValue === tabName}
+                className={`text-center`}
+                onClick={() => {
+                  handleClickTobNav(tabName);
+                  setSelectedAnchorEl((prev) => ({
+                    ...prev,
+                    [firstStr]: null,
+                  }));
+                }}
+              >
+                {translate(tabName)}
+              </MenuItem>
+            ))}
+          </Menu>
+        </>
+      ) : null;
     };
 
     // 7-9. return -----------------------------------------------------------------------------------

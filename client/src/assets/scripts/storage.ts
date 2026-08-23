@@ -29,6 +29,28 @@ let localRoot: any = {};
 let sessionRaw: string | null = null;
 let sessionRoot: any = {};
 
+// 0-2. 변경 구독 --------------------------------------------------------------------------------
+// - setLocal/setSession 은 React 상태를 거치지 않으므로 구독자에게 직접 알려 파생값 stale 을 막음
+// - 스냅샷은 스토리지 원본 문자열을 그대로 읽어 동일 상태에서 항상 같은 값을 반환함
+const listeners: Set<() => void> = new Set();
+
+export const subscribeStorage = (callback: () => void): (() => void) => {
+  listeners.add(callback);
+
+  return () => {
+    listeners.delete(callback);
+  };
+};
+
+const notifyStorage = (): void => {
+  listeners.forEach((callback) => {
+    callback();
+  });
+};
+
+export const getLocalVersion = (): string => localStorage.getItem(TITLE) ?? ``;
+export const getSessionVersion = (): string => sessionStorage.getItem(TITLE) ?? ``;
+
 // getLocalRoot ------------------------------------------------------------------------------------
 export const getLocalRoot = (): any => {
   const raw: string | null = localStorage.getItem(TITLE);
@@ -55,6 +77,7 @@ const writeLocalRoot = (next: any): void => {
   localRoot = next;
   localRaw = str;
   localStorage.setItem(TITLE, str);
+  notifyStorage();
 };
 
 // writeSessionRoot ---------------------------------------------------------------------------------
@@ -63,6 +86,7 @@ const writeSessionRoot = (next: any): void => {
   sessionRoot = next;
   sessionRaw = str;
   sessionStorage.setItem(TITLE, str);
+  notifyStorage();
 };
 
 // 1. getLocal -------------------------------------------------------------------------------------

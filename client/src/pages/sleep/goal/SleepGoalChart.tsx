@@ -14,7 +14,12 @@ import { Grid, Hr } from "@exportComponents";
 import { MenuItem } from "@exportMuis";
 
 // -------------------------------------------------------------------------------------------------
-export const SleepGoalChart = memo(() => {
+declare interface SleepGoalChartProps {
+  DATE?: any;
+}
+
+// -------------------------------------------------------------------------------------------------
+export const SleepGoalChart = memo((props: SleepGoalChartProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
   const { PATH } = useCommonValue();
@@ -62,7 +67,7 @@ export const SleepGoalChart = memo(() => {
         </Select>
       </Grid>
       <Hr m={20} className={`bg-light`} />
-      <SleepGoalChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} />
+      <SleepGoalChartPie TYPE={TYPE_PIE} setTYPE={setTYPE_PIE} DATE={props?.DATE} />
     </Grid>
   );
 

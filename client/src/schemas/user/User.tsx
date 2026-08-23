@@ -13,6 +13,7 @@ export interface UserType {
   user_id_sended: boolean;
   user_verify_code: string;
   user_id_verified: boolean;
+  user_verify_ticket: string;
   user_pw: string;
   user_pw_verified: string;
   user_google?: string;
@@ -100,6 +101,7 @@ export const User: UserType = {
   user_id_sended: false,
   user_verify_code: ``,
   user_id_verified: false,
+  user_verify_ticket: ``,
   user_pw: ``,
   user_pw_verified: ``,
   user_image: ``,

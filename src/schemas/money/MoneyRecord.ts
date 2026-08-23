@@ -89,7 +89,7 @@ const schema = new mongoose.Schema(
         },
         money_record_amount: {
           type: String,
-          default: 0,
+          default: `0`,
           required: false,
         },
         money_record_content: {

@@ -122,11 +122,18 @@ export const FoodRecordList = memo(() => {
       return `${formatDateYyMmDd(item.dateStart)} - ${formatDateYyMmDd(item.dateEnd)}`;
     };
 
+    // 3-2. 평균 칼로리 ------------------------------------------------------------------
+    const averageKcal: number = kcalRecords.length > 0
+      ? kcalRecords.reduce((sum, item) => sum + item.kcal, 0) / kcalRecords.length
+      : 0;
+
     return {
       highestKcalText: formatNumber(highestRecord.kcal),
       highestDateText: formatRecordDate(highestRecord),
       lowestKcalText: formatNumber(lowestRecord.kcal),
       lowestDateText: formatRecordDate(lowestRecord),
+      averageKcalText: formatNumber(averageKcal),
+      averageCountText: kcalRecords.length > 0 ? `${kcalRecords.length}` : `-`,
     };
   }, [OBJECT]);
 
@@ -185,11 +192,11 @@ export const FoodRecordList = memo(() => {
         newSectionCnt: res.data.sectionCnt ?? 0,
       }));
       // 현재 isExpanded의 길이와 응답 길이가 다를 경우, 응답 길이에 맞춰 초기화
-      setIsExpanded(() => {
-        if (resultLength !== isExpanded.length) {
+      setIsExpanded((prev: { expanded: boolean }[]) => {
+        if (resultLength !== prev.length) {
           return Array.from({ length: resultLength }, () => ({ expanded: true }));
         }
-        return isExpanded;
+        return prev;
       });
     })
     .catch((error: any) => {
@@ -214,9 +221,21 @@ export const FoodRecordList = memo(() => {
       <Grid container={true} spacing={0} className={`summary radius-3 border-light-1 shadow-1 p-15px`}>
         {/** row 1 **/}
         <Grid container={true} spacing={0}>
-          <Grid size={12} className={`d-row-left`}>
+          <Grid size={12} className={`d-row-center`}>
             <Div className={`fs-0-95rem fw-600`}>
-              {`${formatDateYyyyMmDd(DATE?.dateStart)} - ${formatDateYyyyMmDd(DATE?.dateEnd)}`}
+              {`${formatDateYyyyMmDd(DATE?.dateStart)}`}
+            </Div>
+            <Div className={`fs-0-85rem fw-600 dark-grey`}>
+               {`(${translate(getDayNotFmt(DATE?.dateStart).format(`ddd`))})`}
+            </Div>
+            <Div className={`fs-0-95rem fw-600 mx-10px`}>
+              {`-`}
+            </Div>
+            <Div className={`fs-0-95rem fw-600`}>
+              {`${formatDateYyyyMmDd(DATE?.dateEnd)}`}
+            </Div>
+            <Div className={`fs-0-85rem fw-600 dark-grey`}>
+               {`(${translate(getDayNotFmt(DATE?.dateEnd).format(`ddd`))})`}
             </Div>
           </Grid>
         </Grid>
@@ -225,7 +244,9 @@ export const FoodRecordList = memo(() => {
 
         {/** row 2 **/}
         <Grid container={true} spacing={0}>
-          <FoodRecordChart />
+          <Grid size={12} className={`d-row-center`}>
+            <FoodRecordChart DATE={DATE} />
+          </Grid>
         </Grid>
 
         <Hr m={20} className={`bg-light`} />
@@ -233,6 +254,7 @@ export const FoodRecordList = memo(() => {
         {/** row 3 **/}
         <Grid container={true} spacing={2}>
           <Grid size={12} className={`stat-grid`}>
+            {/** 최고 칼로리 **/}
             <Div className={`stat-card`}>
               <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
@@ -251,6 +273,7 @@ export const FoodRecordList = memo(() => {
                 </Div>
               </Div>
             </Div>
+            {/** 최저 칼로리 **/}
             <Div className={`stat-card`}>
               <Div className={`stat-label`}>
                 <Div className={`fs-0-65rem fw-600 dark`}>
@@ -263,6 +286,27 @@ export const FoodRecordList = memo(() => {
               <Div className={`d-row-right stat-value`}>
                 <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
                   {recordSummary.lowestKcalText}
+                </Div>
+                <Div className={`fs-0-55rem fw-600 dark`}>
+                  {translate(`kc`)}
+                </Div>
+              </Div>
+            </Div>
+            {/** 평균 칼로리 **/}
+            <Div className={`stat-card`}>
+              <Div className={`stat-label`}>
+                <Div className={`fs-0-65rem fw-600 dark`}>
+                  {translate(`avgKcal`)}
+                </Div>
+                <Div className={`stat-meta fs-0-55rem dark mt-3px`} title={recordSummary.averageCountText}>
+                  {recordSummary.averageCountText === `-`
+                    ? `-`
+                    : `${recordSummary.averageCountText} ${translate(`count`)}`}
+                </Div>
+              </Div>
+              <Div className={`d-row-right stat-value`}>
+                <Div className={`fs-0-85rem fw-700 mr-4px`} compact={false}>
+                  {recordSummary.averageKcalText}
                 </Div>
                 <Div className={`fs-0-55rem fw-600 dark`}>
                   {translate(`kc`)}

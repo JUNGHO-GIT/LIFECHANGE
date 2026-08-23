@@ -5,7 +5,7 @@
  * @since 2026-08-17
  */
 
-import { useState, useEffect, memo } from "@exportReacts";
+import { useState, useEffect, useMemo, memo } from "@exportReacts";
 import { useCommonValue, useCommonDate, useStorageLocal } from "@exportHooks";
 import { useStoreLanguage, useStoreLoading, useStoreAlert } from "@exportStores";
 import { axios } from "@exportLibs";
@@ -23,6 +23,7 @@ declare interface GoalChartMetric {
 declare interface ExerciseGoalChartPieProps {
   TYPE?: any;
   setTYPE?: any;
+  DATE?: any;
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -30,7 +31,7 @@ export const ExerciseGoalChartPie = memo((props: ExerciseGoalChartPieProps) => {
 
   // 1. common ----------------------------------------------------------------------------------
   const { URL_OBJECT, PATH, sessionId, chartThemeColors, localUnit } = useCommonValue();
-  const { getWeekStartFmt, getWeekEndFmt } = useCommonDate();
+  const { getDayFmt, getWeekStartFmt, getWeekEndFmt } = useCommonDate();
   const { getMonthStartFmt, getMonthEndFmt, getYearStartFmt, getYearEndFmt } = useCommonDate();
   const { translate } = useStoreLanguage();
   const { setALERT } = useStoreAlert();
@@ -48,14 +49,20 @@ export const ExerciseGoalChartPie = memo((props: ExerciseGoalChartPieProps) => {
   const [ TYPE_STATE, setTYPE_STATE ] = useState(() => {
     return props?.TYPE !== undefined ? props.TYPE : TYPE;
   });
-  const [ DATE, _setDATE ] = useState({
-    weekStartFmt: getWeekStartFmt(),
-    weekEndFmt: getWeekEndFmt(),
-    monthStartFmt: getMonthStartFmt(),
-    monthEndFmt: getMonthEndFmt(),
-    yearStartFmt: getYearStartFmt(),
-    yearEndFmt: getYearEndFmt(),
-  });
+
+  // 2-2. useMemo --------------------------------------------------------------------------------
+  // - 리스트의 DATE가 주어지면 그 날짜 기준으로 주/월/년 범위를 계산
+  const DATE = useMemo(() => {
+    const base: string = props?.DATE?.dateStart ?? getDayFmt();
+    return {
+      weekStartFmt: getWeekStartFmt(base),
+      weekEndFmt: getWeekEndFmt(base),
+      monthStartFmt: getMonthStartFmt(base),
+      monthEndFmt: getMonthEndFmt(base),
+      yearStartFmt: getYearStartFmt(base),
+      yearEndFmt: getYearEndFmt(base),
+    };
+  }, [ props?.DATE?.dateStart ]);
 
   // 2-2. useState -------------------------------------------------------------------------------
   const [ OBJECT_WEEK, setOBJECT_WEEK ] = useState<GoalChartMetric[]>([]);

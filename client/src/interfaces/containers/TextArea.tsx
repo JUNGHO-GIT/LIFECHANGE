@@ -62,37 +62,37 @@ export const TextArea = memo((props: any) => {
         !!((props?.readOnly ?? props?.locked === `locked`))
       ),
       className: (
-				props?.inputclass?.includes(`fs-`) ? (
-					`text-left ${props?.inputclass ?? ``}`
-				) : (
-					`fs-0-9rem text-left ${props?.inputclass ?? ``}`
-				)
+        props?.inputclass?.includes(`fs-`) ? (
+          `text-left ${props?.inputclass ?? ``}`
+        ) : (
+          `fs-0-9rem text-left ${props?.inputclass ?? ``}`
+        )
       ),
       startAdornment: (
-				props?.startadornment ? (
-					typeof props?.startadornment === `string` ? (
-						<div className={`d-center fs-0-6rem ${props?.adornmentclass ?? ``}`}>
-						  {props?.startadornment}
-						</div>
-					) : (
-						<div className={`d-center ${props?.adornmentclass ?? ``}`}>
-						  {props?.startadornment}
-						</div>
-					)
-				) : null
+        props?.startadornment ? (
+          typeof props?.startadornment === `string` ? (
+            <div className={`d-center fs-0-6rem ${props?.adornmentclass ?? ``}`}>
+              {props?.startadornment}
+            </div>
+          ) : (
+            <div className={`d-center ${props?.adornmentclass ?? ``}`}>
+              {props?.startadornment}
+            </div>
+          )
+        ) : null
       ),
       endAdornment: (
-				props?.endadornment ? (
-					typeof props?.endadornment === `string` ? (
-						<div className={`d-center fs-0-6rem ${props?.adornmentclass ?? ``}`}>
-						  {props?.endadornment}
-						</div>
-					) : (
-						<div className={`d-center ${props?.adornmentclass ?? ``}`}>
-						  {props?.endadornment}
-						</div>
-					)
-				) : null
+        props?.endadornment ? (
+          typeof props?.endadornment === `string` ? (
+            <div className={`d-center fs-0-6rem ${props?.adornmentclass ?? ``}`}>
+              {props?.endadornment}
+            </div>
+          ) : (
+            <div className={`d-center ${props?.adornmentclass ?? ``}`}>
+              {props?.endadornment}
+            </div>
+          )
+        ) : null
       ),
     },
     htmlInput: {

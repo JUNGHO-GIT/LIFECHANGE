@@ -44,8 +44,12 @@ export const Count = memo((
   const { setALERT } = useStoreAlert();
 
   // 4. handle ----------------------------------------------------------------------------------
+  // ?? 는 disabled === false 를 토글 불가로 만들어 동작을 놓치므로 명시 부정으로 바꿈
   const handleLockToggle = useCallback(() => {
-    disabled ?? setLOCKED(LOCKED === `locked` ? `unlocked` : `locked`);
+    if (disabled) {
+      return;
+    }
+    setLOCKED(LOCKED === `locked` ? `unlocked` : `locked`);
   }, [ disabled, LOCKED, setLOCKED ]);
 
   // 4. handle ----------------------------------------------------------------------------------
@@ -75,47 +79,47 @@ export const Count = memo((
   // 4. handle ----------------------------------------------------------------------------------
   const handlePlus = useCallback(() => {
     !disabled && LOCKED !== `locked` && !PATH.includes(`/food/find/list`) &&
-		setCOUNT((prev) => (prev.newSectionCnt < limit ? (
-			onCountChange?.(prev.newSectionCnt + 1),
-			{ ...prev, newSectionCnt: prev.newSectionCnt + 1 }
-		) : (
-			setALERT({
-			  open: true,
-			  severity: `error`,
-			  msg: localLang === `ko`
-					? `${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
-					: `Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
-			}),
-			prev
-		)),
-		);
+    setCOUNT((prev) => (prev.newSectionCnt < limit ? (
+      onCountChange?.(prev.newSectionCnt + 1),
+      { ...prev, newSectionCnt: prev.newSectionCnt + 1 }
+    ) : (
+      setALERT({
+        open: true,
+        severity: `error`,
+        msg: localLang === `ko`
+          ? `${prev.sectionCnt}개 이상 ${limit}개 이하로 입력해주세요.`
+          : `Please enter ${prev.sectionCnt} or more and ${limit} or less.`,
+      }),
+      prev
+    )),
+    );
   }, [
     disabled, LOCKED, PATH, setCOUNT, onCountChange, setALERT, localLang, limit,
   ]);
 
   // 3. useMEMO ----------------------------------------------------------------------------------
   const lockIcon = useMemo(() => (
-		LOCKED === `locked` ? (
-			<Icons
-			  key={`Lock`}
-			  name={`Lock`}
-			  isIconButton={false}
-			  className={`w-20px h-20px`}
-			/>
-		) : (
-			<Icons
-			  key={`UnLock`}
-			  name={`UnLock`}
-			  isIconButton={false}
-			  className={`w-20px h-20px`}
-			/>
-		)
+    LOCKED === `locked` ? (
+      <Icons
+        key={`Lock`}
+        name={`Lock`}
+        isIconButton={false}
+        className={`w-20px h-20px`}
+      />
+    ) : (
+      <Icons
+        key={`UnLock`}
+        name={`UnLock`}
+        isIconButton={false}
+        className={`w-20px h-20px`}
+      />
+    )
   ), [LOCKED]);
 
   // 3. useMEMO ----------------------------------------------------------------------------------
   const countEndAdornment = useMemo(() => (
-		!disabled || LOCKED === `unlocked` ? (
-			<Div className={`d-row-center`}>
+    !disabled || LOCKED === `unlocked` ? (
+      <Div className={`d-row-center`}>
         <Icons
           key={`Minus`}
           name={`Minus`}
@@ -132,8 +136,8 @@ export const Count = memo((
           locked={LOCKED}
           onClick={handlePlus}
         />
-			</Div>
-		) : null
+      </Div>
+    ) : null
   ), [ disabled, LOCKED, handleMinus, handlePlus ]);
 
   // 7. countNode ----------------------------------------------------------------------------------
@@ -161,8 +165,8 @@ export const Count = memo((
         sx={{
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: (allowZero ? COUNT.newSectionCnt < 0 : COUNT.newSectionCnt <= 0)
-							? `#f44336`
-							: `rgba(0, 0, 0, 0.23)`,
+              ? `#f44336`
+              : `rgba(0, 0, 0, 0.23)`,
           },
         }}
         startadornment={(
